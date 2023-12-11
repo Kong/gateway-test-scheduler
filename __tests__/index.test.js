@@ -6,7 +6,7 @@ const { run } = require('../src/main')
 
 // Mock the action's entrypoint
 jest.mock('../src/main', () => ({
-  run: jest.fn()
+  run: jest.fn(),
 }))
 
 describe('index', () => {
