@@ -73,6 +73,7 @@ const downloadStatistics = async (
 
       for (const artifact of artifacts.data.artifacts) {
         if (shouldDownloadArtifact(artifact)) {
+          console.log('artifact name:', artifact.name)
           artifactCount += 1
           await downloadArtifact(owner, repo, run.id, artifact, dataDirectory)
         }

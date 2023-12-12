@@ -34,8 +34,6 @@ const printEnv = () => {
 
 module.exports = {
   analyze: async () => {
-    printEnv()
-
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
     core.info('download statistics files')
