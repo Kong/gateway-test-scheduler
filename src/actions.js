@@ -39,6 +39,7 @@ module.exports = {
 
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
+    core.info('download statistics files')
     await downloadStatistics(
       owner,
       repo,
@@ -46,14 +47,17 @@ module.exports = {
       core.getInput('artifact-name-regexp', { required: true }),
       tmpDir,
     )
+    core.info('combine statistics files')
     const testFileRuntimeFile = core.getInput('test-file-runtime-file', { required: true })
     await combineStatistics(tmpDir, testFileRuntimeFile)
+    core.info(`commit new version of ${testFileRuntimeFile}`)
     await simpleGit()
       .add(testFileRuntimeFile)
       .commit('chore(ci): updated test file runtime file', {
         '--author': '"Test Scheduler <team-gateway@konghq.com>"',
       })
       .push()
+    core.info('done committing')
   },
 
   schedule: async () => {
