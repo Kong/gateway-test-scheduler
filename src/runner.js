@@ -32,25 +32,6 @@ const runner = async (
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
   console.log(`Running ${testsToRun.length} tests`)
 
-  for (const variable of [
-    [
-      'GITHUB_REPOSITORY',
-      'GITHUB_ACTOR',
-      'GITHUB_SHA',
-      'GITHUB_REF',
-      'GITHUB_EVENT_NAME',
-      'GITHUB_EVENT_PATH',
-      'GITHUB_WORKFLOW',
-      'GITHUB_RUN_ID',
-      'GITHUB_RUN_NUMBER',
-      'GITHUB_JOB',
-      'GITHUB_ACTION',
-      'GITHUB_EVENT_PATH',
-    ],
-  ]) {
-    console.log(`${variable} => ${process.env[variable]}`)
-  }
-
   const saveTestResult = async (test, exitStatus, output) => {
     // if (pullRequest) {
     // Implement saving test result for pull request
