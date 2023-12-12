@@ -27,6 +27,7 @@ module.exports = {
       .commit('chore(ci): updated test file runtime file', {
         '--author': '"Test Scheduler <team-gateway@konghq.com>"',
       })
+      .push()
   },
 
   schedule: async () => {
