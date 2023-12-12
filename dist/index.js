@@ -32894,8 +32894,6 @@ const printEnv = () => {
 
 module.exports = {
   analyze: async () => {
-    printEnv()
-
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
     core.info('download statistics files')
@@ -33133,6 +33131,7 @@ const downloadStatistics = async (
 
       for (const artifact of artifacts.data.artifacts) {
         if (shouldDownloadArtifact(artifact)) {
+          console.log('artifact name:', artifact.name)
           artifactCount += 1
           await downloadArtifact(owner, repo, run.id, artifact, dataDirectory)
         }
