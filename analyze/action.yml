@@ -13,7 +13,6 @@ inputs:
   artifact-name-regexp:
     description: 'Regular expression to match artifact names containing actual test runtimes'
     required: true
-    default: ''
 
 # Define your outputs here.
 outputs:
