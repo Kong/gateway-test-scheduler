@@ -38489,7 +38489,9 @@ const printEnv = () => {
     'GIT_AUTHOR_NAME',
     'GIT_AUTHOR_EMAIL',
   ]) {
-    core.info(`${variable} => ${process.env[variable]}`)
+    if (process.env[variable]) {
+      core.info(`${variable} => ${process.env[variable]}`)
+    }
   }
 }
 
