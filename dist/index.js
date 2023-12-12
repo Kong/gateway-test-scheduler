@@ -38478,7 +38478,7 @@ module.exports = {
     await downloadStatistics(
       owner,
       repo,
-      core.getInput('build_and_test.yml', { required: true }),
+      core.getInput('workflow-name', { required: true }),
       core.getInput('artifact-name-regexp', { required: true }),
       tmpDir,
     )
