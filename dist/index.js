@@ -33115,7 +33115,7 @@ const downloadStatistics = async (
 
     const workflowRuns = await getWorkflowRuns(owner, repo, workflowName)
 
-    const matchArtifactName = new RegExp(`^${artifactNameRegexp}$`)
+    const matchArtifactName = new RegExp(artifactNameRegexp)
     const shouldDownloadArtifact = (artifact) => artifact.name.match(matchArtifactName)
 
     console.log('artifact matcher', matchArtifactName)
@@ -33130,8 +33130,8 @@ const downloadStatistics = async (
       })
 
       for (const artifact of artifacts.data.artifacts) {
+        console.log('artifact name:', artifact.name)
         if (shouldDownloadArtifact(artifact)) {
-          console.log('artifact name:', artifact.name)
           artifactCount += 1
           await downloadArtifact(owner, repo, run.id, artifact, dataDirectory)
         }
