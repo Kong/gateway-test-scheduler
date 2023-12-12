@@ -61,6 +61,8 @@ const downloadStatistics = async (
     const shouldDownloadArtifact = (artifact) =>
       artifact.name.match(matchArtifactName)
 
+    const workflowRunCount = workflowRuns.length
+    let artifactCount = 0
     for (const run of workflowRuns) {
       const artifacts = await octokit.actions.listWorkflowRunArtifacts({
         owner,
@@ -70,10 +72,12 @@ const downloadStatistics = async (
 
       for (const artifact of artifacts.data.artifacts) {
         if (shouldDownloadArtifact(artifact)) {
+          artifactCount += 1
           await downloadArtifact(owner, repo, run.id, artifact, dataDirectory)
         }
       }
     }
+    console.log(`looked at ${workflowRunCount} workflow runs, ${artifactCount} files downloaded`)
   } catch (error) {
     console.error('Error:', error.message)
   }
