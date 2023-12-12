@@ -38486,7 +38486,9 @@ module.exports = {
     await combineStatistics(tmpDir, testFileRuntimeFile)
     await simpleGit()
       .add(testFileRuntimeFile)
-      .commit('updated test file runtime file')
+      .commit('chore(ci): updated test file runtime file', {
+        '--author': '"Test Scheduler <team-gateway@konghq.com>"',
+      })
   },
 
   schedule: async () => {
