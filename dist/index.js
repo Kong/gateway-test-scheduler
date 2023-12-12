@@ -38515,11 +38515,10 @@ module.exports = {
     core.info(`commit new version of ${testFileRuntimeFile}`)
     await simpleGit()
       .add(testFileRuntimeFile)
-      .commit('chore(ci): updated test file runtime file', {
-        '--author': '"Test Scheduler <team-gateway@konghq.com>"',
-      })
-      .push()
-    core.info('done committing')
+      .commit('chore(ci): updated test file runtime file')
+      core.info('committed')
+    await simpleGit().push()
+    core.info('pushed')
   },
 
   schedule: async () => {
@@ -38728,8 +38727,9 @@ const downloadStatistics = async (
     const workflowRuns = await getWorkflowRuns(owner, repo, workflowName)
 
     const matchArtifactName = new RegExp(`^${artifactNameRegexp}$`)
-    const shouldDownloadArtifact = (artifact) =>
-      artifact.name.match(matchArtifactName)
+    const shouldDownloadArtifact = (artifact) => artifact.name.match(matchArtifactName)
+
+    console.log('artifact matcher', matchArtifactName)
 
     const workflowRunCount = workflowRuns.length
     let artifactCount = 0

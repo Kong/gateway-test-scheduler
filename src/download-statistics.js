@@ -58,8 +58,9 @@ const downloadStatistics = async (
     const workflowRuns = await getWorkflowRuns(owner, repo, workflowName)
 
     const matchArtifactName = new RegExp(`^${artifactNameRegexp}$`)
-    const shouldDownloadArtifact = (artifact) =>
-      artifact.name.match(matchArtifactName)
+    const shouldDownloadArtifact = (artifact) => artifact.name.match(matchArtifactName)
+
+    console.log('artifact matcher', matchArtifactName)
 
     const workflowRunCount = workflowRuns.length
     let artifactCount = 0
