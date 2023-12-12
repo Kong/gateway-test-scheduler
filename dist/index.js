@@ -38473,23 +38473,21 @@ const { runner } = __nccwpck_require__(8382)
 
 const printEnv = () => {
   for (const variable of [
-    [
-      'GITHUB_REPOSITORY',
-      'GITHUB_ACTOR',
-      'GITHUB_SHA',
-      'GITHUB_REF',
-      'GITHUB_EVENT_NAME',
-      'GITHUB_EVENT_PATH',
-      'GITHUB_WORKFLOW',
-      'GITHUB_RUN_ID',
-      'GITHUB_RUN_NUMBER',
-      'GITHUB_JOB',
-      'GITHUB_ACTION',
-      'GITHUB_EVENT_PATH',
-      'GITHUB_TOKEN',
-      'GIT_AUTHOR_NAME',
-      'GIT_AUTHOR_EMAIL',
-    ],
+    'GITHUB_REPOSITORY',
+    'GITHUB_ACTOR',
+    'GITHUB_SHA',
+    'GITHUB_REF',
+    'GITHUB_EVENT_NAME',
+    'GITHUB_EVENT_PATH',
+    'GITHUB_WORKFLOW',
+    'GITHUB_RUN_ID',
+    'GITHUB_RUN_NUMBER',
+    'GITHUB_JOB',
+    'GITHUB_ACTION',
+    'GITHUB_EVENT_PATH',
+    'GITHUB_TOKEN',
+    'GIT_AUTHOR_NAME',
+    'GIT_AUTHOR_EMAIL',
   ]) {
     core.info(`${variable} => ${process.env[variable]}`)
   }
