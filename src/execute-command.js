@@ -24,4 +24,4 @@ const executeCommand = async (command, env) => {
   })
 }
 
-module.exports = executeCommand
+module.exports = { executeCommand }

@@ -1,6 +1,7 @@
 const fs = require('fs')
 const ms = require('ms')
 const { AsciiTable3, AlignmentEnum } = require('ascii-table3')
+const process = require('node:process')
 
 const executeCommand = require('./execute-command')
 const appendToFile = require('./append-to-file')
@@ -22,27 +23,43 @@ const readTestsToRun = (testsToRunFile, failedTestFilesFile) => {
     .map(JSON.parse)
 }
 
-const testRunner = async (
-  pullRequest,
-  workflowId,
-  runAttempt,
-  runnerNumber,
+const runner = async (
   testsToRunFile,
   failedTestFilesFile,
   testFileRuntimeFile,
+  setupVenv,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
   console.log(`Running ${testsToRun.length} tests`)
 
-  const saveTestResult = async (test, exitStatus, output) => {
-    if (pullRequest) {
-      // Implement saving test result for pull request
-      // You can use relevant Node.js GitHub API libraries for this
-      // Example: octokit.issues.createComment({...});
-    }
+  for (const variable of [
+    [
+      'GITHUB_REPOSITORY',
+      'GITHUB_ACTOR',
+      'GITHUB_SHA',
+      'GITHUB_REF',
+      'GITHUB_EVENT_NAME',
+      'GITHUB_EVENT_PATH',
+      'GITHUB_WORKFLOW',
+      'GITHUB_RUN_ID',
+      'GITHUB_RUN_NUMBER',
+      'GITHUB_JOB',
+      'GITHUB_ACTION',
+      'GITHUB_EVENT_PATH',
+    ],
+  ]) {
+    console.log(`${variable} => ${process.env[variable]}`)
   }
 
-  const bustedEventPath = `/tmp/busted-runner-${runnerNumber}`
+  const saveTestResult = async (test, exitStatus, output) => {
+    // if (pullRequest) {
+    // Implement saving test result for pull request
+    // You can use relevant Node.js GitHub API libraries for this
+    // Example: octokit.issues.createComment({...});
+    // }
+  }
+
+  const bustedEventPath = `/tmp/busted-runner-${process.pid}`
 
   const bustedToDatadogStatus = {
     success: 'pass',
@@ -79,7 +96,9 @@ const testRunner = async (
       const excludeTagsOption = exclude_tags
         ? `--exclude-tags="${exclude_tags}"`
         : ''
-      const command = `bin/busted --helper=spec/busted-ci-helper.lua -o gtest --Xoutput --color ${excludeTagsOption} "${filename}"`
+      const command = `${
+        setupVenv || ''
+      } ; bin/busted --helper=spec/busted-ci-helper.lua -o gtest --Xoutput --color ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(command, {
         ...process.env,
@@ -174,4 +193,4 @@ Total deviation........: ${ms(Math.floor(total.elapsed - total.estimated))}\n`)
   process.exit(0)
 }
 
-module.exports = testRunner
+module.exports = { runner }

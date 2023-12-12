@@ -43,16 +43,23 @@ const downloadArtifact = async (
   console.log(`Downloaded: ${filePath}`)
 }
 
-const shouldDownloadArtifact = (artifact) =>
-  artifact.name.match(/^test-runtime-statistics-\d+$/)
-
-const downloadStatistics = async (owner, repo, workflowName, dataDirectory) => {
+const downloadStatistics = async (
+  owner,
+  repo,
+  workflowName,
+  artifactNameRegexp,
+  dataDirectory,
+) => {
   try {
     if (!fs.existsSync(dataDirectory)) {
       fs.mkdirSync(dataDirectory)
     }
 
     const workflowRuns = await getWorkflowRuns(owner, repo, workflowName)
+
+    const matchArtifactName = new RegExp(`^${artifactNameRegexp}$`)
+    const shouldDownloadArtifact = (artifact) =>
+      artifact.name.match(matchArtifactName)
 
     for (const run of workflowRuns) {
       const artifacts = await octokit.actions.listWorkflowRunArtifacts({
@@ -72,4 +79,4 @@ const downloadStatistics = async (owner, repo, workflowName, dataDirectory) => {
   }
 }
 
-module.exports = downloadStatistics
+module.exports = { downloadStatistics }

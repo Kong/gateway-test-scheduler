@@ -4,15 +4,22 @@ author: 'Your name or organization here'
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  test-suites-file:
+    description: 'File containing the test suite definitions'
     required: true
-    default: '1000'
-
-# Define your outputs here.
-outputs:
-  time:
-    description: 'Your output description here'
+  test-file-runtime-file:
+    description: 'Name of the file from which to read expected test runtimes for scheduling purposes'
+    required: true
+  repo-root:
+    description: 'Path to repository, used to resolve relative test file names'
+    required: true
+    default: '.'
+  output-prefix:
+    description: 'Filename prefix to use for the generated test file chunks'
+    required: true
+  runner-count:
+    description: 'Number of test runners to schedule for'
+    required: true
 
 runs:
   using: node20

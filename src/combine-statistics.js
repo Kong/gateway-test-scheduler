@@ -50,4 +50,4 @@ const combineStatistics = (directoryPath, outputFilePath) => {
   console.log('Combined output written to', outputFilePath)
 }
 
-module.exports = combineStatistics
+module.exports = { combineStatistics }

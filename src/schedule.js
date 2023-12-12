@@ -125,4 +125,4 @@ const schedule = (
   distributeFiles(tasks, outputPrefix, numberOfWorkers)
 }
 
-module.exports = schedule
+module.exports = { schedule }

@@ -1,10 +1,10 @@
 const commander = require('commander')
 const path = require('node:path')
 const findGitRoot = require('find-git-root')
-const schedule = require('./schedule')
-const downloadStatistics = require('./download-statistics')
-const combineStatistics = require('./combine-statistics')
-const testRunner = require('./test-runner')
+const { schedule } = require('./schedule')
+const { downloadStatistics } = require('./download-statistics')
+const { combineStatistics } = require('./combine-statistics')
+const { runner } = require('./runner')
 const repoRoot = () => path.join(findGitRoot(), '..')
 
 const parseIntegerArgument = (value) => {
@@ -63,7 +63,7 @@ const cli = () => {
     .action(combineStatistics)
 
   commander.program
-    .command('test-runner')
+    .command('runner')
     .argument('<prNumber>', 'Pull request number')
     .argument('<workflowId>', 'Workflow ID')
     .argument('<runAttempt>', 'Run attempt')
@@ -71,7 +71,7 @@ const cli = () => {
     .argument('<testsToRunFile>', 'Tests to run file')
     .argument('<failedTestFilesFile>', 'Failed test files file')
     .argument('<testFileRuntimeFile>', 'File to write runtime statistics to')
-    .action(testRunner)
+    .action(runner)
 
   commander.program
     .command('help')
