@@ -18,12 +18,15 @@
     "node": ">=20"
   },
   "scripts": {
+    "bundle": "npm run format:write && npm run package",
     "ci-test": "jest",
     "format:write": "prettier --write **/*.js",
     "format:check": "prettier --check **/*.js",
     "lint": "npx eslint . -c ./.github/linters/.eslintrc.yml",
+    "package": "ncc build src/actions.js --license licenses.txt",
+    "package:watch": "npm run package -- --watch",
     "test": "(jest && make-coverage-badge --output-path ./badges/coverage.svg) || make-coverage-badge --output-path ./badges/coverage.svg",
-    "all": "npm run format:write && npm run lint && npm run test",
+    "all": "npm run format:write && npm run lint && npm run test && npm run package",
     "cli": "node ./src/cli.js"
   },
   "license": "MIT",
@@ -71,6 +74,7 @@
     "@babel/core": "^7.23.6",
     "@babel/eslint-parser": "^7.23.3",
     "@babel/preset-env": "^7.23.6",
+    "@vercel/ncc": "^0.38.1",
     "babel-preset-jest": "^29.6.3",
     "eslint": "^8.55.0",
     "eslint-plugin-github": "^4.10.1",
