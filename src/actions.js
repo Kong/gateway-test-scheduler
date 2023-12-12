@@ -1,6 +1,5 @@
 const core = require('@actions/core')
 const fs = require('node:fs/promises')
-const simpleGit = require('simple-git')
 const path = require('node:path')
 const os = require('node:os')
 
@@ -50,13 +49,7 @@ module.exports = {
     core.info('combine statistics files')
     const testFileRuntimeFile = core.getInput('test-file-runtime-file', { required: true })
     await combineStatistics(tmpDir, testFileRuntimeFile)
-    core.info(`commit new version of ${testFileRuntimeFile}`)
-    await simpleGit()
-      .add(testFileRuntimeFile)
-      .commit('chore(ci): updated test file runtime file')
-      core.info('committed')
-    await simpleGit().push()
-    core.info('pushed')
+    core.info('done')
   },
 
   schedule: async () => {
