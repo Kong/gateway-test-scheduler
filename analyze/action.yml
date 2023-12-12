@@ -22,4 +22,4 @@ outputs:
 
 runs:
   using: node20
-  main: ../src/analyze.js
+  main: ../src/analyze-action.js
