@@ -38471,10 +38471,37 @@ const { combineStatistics } = __nccwpck_require__(4490)
 const { schedule } = __nccwpck_require__(2839)
 const { runner } = __nccwpck_require__(8382)
 
+const printEnv = () => {
+  for (const variable of [
+    [
+      'GITHUB_REPOSITORY',
+      'GITHUB_ACTOR',
+      'GITHUB_SHA',
+      'GITHUB_REF',
+      'GITHUB_EVENT_NAME',
+      'GITHUB_EVENT_PATH',
+      'GITHUB_WORKFLOW',
+      'GITHUB_RUN_ID',
+      'GITHUB_RUN_NUMBER',
+      'GITHUB_JOB',
+      'GITHUB_ACTION',
+      'GITHUB_EVENT_PATH',
+      'GITHUB_TOKEN',
+      'GIT_AUTHOR_NAME',
+      'GIT_AUTHOR_EMAIL',
+    ],
+  ]) {
+    core.info(`${variable} => ${process.env[variable]}`)
+  }
+}
+
 module.exports = {
   analyze: async () => {
+    printEnv()
+
     const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
+    core.info('download statistics files')
     await downloadStatistics(
       owner,
       repo,
@@ -38482,13 +38509,17 @@ module.exports = {
       core.getInput('artifact-name-regexp', { required: true }),
       tmpDir,
     )
+    core.info('combine statistics files')
     const testFileRuntimeFile = core.getInput('test-file-runtime-file', { required: true })
     await combineStatistics(tmpDir, testFileRuntimeFile)
+    core.info(`commit new version of ${testFileRuntimeFile}`)
     await simpleGit()
       .add(testFileRuntimeFile)
       .commit('chore(ci): updated test file runtime file', {
         '--author': '"Test Scheduler <team-gateway@konghq.com>"',
       })
+      .push()
+    core.info('done committing')
   },
 
   schedule: async () => {
@@ -38700,6 +38731,8 @@ const downloadStatistics = async (
     const shouldDownloadArtifact = (artifact) =>
       artifact.name.match(matchArtifactName)
 
+    const workflowRunCount = workflowRuns.length
+    let artifactCount = 0
     for (const run of workflowRuns) {
       const artifacts = await octokit.actions.listWorkflowRunArtifacts({
         owner,
@@ -38709,10 +38742,12 @@ const downloadStatistics = async (
 
       for (const artifact of artifacts.data.artifacts) {
         if (shouldDownloadArtifact(artifact)) {
+          artifactCount += 1
           await downloadArtifact(owner, repo, run.id, artifact, dataDirectory)
         }
       }
     }
+    console.log(`looked at ${workflowRunCount} workflow runs, ${artifactCount} files downloaded`)
   } catch (error) {
     console.error('Error:', error.message)
   }
@@ -38793,25 +38828,6 @@ const runner = async (
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
   console.log(`Running ${testsToRun.length} tests`)
-
-  for (const variable of [
-    [
-      'GITHUB_REPOSITORY',
-      'GITHUB_ACTOR',
-      'GITHUB_SHA',
-      'GITHUB_REF',
-      'GITHUB_EVENT_NAME',
-      'GITHUB_EVENT_PATH',
-      'GITHUB_WORKFLOW',
-      'GITHUB_RUN_ID',
-      'GITHUB_RUN_NUMBER',
-      'GITHUB_JOB',
-      'GITHUB_ACTION',
-      'GITHUB_EVENT_PATH',
-    ],
-  ]) {
-    console.log(`${variable} => ${process.env[variable]}`)
-  }
 
   const saveTestResult = async (test, exitStatus, output) => {
     // if (pullRequest) {
