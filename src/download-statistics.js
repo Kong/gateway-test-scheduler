@@ -40,7 +40,6 @@ const downloadArtifact = async (
 
   const filePath = path.join(dataDirectory, `run_${runId}_${artifact.name}.zip`)
   fs.writeFileSync(filePath, Buffer.from(response.data))
-  console.log(`Downloaded: ${filePath}`)
 }
 
 const downloadStatistics = async (
@@ -61,8 +60,6 @@ const downloadStatistics = async (
     const shouldDownloadArtifact = (artifact) =>
       artifact.name.match(matchArtifactName)
 
-    console.log('artifact matcher', matchArtifactName)
-
     const workflowRunCount = workflowRuns.length
     let artifactCount = 0
     for (const run of workflowRuns) {
@@ -73,7 +70,6 @@ const downloadStatistics = async (
       })
 
       for (const artifact of artifacts.data.artifacts) {
-        console.log('artifact name:', artifact.name)
         if (shouldDownloadArtifact(artifact)) {
           artifactCount += 1
           await downloadArtifact(owner, repo, run.id, artifact, dataDirectory)
