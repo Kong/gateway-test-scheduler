@@ -33504,7 +33504,7 @@ const schedule = (
         .join('\n\t')}\n\n`,
     )
   }
-  console.log('distribute to files')
+  console.log(`distribute ${tasks.length} tasks to ${numberOfWorkers} files`)
   distributeFiles(tasks, outputPrefix, numberOfWorkers)
 }
 
