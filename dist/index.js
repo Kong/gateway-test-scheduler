@@ -32905,7 +32905,9 @@ module.exports = {
       tmpDir,
     )
     core.info('combine statistics files')
-    const testFileRuntimeFile = core.getInput('test-file-runtime-file', { required: true })
+    const testFileRuntimeFile = core.getInput('test-file-runtime-file', {
+      required: true,
+    })
     await combineStatistics(tmpDir, testFileRuntimeFile)
     core.info('done')
   },
@@ -33116,7 +33118,8 @@ const downloadStatistics = async (
     const workflowRuns = await getWorkflowRuns(owner, repo, workflowName)
 
     const matchArtifactName = new RegExp(artifactNameRegexp)
-    const shouldDownloadArtifact = (artifact) => artifact.name.match(matchArtifactName)
+    const shouldDownloadArtifact = (artifact) =>
+      artifact.name.match(matchArtifactName)
 
     console.log('artifact matcher', matchArtifactName)
 
@@ -33137,7 +33140,9 @@ const downloadStatistics = async (
         }
       }
     }
-    console.log(`looked at ${workflowRunCount} workflow runs, ${artifactCount} files downloaded`)
+    console.log(
+      `looked at ${workflowRunCount} workflow runs, ${artifactCount} files downloaded`,
+    )
   } catch (error) {
     console.error('Error:', error.message)
   }
