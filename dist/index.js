@@ -33050,7 +33050,11 @@ const combineStatistics = (directoryPath, outputFilePath) => {
       const filePath = path.join(directoryPath, file)
       const zip = new AdmZip(filePath)
       const fileContent = zip.readAsText(zip.getEntries()[0])
-      processTextFile(fileContent, durations)
+      try {
+        processTextFile(fileContent, durations)
+      } catch (e) {
+        console.error(`error processing file ${file}: ${e}`)
+      }
     }
   }
 
