@@ -61,7 +61,7 @@ const runner = async (
             const { duration } = args[0]
             appendToFile(
               testFileRuntimeFile,
-              encodeJSON({ suite, filename, duration }),
+              `${encodeJSON({ suite, filename, duration })}\n`,
             )
             runtimes.push({
               suite,
