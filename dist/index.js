@@ -33195,7 +33195,7 @@ const ms = __nccwpck_require__(900)
 const { AsciiTable3, AlignmentEnum } = __nccwpck_require__(4244)
 const process = __nccwpck_require__(7742)
 
-const executeCommand = __nccwpck_require__(9722)
+const { executeCommand } = __nccwpck_require__(9722)
 const appendToFile = __nccwpck_require__(1637)
 const bustedEventListener = __nccwpck_require__(5552)
 

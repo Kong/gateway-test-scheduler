@@ -3,7 +3,7 @@ const ms = require('ms')
 const { AsciiTable3, AlignmentEnum } = require('ascii-table3')
 const process = require('node:process')
 
-const executeCommand = require('./execute-command')
+const { executeCommand } = require('./execute-command')
 const appendToFile = require('./append-to-file')
 const bustedEventListener = require('./busted-event-listener')
 
