@@ -2,6 +2,8 @@ const fs = require('node:fs')
 const { globSync } = require('glob')
 const path = require('node:path')
 
+const { encodeJSON } = require('./encode-json')
+
 function distributeFiles(tasks, outputPrefix, numberOfWorkers) {
   // Parse and sort lines based on duration
   const sortedTasks = tasks
@@ -12,7 +14,7 @@ function distributeFiles(tasks, outputPrefix, numberOfWorkers) {
 
   // Distribute files into output files
   const outputFiles = new Array(numberOfWorkers).fill(0).map((_, index) => ({
-    fileName: `${outputPrefix}${index + 1}.txt`,
+    fileName: `${outputPrefix}${index + 1}.json`,
     tasks: [],
     currentDuration: 0,
   }))
@@ -27,10 +29,10 @@ function distributeFiles(tasks, outputPrefix, numberOfWorkers) {
 
   // Write files to output directory
   for (const file of outputFiles) {
-    fs.writeFileSync(file.fileName, file.tasks.map(JSON.stringify).join('\n'))
+    fs.writeFileSync(file.fileName, file.tasks.map(encodeJSON).join('\n'))
   }
 
-  console.log(
+  console.debug(
     `Files distributed and written to ${outputFiles
       .map(({ fileName }) => fileName)
       .sort()
@@ -69,17 +71,15 @@ const readTestSuites = (testSuitesFile, repoRoot) =>
   })
 
 const readRuntimeInfoFile = (runtimeInfoFilename) =>
-  fs
-    .readFileSync(runtimeInfoFilename, 'utf-8')
-    .split('\n')
-    .reduce((result, line) => {
-      const [suite, filename, duration] = line.split('\t')
+  JSON.parse(fs.readFileSync(runtimeInfoFilename, 'utf-8')).reduce(
+    (result, { suite, filename, duration }) => {
       if (!result[suite]) {
         result[suite] = {}
       }
       result[suite][filename] = duration
-      return result
-    }, {})
+    },
+    {},
+  )
 
 const schedule = (
   testSuitesFile,

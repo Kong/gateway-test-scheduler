@@ -6,14 +6,15 @@ const process = require('node:process')
 const { executeCommand } = require('./execute-command')
 const appendToFile = require('./append-to-file')
 const bustedEventListener = require('./busted-event-listener')
+const { encodeJSON } = require('./encode-json')
 
 const readTestsToRun = (testsToRunFile, failedTestFilesFile) => {
   let file = testsToRunFile
   if (fs.existsSync(failedTestFilesFile)) {
-    console.log(`Rerunning failed tests from ${failedTestFilesFile}`)
+    console.log(`### Rerunning failed tests from ${failedTestFilesFile}`)
     file = failedTestFilesFile
   } else {
-    console.log(`Running tests from ${testsToRunFile}`)
+    console.log(`### Running tests from ${testsToRunFile}`)
   }
 
   return fs
@@ -30,7 +31,7 @@ const runner = async (
   setupVenv,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
-  console.log(`Running ${testsToRun.length} tests`)
+  console.log(`### Running ${testsToRun.length} tests`)
 
   const saveTestResult = async (test, exitStatus, output) => {
     // if (pullRequest) {
@@ -60,7 +61,7 @@ const runner = async (
             const { duration } = args[0]
             appendToFile(
               testFileRuntimeFile,
-              `${suite}\t${filename}\t${duration}`,
+              encodeJSON({ suite, filename, duration }),
             )
             runtimes.push({
               suite,

@@ -1,17 +1,33 @@
 const fs = require('fs')
 const path = require('path')
 const AdmZip = require('adm-zip')
+const { encodeJSON } = require('./encode-json')
+
+const parseTSV = (line) => {
+  const [suite, filename, durationString] = line.split(/\s+/)
+  const duration = parseFloat(durationString) || 0
+  return { suite, filename, duration }
+}
+
+const parseJSON = (line) => {
+  try {
+    return JSON.parse(line)
+  } catch (e) {
+    console.error(`error parsing line ${line} as JSON:`, e)
+    throw e
+  }
+}
 
 const processTextFile = (fileContent, durations) => {
-  const lines = fileContent.split(/\n/)
-
-  for (const line of lines) {
-    const [suite, testFile, duration] = line.split(/\s+/)
-    const durationInSeconds = parseFloat(duration)
-
-    if (!isNaN(durationInSeconds)) {
-      const key = `${suite}:${testFile}`
-      durations[key] = [...(durations[key] || []), durationInSeconds]
+  const isJSON = fileContent[0] === '{'
+  const parsed = fileContent
+    .split(/\n/)
+    .filter((line) => line.length > 0)
+    .map((line) => (isJSON ? parseJSON(line) : parseTSV(line)))
+  for (const { suite, filename, duration } of parsed) {
+    if (duration > 0) {
+      const key = `${suite}:${filename}`
+      durations[key] = [...(durations[key] || []), duration]
     }
   }
 }
@@ -38,16 +54,17 @@ const combineStatistics = (directoryPath, outputFilePath) => {
     }
   }
 
-  const outputStream = fs.createWriteStream(outputFilePath)
-
-  for (const key in durations) {
-    const medianDuration = calculateMedian(durations[key])
+  const result = Object.entries(durations).map(([key, value]) => {
+    const expectedDuration = calculateMedian(durations[key])
     const [suite, filename] = key.split(':')
-    outputStream.write(`${suite}\t${filename}\t${medianDuration}\n`)
-  }
+    return {
+      suite,
+      filename,
+      expectedDuration,
+    }
+  })
 
-  outputStream.end()
-  console.log('Combined output written to', outputFilePath)
+  fs.writeFileSync(outputFilePath, encodeJSON(result))
 }
 
 module.exports = { combineStatistics }
