@@ -4,7 +4,6 @@
   "version": "1",
   "author": "Hans Hübner",
   "private": true,
-  "type": "module",
   "homepage": "https://github.com/Kong/gateway-test-scheduler#readme",
   "repository": {
     "type": "git",
