@@ -45,7 +45,9 @@ module.exports = {
       tmpDir,
     )
     core.info('combine statistics files')
-    const testFileRuntimeFile = core.getInput('test-file-runtime-file', { required: true })
+    const testFileRuntimeFile = core.getInput('test-file-runtime-file', {
+      required: true,
+    })
     await combineStatistics(tmpDir, testFileRuntimeFile)
     core.info('done')
   },

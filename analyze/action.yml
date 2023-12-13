@@ -5,13 +5,16 @@ author: 'Your name or organization here'
 # Define your inputs here.
 inputs:
   workflow-name:
-    description: 'Name of the workflow file to collect statistics from'
+    description: |
+      Name of the workflow file to collect statistics from
     required: true
   test-file-runtime-file:
-    description: 'Name of the file to which to write expected test runtimes for scheduling purposes'
+    description: |
+      Name of the file to which to write expected test runtimes for scheduling purposes
     required: true
   artifact-name-regexp:
-    description: 'Regular expression to match artifact names containing actual test runtimes'
+    description: |
+      Regular expression to match artifact names containing actual test runtimes
     required: true
 
 # Define your outputs here.
