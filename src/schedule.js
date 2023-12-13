@@ -88,8 +88,13 @@ const schedule = (
   outputPrefix,
   numberOfWorkers,
 ) => {
+  console.log(`read runtime info from ${runtimeInfoFile}`)
   const runtimeInfo = readRuntimeInfoFile(runtimeInfoFile)
+  console.log(
+    `read test suites from ${testSuitesFile}, repoRoot is ${repoRoot}`,
+  )
   const suites = readTestSuites(testSuitesFile, repoRoot)
+  console.log('collecting durations')
   const newFiles = new Set()
   const findDuration = (suiteName, filename) => {
     const duration = runtimeInfo[suiteName] && runtimeInfo[suiteName][filename]
@@ -100,6 +105,7 @@ const schedule = (
       return duration
     }
   }
+  console.log('calculating expected durations')
   const tasks = suites.reduce(
     (result, { name, exclude_tags, environment, filenames }) =>
       result.concat(
@@ -122,6 +128,7 @@ const schedule = (
         .join('\n\t')}\n\n`,
     )
   }
+  console.log('distribute to files')
   distributeFiles(tasks, outputPrefix, numberOfWorkers)
 }
 

@@ -2,17 +2,22 @@ name: 'Run busted tests'
 description: |
   Run tests as specified in an input file that was previously created by the 'schedule' action.
 author: 'Hans Hübner, Kong Inc.'
-
 # Define your inputs here.
 inputs:
   tests-to-run-file:
-    description: 'Name of the file containing the tests to run, created by "schedule" action'
+    description:
+      'Name of the file containing the tests to run, created by "schedule"
+      action'
     required: true
   failed-test-files-file:
-    description: 'Name of the file containing failing tests, will override tests-to-run-file if existing and be written with failing tests'
+    description:
+      'Name of the file containing failing tests, will override
+      tests-to-run-file if existing and be written with failing tests'
     required: true
   test-file-runtime-file:
-    description: 'Name of the file into which to write actual test runtimes for scheduling purposes'
+    description:
+      'Name of the file into which to write actual test runtimes for scheduling
+      purposes'
     required: true
   setup-venv:
     description: "Shell command to set up Kong's virtual environment"

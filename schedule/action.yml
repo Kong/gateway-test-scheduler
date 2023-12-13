@@ -8,7 +8,9 @@ inputs:
     description: 'File containing the test suite definitions'
     required: true
   test-file-runtime-file:
-    description: 'Name of the file from which to read expected test runtimes for scheduling purposes'
+    description:
+      'Name of the file from which to read expected test runtimes for scheduling
+      purposes'
     required: true
   repo-root:
     description: 'Path to repository, used to resolve relative test file names'
