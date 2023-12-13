@@ -33484,11 +33484,12 @@ const readTestSuites = (testSuitesFile, repoRoot) =>
 
 const readRuntimeInfoFile = (runtimeInfoFilename) =>
   JSON.parse(fs.readFileSync(runtimeInfoFilename, 'utf-8')).reduce(
-    (result, { suite, filename, duration }) => {
+    (result, { suite, filename, expectedDuration }) => {
       if (!result[suite]) {
         result[suite] = {}
       }
-      result[suite][filename] = duration
+      result[suite][filename] = expectedDuration
+      return result
     },
     {},
   )
