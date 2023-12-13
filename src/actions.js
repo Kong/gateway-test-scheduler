@@ -56,7 +56,7 @@ module.exports = {
     try {
       await schedule(
         core.getInput('test-suites-file', { required: true }),
-        core.getInput('runtime-info-repo', { required: true }),
+        core.getInput('test-file-runtime-file', { required: true }),
         core.getInput('repo-root', { required: true }),
         core.getInput('output-prefix', { required: true }),
         parseInt(core.getInput('runner-count', { required: true }), 10),
