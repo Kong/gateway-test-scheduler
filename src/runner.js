@@ -92,13 +92,13 @@ const runner = async (
       await saveTestResult(test, exitStatus, output)
 
       if (exitStatus !== 0) {
-        console.log(`\nTest failed with exit status: ${exitStatus} ($output)`)
+        console.error(`\nTest failed with exit status: ${exitStatus} ($output)`)
         return false
       }
 
       return true
     } catch (error) {
-      console.log(error.message)
+      console.error(error.message)
       return false
     } finally {
       listener.close()
