@@ -5,12 +5,15 @@ const path = require('node:path')
 const { encodeJSON } = require('./encode-json')
 
 function distributeFiles(tasks, outputPrefix, numberOfWorkers) {
-  // Parse and sort lines based on duration
+  // Parse and sort lines based on duration, tests with a zero duration
+  // are considered new and run first
   const sortedTasks = tasks
     .map(({ duration, ...task }) => {
       return { duration: parseFloat(duration), ...task }
     })
-    .sort((a, b) => b.duration - a.duration)
+    .sort(
+      (a, b) => b.duration || Number.MAX_VALUE - a.duration || Number.MAX_VALUE,
+    )
 
   // Distribute files into output files
   const outputFiles = new Array(numberOfWorkers).fill(0).map((_, index) => ({
@@ -63,24 +66,25 @@ const expandSpecs = (repoRoot, specs) =>
   }, [])
 
 const readTestSuites = (testSuitesFile, repoRoot) =>
-  JSON.parse(fs.readFileSync(testSuitesFile, 'utf-8')).map((suite) => {
-    return {
-      ...suite,
-      filenames: expandSpecs(repoRoot, suite.specs),
-    }
-  })
+  JSON.parse(fs.readFileSync(testSuitesFile, { encoding: 'utf-8' })).map(
+    (suite) => {
+      return {
+        ...suite,
+        filenames: expandSpecs(repoRoot, suite.specs),
+      }
+    },
+  )
 
 const readRuntimeInfoFile = (runtimeInfoFilename) =>
-  JSON.parse(fs.readFileSync(runtimeInfoFilename, 'utf-8')).reduce(
-    (result, { suite, filename, expectedDuration }) => {
-      if (!result[suite]) {
-        result[suite] = {}
-      }
-      result[suite][filename] = expectedDuration
-      return result
-    },
-    {},
-  )
+  JSON.parse(
+    fs.readFileSync(runtimeInfoFilename, { encoding: 'utf-8' }),
+  ).reduce((result, { suite, filename, expectedDuration }) => {
+    if (!result[suite]) {
+      result[suite] = {}
+    }
+    result[suite][filename] = expectedDuration
+    return result
+  }, {})
 
 const schedule = (
   testSuitesFile,
