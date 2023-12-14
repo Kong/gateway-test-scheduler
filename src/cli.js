@@ -5,7 +5,6 @@ const { schedule } = require('./schedule')
 const { downloadStatistics } = require('./download-statistics')
 const { combineStatistics } = require('./combine-statistics')
 const { runner } = require('./runner')
-const repoRoot = () => path.join(findGitRoot(), '..')
 
 const parseIntegerArgument = (value) => {
   // parseInt takes a string and a radix
@@ -24,6 +23,7 @@ const cli = () => {
     )
     .argument('<suite-definitions>', 'JSON file with suite definitions')
     .argument('<runtime-data>', 'text file with historic runtime data')
+    .argument('<repo-root>', 'gateway repository root to locate test files')
     .argument('<output-prefix>', 'filename prefix for generated task files')
     .argument(
       '<worker-count>',
@@ -31,11 +31,17 @@ const cli = () => {
       parseIntegerArgument,
     )
     .action(
-      (suiteDefinitionFile, runtimeDataFile, outputPrefix, workerCount) => {
+      (
+        suiteDefinitionFile,
+        runtimeDataFile,
+        repoRoot,
+        outputPrefix,
+        workerCount,
+      ) => {
         schedule(
           suiteDefinitionFile,
           runtimeDataFile,
-          repoRoot(),
+          repoRoot,
           outputPrefix,
           workerCount,
         )
