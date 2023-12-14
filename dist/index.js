@@ -33421,49 +33421,83 @@ module.exports = { runner }
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const fs = __nccwpck_require__(7561)
-const { globSync } = __nccwpck_require__(8211)
 const path = __nccwpck_require__(9411)
+
+const { globSync } = __nccwpck_require__(8211)
+const { AsciiTable3, AlignmentEnum } = __nccwpck_require__(4244)
 
 const { encodeJSON } = __nccwpck_require__(1058)
 
-function distributeFiles(tasks, outputPrefix, numberOfWorkers) {
-  // Parse and sort lines based on duration, tests with a zero duration
-  // are considered new and run first
-  const sortedTasks = tasks
-    .map(({ duration, ...task }) => {
-      return { duration: parseFloat(duration), ...task }
-    })
-    .sort(
-      (a, b) => b.duration || Number.MAX_VALUE - a.duration || Number.MAX_VALUE,
+const writeReport = (outputFiles) => {
+  const columnWidths = outputFiles
+    .flatMap(({ tasks }) => tasks)
+    .reduce(
+      (widths, { suite, filename }) => [
+        Math.max(widths[0], suite.length + 2),
+        Math.max(widths[1], filename.length + 2),
+        11,
+      ],
+      [0, 0, 0],
     )
+  for (const outputFile of outputFiles) {
+    console.log(
+      new AsciiTable3(
+        `Filename: ${
+          outputFile.fileName
+        } Expected total duration: ${outputFile.expectedDuration.toFixed(
+          2,
+        )} seconds`,
+      )
+        .setHeading('Suite', 'File', 'Estimated')
+        .setAligns([
+          AlignmentEnum.LEFT,
+          AlignmentEnum.LEFT,
+          AlignmentEnum.RIGHT,
+        ])
+        .addRowMatrix(
+          outputFile.tasks.map(({ suite, filename, duration }) => [
+            suite,
+            filename,
+            duration.toFixed(2),
+          ]),
+        )
+        .setWidths(columnWidths)
+        .toString(),
+    )
+  }
+}
 
-  // Distribute files into output files
+const distributeFiles = (tasks, outputPrefix, numberOfWorkers) => {
+  // Sort lines based on duration, tests with a zero duration
+  // are considered new and run first
+  const zeroFirst = (a, b) =>
+    (b.duration || Number.MAX_VALUE) - (a.duration || Number.MAX_VALUE)
+  tasks.sort(zeroFirst)
+
+  // Distribute test files into output files
   const outputFiles = new Array(numberOfWorkers).fill(0).map((_, index) => ({
     fileName: `${outputPrefix}${index + 1}.json`,
     tasks: [],
-    currentDuration: 0,
+    expectedDuration: 0,
   }))
 
-  for (const task of sortedTasks) {
+  for (const task of tasks) {
     const targetFile = outputFiles.sort(
-      (a, b) => a.currentDuration - b.currentDuration,
+      (a, b) => a.expectedDuration - b.expectedDuration,
     )[0]
     targetFile.tasks.push(task)
-    targetFile.currentDuration += task.duration || 0.1
+    targetFile.expectedDuration += task.duration || 0.1
   }
+  // re-sort files to lexical order again
+  outputFiles.sort((a, b) => a.fileName.localeCompare(b.fileName))
 
   // Write files to output directory
   for (const file of outputFiles) {
     fs.writeFileSync(file.fileName, file.tasks.map(encodeJSON).join('\n'))
   }
 
-  console.debug(
-    `Files distributed and written to ${outputFiles
-      .map(({ fileName }) => fileName)
-      .sort()
-      .join(', ')
-      .replace(/, ([^,]+)$/, ' and $1')}`,
-  )
+  // Write report
+  writeReport(outputFiles)
 }
 
 const expandSpecs = (repoRoot, specs) =>
@@ -33515,13 +33549,8 @@ const schedule = (
   outputPrefix,
   numberOfWorkers,
 ) => {
-  console.log(`read runtime info from ${runtimeInfoFile}`)
   const runtimeInfo = readRuntimeInfoFile(runtimeInfoFile)
-  console.log(
-    `read test suites from ${testSuitesFile}, repoRoot is ${repoRoot}`,
-  )
   const suites = readTestSuites(testSuitesFile, repoRoot)
-  console.log('collecting durations')
   const newFiles = new Set()
   const findDuration = (suiteName, filename) => {
     const duration = runtimeInfo[suiteName] && runtimeInfo[suiteName][filename]
@@ -33532,7 +33561,6 @@ const schedule = (
       return duration
     }
   }
-  console.log('calculating expected durations')
   const tasks = suites.reduce(
     (result, { name, exclude_tags, environment, filenames }) =>
       result.concat(
@@ -33555,7 +33583,6 @@ const schedule = (
         .join('\n\t')}\n\n`,
     )
   }
-  console.log(`distribute ${tasks.length} tasks to ${numberOfWorkers} files`)
   distributeFiles(tasks, outputPrefix, numberOfWorkers)
 }
 
