@@ -1,6 +1,6 @@
 const toFixedNumbers = (key, val) => {
   if (typeof val === 'number') {
-    return val.toFixed(2)
+    return parseFloat(val.toFixed(2))
   } else {
     return val
   }

@@ -3,7 +3,7 @@ const path = require('node:path')
 
 const tmp = require('tmp')
 
-const { expect } = require('@jest/globals')
+const { expect, it, describe } = require('@jest/globals')
 
 const { combineStatistics } = require('../src/combine-statistics')
 

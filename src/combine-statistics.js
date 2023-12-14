@@ -11,7 +11,12 @@ const parseTSV = (line) => {
 
 const parseJSON = (line) => {
   try {
-    return JSON.parse(line)
+    const entry = JSON.parse(line)
+    const { duration } = entry
+    if (typeof duration === 'string') {
+      entry.duration = parseFloat(duration)
+    }
+    return entry
   } catch (e) {
     console.error(`error parsing line ${line} as JSON:`, e)
     throw e
@@ -61,6 +66,11 @@ const combineStatistics = (directoryPath, outputFilePath) => {
   const result = Object.entries(durations).map(([key, value]) => {
     const expectedDuration = calculateMedian(durations[key])
     const [suite, filename] = key.split(':')
+    if (typeof expectedDuration !== 'number' || isNaN(expectedDuration)) {
+      throw new Error(
+        `unexpected duration ${typeof expectedDuration}:${expectedDuration} value calculated for suite ${suite} file ${filename}`,
+      )
+    }
     return {
       suite,
       filename,
