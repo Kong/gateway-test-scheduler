@@ -34,12 +34,10 @@ const printEnv = () => {
 
 module.exports = {
   analyze: async () => {
-    const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/')
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
     core.info('download statistics files')
     await downloadStatistics(
-      owner,
-      repo,
+      process.env.GITHUB_REPOSITORY,
       core.getInput('workflow-name', { required: true }),
       core.getInput('artifact-name-regexp', { required: true }),
       tmpDir,

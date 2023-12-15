@@ -110,16 +110,26 @@ const readTestSuites = (testSuitesFile, repoRoot) =>
     },
   )
 
+const readJSONArray = (filename) => {
+  // We must be prepared for legacy format (one JSON document containing an array) and
+  // for the current one-object-per-line format.
+  const contents = fs.readFileSync(filename, { encoding: 'utf-8' })
+  return contents[0] === '['
+    ? JSON.parse(contents)
+    : contents.split('\n').map((line) => JSON.parse(line))
+}
+
 const readRuntimeInfoFile = (runtimeInfoFilename) =>
-  JSON.parse(
-    fs.readFileSync(runtimeInfoFilename, { encoding: 'utf-8' }),
-  ).reduce((result, { suite, filename, expectedDuration }) => {
-    if (!result[suite]) {
-      result[suite] = {}
-    }
-    result[suite][filename] = expectedDuration
-    return result
-  }, {})
+  readJSONArray(runtimeInfoFilename).reduce(
+    (result, { suite, filename, expectedDuration }) => {
+      if (!result[suite]) {
+        result[suite] = {}
+      }
+      result[suite][filename] = expectedDuration
+      return result
+    },
+    {},
+  )
 
 const schedule = (
   testSuitesFile,
@@ -164,4 +174,4 @@ const schedule = (
   distributeFiles(tasks, outputPrefix, numberOfWorkers)
 }
 
-module.exports = { schedule }
+module.exports = { schedule, readJSONArray }

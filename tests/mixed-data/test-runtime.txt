@@ -1,0 +1,17 @@
+plugins	spec/03-plugins/27-aws-lambda/06-request-util_spec.lua	17.540364472
+plugins	spec/03-plugins/27-aws-lambda/99-access_spec.lua	18.712750725
+dbless	spec/02-integration/05-proxy/05-dns_spec.lua	0.30081670499999
+dbless	spec/02-integration/05-proxy/27-unbuffered_spec.lua	0.29833180800006
+plugins	spec/03-plugins/18-acl/03-invalidations_spec.lua	6.961492196
+dbless	spec/02-integration/02-cmd/09-prepare_spec.lua	1.781117517
+unit	spec/01-unit/29-admin_gui/01-admin_gui_spec.lua	0.39950316199997
+unit	spec/01-unit/01-db/01-schema/02-metaschema_spec.lua	0.49502685100003
+plugins	spec/03-plugins/10-basic-auth/03-access_spec.lua	7.888454195
+plugins	spec/03-plugins/21-bot-detection/02-invalidations_spec.lua	2.5196165909999
+dbless	spec/02-integration/02-cmd/04-version_spec.lua	0.75311781599999
+unit	spec/01-unit/01-db/01-schema/09-upstreams_spec.lua	0.11157679799999
+unit	spec/01-unit/01-db/01-schema/08-targets_spec.lua	0.02450637100003
+unit	spec/01-unit/22-grpc-utils_spec.lua	0.0072322689999282
+unit	spec/01-unit/28-plugins-iterator/01-compound_key_spec.lua	0.0057073939999555
+unit	spec/01-unit/01-db/01-schema/12-topological_sort_spec.lua	0.019802854999966
+plugins	spec/03-plugins/26-prometheus/08-unit_spec.lua	0.0074221510000143

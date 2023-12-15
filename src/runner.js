@@ -29,6 +29,7 @@ const runner = async (
   failedTestFilesFile,
   testFileRuntimeFile,
   setupVenv,
+  workingDirectory,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
   console.log(`### Running ${testsToRun.length} tests`)
@@ -82,11 +83,15 @@ const runner = async (
         setupVenv || ''
       } ; bin/busted --helper=spec/busted-ci-helper.lua -o gtest --Xoutput --color ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
-      const { exitStatus, output } = await executeCommand(command, {
-        ...process.env,
-        ...environment,
-        BUSTED_EVENT_PATH: bustedEventPath,
-      })
+      const { exitStatus, output } = await executeCommand(
+        command,
+        {
+          ...process.env,
+          ...environment,
+          BUSTED_EVENT_PATH: bustedEventPath,
+        },
+        workingDirectory,
+      )
       // fixme do we want to wait until the suite:end event?  It seems to me that as the busted process has exited when
       // we reach this point, there should be no buffered data left.
 
