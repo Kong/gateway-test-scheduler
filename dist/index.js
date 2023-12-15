@@ -33501,25 +33501,26 @@ const distributeFiles = (tasks, outputPrefix, numberOfWorkers) => {
 }
 
 const expandSpecs = (repoRoot, specs) =>
-  specs.reduce((files, spec) => {
-    const p = path.join(repoRoot, spec)
-    if (fs.lstatSync(p).isDirectory()) {
-      const specFiles = globSync(`${p}/**/*_spec.lua`).map((p1) =>
-        path.relative(repoRoot, p1),
-      )
-      if (!specFiles.length) {
-        console.warn(
-          'test spec',
-          spec,
-          'did not expand to any files, incorrect suite definition?',
+  specs
+    .map((spec) => {
+      const p = path.join(repoRoot, spec)
+      if (fs.lstatSync(p).isDirectory()) {
+        const specFiles = globSync(`${p}/**/*_spec.lua`).map((p1) =>
+          path.relative(repoRoot, p1),
         )
+        if (!specFiles.length) {
+          console.warn(
+            'test spec',
+            spec,
+            'did not expand to any files, incorrect suite definition?',
+          )
+        }
+        return specFiles
+      } else {
+        return spec
       }
-      files = files.concat(specFiles)
-    } else {
-      files.push(spec)
-    }
-    return files
-  }, [])
+    })
+    .flat()
 
 const readTestSuites = (testSuitesFile, repoRoot) =>
   JSON.parse(fs.readFileSync(testSuitesFile, { encoding: 'utf-8' })).map(
@@ -33561,21 +33562,20 @@ const schedule = (
       return duration
     }
   }
-  const tasks = suites.reduce(
-    (result, { name, exclude_tags, environment, filenames }) =>
-      result.concat(
-        filenames.map((filename) => {
-          return {
-            suite: name,
-            exclude_tags,
-            environment,
-            filename,
-            duration: findDuration(name, filename),
-          }
-        }),
-      ),
-    [],
-  )
+  const tasks = suites
+    .map(({ name, exclude_tags, environment, filenames }) =>
+      filenames.map((filename) => {
+        return {
+          suite: name,
+          exclude_tags,
+          environment,
+          filename,
+          duration: findDuration(name, filename),
+        }
+      }),
+    )
+    .flat()
+
   if (newFiles.size) {
     console.log(
       `${newFiles.size} new test files:\n\n\t${Array.from(newFiles)
