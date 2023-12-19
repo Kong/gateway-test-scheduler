@@ -37488,6 +37488,9 @@ const { subDays, format } = __nccwpck_require__(3314)
 const tmp = __nccwpck_require__(8517)
 const AdmZip = __nccwpck_require__(6761)
 
+// number of days to look backwards for statistics files
+const STATS_DAYS = 7
+
 const token = process.env.GITHUB_TOKEN
 
 const octokit = new Octokit({
@@ -37495,7 +37498,7 @@ const octokit = new Octokit({
 })
 
 const getWorkflowRuns = async (owner, repo, workflowName) => {
-  const sevenDaysAgo = format(subDays(new Date(), 1), 'yyyy-MM-dd')
+  const sinceWhen = format(subDays(new Date(), STATS_DAYS), 'yyyy-MM-dd')
 
   const response = await octokit.actions.listWorkflowRuns({
     owner,
@@ -37505,7 +37508,7 @@ const getWorkflowRuns = async (owner, repo, workflowName) => {
   })
 
   return response.data.workflow_runs.filter(
-    (run) => run.created_at >= sevenDaysAgo,
+    (run) => run.created_at >= sinceWhen,
   )
 }
 
@@ -37680,12 +37683,6 @@ const runner = async (
   }
 
   const bustedEventPath = `/tmp/busted-runner-${process.pid}`
-
-  const bustedToDatadogStatus = {
-    success: 'pass',
-    error: 'error',
-    failure: 'fail',
-  }
 
   const runtimes = []
 

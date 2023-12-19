@@ -44,12 +44,6 @@ const runner = async (
 
   const bustedEventPath = `/tmp/busted-runner-${process.pid}`
 
-  const bustedToDatadogStatus = {
-    success: 'pass',
-    error: 'error',
-    failure: 'fail',
-  }
-
   const runtimes = []
 
   const runTest = async (test) => {

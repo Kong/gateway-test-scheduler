@@ -98,7 +98,7 @@ const cli = () => {
   commander.program.parse(process.argv)
 
   // Display help if no sub-command is provided
-  if (!process.argv.slice(2).length) {
+  if (process.argv.length < 3) {
     commander.program.outputHelp()
   }
 }
