@@ -1,7 +1,11 @@
 const { spawn } = require('child_process')
 
-const executeCommand = async (command, env) => {
-  const childProcess = spawn(command, [], { env, shell: true })
+const executeCommand = async (command, env, workingDirectory) => {
+  const childProcess = spawn(command, [], {
+    env,
+    shell: true,
+    cwd: workingDirectory,
+  })
 
   let output = ''
 

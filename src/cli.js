@@ -1,6 +1,5 @@
 const commander = require('commander')
 const path = require('node:path')
-const findGitRoot = require('find-git-root')
 const { schedule } = require('./schedule')
 const { downloadStatistics } = require('./download-statistics')
 const { combineStatistics } = require('./combine-statistics')
@@ -50,11 +49,20 @@ const cli = () => {
 
   commander.program
     .command('download-statistics')
-    .argument('<owner>', 'repository owner')
-    .argument('<repo>', 'repository name')
+    .argument('<repo>', 'repository name (<owner>/<repo>)')
     .argument('<workflow-name>', 'workflow (file) name')
+    .argument(
+      '<artifact-name-regexp>',
+      'regular expression to match artifact names of runtime logs',
+    )
     .argument('<directory>', 'local directory to download the files to')
-    .action(downloadStatistics)
+    .action(async (...args) => {
+      const { workflowRunCount, artifactCount, dataDirectory } =
+        await downloadStatistics(...args)
+      console.log(
+        `looked at ${workflowRunCount} workflow runs, ${artifactCount} files downloaded to ${dataDirectory}`,
+      )
+    })
 
   commander.program
     .command('combine-statistics')
@@ -66,17 +74,18 @@ const cli = () => {
       '<output-filename>',
       'name of the combined statistics file to write',
     )
-    .action(combineStatistics)
+    .action(async (...args) => {
+      const { outputFilePath } = await combineStatistics(...args)
+      console.log(`wrote runtime prediction file ${outputFilePath}`)
+    })
 
   commander.program
     .command('runner')
-    .argument('<prNumber>', 'Pull request number')
-    .argument('<workflowId>', 'Workflow ID')
-    .argument('<runAttempt>', 'Run attempt')
-    .argument('<runnerNumber>', 'Runner number')
     .argument('<testsToRunFile>', 'Tests to run file')
     .argument('<failedTestFilesFile>', 'Failed test files file')
     .argument('<testFileRuntimeFile>', 'File to write runtime statistics to')
+    .argument('<kongDirectory>', 'Path to local Kong repository')
+    .argument('<setupVenv>', 'Command to initialize the Kong environment')
     .action(runner)
 
   commander.program
@@ -89,7 +98,7 @@ const cli = () => {
   commander.program.parse(process.argv)
 
   // Display help if no sub-command is provided
-  if (!process.argv.slice(2).length) {
+  if (process.argv.length < 3) {
     commander.program.outputHelp()
   }
 }

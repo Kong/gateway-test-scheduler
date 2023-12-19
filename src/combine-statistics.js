@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const AdmZip = require('adm-zip')
 const { encodeJSON } = require('./encode-json')
 
 const parseTSV = (line) => {
@@ -51,15 +50,13 @@ const combineStatistics = (directoryPath, outputFilePath) => {
 
   const files = fs.readdirSync(directoryPath)
   for (const file of files) {
-    if (file.endsWith('.zip')) {
-      const filePath = path.join(directoryPath, file)
-      const zip = new AdmZip(filePath)
-      const fileContent = zip.readAsText(zip.getEntries()[0])
-      try {
-        processTextFile(fileContent, durations)
-      } catch (e) {
-        console.error(`error processing file ${file}: ${e}`)
-      }
+    const fileContent = fs.readFileSync(path.resolve(directoryPath, file), {
+      encoding: 'utf-8',
+    })
+    try {
+      processTextFile(fileContent, durations)
+    } catch (e) {
+      console.error(`error processing file ${file}: ${e}`)
     }
   }
 
@@ -78,7 +75,11 @@ const combineStatistics = (directoryPath, outputFilePath) => {
     }
   })
 
-  fs.writeFileSync(outputFilePath, encodeJSON(result))
+  fs.writeFileSync(
+    outputFilePath,
+    result.map((entry) => encodeJSON(entry)).join('\n'),
+  )
+  return { outputFilePath }
 }
 
 module.exports = { combineStatistics }

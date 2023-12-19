@@ -2,6 +2,11 @@ const fs = require('fs')
 const path = require('path')
 const { Octokit } = require('@octokit/rest')
 const { subDays, format } = require('date-fns')
+const tmp = require('tmp')
+const AdmZip = require('adm-zip')
+
+// number of days to look backwards for statistics files
+const STATS_DAYS = 7
 
 const token = process.env.GITHUB_TOKEN
 
@@ -10,7 +15,7 @@ const octokit = new Octokit({
 })
 
 const getWorkflowRuns = async (owner, repo, workflowName) => {
-  const sevenDaysAgo = format(subDays(new Date(), 1), 'yyyy-MM-dd')
+  const sinceWhen = format(subDays(new Date(), STATS_DAYS), 'yyyy-MM-dd')
 
   const response = await octokit.actions.listWorkflowRuns({
     owner,
@@ -20,7 +25,7 @@ const getWorkflowRuns = async (owner, repo, workflowName) => {
   })
 
   return response.data.workflow_runs.filter(
-    (run) => run.created_at >= sevenDaysAgo,
+    (run) => run.created_at >= sinceWhen,
   )
 }
 
@@ -38,17 +43,21 @@ const downloadArtifact = async (
     archive_format: 'zip',
   })
 
-  const filePath = path.join(dataDirectory, `run_${runId}_${artifact.name}.zip`)
-  fs.writeFileSync(filePath, Buffer.from(response.data))
+  const tmpFile = tmp.fileSync({ suffix: '.zip' })
+  fs.writeFileSync(tmpFile.name, Buffer.from(response.data))
+  const zip = new AdmZip(tmpFile.name)
+  const fileContent = zip.readAsText(zip.getEntries()[0])
+  const filePath = path.join(dataDirectory, `${runId}_${artifact.name}.txt`)
+  fs.writeFileSync(filePath, fileContent)
 }
 
 const downloadStatistics = async (
-  owner,
-  repo,
+  repoSpec,
   workflowName,
   artifactNameRegexp,
   dataDirectory,
 ) => {
+  const [owner, repo] = repoSpec.split('/')
   try {
     if (!fs.existsSync(dataDirectory)) {
       fs.mkdirSync(dataDirectory)
@@ -76,9 +85,7 @@ const downloadStatistics = async (
         }
       }
     }
-    console.log(
-      `looked at ${workflowRunCount} workflow runs, ${artifactCount} files downloaded`,
-    )
+    return { workflowRunCount, artifactCount, dataDirectory }
   } catch (error) {
     console.error('Error:', error.message)
   }
