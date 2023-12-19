@@ -5,7 +5,7 @@ a look at the [Overview](./OVERVIEW.md) document if you want to learn
 what it does and how it does it.  This document describes how to set
 up the development environment and how to manually run each step.
 
-# Hacking
+## Hacking
 
 The scheduler is implemented in JavaScript and exposes its
 functionality through GitHub actions.  To facilitate local development
@@ -20,7 +20,7 @@ packaged version needs to be checked in.  If you install the supplied
 directory, linting, reformatting and packaging will be done before
 each commit so that you don't forget the build step.
 
-## Setup
+### Setup
 
 You will need to
 [install Node.js](https://nodejs.org/en/download/package-manager) on
@@ -41,14 +41,14 @@ gh auth login
 export GITHUB_TOKEN=$(gh auth token)
 ```
 
-## Running Locally
+### Running Locally
 
 Each of the steps that is normally invoked from GitHub Workflows can
 also be invoked from the command-line in the development environment.
 In this mode, parameters are passed as command-line arguments.  For
 each of the commands, a sample invocation is presented below.
 
-### Runtime Prediction
+#### Runtime Prediction
 
 To work on the runtime prediction part of the system, you will need to
 have runtime statistics files available.  The GitHub action
@@ -76,7 +76,7 @@ npm run combine-statistics /tmp/workflow-statistics/ \
 The file `/tmp/runtimes.json` (or whatever you specified) will contain
 the prediction data.
 
-### Scheduling
+#### Scheduling
 
 To create control files for the runners, use a command like this:
 
@@ -91,7 +91,7 @@ test suite definitions in the kong source directory `../kong/` and the
 runtime prediction file `/tmp/runtime-predictions.json`.  A report on
 the details of the generated files is written to the standard output.
 
-### Running
+#### Running
 
 Once the runner control files have been generated, you can start a
 runner process like so:
@@ -107,7 +107,7 @@ logged to the file `/tmp/failed.json`, the file `/tmp/runtimes.json`
 will contain the actual runtimes of the tests that were run.  If a
 file `/tmp/failed.json` already exists, only those tests are run.
 
-## Invoking the Action Handlers
+### Invoking the Action Handlers
 
 It is also possible to invoke the Action handlers locally.
 Parametrization will then need to happen through environment
