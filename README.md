@@ -69,7 +69,7 @@ With the runtime log files in place, you can run the process to
 combine them into a prediction file like so:
 
 ```shell
-npm run combine-statistics /tmp/workflow-statistics/ \
+npm run cli combine-statistics /tmp/workflow-statistics/ \
     /tmp/runtime-predictions.json
 ```
 
