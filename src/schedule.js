@@ -36,7 +36,7 @@ const writeReport = (outputFiles) => {
           outputFile.tasks.map(({ suite, filename, duration }) => [
             suite,
             filename,
-            duration.toFixed(2),
+            (duration || 0.1).toFixed(2),
           ]),
         )
         .setWidths(columnWidths)
