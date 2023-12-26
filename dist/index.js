@@ -37971,7 +37971,11 @@ const schedule = (
       newFiles.add(filename)
       return 0
     } else {
-      return duration
+      if (duration === undefined) {
+        return 0.1
+      } else {
+        return duration
+      }
     }
   }
   const tasks = suites
