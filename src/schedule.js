@@ -6,6 +6,8 @@ const { AsciiTable3, AlignmentEnum } = require('ascii-table3')
 
 const { encodeJSON } = require('./encode-json')
 
+const buildTestFileKey = (suite, filename) => `${suite}:${filename}`
+
 const writeReport = (outputFiles) => {
   const columnWidths = outputFiles
     .flatMap(({ tasks }) => tasks)
@@ -125,7 +127,8 @@ const readRuntimeInfoFile = (runtimeInfoFilename) =>
       if (!result[suite]) {
         result[suite] = {}
       }
-      result[suite][filename] = expectedDuration
+      const testFileKey = buildTestFileKey(suite, filename)
+      result[suite][testFileKey] = expectedDuration
       return result
     },
     {},
@@ -140,18 +143,15 @@ const schedule = (
 ) => {
   const runtimeInfo = readRuntimeInfoFile(runtimeInfoFile)
   const suites = readTestSuites(testSuitesFile, repoRoot)
-  const newFiles = new Set()
+  const newTests = new Set()
   const findDuration = (suiteName, filename) => {
-    const duration = runtimeInfo[suiteName] && runtimeInfo[suiteName][filename]
-    if (duration === undefined && !newFiles.has(filename)) {
-      newFiles.add(filename)
+    const testFileKey = buildTestFileKey(suiteName, filename)
+    const duration = runtimeInfo[suiteName] && runtimeInfo[suiteName][testFileKey]
+    if (duration === undefined && !newTests.has(testFileKey)) {
+      newTests.add(testFileKey)
       return 0
     } else {
-      if (duration === undefined) {
-        return 0.1
-      } else {
-        return duration
-      }
+      return duration
     }
   }
   const tasks = suites
@@ -168,9 +168,9 @@ const schedule = (
     )
     .flat()
 
-  if (newFiles.size) {
+  if (newTests.size) {
     console.log(
-      `${newFiles.size} new test files:\n\n\t${Array.from(newFiles)
+      `${newTests.size} new test files:\n\n\t${Array.from(newTests)
         .sort()
         .join('\n\t')}\n\n`,
     )
