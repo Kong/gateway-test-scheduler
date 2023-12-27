@@ -146,7 +146,8 @@ const schedule = (
   const newTests = new Set()
   const findDuration = (suiteName, filename) => {
     const testFileKey = buildTestFileKey(suiteName, filename)
-    const duration = runtimeInfo[suiteName] && runtimeInfo[suiteName][testFileKey]
+    const duration =
+      runtimeInfo[suiteName] && runtimeInfo[suiteName][testFileKey]
     if (duration === undefined && !newTests.has(testFileKey)) {
       newTests.add(testFileKey)
       return 0
