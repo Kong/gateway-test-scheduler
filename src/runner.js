@@ -48,10 +48,18 @@ const runner = async (
 
   const runTest = async (test) => {
     const { suite, exclude_tags, environment, filename } = test
+    let failed = false
     const listener = await bustedEventListener(
       bustedEventPath,
       ({ event, args }) => {
         switch (event) {
+          case 'failure':
+          case 'failure:it':
+          case 'error':
+          case 'error:it':
+            failed = true
+            break
+
           case 'file:end': {
             const { duration } = args[0]
             appendToFile(
@@ -91,7 +99,7 @@ const runner = async (
 
       await saveTestResult(test, exitStatus, output)
 
-      if (exitStatus !== 0) {
+      if (exitStatus !== 0 || failed) {
         console.error(`\nTest failed with exit status: ${exitStatus} ($output)`)
         return false
       }
