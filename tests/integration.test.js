@@ -1,39 +1,44 @@
+const { Octokit, App } = require('octokit')
+
 const { expect, it, describe } = require('@jest/globals')
 
-const axios = require('axios');
+const branch = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF
 
-const branch = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF.split('/').pop();
+console.log('using branch: ', branch)
 
-console.log('using branch: ', branch);
+async function triggerWorkflow(scheduler_res_path) {
+  const octokit = new Octokit({
+    auth: `${process.env.GITHUB_TOKEN}`,
+  })
 
-async function triggerWorkflow() {
-  const githubToken = process.env.GITHUB_TOKEN;
   try {
-    const response = await axios.post(
-      `https://api.github.com/repos/Kong/gateway-test-scheduler/actions/workflows/integration.yml/dispatches`,
+    return await octokit.request(
+      'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
       {
+        owner: 'Kong',
+        repo: 'gateway-test-scheduler',
+        workflow_id: 'integration.yml',
         ref: branch,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${githubToken}`,
-          Accept: 'application/vnd.github.v3+json',
+        inputs: {
+          scheduler_res_path,
         },
-      }
-    );
-
-    console.log('Workflow dispatch triggered successfully, status: ', response.status);
-    return response.status;
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      },
+    )
   } catch (error) {
-    console.error('Error triggering workflow dispatch:', error.response || error.message || error);
+    console.error(
+      'Error triggering workflow dispatch:',
+      error.response || error.message || error,
+    )
   }
 }
 
-
 describe('integration tests', () => {
   it('trigger workflow run', async () => {
-    res = await triggerWorkflow();
-    
-    expect(res).toBe(204);
+    const res = await triggerWorkflow()
+
+    expect(res).toBe(204)
   })
 })
