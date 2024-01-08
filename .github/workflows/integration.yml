@@ -1,0 +1,23 @@
+name: Integration
+
+on:
+  push:
+    branches:
+      - tests/integration-tests
+  workflow_dispatch:
+    inputs:
+      foo:
+        description: 'foo input'
+        required: false
+        default: 'bar'
+
+permissions:
+  contents: read
+
+jobs:
+  test-javascript:
+    name: Integration tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "🎉 The job was triggered by a ${{ github.event_name }} event with input foo = ${{ github.event.inputs.foo }}"
