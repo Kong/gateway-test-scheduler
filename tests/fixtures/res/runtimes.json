@@ -1,0 +1,4 @@
+[{"suite":"s1","filename":"tests/fixtures/s1/t1_spec.lua","expectedDuration":1.23},
+{"suite":"s1","filename":"tests/fixtures/s1/t2_spec.lua","expectedDuration":4.56},
+{"suite":"s2","filename":"tests/fixtures/s2/t1_spec.lua","expectedDuration":7.89},
+{"suite":"s2","filename":"tests/fixtures/s2/t2_spec.lua","expectedDuration":10.11}]

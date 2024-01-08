@@ -1,0 +1,5 @@
+describe("test", function()
+  it("errors_1", function()
+    error("goodbye")
+  end)
+end)

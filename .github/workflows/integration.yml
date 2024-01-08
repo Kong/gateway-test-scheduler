@@ -1,0 +1,117 @@
+name: Integration
+run-name: ${{ inputs.run_name }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      scheduler_res_path:
+        type: string
+        description: path to test resources to use for this run
+        required: true
+        default: tests/fixtures/res
+      run_name:
+        type: string
+        description: name (UUID) to use for this run
+        required: false
+
+env:
+  RUNNER_COUNT: 3
+
+permissions:
+  contents: read
+
+jobs:
+  schedule:
+    name: Schedule tests and generate runner array
+    runs-on: ubuntu-latest
+
+    outputs:
+      runners: ${{ steps.generate-runner-array.outputs.RUNNERS }}
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Schedule tests
+        id: schedule
+        uses: ./schedule
+        with:
+          test-suites-file: ${{ github.event.inputs.scheduler_res_path }}/test_suites.json
+          test-file-runtime-file: ${{ github.event.inputs.scheduler_res_path }}/runtimes.json
+          output-prefix: test-chunk.
+          runner-count: ${{ env.RUNNER_COUNT }}
+
+      - name: Upload schedule files
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: schedule-test-files
+          path: test-chunk.*
+          retention-days: 1
+
+      - name: Generate runner array
+        id: generate-runner-array
+        run: |
+          echo "RUNNERS=[$(seq 1 "$RUNNER_COUNT" | tr '\n' ', ' | sed 's/,$//')]" >> "$GITHUB_OUTPUT"
+
+  run:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: schedule
+
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: ${{ fromJSON(needs.schedule.outputs.runners) }}
+
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+
+    - name: Download test schedule file
+      uses: actions/download-artifact@v4
+      with:
+        name: schedule-test-files
+
+    - name: Prepare environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y luarocks
+        mkdir bin spec
+        sudo luarocks install busted --tree=.
+        sudo luarocks install lua-cjson
+        cp tests/fixtures/busted-ci-helper.lua spec/
+
+    - name: Download test rerun information
+      uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        name: test-rerun-info-${{ matrix.runner }}
+        path: ${{ github.event.inputs.scheduler_res_path }}
+
+    - name: Run Tests
+      uses: ./runner
+      env:
+        BUSTED_EVENT_FILE_PATH: busted-events.json
+      with:
+        tests-to-run-file: test-chunk.${{ matrix.runner }}.json
+        failed-test-files-file: ${{ github.event.inputs.scheduler_res_path }}/failed.json
+        test-file-runtime-file: ${{ github.event.inputs.scheduler_res_path }}/runtimes.json
+        setup-venv: ':'
+
+    - name: Upload test rerun information
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-rerun-info-${{ matrix.runner }}
+        path: ${{ github.event.inputs.scheduler_res_path }}/failed.json
+        retention-days: 1
+
+    - name: Upload busted events file
+      if: always()
+      uses: actions/upload-artifact@v4
+      continue-on-error: true
+      with:
+        name: busted-events-${{ matrix.runner }}
+        path: busted-events.json
+        retention-days: 1
