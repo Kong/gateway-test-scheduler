@@ -10860,140 +10860,84 @@ var isArray = Array.isArray || function (xs) {
 
 /***/ }),
 
-/***/ 8794:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addLeadingZeros;
-function addLeadingZeros(number, targetLength) {
-  var sign = number < 0 ? '-' : '';
-  var output = Math.abs(number).toString();
-  while (output.length < targetLength) {
-    output = '0' + output;
-  }
-  return sign + output;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 2631:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = assign;
-function assign(target, object) {
-  if (target == null) {
-    throw new TypeError('assign requires that input parameter not be null or undefined');
-  }
-  for (var property in object) {
-    if (Object.prototype.hasOwnProperty.call(object, property)) {
-      ;
-      target[property] = object[property];
-    }
-  }
-  return target;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 7934:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = cloneObject;
-var _index = _interopRequireDefault(__nccwpck_require__(2631));
-function cloneObject(object) {
-  return (0, _index.default)({}, object);
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 618:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(1773));
-var _default = _index.default;
-exports["default"] = _default;
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 9307:
+/***/ 534:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.addLeadingZeros = addLeadingZeros;
+function addLeadingZeros(number, targetLength) {
+  const sign = number < 0 ? "-" : "";
+  const output = Math.abs(number).toString().padStart(targetLength, "0");
+  return sign + output;
+}
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
+
+/***/ }),
+
+/***/ 4092:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "defaultLocale", ({
+  enumerable: true,
+  get: function () {
+    return _index.enUS;
+  },
 }));
+var _index = __nccwpck_require__(55);
+
+
+/***/ }),
+
+/***/ 2466:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
 exports.getDefaultOptions = getDefaultOptions;
 exports.setDefaultOptions = setDefaultOptions;
-var defaultOptions = {};
+
+let defaultOptions = {};
+
 function getDefaultOptions() {
   return defaultOptions;
 }
+
 function setDefaultOptions(newOptions) {
   defaultOptions = newOptions;
 }
 
+
 /***/ }),
 
-/***/ 9257:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9892:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatters = void 0;
+var _index = __nccwpck_require__(900);
+var _index2 = __nccwpck_require__(6475);
+var _index3 = __nccwpck_require__(308);
+var _index4 = __nccwpck_require__(802);
+var _index5 = __nccwpck_require__(7669);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(2966));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8493));
-var _index3 = _interopRequireDefault(__nccwpck_require__(7170));
-var _index4 = _interopRequireDefault(__nccwpck_require__(8761));
-var _index5 = _interopRequireDefault(__nccwpck_require__(8050));
-var _index6 = _interopRequireDefault(__nccwpck_require__(8794));
-var _index7 = _interopRequireDefault(__nccwpck_require__(289));
-var dayPeriodEnum = {
-  am: 'am',
-  pm: 'pm',
-  midnight: 'midnight',
-  noon: 'noon',
-  morning: 'morning',
-  afternoon: 'afternoon',
-  evening: 'evening',
-  night: 'night'
+var _index6 = __nccwpck_require__(534);
+var _index7 = __nccwpck_require__(6961);
+
+const dayPeriodEnum = {
+  am: "am",
+  pm: "pm",
+  midnight: "midnight",
+  noon: "noon",
+  morning: "morning",
+  afternoon: "afternoon",
+  evening: "evening",
+  night: "night",
 };
+
 /*
  * |     | Unit                           |     | Unit                           |
  * |-----|--------------------------------|-----|--------------------------------|
@@ -11040,73 +10984,68 @@ var dayPeriodEnum = {
  * - `p` is long localized time format
  */
 
-var formatters = {
+const formatters = (exports.formatters = {
   // Era
-  G: function G(date, token, localize) {
-    var era = date.getUTCFullYear() > 0 ? 1 : 0;
+  G: function (date, token, localize) {
+    const era = date.getFullYear() > 0 ? 1 : 0;
     switch (token) {
       // AD, BC
-      case 'G':
-      case 'GG':
-      case 'GGG':
-        return localize.era(era, {
-          width: 'abbreviated'
-        });
+      case "G":
+      case "GG":
+      case "GGG":
+        return localize.era(era, { width: "abbreviated" });
       // A, B
-      case 'GGGGG':
-        return localize.era(era, {
-          width: 'narrow'
-        });
+      case "GGGGG":
+        return localize.era(era, { width: "narrow" });
       // Anno Domini, Before Christ
-      case 'GGGG':
+      case "GGGG":
       default:
-        return localize.era(era, {
-          width: 'wide'
-        });
+        return localize.era(era, { width: "wide" });
     }
   },
+
   // Year
-  y: function y(date, token, localize) {
+  y: function (date, token, localize) {
     // Ordinal number
-    if (token === 'yo') {
-      var signedYear = date.getUTCFullYear();
+    if (token === "yo") {
+      const signedYear = date.getFullYear();
       // Returns 1 for 1 BC (which is year 0 in JavaScript)
-      var year = signedYear > 0 ? signedYear : 1 - signedYear;
-      return localize.ordinalNumber(year, {
-        unit: 'year'
-      });
+      const year = signedYear > 0 ? signedYear : 1 - signedYear;
+      return localize.ordinalNumber(year, { unit: "year" });
     }
-    return _index7.default.y(date, token);
+
+    return _index7.lightFormatters.y(date, token);
   },
+
   // Local week-numbering year
-  Y: function Y(date, token, localize, options) {
-    var signedWeekYear = (0, _index5.default)(date, options);
+  Y: function (date, token, localize, options) {
+    const signedWeekYear = (0, _index5.getWeekYear)(date, options);
     // Returns 1 for 1 BC (which is year 0 in JavaScript)
-    var weekYear = signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear;
+    const weekYear = signedWeekYear > 0 ? signedWeekYear : 1 - signedWeekYear;
 
     // Two digit year
-    if (token === 'YY') {
-      var twoDigitYear = weekYear % 100;
-      return (0, _index6.default)(twoDigitYear, 2);
+    if (token === "YY") {
+      const twoDigitYear = weekYear % 100;
+      return (0, _index6.addLeadingZeros)(twoDigitYear, 2);
     }
 
     // Ordinal number
-    if (token === 'Yo') {
-      return localize.ordinalNumber(weekYear, {
-        unit: 'year'
-      });
+    if (token === "Yo") {
+      return localize.ordinalNumber(weekYear, { unit: "year" });
     }
 
     // Padding
-    return (0, _index6.default)(weekYear, token.length);
+    return (0, _index6.addLeadingZeros)(weekYear, token.length);
   },
+
   // ISO week-numbering year
-  R: function R(date, token) {
-    var isoWeekYear = (0, _index3.default)(date);
+  R: function (date, token) {
+    const isoWeekYear = (0, _index3.getISOWeekYear)(date);
 
     // Padding
-    return (0, _index6.default)(isoWeekYear, token.length);
+    return (0, _index6.addLeadingZeros)(isoWeekYear, token.length);
   },
+
   // Extended year. This is a single number designating the year of this calendar system.
   // The main difference between `y` and `u` localizers are B.C. years:
   // | Year | `y` | `u` |
@@ -11116,419 +11055,419 @@ var formatters = {
   // | BC 2 |   2 |  -1 |
   // Also `yy` always returns the last two digits of a year,
   // while `uu` pads single digit years to 2 characters and returns other years unchanged.
-  u: function u(date, token) {
-    var year = date.getUTCFullYear();
-    return (0, _index6.default)(year, token.length);
+  u: function (date, token) {
+    const year = date.getFullYear();
+    return (0, _index6.addLeadingZeros)(year, token.length);
   },
+
   // Quarter
-  Q: function Q(date, token, localize) {
-    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+  Q: function (date, token, localize) {
+    const quarter = Math.ceil((date.getMonth() + 1) / 3);
     switch (token) {
       // 1, 2, 3, 4
-      case 'Q':
+      case "Q":
         return String(quarter);
       // 01, 02, 03, 04
-      case 'QQ':
-        return (0, _index6.default)(quarter, 2);
+      case "QQ":
+        return (0, _index6.addLeadingZeros)(quarter, 2);
       // 1st, 2nd, 3rd, 4th
-      case 'Qo':
-        return localize.ordinalNumber(quarter, {
-          unit: 'quarter'
-        });
+      case "Qo":
+        return localize.ordinalNumber(quarter, { unit: "quarter" });
       // Q1, Q2, Q3, Q4
-      case 'QQQ':
+      case "QQQ":
         return localize.quarter(quarter, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
       // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-      case 'QQQQQ':
+      case "QQQQQ":
         return localize.quarter(quarter, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
       // 1st quarter, 2nd quarter, ...
-      case 'QQQQ':
+      case "QQQQ":
       default:
         return localize.quarter(quarter, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // Stand-alone quarter
-  q: function q(date, token, localize) {
-    var quarter = Math.ceil((date.getUTCMonth() + 1) / 3);
+  q: function (date, token, localize) {
+    const quarter = Math.ceil((date.getMonth() + 1) / 3);
     switch (token) {
       // 1, 2, 3, 4
-      case 'q':
+      case "q":
         return String(quarter);
       // 01, 02, 03, 04
-      case 'qq':
-        return (0, _index6.default)(quarter, 2);
+      case "qq":
+        return (0, _index6.addLeadingZeros)(quarter, 2);
       // 1st, 2nd, 3rd, 4th
-      case 'qo':
-        return localize.ordinalNumber(quarter, {
-          unit: 'quarter'
-        });
+      case "qo":
+        return localize.ordinalNumber(quarter, { unit: "quarter" });
       // Q1, Q2, Q3, Q4
-      case 'qqq':
+      case "qqq":
         return localize.quarter(quarter, {
-          width: 'abbreviated',
-          context: 'standalone'
+          width: "abbreviated",
+          context: "standalone",
         });
       // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-      case 'qqqqq':
+      case "qqqqq":
         return localize.quarter(quarter, {
-          width: 'narrow',
-          context: 'standalone'
+          width: "narrow",
+          context: "standalone",
         });
       // 1st quarter, 2nd quarter, ...
-      case 'qqqq':
+      case "qqqq":
       default:
         return localize.quarter(quarter, {
-          width: 'wide',
-          context: 'standalone'
+          width: "wide",
+          context: "standalone",
         });
     }
   },
+
   // Month
-  M: function M(date, token, localize) {
-    var month = date.getUTCMonth();
+  M: function (date, token, localize) {
+    const month = date.getMonth();
     switch (token) {
-      case 'M':
-      case 'MM':
-        return _index7.default.M(date, token);
+      case "M":
+      case "MM":
+        return _index7.lightFormatters.M(date, token);
       // 1st, 2nd, ..., 12th
-      case 'Mo':
-        return localize.ordinalNumber(month + 1, {
-          unit: 'month'
-        });
+      case "Mo":
+        return localize.ordinalNumber(month + 1, { unit: "month" });
       // Jan, Feb, ..., Dec
-      case 'MMM':
+      case "MMM":
         return localize.month(month, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
       // J, F, ..., D
-      case 'MMMMM':
+      case "MMMMM":
         return localize.month(month, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
       // January, February, ..., December
-      case 'MMMM':
+      case "MMMM":
       default:
-        return localize.month(month, {
-          width: 'wide',
-          context: 'formatting'
-        });
+        return localize.month(month, { width: "wide", context: "formatting" });
     }
   },
+
   // Stand-alone month
-  L: function L(date, token, localize) {
-    var month = date.getUTCMonth();
+  L: function (date, token, localize) {
+    const month = date.getMonth();
     switch (token) {
       // 1, 2, ..., 12
-      case 'L':
+      case "L":
         return String(month + 1);
       // 01, 02, ..., 12
-      case 'LL':
-        return (0, _index6.default)(month + 1, 2);
+      case "LL":
+        return (0, _index6.addLeadingZeros)(month + 1, 2);
       // 1st, 2nd, ..., 12th
-      case 'Lo':
-        return localize.ordinalNumber(month + 1, {
-          unit: 'month'
-        });
+      case "Lo":
+        return localize.ordinalNumber(month + 1, { unit: "month" });
       // Jan, Feb, ..., Dec
-      case 'LLL':
+      case "LLL":
         return localize.month(month, {
-          width: 'abbreviated',
-          context: 'standalone'
+          width: "abbreviated",
+          context: "standalone",
         });
       // J, F, ..., D
-      case 'LLLLL':
+      case "LLLLL":
         return localize.month(month, {
-          width: 'narrow',
-          context: 'standalone'
+          width: "narrow",
+          context: "standalone",
         });
       // January, February, ..., December
-      case 'LLLL':
+      case "LLLL":
       default:
-        return localize.month(month, {
-          width: 'wide',
-          context: 'standalone'
-        });
+        return localize.month(month, { width: "wide", context: "standalone" });
     }
   },
+
   // Local week of year
-  w: function w(date, token, localize, options) {
-    var week = (0, _index4.default)(date, options);
-    if (token === 'wo') {
-      return localize.ordinalNumber(week, {
-        unit: 'week'
-      });
+  w: function (date, token, localize, options) {
+    const week = (0, _index4.getWeek)(date, options);
+
+    if (token === "wo") {
+      return localize.ordinalNumber(week, { unit: "week" });
     }
-    return (0, _index6.default)(week, token.length);
+
+    return (0, _index6.addLeadingZeros)(week, token.length);
   },
+
   // ISO week of year
-  I: function I(date, token, localize) {
-    var isoWeek = (0, _index2.default)(date);
-    if (token === 'Io') {
-      return localize.ordinalNumber(isoWeek, {
-        unit: 'week'
-      });
+  I: function (date, token, localize) {
+    const isoWeek = (0, _index2.getISOWeek)(date);
+
+    if (token === "Io") {
+      return localize.ordinalNumber(isoWeek, { unit: "week" });
     }
-    return (0, _index6.default)(isoWeek, token.length);
+
+    return (0, _index6.addLeadingZeros)(isoWeek, token.length);
   },
+
   // Day of the month
-  d: function d(date, token, localize) {
-    if (token === 'do') {
-      return localize.ordinalNumber(date.getUTCDate(), {
-        unit: 'date'
-      });
+  d: function (date, token, localize) {
+    if (token === "do") {
+      return localize.ordinalNumber(date.getDate(), { unit: "date" });
     }
-    return _index7.default.d(date, token);
+
+    return _index7.lightFormatters.d(date, token);
   },
+
   // Day of year
-  D: function D(date, token, localize) {
-    var dayOfYear = (0, _index.default)(date);
-    if (token === 'Do') {
-      return localize.ordinalNumber(dayOfYear, {
-        unit: 'dayOfYear'
-      });
+  D: function (date, token, localize) {
+    const dayOfYear = (0, _index.getDayOfYear)(date);
+
+    if (token === "Do") {
+      return localize.ordinalNumber(dayOfYear, { unit: "dayOfYear" });
     }
-    return (0, _index6.default)(dayOfYear, token.length);
+
+    return (0, _index6.addLeadingZeros)(dayOfYear, token.length);
   },
+
   // Day of week
-  E: function E(date, token, localize) {
-    var dayOfWeek = date.getUTCDay();
+  E: function (date, token, localize) {
+    const dayOfWeek = date.getDay();
     switch (token) {
       // Tue
-      case 'E':
-      case 'EE':
-      case 'EEE':
+      case "E":
+      case "EE":
+      case "EEE":
         return localize.day(dayOfWeek, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
       // T
-      case 'EEEEE':
+      case "EEEEE":
         return localize.day(dayOfWeek, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
       // Tu
-      case 'EEEEEE':
+      case "EEEEEE":
         return localize.day(dayOfWeek, {
-          width: 'short',
-          context: 'formatting'
+          width: "short",
+          context: "formatting",
         });
       // Tuesday
-      case 'EEEE':
+      case "EEEE":
       default:
         return localize.day(dayOfWeek, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // Local day of week
-  e: function e(date, token, localize, options) {
-    var dayOfWeek = date.getUTCDay();
-    var localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
+  e: function (date, token, localize, options) {
+    const dayOfWeek = date.getDay();
+    const localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
     switch (token) {
       // Numerical value (Nth day of week with current locale or weekStartsOn)
-      case 'e':
+      case "e":
         return String(localDayOfWeek);
       // Padded numerical value
-      case 'ee':
-        return (0, _index6.default)(localDayOfWeek, 2);
+      case "ee":
+        return (0, _index6.addLeadingZeros)(localDayOfWeek, 2);
       // 1st, 2nd, ..., 7th
-      case 'eo':
-        return localize.ordinalNumber(localDayOfWeek, {
-          unit: 'day'
-        });
-      case 'eee':
+      case "eo":
+        return localize.ordinalNumber(localDayOfWeek, { unit: "day" });
+      case "eee":
         return localize.day(dayOfWeek, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
       // T
-      case 'eeeee':
+      case "eeeee":
         return localize.day(dayOfWeek, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
       // Tu
-      case 'eeeeee':
+      case "eeeeee":
         return localize.day(dayOfWeek, {
-          width: 'short',
-          context: 'formatting'
+          width: "short",
+          context: "formatting",
         });
       // Tuesday
-      case 'eeee':
+      case "eeee":
       default:
         return localize.day(dayOfWeek, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // Stand-alone local day of week
-  c: function c(date, token, localize, options) {
-    var dayOfWeek = date.getUTCDay();
-    var localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
+  c: function (date, token, localize, options) {
+    const dayOfWeek = date.getDay();
+    const localDayOfWeek = (dayOfWeek - options.weekStartsOn + 8) % 7 || 7;
     switch (token) {
       // Numerical value (same as in `e`)
-      case 'c':
+      case "c":
         return String(localDayOfWeek);
       // Padded numerical value
-      case 'cc':
-        return (0, _index6.default)(localDayOfWeek, token.length);
+      case "cc":
+        return (0, _index6.addLeadingZeros)(localDayOfWeek, token.length);
       // 1st, 2nd, ..., 7th
-      case 'co':
-        return localize.ordinalNumber(localDayOfWeek, {
-          unit: 'day'
-        });
-      case 'ccc':
+      case "co":
+        return localize.ordinalNumber(localDayOfWeek, { unit: "day" });
+      case "ccc":
         return localize.day(dayOfWeek, {
-          width: 'abbreviated',
-          context: 'standalone'
+          width: "abbreviated",
+          context: "standalone",
         });
       // T
-      case 'ccccc':
+      case "ccccc":
         return localize.day(dayOfWeek, {
-          width: 'narrow',
-          context: 'standalone'
+          width: "narrow",
+          context: "standalone",
         });
       // Tu
-      case 'cccccc':
+      case "cccccc":
         return localize.day(dayOfWeek, {
-          width: 'short',
-          context: 'standalone'
+          width: "short",
+          context: "standalone",
         });
       // Tuesday
-      case 'cccc':
+      case "cccc":
       default:
         return localize.day(dayOfWeek, {
-          width: 'wide',
-          context: 'standalone'
+          width: "wide",
+          context: "standalone",
         });
     }
   },
+
   // ISO day of week
-  i: function i(date, token, localize) {
-    var dayOfWeek = date.getUTCDay();
-    var isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
+  i: function (date, token, localize) {
+    const dayOfWeek = date.getDay();
+    const isoDayOfWeek = dayOfWeek === 0 ? 7 : dayOfWeek;
     switch (token) {
       // 2
-      case 'i':
+      case "i":
         return String(isoDayOfWeek);
       // 02
-      case 'ii':
-        return (0, _index6.default)(isoDayOfWeek, token.length);
+      case "ii":
+        return (0, _index6.addLeadingZeros)(isoDayOfWeek, token.length);
       // 2nd
-      case 'io':
-        return localize.ordinalNumber(isoDayOfWeek, {
-          unit: 'day'
-        });
+      case "io":
+        return localize.ordinalNumber(isoDayOfWeek, { unit: "day" });
       // Tue
-      case 'iii':
+      case "iii":
         return localize.day(dayOfWeek, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
       // T
-      case 'iiiii':
+      case "iiiii":
         return localize.day(dayOfWeek, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
       // Tu
-      case 'iiiiii':
+      case "iiiiii":
         return localize.day(dayOfWeek, {
-          width: 'short',
-          context: 'formatting'
+          width: "short",
+          context: "formatting",
         });
       // Tuesday
-      case 'iiii':
+      case "iiii":
       default:
         return localize.day(dayOfWeek, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // AM or PM
-  a: function a(date, token, localize) {
-    var hours = date.getUTCHours();
-    var dayPeriodEnumValue = hours / 12 >= 1 ? 'pm' : 'am';
+  a: function (date, token, localize) {
+    const hours = date.getHours();
+    const dayPeriodEnumValue = hours / 12 >= 1 ? "pm" : "am";
+
     switch (token) {
-      case 'a':
-      case 'aa':
+      case "a":
+      case "aa":
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
-      case 'aaa':
+      case "aaa":
+        return localize
+          .dayPeriod(dayPeriodEnumValue, {
+            width: "abbreviated",
+            context: "formatting",
+          })
+          .toLowerCase();
+      case "aaaaa":
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'abbreviated',
-          context: 'formatting'
-        }).toLowerCase();
-      case 'aaaaa':
-        return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
-      case 'aaaa':
+      case "aaaa":
       default:
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // AM, PM, midnight, noon
-  b: function b(date, token, localize) {
-    var hours = date.getUTCHours();
-    var dayPeriodEnumValue;
+  b: function (date, token, localize) {
+    const hours = date.getHours();
+    let dayPeriodEnumValue;
     if (hours === 12) {
       dayPeriodEnumValue = dayPeriodEnum.noon;
     } else if (hours === 0) {
       dayPeriodEnumValue = dayPeriodEnum.midnight;
     } else {
-      dayPeriodEnumValue = hours / 12 >= 1 ? 'pm' : 'am';
+      dayPeriodEnumValue = hours / 12 >= 1 ? "pm" : "am";
     }
+
     switch (token) {
-      case 'b':
-      case 'bb':
+      case "b":
+      case "bb":
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
-      case 'bbb':
+      case "bbb":
+        return localize
+          .dayPeriod(dayPeriodEnumValue, {
+            width: "abbreviated",
+            context: "formatting",
+          })
+          .toLowerCase();
+      case "bbbbb":
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'abbreviated',
-          context: 'formatting'
-        }).toLowerCase();
-      case 'bbbbb':
-        return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
-      case 'bbbb':
+      case "bbbb":
       default:
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // in the morning, in the afternoon, in the evening, at night
-  B: function B(date, token, localize) {
-    var hours = date.getUTCHours();
-    var dayPeriodEnumValue;
+  B: function (date, token, localize) {
+    const hours = date.getHours();
+    let dayPeriodEnumValue;
     if (hours >= 17) {
       dayPeriodEnumValue = dayPeriodEnum.evening;
     } else if (hours >= 12) {
@@ -11538,234 +11477,244 @@ var formatters = {
     } else {
       dayPeriodEnumValue = dayPeriodEnum.night;
     }
+
     switch (token) {
-      case 'B':
-      case 'BB':
-      case 'BBB':
+      case "B":
+      case "BB":
+      case "BBB":
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'abbreviated',
-          context: 'formatting'
+          width: "abbreviated",
+          context: "formatting",
         });
-      case 'BBBBB':
+      case "BBBBB":
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'narrow',
-          context: 'formatting'
+          width: "narrow",
+          context: "formatting",
         });
-      case 'BBBB':
+      case "BBBB":
       default:
         return localize.dayPeriod(dayPeriodEnumValue, {
-          width: 'wide',
-          context: 'formatting'
+          width: "wide",
+          context: "formatting",
         });
     }
   },
+
   // Hour [1-12]
-  h: function h(date, token, localize) {
-    if (token === 'ho') {
-      var hours = date.getUTCHours() % 12;
+  h: function (date, token, localize) {
+    if (token === "ho") {
+      let hours = date.getHours() % 12;
       if (hours === 0) hours = 12;
-      return localize.ordinalNumber(hours, {
-        unit: 'hour'
-      });
+      return localize.ordinalNumber(hours, { unit: "hour" });
     }
-    return _index7.default.h(date, token);
+
+    return _index7.lightFormatters.h(date, token);
   },
+
   // Hour [0-23]
-  H: function H(date, token, localize) {
-    if (token === 'Ho') {
-      return localize.ordinalNumber(date.getUTCHours(), {
-        unit: 'hour'
-      });
+  H: function (date, token, localize) {
+    if (token === "Ho") {
+      return localize.ordinalNumber(date.getHours(), { unit: "hour" });
     }
-    return _index7.default.H(date, token);
+
+    return _index7.lightFormatters.H(date, token);
   },
+
   // Hour [0-11]
-  K: function K(date, token, localize) {
-    var hours = date.getUTCHours() % 12;
-    if (token === 'Ko') {
-      return localize.ordinalNumber(hours, {
-        unit: 'hour'
-      });
+  K: function (date, token, localize) {
+    const hours = date.getHours() % 12;
+
+    if (token === "Ko") {
+      return localize.ordinalNumber(hours, { unit: "hour" });
     }
-    return (0, _index6.default)(hours, token.length);
+
+    return (0, _index6.addLeadingZeros)(hours, token.length);
   },
+
   // Hour [1-24]
-  k: function k(date, token, localize) {
-    var hours = date.getUTCHours();
+  k: function (date, token, localize) {
+    let hours = date.getHours();
     if (hours === 0) hours = 24;
-    if (token === 'ko') {
-      return localize.ordinalNumber(hours, {
-        unit: 'hour'
-      });
+
+    if (token === "ko") {
+      return localize.ordinalNumber(hours, { unit: "hour" });
     }
-    return (0, _index6.default)(hours, token.length);
+
+    return (0, _index6.addLeadingZeros)(hours, token.length);
   },
+
   // Minute
-  m: function m(date, token, localize) {
-    if (token === 'mo') {
-      return localize.ordinalNumber(date.getUTCMinutes(), {
-        unit: 'minute'
-      });
+  m: function (date, token, localize) {
+    if (token === "mo") {
+      return localize.ordinalNumber(date.getMinutes(), { unit: "minute" });
     }
-    return _index7.default.m(date, token);
+
+    return _index7.lightFormatters.m(date, token);
   },
+
   // Second
-  s: function s(date, token, localize) {
-    if (token === 'so') {
-      return localize.ordinalNumber(date.getUTCSeconds(), {
-        unit: 'second'
-      });
+  s: function (date, token, localize) {
+    if (token === "so") {
+      return localize.ordinalNumber(date.getSeconds(), { unit: "second" });
     }
-    return _index7.default.s(date, token);
+
+    return _index7.lightFormatters.s(date, token);
   },
+
   // Fraction of second
-  S: function S(date, token) {
-    return _index7.default.S(date, token);
+  S: function (date, token) {
+    return _index7.lightFormatters.S(date, token);
   },
+
   // Timezone (ISO-8601. If offset is 0, output is always `'Z'`)
-  X: function X(date, token, _localize, options) {
-    var originalDate = options._originalDate || date;
-    var timezoneOffset = originalDate.getTimezoneOffset();
+  X: function (date, token, _localize, options) {
+    const originalDate = options._originalDate || date;
+    const timezoneOffset = originalDate.getTimezoneOffset();
+
     if (timezoneOffset === 0) {
-      return 'Z';
+      return "Z";
     }
+
     switch (token) {
       // Hours and optional minutes
-      case 'X':
+      case "X":
         return formatTimezoneWithOptionalMinutes(timezoneOffset);
 
       // Hours, minutes and optional seconds without `:` delimiter
       // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
       // so this token always has the same output as `XX`
-      case 'XXXX':
-      case 'XX':
-        // Hours and minutes without `:` delimiter
+      case "XXXX":
+      case "XX": // Hours and minutes without `:` delimiter
         return formatTimezone(timezoneOffset);
 
       // Hours, minutes and optional seconds with `:` delimiter
       // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
       // so this token always has the same output as `XXX`
-      case 'XXXXX':
-      case 'XXX': // Hours and minutes with `:` delimiter
+      case "XXXXX":
+      case "XXX": // Hours and minutes with `:` delimiter
       default:
-        return formatTimezone(timezoneOffset, ':');
+        return formatTimezone(timezoneOffset, ":");
     }
   },
+
   // Timezone (ISO-8601. If offset is 0, output is `'+00:00'` or equivalent)
-  x: function x(date, token, _localize, options) {
-    var originalDate = options._originalDate || date;
-    var timezoneOffset = originalDate.getTimezoneOffset();
+  x: function (date, token, _localize, options) {
+    const originalDate = options._originalDate || date;
+    const timezoneOffset = originalDate.getTimezoneOffset();
+
     switch (token) {
       // Hours and optional minutes
-      case 'x':
+      case "x":
         return formatTimezoneWithOptionalMinutes(timezoneOffset);
 
       // Hours, minutes and optional seconds without `:` delimiter
       // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
       // so this token always has the same output as `xx`
-      case 'xxxx':
-      case 'xx':
-        // Hours and minutes without `:` delimiter
+      case "xxxx":
+      case "xx": // Hours and minutes without `:` delimiter
         return formatTimezone(timezoneOffset);
 
       // Hours, minutes and optional seconds with `:` delimiter
       // Note: neither ISO-8601 nor JavaScript supports seconds in timezone offsets
       // so this token always has the same output as `xxx`
-      case 'xxxxx':
-      case 'xxx': // Hours and minutes with `:` delimiter
+      case "xxxxx":
+      case "xxx": // Hours and minutes with `:` delimiter
       default:
-        return formatTimezone(timezoneOffset, ':');
+        return formatTimezone(timezoneOffset, ":");
     }
   },
+
   // Timezone (GMT)
-  O: function O(date, token, _localize, options) {
-    var originalDate = options._originalDate || date;
-    var timezoneOffset = originalDate.getTimezoneOffset();
+  O: function (date, token, _localize, options) {
+    const originalDate = options._originalDate || date;
+    const timezoneOffset = originalDate.getTimezoneOffset();
+
     switch (token) {
       // Short
-      case 'O':
-      case 'OO':
-      case 'OOO':
-        return 'GMT' + formatTimezoneShort(timezoneOffset, ':');
+      case "O":
+      case "OO":
+      case "OOO":
+        return "GMT" + formatTimezoneShort(timezoneOffset, ":");
       // Long
-      case 'OOOO':
+      case "OOOO":
       default:
-        return 'GMT' + formatTimezone(timezoneOffset, ':');
+        return "GMT" + formatTimezone(timezoneOffset, ":");
     }
   },
+
   // Timezone (specific non-location)
-  z: function z(date, token, _localize, options) {
-    var originalDate = options._originalDate || date;
-    var timezoneOffset = originalDate.getTimezoneOffset();
+  z: function (date, token, _localize, options) {
+    const originalDate = options._originalDate || date;
+    const timezoneOffset = originalDate.getTimezoneOffset();
+
     switch (token) {
       // Short
-      case 'z':
-      case 'zz':
-      case 'zzz':
-        return 'GMT' + formatTimezoneShort(timezoneOffset, ':');
+      case "z":
+      case "zz":
+      case "zzz":
+        return "GMT" + formatTimezoneShort(timezoneOffset, ":");
       // Long
-      case 'zzzz':
+      case "zzzz":
       default:
-        return 'GMT' + formatTimezone(timezoneOffset, ':');
+        return "GMT" + formatTimezone(timezoneOffset, ":");
     }
   },
+
   // Seconds timestamp
-  t: function t(date, token, _localize, options) {
-    var originalDate = options._originalDate || date;
-    var timestamp = Math.floor(originalDate.getTime() / 1000);
-    return (0, _index6.default)(timestamp, token.length);
+  t: function (date, token, _localize, options) {
+    const originalDate = options._originalDate || date;
+    const timestamp = Math.floor(originalDate.getTime() / 1000);
+    return (0, _index6.addLeadingZeros)(timestamp, token.length);
   },
+
   // Milliseconds timestamp
-  T: function T(date, token, _localize, options) {
-    var originalDate = options._originalDate || date;
-    var timestamp = originalDate.getTime();
-    return (0, _index6.default)(timestamp, token.length);
-  }
-};
-function formatTimezoneShort(offset, dirtyDelimiter) {
-  var sign = offset > 0 ? '-' : '+';
-  var absOffset = Math.abs(offset);
-  var hours = Math.floor(absOffset / 60);
-  var minutes = absOffset % 60;
+  T: function (date, token, _localize, options) {
+    const originalDate = options._originalDate || date;
+    const timestamp = originalDate.getTime();
+    return (0, _index6.addLeadingZeros)(timestamp, token.length);
+  },
+});
+
+function formatTimezoneShort(offset, delimiter = "") {
+  const sign = offset > 0 ? "-" : "+";
+  const absOffset = Math.abs(offset);
+  const hours = Math.floor(absOffset / 60);
+  const minutes = absOffset % 60;
   if (minutes === 0) {
     return sign + String(hours);
   }
-  var delimiter = dirtyDelimiter || '';
-  return sign + String(hours) + delimiter + (0, _index6.default)(minutes, 2);
+  return (
+    sign + String(hours) + delimiter + (0, _index6.addLeadingZeros)(minutes, 2)
+  );
 }
-function formatTimezoneWithOptionalMinutes(offset, dirtyDelimiter) {
+
+function formatTimezoneWithOptionalMinutes(offset, delimiter) {
   if (offset % 60 === 0) {
-    var sign = offset > 0 ? '-' : '+';
-    return sign + (0, _index6.default)(Math.abs(offset) / 60, 2);
+    const sign = offset > 0 ? "-" : "+";
+    return sign + (0, _index6.addLeadingZeros)(Math.abs(offset) / 60, 2);
   }
-  return formatTimezone(offset, dirtyDelimiter);
+  return formatTimezone(offset, delimiter);
 }
-function formatTimezone(offset, dirtyDelimiter) {
-  var delimiter = dirtyDelimiter || '';
-  var sign = offset > 0 ? '-' : '+';
-  var absOffset = Math.abs(offset);
-  var hours = (0, _index6.default)(Math.floor(absOffset / 60), 2);
-  var minutes = (0, _index6.default)(absOffset % 60, 2);
+
+function formatTimezone(offset, delimiter = "") {
+  const sign = offset > 0 ? "-" : "+";
+  const absOffset = Math.abs(offset);
+  const hours = (0, _index6.addLeadingZeros)(Math.floor(absOffset / 60), 2);
+  const minutes = (0, _index6.addLeadingZeros)(absOffset % 60, 2);
   return sign + hours + delimiter + minutes;
 }
-var _default = formatters;
-exports["default"] = _default;
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 289:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6961:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lightFormatters = void 0;
+var _index = __nccwpck_require__(534);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(8794));
 /*
  * |     | Unit                           |     | Unit                           |
  * |-----|--------------------------------|-----|--------------------------------|
@@ -11779,9 +11728,9 @@ var _index = _interopRequireDefault(__nccwpck_require__(8794));
  * Letters marked by * are not implemented but reserved by Unicode standard.
  */
 
-var formatters = {
+const lightFormatters = (exports.lightFormatters = {
   // Year
-  y: function y(date, token) {
+  y(date, token) {
     // From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_tokens
     // | Year     |     y | yy |   yyy |  yyyy | yyyyy |
     // |----------|-------|----|-------|-------|-------|
@@ -11791,172 +11740,164 @@ var formatters = {
     // | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
     // | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
 
-    var signedYear = date.getUTCFullYear();
+    const signedYear = date.getFullYear();
     // Returns 1 for 1 BC (which is year 0 in JavaScript)
-    var year = signedYear > 0 ? signedYear : 1 - signedYear;
-    return (0, _index.default)(token === 'yy' ? year % 100 : year, token.length);
+    const year = signedYear > 0 ? signedYear : 1 - signedYear;
+    return (0, _index.addLeadingZeros)(
+      token === "yy" ? year % 100 : year,
+      token.length,
+    );
   },
+
   // Month
-  M: function M(date, token) {
-    var month = date.getUTCMonth();
-    return token === 'M' ? String(month + 1) : (0, _index.default)(month + 1, 2);
+  M(date, token) {
+    const month = date.getMonth();
+    return token === "M"
+      ? String(month + 1)
+      : (0, _index.addLeadingZeros)(month + 1, 2);
   },
+
   // Day of the month
-  d: function d(date, token) {
-    return (0, _index.default)(date.getUTCDate(), token.length);
+  d(date, token) {
+    return (0, _index.addLeadingZeros)(date.getDate(), token.length);
   },
+
   // AM or PM
-  a: function a(date, token) {
-    var dayPeriodEnumValue = date.getUTCHours() / 12 >= 1 ? 'pm' : 'am';
+  a(date, token) {
+    const dayPeriodEnumValue = date.getHours() / 12 >= 1 ? "pm" : "am";
+
     switch (token) {
-      case 'a':
-      case 'aa':
+      case "a":
+      case "aa":
         return dayPeriodEnumValue.toUpperCase();
-      case 'aaa':
+      case "aaa":
         return dayPeriodEnumValue;
-      case 'aaaaa':
+      case "aaaaa":
         return dayPeriodEnumValue[0];
-      case 'aaaa':
+      case "aaaa":
       default:
-        return dayPeriodEnumValue === 'am' ? 'a.m.' : 'p.m.';
+        return dayPeriodEnumValue === "am" ? "a.m." : "p.m.";
     }
   },
+
   // Hour [1-12]
-  h: function h(date, token) {
-    return (0, _index.default)(date.getUTCHours() % 12 || 12, token.length);
+  h(date, token) {
+    return (0, _index.addLeadingZeros)(
+      date.getHours() % 12 || 12,
+      token.length,
+    );
   },
+
   // Hour [0-23]
-  H: function H(date, token) {
-    return (0, _index.default)(date.getUTCHours(), token.length);
+  H(date, token) {
+    return (0, _index.addLeadingZeros)(date.getHours(), token.length);
   },
+
   // Minute
-  m: function m(date, token) {
-    return (0, _index.default)(date.getUTCMinutes(), token.length);
+  m(date, token) {
+    return (0, _index.addLeadingZeros)(date.getMinutes(), token.length);
   },
+
   // Second
-  s: function s(date, token) {
-    return (0, _index.default)(date.getUTCSeconds(), token.length);
+  s(date, token) {
+    return (0, _index.addLeadingZeros)(date.getSeconds(), token.length);
   },
+
   // Fraction of second
-  S: function S(date, token) {
-    var numberOfDigits = token.length;
-    var milliseconds = date.getUTCMilliseconds();
-    var fractionalSeconds = Math.floor(milliseconds * Math.pow(10, numberOfDigits - 3));
-    return (0, _index.default)(fractionalSeconds, token.length);
-  }
-};
-var _default = formatters;
-exports["default"] = _default;
-module.exports = exports.default;
+  S(date, token) {
+    const numberOfDigits = token.length;
+    const milliseconds = date.getMilliseconds();
+    const fractionalSeconds = Math.floor(
+      milliseconds * Math.pow(10, numberOfDigits - 3),
+    );
+    return (0, _index.addLeadingZeros)(fractionalSeconds, token.length);
+  },
+});
+
 
 /***/ }),
 
-/***/ 8387:
-/***/ ((module, exports) => {
+/***/ 8707:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.longFormatters = void 0;
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var dateLongFormatter = function dateLongFormatter(pattern, formatLong) {
+const dateLongFormatter = (pattern, formatLong) => {
   switch (pattern) {
-    case 'P':
-      return formatLong.date({
-        width: 'short'
-      });
-    case 'PP':
-      return formatLong.date({
-        width: 'medium'
-      });
-    case 'PPP':
-      return formatLong.date({
-        width: 'long'
-      });
-    case 'PPPP':
+    case "P":
+      return formatLong.date({ width: "short" });
+    case "PP":
+      return formatLong.date({ width: "medium" });
+    case "PPP":
+      return formatLong.date({ width: "long" });
+    case "PPPP":
     default:
-      return formatLong.date({
-        width: 'full'
-      });
+      return formatLong.date({ width: "full" });
   }
 };
-var timeLongFormatter = function timeLongFormatter(pattern, formatLong) {
+
+const timeLongFormatter = (pattern, formatLong) => {
   switch (pattern) {
-    case 'p':
-      return formatLong.time({
-        width: 'short'
-      });
-    case 'pp':
-      return formatLong.time({
-        width: 'medium'
-      });
-    case 'ppp':
-      return formatLong.time({
-        width: 'long'
-      });
-    case 'pppp':
+    case "p":
+      return formatLong.time({ width: "short" });
+    case "pp":
+      return formatLong.time({ width: "medium" });
+    case "ppp":
+      return formatLong.time({ width: "long" });
+    case "pppp":
     default:
-      return formatLong.time({
-        width: 'full'
-      });
+      return formatLong.time({ width: "full" });
   }
 };
-var dateTimeLongFormatter = function dateTimeLongFormatter(pattern, formatLong) {
-  var matchResult = pattern.match(/(P+)(p+)?/) || [];
-  var datePattern = matchResult[1];
-  var timePattern = matchResult[2];
+
+const dateTimeLongFormatter = (pattern, formatLong) => {
+  const matchResult = pattern.match(/(P+)(p+)?/) || [];
+  const datePattern = matchResult[1];
+  const timePattern = matchResult[2];
+
   if (!timePattern) {
     return dateLongFormatter(pattern, formatLong);
   }
-  var dateTimeFormat;
+
+  let dateTimeFormat;
+
   switch (datePattern) {
-    case 'P':
-      dateTimeFormat = formatLong.dateTime({
-        width: 'short'
-      });
+    case "P":
+      dateTimeFormat = formatLong.dateTime({ width: "short" });
       break;
-    case 'PP':
-      dateTimeFormat = formatLong.dateTime({
-        width: 'medium'
-      });
+    case "PP":
+      dateTimeFormat = formatLong.dateTime({ width: "medium" });
       break;
-    case 'PPP':
-      dateTimeFormat = formatLong.dateTime({
-        width: 'long'
-      });
+    case "PPP":
+      dateTimeFormat = formatLong.dateTime({ width: "long" });
       break;
-    case 'PPPP':
+    case "PPPP":
     default:
-      dateTimeFormat = formatLong.dateTime({
-        width: 'full'
-      });
+      dateTimeFormat = formatLong.dateTime({ width: "full" });
       break;
   }
-  return dateTimeFormat.replace('{{date}}', dateLongFormatter(datePattern, formatLong)).replace('{{time}}', timeLongFormatter(timePattern, formatLong));
+
+  return dateTimeFormat
+    .replace("{{date}}", dateLongFormatter(datePattern, formatLong))
+    .replace("{{time}}", timeLongFormatter(timePattern, formatLong));
 };
-var longFormatters = {
+
+const longFormatters = (exports.longFormatters = {
   p: timeLongFormatter,
-  P: dateTimeLongFormatter
-};
-var _default = longFormatters;
-exports["default"] = _default;
-module.exports = exports.default;
+  P: dateTimeLongFormatter,
+});
+
 
 /***/ }),
 
-/***/ 7032:
-/***/ ((module, exports) => {
+/***/ 1292:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getTimezoneOffsetInMilliseconds;
-/**
+exports.getTimezoneOffsetInMilliseconds = getTimezoneOffsetInMilliseconds; /**
  * Google Chrome as of 67.0.3396.87 introduced timezones with offset that includes seconds.
  * They usually appear for dates that denote time before the timezones were introduced
  * (e.g. for 'Europe/Prague' timezone the offset is GMT+00:57:44 before 1 October 1891
@@ -11968,555 +11909,91 @@ exports["default"] = getTimezoneOffsetInMilliseconds;
  * This function returns the timezone offset in milliseconds that takes seconds in account.
  */
 function getTimezoneOffsetInMilliseconds(date) {
-  var utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()));
+  const utcDate = new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds(),
+    ),
+  );
   utcDate.setUTCFullYear(date.getFullYear());
   return date.getTime() - utcDate.getTime();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2966:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getUTCDayOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_DAY = 86400000;
-function getUTCDayOfYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var timestamp = date.getTime();
-  date.setUTCMonth(0, 1);
-  date.setUTCHours(0, 0, 0, 0);
-  var startOfYearTimestamp = date.getTime();
-  var difference = timestamp - startOfYearTimestamp;
-  return Math.floor(difference / MILLISECONDS_IN_DAY) + 1;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 8493:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getUTCISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3061));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1478));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
-function getUTCISOWeek(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var diff = (0, _index2.default)(date).getTime() - (0, _index3.default)(date).getTime();
-
-  // Round the number of days to the nearest integer
-  // because the number of milliseconds in a week is not constant
-  // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 7170:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getUTCISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(3061));
-function getUTCISOWeekYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getUTCFullYear();
-  var fourthOfJanuaryOfNextYear = new Date(0);
-  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
-  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
-  var startOfNextYear = (0, _index3.default)(fourthOfJanuaryOfNextYear);
-  var fourthOfJanuaryOfThisYear = new Date(0);
-  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
-  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
-  var startOfThisYear = (0, _index3.default)(fourthOfJanuaryOfThisYear);
-  if (date.getTime() >= startOfNextYear.getTime()) {
-    return year + 1;
-  } else if (date.getTime() >= startOfThisYear.getTime()) {
-    return year;
-  } else {
-    return year - 1;
-  }
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 8761:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getUTCWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2258));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2629));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
-function getUTCWeek(dirtyDate, options) {
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var diff = (0, _index2.default)(date, options).getTime() - (0, _index3.default)(date, options).getTime();
-
-  // Round the number of days to the nearest integer
-  // because the number of milliseconds in a week is not constant
-  // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 8050:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getUTCWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2258));
-var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index5 = __nccwpck_require__(9307);
-function getUTCWeekYear(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getUTCFullYear();
-  var defaultOptions = (0, _index5.getDefaultOptions)();
-  var firstWeekContainsDate = (0, _index4.default)((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
-
-  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
-  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
-    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
-  }
-  var firstWeekOfNextYear = new Date(0);
-  firstWeekOfNextYear.setUTCFullYear(year + 1, 0, firstWeekContainsDate);
-  firstWeekOfNextYear.setUTCHours(0, 0, 0, 0);
-  var startOfNextYear = (0, _index3.default)(firstWeekOfNextYear, options);
-  var firstWeekOfThisYear = new Date(0);
-  firstWeekOfThisYear.setUTCFullYear(year, 0, firstWeekContainsDate);
-  firstWeekOfThisYear.setUTCHours(0, 0, 0, 0);
-  var startOfThisYear = (0, _index3.default)(firstWeekOfThisYear, options);
-  if (date.getTime() >= startOfNextYear.getTime()) {
-    return year + 1;
-  } else if (date.getTime() >= startOfThisYear.getTime()) {
-    return year;
-  } else {
-    return year - 1;
-  }
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 2509:
+/***/ 2147:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
 exports.isProtectedDayOfYearToken = isProtectedDayOfYearToken;
 exports.isProtectedWeekYearToken = isProtectedWeekYearToken;
 exports.throwProtectedError = throwProtectedError;
-var protectedDayOfYearTokens = ['D', 'DD'];
-var protectedWeekYearTokens = ['YY', 'YYYY'];
+const protectedDayOfYearTokens = ["D", "DD"];
+const protectedWeekYearTokens = ["YY", "YYYY"];
+
 function isProtectedDayOfYearToken(token) {
   return protectedDayOfYearTokens.indexOf(token) !== -1;
 }
+
 function isProtectedWeekYearToken(token) {
   return protectedWeekYearTokens.indexOf(token) !== -1;
 }
+
 function throwProtectedError(token, format, input) {
-  if (token === 'YYYY') {
-    throw new RangeError("Use `yyyy` instead of `YYYY` (in `".concat(format, "`) for formatting years to the input `").concat(input, "`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md"));
-  } else if (token === 'YY') {
-    throw new RangeError("Use `yy` instead of `YY` (in `".concat(format, "`) for formatting years to the input `").concat(input, "`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md"));
-  } else if (token === 'D') {
-    throw new RangeError("Use `d` instead of `D` (in `".concat(format, "`) for formatting days of the month to the input `").concat(input, "`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md"));
-  } else if (token === 'DD') {
-    throw new RangeError("Use `dd` instead of `DD` (in `".concat(format, "`) for formatting days of the month to the input `").concat(input, "`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md"));
+  if (token === "YYYY") {
+    throw new RangeError(
+      `Use \`yyyy\` instead of \`YYYY\` (in \`${format}\`) for formatting years to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`,
+    );
+  } else if (token === "YY") {
+    throw new RangeError(
+      `Use \`yy\` instead of \`YY\` (in \`${format}\`) for formatting years to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`,
+    );
+  } else if (token === "D") {
+    throw new RangeError(
+      `Use \`d\` instead of \`D\` (in \`${format}\`) for formatting days of the month to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`,
+    );
+  } else if (token === "DD") {
+    throw new RangeError(
+      `Use \`dd\` instead of \`DD\` (in \`${format}\`) for formatting days of the month to the input \`${input}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`,
+    );
   }
 }
 
-/***/ }),
-
-/***/ 2063:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = requiredArgs;
-function requiredArgs(required, args) {
-  if (args.length < required) {
-    throw new TypeError(required + ' argument' + (required > 1 ? 's' : '') + ' required, but only ' + args.length + ' present');
-  }
-}
-module.exports = exports.default;
 
 /***/ }),
 
-/***/ 8016:
+/***/ 304:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
 exports.getRoundingMethod = getRoundingMethod;
-var roundingMap = {
-  ceil: Math.ceil,
-  round: Math.round,
-  floor: Math.floor,
-  trunc: function trunc(value) {
-    return value < 0 ? Math.ceil(value) : Math.floor(value);
-  } // Math.trunc is not supported by IE
-};
 
-var defaultRoundingMethod = 'trunc';
 function getRoundingMethod(method) {
-  return method ? roundingMap[method] : roundingMap[defaultRoundingMethod];
+  return method ? Math[method] : Math.trunc;
 }
+
 
 /***/ }),
 
-/***/ 2694:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3110:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.add = add;
+var _index = __nccwpck_require__(8361);
+var _index2 = __nccwpck_require__(4119);
+var _index3 = __nccwpck_require__(2736);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setUTCDay;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = __nccwpck_require__(9307);
-function setUTCDay(dirtyDate, dirtyDay, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index2.default)(2, arguments);
-  var defaultOptions = (0, _index4.getDefaultOptions)();
-  var weekStartsOn = (0, _index3.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
-
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = (0, _index.default)(dirtyDate);
-  var day = (0, _index3.default)(dirtyDay);
-  var currentDay = date.getUTCDay();
-  var remainder = day % 7;
-  var dayIndex = (remainder + 7) % 7;
-  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 7985:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setUTCISODay;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-function setUTCISODay(dirtyDate, dirtyDay) {
-  (0, _index2.default)(2, arguments);
-  var day = (0, _index3.default)(dirtyDay);
-  if (day % 7 === 0) {
-    day = day - 7;
-  }
-  var weekStartsOn = 1;
-  var date = (0, _index.default)(dirtyDate);
-  var currentDay = date.getUTCDay();
-  var remainder = day % 7;
-  var dayIndex = (remainder + 7) % 7;
-  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 8921:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setUTCISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8493));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-function setUTCISOWeek(dirtyDate, dirtyISOWeek) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var isoWeek = (0, _index.default)(dirtyISOWeek);
-  var diff = (0, _index3.default)(date) - isoWeek;
-  date.setUTCDate(date.getUTCDate() - diff * 7);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 3285:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setUTCWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8761));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-function setUTCWeek(dirtyDate, dirtyWeek, options) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var week = (0, _index.default)(dirtyWeek);
-  var diff = (0, _index3.default)(date, options) - week;
-  date.setUTCDate(date.getUTCDate() - diff * 7);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 3061:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfUTCISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-function startOfUTCISOWeek(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var weekStartsOn = 1;
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getUTCDay();
-  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-  date.setUTCDate(date.getUTCDate() - diff);
-  date.setUTCHours(0, 0, 0, 0);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 1478:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfUTCISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(7170));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3061));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-function startOfUTCISOWeekYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var year = (0, _index.default)(dirtyDate);
-  var fourthOfJanuary = new Date(0);
-  fourthOfJanuary.setUTCFullYear(year, 0, 4);
-  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
-  var date = (0, _index2.default)(fourthOfJanuary);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 2258:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfUTCWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = __nccwpck_require__(9307);
-function startOfUTCWeek(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index2.default)(1, arguments);
-  var defaultOptions = (0, _index4.getDefaultOptions)();
-  var weekStartsOn = (0, _index3.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
-
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getUTCDay();
-  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-  date.setUTCDate(date.getUTCDate() - diff);
-  date.setUTCHours(0, 0, 0, 0);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 2629:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfUTCWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(8050));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2258));
-var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index5 = __nccwpck_require__(9307);
-function startOfUTCWeekYear(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index2.default)(1, arguments);
-  var defaultOptions = (0, _index5.getDefaultOptions)();
-  var firstWeekContainsDate = (0, _index4.default)((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
-  var year = (0, _index.default)(dirtyDate, options);
-  var firstWeek = new Date(0);
-  firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
-  firstWeek.setUTCHours(0, 0, 0, 0);
-  var date = (0, _index3.default)(firstWeek, options);
-  return date;
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 1985:
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = toInteger;
-function toInteger(dirtyNumber) {
-  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
-    return NaN;
-  }
-  var number = Number(dirtyNumber);
-  if (isNaN(number)) {
-    return number;
-  }
-  return number < 0 ? Math.ceil(number) : Math.floor(number);
-}
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 6211:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = add;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(6227));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2995));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index5 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name add
  * @category Common Helpers
@@ -12525,8 +12002,10 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Add the specified years, months, weeks, days, hours, minutes and seconds to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Duration} duration - the object with years, months, weeks, days, hours, minutes and seconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param duration - The object with years, months, weeks, days, hours, minutes and seconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
  *
  * | Key            | Description                        |
  * |----------------|------------------------------------|
@@ -12540,8 +12019,7 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(1985));
  *
  * All values default to 0
  *
- * @returns {Date} the new date with the seconds added
- * @throws {TypeError} 2 arguments required
+ * @returns The new date with the seconds added
  *
  * @example
  * // Add the following duration to 1 September 2014, 10:19:50
@@ -12550,128 +12028,134 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(1985));
  *   months: 9,
  *   weeks: 1,
  *   days: 7,
- *   hours: 5,
+ *   hours: 5,\\-7
  *   minutes: 9,
  *   seconds: 30,
  * })
  * //=> Thu Jun 15 2017 15:29:20
  */
-function add(dirtyDate, duration) {
-  (0, _index4.default)(2, arguments);
-  if (!duration || (0, _typeof2.default)(duration) !== 'object') return new Date(NaN);
-  var years = duration.years ? (0, _index5.default)(duration.years) : 0;
-  var months = duration.months ? (0, _index5.default)(duration.months) : 0;
-  var weeks = duration.weeks ? (0, _index5.default)(duration.weeks) : 0;
-  var days = duration.days ? (0, _index5.default)(duration.days) : 0;
-  var hours = duration.hours ? (0, _index5.default)(duration.hours) : 0;
-  var minutes = duration.minutes ? (0, _index5.default)(duration.minutes) : 0;
-  var seconds = duration.seconds ? (0, _index5.default)(duration.seconds) : 0;
+function add(date, duration) {
+  const {
+    years = 0,
+    months = 0,
+    weeks = 0,
+    days = 0,
+    hours = 0,
+    minutes = 0,
+    seconds = 0,
+  } = duration;
 
   // Add years and months
-  var date = (0, _index3.default)(dirtyDate);
-  var dateWithMonths = months || years ? (0, _index2.default)(date, months + years * 12) : date;
+  const _date = (0, _index4.toDate)(date);
+  const dateWithMonths =
+    months || years
+      ? (0, _index2.addMonths)(_date, months + years * 12)
+      : _date;
 
   // Add weeks and days
-  var dateWithDays = days || weeks ? (0, _index.default)(dateWithMonths, days + weeks * 7) : dateWithMonths;
+  const dateWithDays =
+    days || weeks
+      ? (0, _index.addDays)(dateWithMonths, days + weeks * 7)
+      : dateWithMonths;
 
   // Add days, hours, minutes and seconds
-  var minutesToAdd = minutes + hours * 60;
-  var secondsToAdd = seconds + minutesToAdd * 60;
-  var msToAdd = secondsToAdd * 1000;
-  var finalDate = new Date(dateWithDays.getTime() + msToAdd);
+  const minutesToAdd = minutes + hours * 60;
+  const secondsToAdd = seconds + minutesToAdd * 60;
+  const msToAdd = secondsToAdd * 1000;
+  const finalDate = (0, _index3.constructFrom)(
+    date,
+    dateWithDays.getTime() + msToAdd,
+  );
+
   return finalDate;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1727:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1060:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addBusinessDays = addBusinessDays;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(2320);
+var _index3 = __nccwpck_require__(9267);
+var _index4 = __nccwpck_require__(5417);
+var _index5 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addBusinessDays;
-var _index = _interopRequireDefault(__nccwpck_require__(403));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index5 = _interopRequireDefault(__nccwpck_require__(5852));
-var _index6 = _interopRequireDefault(__nccwpck_require__(6308));
 /**
  * @name addBusinessDays
- * @category Day Helpers
+ * @category Date Extension Helpers
  * @summary Add the specified number of business days (mon - fri) to the given date.
  *
  * @description
  * Add the specified number of business days (mon - fri) to the given date, ignoring weekends.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of business days to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the business days added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of business days to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the business days added
  *
  * @example
  * // Add 10 business days to 1 September 2014:
  * const result = addBusinessDays(new Date(2014, 8, 1), 10)
  * //=> Mon Sep 15 2014 00:00:00 (skipped weekend days)
  */
-function addBusinessDays(dirtyDate, dirtyAmount) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var startedOnWeekend = (0, _index.default)(date);
-  var amount = (0, _index3.default)(dirtyAmount);
-  if (isNaN(amount)) return new Date(NaN);
-  var hours = date.getHours();
-  var sign = amount < 0 ? -1 : 1;
-  var fullWeeks = (0, _index3.default)(amount / 5);
-  date.setDate(date.getDate() + fullWeeks * 7);
+function addBusinessDays(date, amount) {
+  const _date = (0, _index5.toDate)(date);
+  const startedOnWeekend = (0, _index4.isWeekend)(_date);
+
+  if (isNaN(amount)) return (0, _index.constructFrom)(date, NaN);
+
+  const hours = _date.getHours();
+  const sign = amount < 0 ? -1 : 1;
+  const fullWeeks = Math.trunc(amount / 5);
+
+  _date.setDate(_date.getDate() + fullWeeks * 7);
 
   // Get remaining days not part of a full week
-  var restDays = Math.abs(amount % 5);
+  let restDays = Math.abs(amount % 5);
 
   // Loops over remaining days
   while (restDays > 0) {
-    date.setDate(date.getDate() + sign);
-    if (!(0, _index.default)(date)) restDays -= 1;
+    _date.setDate(_date.getDate() + sign);
+    if (!(0, _index4.isWeekend)(_date)) restDays -= 1;
   }
 
   // If the date is a weekend day and we reduce a dividable of
   // 5 from it, we land on a weekend date.
   // To counter this, we add days accordingly to land on the next business day
-  if (startedOnWeekend && (0, _index.default)(date) && amount !== 0) {
+  if (startedOnWeekend && (0, _index4.isWeekend)(_date) && amount !== 0) {
     // If we're reducing days, we want to add days until we land on a weekday
     // If we're adding days we want to reduce days until we land on a weekday
-    if ((0, _index6.default)(date)) date.setDate(date.getDate() + (sign < 0 ? 2 : -1));
-    if ((0, _index5.default)(date)) date.setDate(date.getDate() + (sign < 0 ? 1 : -2));
+    if ((0, _index2.isSaturday)(_date))
+      _date.setDate(_date.getDate() + (sign < 0 ? 2 : -1));
+    if ((0, _index3.isSunday)(_date))
+      _date.setDate(_date.getDate() + (sign < 0 ? 1 : -2));
   }
 
   // Restore hours to avoid DST lag
-  date.setHours(hours);
-  return date;
+  _date.setHours(hours);
+
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6227:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8361:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addDays = addDays;
+var _index = __nccwpck_require__(3622);
+var _index2 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addDays;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addDays
  * @category Day Helpers
@@ -12680,49 +12164,40 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of days to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of days to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} - the new date with the days added
- * @throws {TypeError} - 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the days added
  *
  * @example
  * // Add 10 days to 1 September 2014:
  * const result = addDays(new Date(2014, 8, 1), 10)
  * //=> Thu Sep 11 2014 00:00:00
  */
-function addDays(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var amount = (0, _index.default)(dirtyAmount);
-  if (isNaN(amount)) {
-    return new Date(NaN);
-  }
+function addDays(date, amount) {
+  const _date = (0, _index.toDate)(date);
+  if (isNaN(amount)) return (0, _index2.constructFrom)(date, NaN);
   if (!amount) {
     // If 0 days, no-op to avoid changing times in the hour before end of DST
-    return date;
+    return _date;
   }
-  date.setDate(date.getDate() + amount);
-  return date;
+  _date.setDate(_date.getDate() + amount);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9956:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9994:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addHours;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(524));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_HOUR = 3600000;
+exports.addHours = addHours;
+var _index = __nccwpck_require__(8671);
+var _index2 = __nccwpck_require__(7818);
 
 /**
  * @name addHours
@@ -12732,40 +12207,34 @@ var MILLISECONDS_IN_HOUR = 3600000;
  * @description
  * Add the specified number of hours to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of hours to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the hours added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of hours to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the hours added
  *
  * @example
  * // Add 2 hours to 10 July 2014 23:00:00:
  * const result = addHours(new Date(2014, 6, 10, 23, 0), 2)
  * //=> Fri Jul 11 2014 01:00:00
  */
-function addHours(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, amount * MILLISECONDS_IN_HOUR);
+function addHours(date, amount) {
+  return (0, _index.addMilliseconds)(date, amount * _index2.millisecondsInHour);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5318:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9209:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addISOWeekYears = addISOWeekYears;
+var _index = __nccwpck_require__(308);
+var _index2 = __nccwpck_require__(4954);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addISOWeekYears;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6991));
-var _index3 = _interopRequireDefault(__nccwpck_require__(822));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addISOWeekYears
  * @category ISO Week-Numbering Year Helpers
@@ -12776,39 +12245,37 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of ISO week-numbering years to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the ISO week-numbering years added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of ISO week-numbering years to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the ISO week-numbering years added
  *
  * @example
  * // Add 5 ISO week-numbering years to 2 July 2010:
  * const result = addISOWeekYears(new Date(2010, 6, 2), 5)
- * //=> Fri Jun 26 2015 00:00:00
+ * //=> Fri Jn 26 2015 00:00:00
  */
-function addISOWeekYears(dirtyDate, dirtyAmount) {
-  (0, _index4.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index3.default)(dirtyDate, (0, _index2.default)(dirtyDate) + amount);
+function addISOWeekYears(date, amount) {
+  return (0, _index2.setISOWeekYear)(
+    date,
+    (0, _index.getISOWeekYear)(date) + amount,
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 524:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8671:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addMilliseconds = addMilliseconds;
+var _index = __nccwpck_require__(3622);
+var _index2 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addMilliseconds
  * @category Millisecond Helpers
@@ -12817,41 +12284,34 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of milliseconds to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of milliseconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the milliseconds added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of milliseconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the milliseconds added
  *
  * @example
  * // Add 750 milliseconds to 10 July 2014 12:45:30.000:
  * const result = addMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
  * //=> Thu Jul 10 2014 12:45:30.750
  */
-function addMilliseconds(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var timestamp = (0, _index2.default)(dirtyDate).getTime();
-  var amount = (0, _index.default)(dirtyAmount);
-  return new Date(timestamp + amount);
+function addMilliseconds(date, amount) {
+  const timestamp = +(0, _index.toDate)(date);
+  return (0, _index2.constructFrom)(date, timestamp + amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5268:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7231:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(524));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_MINUTE = 60000;
+exports.addMinutes = addMinutes;
+var _index = __nccwpck_require__(8671);
+var _index2 = __nccwpck_require__(7818);
 
 /**
  * @name addMinutes
@@ -12861,39 +12321,37 @@ var MILLISECONDS_IN_MINUTE = 60000;
  * @description
  * Add the specified number of minutes to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of minutes to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the minutes added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of minutes to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the minutes added
  *
  * @example
  * // Add 30 minutes to 10 July 2014 12:00:00:
  * const result = addMinutes(new Date(2014, 6, 10, 12, 0), 30)
  * //=> Thu Jul 10 2014 12:30:00
  */
-function addMinutes(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, amount * MILLISECONDS_IN_MINUTE);
+function addMinutes(date, amount) {
+  return (0, _index.addMilliseconds)(
+    date,
+    amount * _index2.millisecondsInMinute,
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2995:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4119:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addMonths = addMonths;
+var _index = __nccwpck_require__(3622);
+var _index2 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addMonths;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addMonths
  * @category Month Helpers
@@ -12902,28 +12360,30 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of months to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of months to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the months added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the months added
  *
  * @example
  * // Add 5 months to 1 September 2014:
  * const result = addMonths(new Date(2014, 8, 1), 5)
  * //=> Sun Feb 01 2015 00:00:00
+ *
+ * // Add one month to 30 January 2023:
+ * const result = addMonths(new Date(2023, 0, 30), 1)
+ * //=> Tue Feb 28 2023 00:00:00
  */
-function addMonths(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var amount = (0, _index.default)(dirtyAmount);
-  if (isNaN(amount)) {
-    return new Date(NaN);
-  }
+function addMonths(date, amount) {
+  const _date = (0, _index.toDate)(date);
+  if (isNaN(amount)) return (0, _index2.constructFrom)(date, NaN);
   if (!amount) {
     // If 0 months, no-op to avoid changing times in the hour before end of DST
-    return date;
+    return _date;
   }
-  var dayOfMonth = date.getDate();
+  const dayOfMonth = _date.getDate();
 
   // The JS Date object supports date math by accepting out-of-bounds values for
   // month, day, etc. For example, new Date(2020, 0, 0) returns 31 Dec 2019 and
@@ -12933,9 +12393,9 @@ function addMonths(dirtyDate, dirtyAmount) {
   // we'll default to the end of the desired month by adding 1 to the desired
   // month and using a date of 0 to back up one day to the end of the desired
   // month.
-  var endOfDesiredMonth = new Date(date.getTime());
-  endOfDesiredMonth.setMonth(date.getMonth() + amount + 1, 0);
-  var daysInMonth = endOfDesiredMonth.getDate();
+  const endOfDesiredMonth = (0, _index2.constructFrom)(date, _date.getTime());
+  endOfDesiredMonth.setMonth(_date.getMonth() + amount + 1, 0);
+  const daysInMonth = endOfDesiredMonth.getDate();
   if (dayOfMonth >= daysInMonth) {
     // If we're already at the end of the month, then this is the correct date
     // and we're done.
@@ -12948,28 +12408,26 @@ function addMonths(dirtyDate, dirtyAmount) {
     // the last day of the month and its local time was in the hour skipped or
     // repeated next to a DST transition.  So we use `date` instead which is
     // guaranteed to still have the original time.
-    date.setFullYear(endOfDesiredMonth.getFullYear(), endOfDesiredMonth.getMonth(), dayOfMonth);
-    return date;
+    _date.setFullYear(
+      endOfDesiredMonth.getFullYear(),
+      endOfDesiredMonth.getMonth(),
+      dayOfMonth,
+    );
+    return _date;
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5149:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7153:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addQuarters = addQuarters;
+var _index = __nccwpck_require__(4119);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addQuarters;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2995));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addQuarters
  * @category Quarter Helpers
@@ -12978,40 +12436,34 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of year quarters to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of quarters to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the quarters added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of quarters to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the quarters added
  *
  * @example
  * // Add 1 quarter to 1 September 2014:
  * const result = addQuarters(new Date(2014, 8, 1), 1)
  * //=> Mon Dec 01 2014 00:00:00
  */
-function addQuarters(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  var months = amount * 3;
-  return (0, _index2.default)(dirtyDate, months);
+function addQuarters(date, amount) {
+  const months = amount * 3;
+  return (0, _index.addMonths)(date, months);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4112:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3378:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addSeconds = addSeconds;
+var _index = __nccwpck_require__(8671);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(524));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addSeconds
  * @category Second Helpers
@@ -13020,39 +12472,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of seconds to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of seconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the seconds added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of seconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the seconds added
  *
  * @example
  * // Add 30 seconds to 10 July 2014 12:45:00:
  * const result = addSeconds(new Date(2014, 6, 10, 12, 45, 0), 30)
  * //=> Thu Jul 10 2014 12:45:30
  */
-function addSeconds(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, amount * 1000);
+function addSeconds(date, amount) {
+  return (0, _index.addMilliseconds)(date, amount * 1000);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7195:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6985:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addWeeks = addWeeks;
+var _index = __nccwpck_require__(8361);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addWeeks;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6227));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addWeeks
  * @category Week Helpers
@@ -13061,40 +12507,34 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of week to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of weeks to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the weeks added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of weeks to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the weeks added
  *
  * @example
  * // Add 4 weeks to 1 September 2014:
  * const result = addWeeks(new Date(2014, 8, 1), 4)
  * //=> Mon Sep 29 2014 00:00:00
  */
-function addWeeks(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  var days = amount * 7;
-  return (0, _index2.default)(dirtyDate, days);
+function addWeeks(date, amount) {
+  const days = amount * 7;
+  return (0, _index.addDays)(date, days);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3367:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7204:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.addYears = addYears;
+var _index = __nccwpck_require__(4119);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = addYears;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2995));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name addYears
  * @category Year Helpers
@@ -13103,54 +12543,50 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Add the specified number of years to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of years to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the years added
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the years added
  *
  * @example
  * // Add 5 years to 1 September 2014:
  * const result = addYears(new Date(2014, 8, 1), 5)
  * //=> Sun Sep 01 2019 00:00:00
  */
-function addYears(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, amount * 12);
+function addYears(date, amount) {
+  return (0, _index.addMonths)(date, amount * 12);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2282:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8690:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.areIntervalsOverlapping = areIntervalsOverlapping;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = areIntervalsOverlapping;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link areIntervalsOverlapping} function options.
+ */
+
 /**
  * @name areIntervalsOverlapping
  * @category Interval Helpers
  * @summary Is the given time interval overlapping with another time interval?
  *
  * @description
- * Is the given time interval overlapping with another time interval? Adjacent intervals do not count as overlapping.
+ * Is the given time interval overlapping with another time interval? Adjacent intervals do not count as overlapping unless `inclusive` is set to `true`.
  *
- * @param {Interval} intervalLeft - the first interval to compare. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @param {Interval} intervalRight - the second interval to compare. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @param {Object} [options] - the object with options
- * @param {Boolean} [options.inclusive=false] - whether the comparison is inclusive or not
- * @returns {Boolean} whether the time intervals are overlapping
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @param intervalLeft - The first interval to compare.
+ * @param intervalRight - The second interval to compare.
+ * @param options - The object with options
+ *
+ * @returns Whether the time intervals are overlapping
  *
  * @example
  * // For overlapping time intervals:
@@ -13183,6 +12619,8 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *   { start: new Date(2014, 0, 20), end: new Date(2014, 0, 24) }
  * )
  * //=> false
+ *
+ * @example
  * areIntervalsOverlapping(
  *   { start: new Date(2014, 0, 10), end: new Date(2014, 0, 20) },
  *   { start: new Date(2014, 0, 20), end: new Date(2014, 0, 24) },
@@ -13191,39 +12629,33 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> true
  */
 function areIntervalsOverlapping(intervalLeft, intervalRight, options) {
-  (0, _index2.default)(2, arguments);
-  var leftStartTime = (0, _index.default)(intervalLeft === null || intervalLeft === void 0 ? void 0 : intervalLeft.start).getTime();
-  var leftEndTime = (0, _index.default)(intervalLeft === null || intervalLeft === void 0 ? void 0 : intervalLeft.end).getTime();
-  var rightStartTime = (0, _index.default)(intervalRight === null || intervalRight === void 0 ? void 0 : intervalRight.start).getTime();
-  var rightEndTime = (0, _index.default)(intervalRight === null || intervalRight === void 0 ? void 0 : intervalRight.end).getTime();
+  const [leftStartTime, leftEndTime] = [
+    +(0, _index.toDate)(intervalLeft.start),
+    +(0, _index.toDate)(intervalLeft.end),
+  ].sort();
+  const [rightStartTime, rightEndTime] = [
+    +(0, _index.toDate)(intervalRight.start),
+    +(0, _index.toDate)(intervalRight.end),
+  ].sort();
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(leftStartTime <= leftEndTime && rightStartTime <= rightEndTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  if (options !== null && options !== void 0 && options.inclusive) {
+  if (options?.inclusive)
     return leftStartTime <= rightEndTime && rightStartTime <= leftEndTime;
-  }
+
   return leftStartTime < rightEndTime && rightStartTime < leftEndTime;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9660:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8832:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.clamp = clamp;
+var _index = __nccwpck_require__(7679);
+var _index2 = __nccwpck_require__(3607);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = clamp;
-var _index = _interopRequireDefault(__nccwpck_require__(5815));
-var _index2 = _interopRequireDefault(__nccwpck_require__(5310));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name clamp
  * @category Interval Helpers
@@ -13237,6 +12669,13 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * - When the date is greater than the end of the interval, the end is returned.
  * - Otherwise the date is returned.
  *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be bounded
+ * @param interval - The interval to bound to
+ *
+ * @returns The date bounded by the start and the end of the interval
+ *
  * @example
  * // What is Mar, 21, 2021 bounded to an interval starting at Mar, 22, 2021 and ending at Apr, 01, 2021
  * const result = clamp(new Date(2021, 2, 21), {
@@ -13244,35 +12683,25 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *   end: new Date(2021, 3, 1),
  * })
  * //=> Mon Mar 22 2021 00:00:00
- *
- * @param {Date | Number} date - the date to be bounded
- * @param {Interval} interval - the interval to bound to
- * @returns {Date} the date bounded by the start and the end of the interval
- * @throws {TypeError} 2 arguments required
  */
-function clamp(date, _ref) {
-  var start = _ref.start,
-    end = _ref.end;
-  (0, _index3.default)(2, arguments);
-  return (0, _index2.default)([(0, _index.default)([date, start]), end]);
+function clamp(date, interval) {
+  return (0, _index2.min)([
+    (0, _index.max)([date, interval.start]),
+    interval.end,
+  ]);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2264:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2563:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.closestIndexTo = closestIndexTo;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = closestIndexTo;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name closestIndexTo
  * @category Common Helpers
@@ -13281,10 +12710,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return an index of the closest date from the array comparing to the given date.
  *
- * @param {Date | Number} dateToCompare - the date to compare with
- * @param {Array<Date> | Array<number>} datesArray - the array to search
- * @returns {Number | undefined} an index of the date closest to the given date or undefined if no valid value is given
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateToCompare - The date to compare with
+ * @param dates - The array to search
+ *
+ * @returns An index of the date closest to the given date or undefined if no valid value is given
  *
  * @example
  * // Which date is closer to 6 September 2015?
@@ -13297,58 +12728,46 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = closestIndexTo(dateToCompare, datesArray)
  * //=> 1
  */
-function closestIndexTo(dirtyDateToCompare, dirtyDatesArray) {
-  (0, _index2.default)(2, arguments);
-  var dateToCompare = (0, _index.default)(dirtyDateToCompare);
-  if (isNaN(Number(dateToCompare))) return NaN;
-  var timeToCompare = dateToCompare.getTime();
-  var datesArray;
-  // `dirtyDatesArray` is undefined or null
-  if (dirtyDatesArray == null) {
-    datesArray = [];
+function closestIndexTo(dateToCompare, dates) {
+  const date = (0, _index.toDate)(dateToCompare);
 
-    // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
-  } else if (typeof dirtyDatesArray.forEach === 'function') {
-    datesArray = dirtyDatesArray;
+  if (isNaN(Number(date))) return NaN;
 
-    // If `dirtyDatesArray` is Array-like Object, convert to Array. Otherwise, make it empty Array
-  } else {
-    datesArray = Array.prototype.slice.call(dirtyDatesArray);
-  }
-  var result;
-  var minDistance;
-  datesArray.forEach(function (dirtyDate, index) {
-    var currentDate = (0, _index.default)(dirtyDate);
+  const timeToCompare = date.getTime();
+
+  let result;
+  let minDistance;
+  dates.forEach(function (dirtyDate, index) {
+    const currentDate = (0, _index.toDate)(dirtyDate);
+
     if (isNaN(Number(currentDate))) {
       result = NaN;
       minDistance = NaN;
       return;
     }
-    var distance = Math.abs(timeToCompare - currentDate.getTime());
-    if (result == null || distance < Number(minDistance)) {
+
+    const distance = Math.abs(timeToCompare - currentDate.getTime());
+    if (result == null || distance < minDistance) {
       result = index;
       minDistance = distance;
     }
   });
+
   return result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2013:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 43:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.closestTo = closestTo;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = closestTo;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name closestTo
  * @category Common Helpers
@@ -13357,10 +12776,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return a date from the array closest to the given date.
  *
- * @param {Date | Number} dateToCompare - the date to compare with
- * @param {Array<Date> | Array<number>} datesArray - the array to search
- * @returns {Date | undefined} the date from the array closest to the given date or undefined if no valid value is given
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateToCompare - The date to compare with
+ * @param dates - The array to search
+ *
+ * @returns The date from the array closest to the given date or undefined if no valid value is given
  *
  * @example
  * // Which date is closer to 6 September 2015: 1 January 2000 or 1 January 2030?
@@ -13371,58 +12792,45 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * ])
  * //=> Tue Jan 01 2030 00:00:00
  */
-function closestTo(dirtyDateToCompare, dirtyDatesArray) {
-  (0, _index2.default)(2, arguments);
-  var dateToCompare = (0, _index.default)(dirtyDateToCompare);
-  if (isNaN(Number(dateToCompare))) return new Date(NaN);
-  var timeToCompare = dateToCompare.getTime();
-  var datesArray;
-  // `dirtyDatesArray` is undefined or null
-  if (dirtyDatesArray == null) {
-    datesArray = [];
+function closestTo(dateToCompare, dates) {
+  const date = (0, _index2.toDate)(dateToCompare);
 
-    // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
-  } else if (typeof dirtyDatesArray.forEach === 'function') {
-    datesArray = dirtyDatesArray;
+  if (isNaN(Number(date))) return (0, _index.constructFrom)(dateToCompare, NaN);
 
-    // If `dirtyDatesArray` is Array-like Object, convert to Array. Otherwise, make it empty Array
-  } else {
-    datesArray = Array.prototype.slice.call(dirtyDatesArray);
-  }
-  var result;
-  var minDistance;
-  datesArray.forEach(function (dirtyDate) {
-    var currentDate = (0, _index.default)(dirtyDate);
+  const timeToCompare = date.getTime();
+
+  let result;
+  let minDistance;
+  dates.forEach((dirtyDate) => {
+    const currentDate = (0, _index2.toDate)(dirtyDate);
+
     if (isNaN(Number(currentDate))) {
-      result = new Date(NaN);
+      result = (0, _index.constructFrom)(dateToCompare, NaN);
       minDistance = NaN;
       return;
     }
-    var distance = Math.abs(timeToCompare - currentDate.getTime());
-    if (result == null || distance < Number(minDistance)) {
+
+    const distance = Math.abs(timeToCompare - currentDate.getTime());
+    if (result == null || distance < minDistance) {
       result = currentDate;
       minDistance = distance;
     }
   });
+
   return result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9818:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6125:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.compareAsc = compareAsc;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = compareAsc;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name compareAsc
  * @category Common Helpers
@@ -13432,10 +12840,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Compare the two dates and return 1 if the first date is after the second,
  * -1 if the first date is before the second or 0 if dates are equal.
  *
- * @param {Date|Number} dateLeft - the first date to compare
- * @param {Date|Number} dateRight - the second date to compare
- * @returns {Number} the result of the comparison
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to compare
+ * @param dateRight - The second date to compare
+ *
+ * @returns The result of the comparison
  *
  * @example
  * // Compare 11 February 1987 and 10 July 1989:
@@ -13455,11 +12865,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Sun Jul 02 1995 00:00:00
  * // ]
  */
-function compareAsc(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var diff = dateLeft.getTime() - dateRight.getTime();
+function compareAsc(dateLeft, dateRight) {
+  const _dateLeft = (0, _index.toDate)(dateLeft);
+  const _dateRight = (0, _index.toDate)(dateRight);
+
+  const diff = _dateLeft.getTime() - _dateRight.getTime();
+
   if (diff < 0) {
     return -1;
   } else if (diff > 0) {
@@ -13469,23 +12880,18 @@ function compareAsc(dirtyDateLeft, dirtyDateRight) {
     return diff;
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7783:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3259:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.compareDesc = compareDesc;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = compareDesc;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name compareDesc
  * @category Common Helpers
@@ -13495,10 +12901,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Compare the two dates and return -1 if the first date is after the second,
  * 1 if the first date is before the second or 0 if dates are equal.
  *
- * @param {Date|Number} dateLeft - the first date to compare
- * @param {Date|Number} dateRight - the second date to compare
- * @returns {Number} the result of the comparison
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to compare
+ * @param dateRight - The second date to compare
+ *
+ * @returns The result of the comparison
  *
  * @example
  * // Compare 11 February 1987 and 10 July 1989 reverse chronologically:
@@ -13518,11 +12926,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Wed Feb 11 1987 00:00:00
  * // ]
  */
-function compareDesc(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var diff = dateLeft.getTime() - dateRight.getTime();
+function compareDesc(dateLeft, dateRight) {
+  const _dateLeft = (0, _index.toDate)(dateLeft);
+  const _dateRight = (0, _index.toDate)(dateRight);
+
+  const diff = _dateLeft.getTime() - _dateRight.getTime();
+
   if (diff > 0) {
     return -1;
   } else if (diff < 0) {
@@ -13532,237 +12941,299 @@ function compareDesc(dirtyDateLeft, dirtyDateRight) {
     return diff;
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5756:
+/***/ 7818:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.secondsInYear = exports.secondsInWeek = exports.secondsInQuarter = exports.secondsInMonth = exports.secondsInMinute = exports.secondsInHour = exports.secondsInDay = exports.quartersInYear = exports.monthsInYear = exports.monthsInQuarter = exports.minutesInHour = exports.minTime = exports.millisecondsInSecond = exports.millisecondsInMinute = exports.millisecondsInHour = exports.maxTime = exports.daysInYear = exports.daysInWeek = void 0;
-/**
- * Days in 1 week.
+exports.secondsInYear =
+  exports.secondsInWeek =
+  exports.secondsInQuarter =
+  exports.secondsInMonth =
+  exports.secondsInMinute =
+  exports.secondsInHour =
+  exports.secondsInDay =
+  exports.quartersInYear =
+  exports.monthsInYear =
+  exports.monthsInQuarter =
+  exports.minutesInYear =
+  exports.minutesInMonth =
+  exports.minutesInHour =
+  exports.minutesInDay =
+  exports.minTime =
+  exports.millisecondsInWeek =
+  exports.millisecondsInSecond =
+  exports.millisecondsInMinute =
+  exports.millisecondsInHour =
+  exports.millisecondsInDay =
+  exports.maxTime =
+  exports.daysInYear =
+  exports.daysInWeek =
+    void 0; /**
+ * @module constants
+ * @summary Useful constants
+ * @description
+ * Collection of useful date constants.
  *
- * @name daysInWeek
- * @constant
- * @type {number}
- * @default
+ * The constants could be imported from `date-fns/constants`:
+ *
+ * ```ts
+ * import { maxTime, minTime } from "date-fns/constants";
+ *
+ * function isAllowedTime(time) {
+ *   return time <= maxTime && time >= minTime;
+ * }
+ * ```
  */
-var daysInWeek = 7;
 
 /**
- * Days in 1 year
+ * @constant
+ * @name daysInWeek
+ * @summary Days in 1 week.
+ */
+const daysInWeek = (exports.daysInWeek = 7);
+
+/**
+ * @constant
+ * @name daysInYear
+ * @summary Days in 1 year.
+ *
+ * @description
+ * How many days in a year.
+ *
  * One years equals 365.2425 days according to the formula:
  *
  * > Leap year occures every 4 years, except for years that are divisable by 100 and not divisable by 400.
  * > 1 mean year = (365+1/4-1/100+1/400) days = 365.2425 days
- *
- * @name daysInYear
- * @constant
- * @type {number}
- * @default
  */
-exports.daysInWeek = daysInWeek;
-var daysInYear = 365.2425;
+const daysInYear = (exports.daysInYear = 365.2425);
 
 /**
- * Maximum allowed time.
- *
+ * @constant
  * @name maxTime
- * @constant
- * @type {number}
- * @default
+ * @summary Maximum allowed time.
+ *
+ * @example
+ * import { maxTime } from "date-fns/constants";
+ *
+ * const isValid = 8640000000000001 <= maxTime;
+ * //=> false
+ *
+ * new Date(8640000000000001);
+ * //=> Invalid Date
  */
-exports.daysInYear = daysInYear;
-var maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1000;
+const maxTime = (exports.maxTime = Math.pow(10, 8) * 24 * 60 * 60 * 1000);
 
 /**
- * Milliseconds in 1 minute
- *
- * @name millisecondsInMinute
  * @constant
- * @type {number}
- * @default
- */
-exports.maxTime = maxTime;
-var millisecondsInMinute = 60000;
-
-/**
- * Milliseconds in 1 hour
- *
- * @name millisecondsInHour
- * @constant
- * @type {number}
- * @default
- */
-exports.millisecondsInMinute = millisecondsInMinute;
-var millisecondsInHour = 3600000;
-
-/**
- * Milliseconds in 1 second
- *
- * @name millisecondsInSecond
- * @constant
- * @type {number}
- * @default
- */
-exports.millisecondsInHour = millisecondsInHour;
-var millisecondsInSecond = 1000;
-
-/**
- * Minimum allowed time.
- *
  * @name minTime
- * @constant
- * @type {number}
- * @default
+ * @summary Minimum allowed time.
+ *
+ * @example
+ * import { minTime } from "date-fns/constants";
+ *
+ * const isValid = -8640000000000001 >= minTime;
+ * //=> false
+ *
+ * new Date(-8640000000000001)
+ * //=> Invalid Date
  */
-exports.millisecondsInSecond = millisecondsInSecond;
-var minTime = -maxTime;
+const minTime = (exports.minTime = -maxTime);
 
 /**
- * Minutes in 1 hour
- *
+ * @constant
+ * @name millisecondsInWeek
+ * @summary Milliseconds in 1 week.
+ */
+const millisecondsInWeek = (exports.millisecondsInWeek = 604800000);
+
+/**
+ * @constant
+ * @name millisecondsInDay
+ * @summary Milliseconds in 1 day.
+ */
+const millisecondsInDay = (exports.millisecondsInDay = 86400000);
+
+/**
+ * @constant
+ * @name millisecondsInMinute
+ * @summary Milliseconds in 1 minute
+ */
+const millisecondsInMinute = (exports.millisecondsInMinute = 60000);
+
+/**
+ * @constant
+ * @name millisecondsInHour
+ * @summary Milliseconds in 1 hour
+ */
+const millisecondsInHour = (exports.millisecondsInHour = 3600000);
+
+/**
+ * @constant
+ * @name millisecondsInSecond
+ * @summary Milliseconds in 1 second
+ */
+const millisecondsInSecond = (exports.millisecondsInSecond = 1000);
+
+/**
+ * @constant
+ * @name minutesInYear
+ * @summary Minutes in 1 year.
+ */
+const minutesInYear = (exports.minutesInYear = 525600);
+
+/**
+ * @constant
+ * @name minutesInMonth
+ * @summary Minutes in 1 month.
+ */
+const minutesInMonth = (exports.minutesInMonth = 43200);
+
+/**
+ * @constant
+ * @name minutesInDay
+ * @summary Minutes in 1 day.
+ */
+const minutesInDay = (exports.minutesInDay = 1440);
+
+/**
+ * @constant
  * @name minutesInHour
- * @constant
- * @type {number}
- * @default
+ * @summary Minutes in 1 hour.
  */
-exports.minTime = minTime;
-var minutesInHour = 60;
+const minutesInHour = (exports.minutesInHour = 60);
 
 /**
- * Months in 1 quarter
- *
+ * @constant
  * @name monthsInQuarter
- * @constant
- * @type {number}
- * @default
+ * @summary Months in 1 quarter.
  */
-exports.minutesInHour = minutesInHour;
-var monthsInQuarter = 3;
+const monthsInQuarter = (exports.monthsInQuarter = 3);
 
 /**
- * Months in 1 year
- *
+ * @constant
  * @name monthsInYear
- * @constant
- * @type {number}
- * @default
+ * @summary Months in 1 year.
  */
-exports.monthsInQuarter = monthsInQuarter;
-var monthsInYear = 12;
+const monthsInYear = (exports.monthsInYear = 12);
 
 /**
- * Quarters in 1 year
- *
+ * @constant
  * @name quartersInYear
- * @constant
- * @type {number}
- * @default
+ * @summary Quarters in 1 year
  */
-exports.monthsInYear = monthsInYear;
-var quartersInYear = 4;
+const quartersInYear = (exports.quartersInYear = 4);
 
 /**
- * Seconds in 1 hour
- *
+ * @constant
  * @name secondsInHour
- * @constant
- * @type {number}
- * @default
+ * @summary Seconds in 1 hour.
  */
-exports.quartersInYear = quartersInYear;
-var secondsInHour = 3600;
+const secondsInHour = (exports.secondsInHour = 3600);
 
 /**
- * Seconds in 1 minute
- *
+ * @constant
  * @name secondsInMinute
- * @constant
- * @type {number}
- * @default
+ * @summary Seconds in 1 minute.
  */
-exports.secondsInHour = secondsInHour;
-var secondsInMinute = 60;
+const secondsInMinute = (exports.secondsInMinute = 60);
 
 /**
- * Seconds in 1 day
- *
+ * @constant
  * @name secondsInDay
- * @constant
- * @type {number}
- * @default
+ * @summary Seconds in 1 day.
  */
-exports.secondsInMinute = secondsInMinute;
-var secondsInDay = secondsInHour * 24;
+const secondsInDay = (exports.secondsInDay = secondsInHour * 24);
 
 /**
- * Seconds in 1 week
- *
+ * @constant
  * @name secondsInWeek
- * @constant
- * @type {number}
- * @default
+ * @summary Seconds in 1 week.
  */
-exports.secondsInDay = secondsInDay;
-var secondsInWeek = secondsInDay * 7;
+const secondsInWeek = (exports.secondsInWeek = secondsInDay * 7);
 
 /**
- * Seconds in 1 year
- *
+ * @constant
  * @name secondsInYear
- * @constant
- * @type {number}
- * @default
+ * @summary Seconds in 1 year.
  */
-exports.secondsInWeek = secondsInWeek;
-var secondsInYear = secondsInDay * daysInYear;
+const secondsInYear = (exports.secondsInYear = secondsInDay * daysInYear);
 
 /**
- * Seconds in 1 month
- *
+ * @constant
  * @name secondsInMonth
- * @constant
- * @type {number}
- * @default
+ * @summary Seconds in 1 month
  */
-exports.secondsInYear = secondsInYear;
-var secondsInMonth = secondsInYear / 12;
+const secondsInMonth = (exports.secondsInMonth = secondsInYear / 12);
 
 /**
- * Seconds in 1 quarter
- *
- * @name secondsInQuarter
  * @constant
- * @type {number}
- * @default
+ * @name secondsInQuarter
+ * @summary Seconds in 1 quarter.
  */
-exports.secondsInMonth = secondsInMonth;
-var secondsInQuarter = secondsInMonth * 3;
-exports.secondsInQuarter = secondsInQuarter;
+const secondsInQuarter = (exports.secondsInQuarter = secondsInMonth * 3);
+
 
 /***/ }),
 
-/***/ 6237:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2736:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.constructFrom = constructFrom;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = daysToWeeks;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
+/**
+ * @name constructFrom
+ * @category Generic Helpers
+ * @summary Constructs a date using the reference date and the value
+ *
+ * @description
+ * The function constructs a new date using the constructor from the reference
+ * date and the given value. It helps to build generic functions that accept
+ * date extensions.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The reference date to take constructor from
+ * @param value - The value to create the date
+ *
+ * @returns Date initialized using the given date and value
+ *
+ * @example
+ * import { constructFrom } from 'date-fns'
+ *
+ * // A function that clones a date preserving the original type
+ * function cloneDate<DateType extends Date(date: DateType): DateType {
+ *   return constructFrom(
+ *     date, // Use contrustor from the given date
+ *     date.getTime() // Use the date value to create a new date
+ *   )
+ * }
+ */
+function constructFrom(date, value) {
+  if (date instanceof Date) {
+    return new date.constructor(value);
+  } else {
+    return new Date(value);
+  }
+}
+
+
+/***/ }),
+
+/***/ 5123:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.daysToWeeks = daysToWeeks;
+var _index = __nccwpck_require__(7818);
+
 /**
  * @name daysToWeeks
  * @category Conversion Helpers
@@ -13771,10 +13242,11 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of days to a full number of weeks.
  *
- * @param {number} days - number of days to be converted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {number} the number of days converted in weeks
- * @throws {TypeError} 1 argument required
+ * @param days - The number of days to be converted
+ *
+ * @returns The number of days converted in weeks
  *
  * @example
  * // Convert 14 days to weeks:
@@ -13787,33 +13259,26 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 1
  */
 function daysToWeeks(days) {
-  (0, _index.default)(1, arguments);
-  var weeks = days / _index2.daysInWeek;
+  const weeks = days / _index.daysInWeek;
   return Math.floor(weeks);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4734:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6753:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInBusinessDays = differenceInBusinessDays;
+var _index = __nccwpck_require__(8361);
+var _index2 = __nccwpck_require__(338);
+var _index3 = __nccwpck_require__(8512);
+var _index4 = __nccwpck_require__(8915);
+var _index5 = __nccwpck_require__(5417);
+var _index6 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInBusinessDays;
-var _index = _interopRequireDefault(__nccwpck_require__(6227));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3086));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2154));
-var _index4 = _interopRequireDefault(__nccwpck_require__(9920));
-var _index5 = _interopRequireDefault(__nccwpck_require__(403));
-var _index6 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index7 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index8 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name differenceInBusinessDays
  * @category Day Helpers
@@ -13825,10 +13290,12 @@ var _index8 = _interopRequireDefault(__nccwpck_require__(1985));
  * Like `differenceInCalendarDays`, the function removes the times from
  * the dates before calculating the difference.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of business days
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of business days
  *
  * @example
  * // How many business days are between
@@ -13863,44 +13330,47 @@ var _index8 = _interopRequireDefault(__nccwpck_require__(1985));
  * )
  * //=> 0
  */
-function differenceInBusinessDays(dirtyDateLeft, dirtyDateRight) {
-  (0, _index7.default)(2, arguments);
-  var dateLeft = (0, _index6.default)(dirtyDateLeft);
-  var dateRight = (0, _index6.default)(dirtyDateRight);
-  if (!(0, _index4.default)(dateLeft) || !(0, _index4.default)(dateRight)) return NaN;
-  var calendarDifference = (0, _index2.default)(dateLeft, dateRight);
-  var sign = calendarDifference < 0 ? -1 : 1;
-  var weeks = (0, _index8.default)(calendarDifference / 7);
-  var result = weeks * 5;
-  dateRight = (0, _index.default)(dateRight, weeks * 7);
+function differenceInBusinessDays(dateLeft, dateRight) {
+  const _dateLeft = (0, _index6.toDate)(dateLeft);
+  let _dateRight = (0, _index6.toDate)(dateRight);
+
+  if (!(0, _index4.isValid)(_dateLeft) || !(0, _index4.isValid)(_dateRight))
+    return NaN;
+
+  const calendarDifference = (0, _index2.differenceInCalendarDays)(
+    _dateLeft,
+    _dateRight,
+  );
+  const sign = calendarDifference < 0 ? -1 : 1;
+
+  const weeks = Math.trunc(calendarDifference / 7);
+
+  let result = weeks * 5;
+  _dateRight = (0, _index.addDays)(_dateRight, weeks * 7);
 
   // the loop below will run at most 6 times to account for the remaining days that don't makeup a full week
-  while (!(0, _index3.default)(dateLeft, dateRight)) {
+  while (!(0, _index3.isSameDay)(_dateLeft, _dateRight)) {
     // sign is used to account for both negative and positive differences
-    result += (0, _index5.default)(dateRight) ? 0 : sign;
-    dateRight = (0, _index.default)(dateRight, sign);
+    result += (0, _index5.isWeekend)(_dateRight) ? 0 : sign;
+    _dateRight = (0, _index.addDays)(_dateRight, sign);
   }
+
+  // Prevent negative zero
   return result === 0 ? 0 : result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3086:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 338:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarDays;
-var _index = _interopRequireDefault(__nccwpck_require__(7032));
-var _index2 = _interopRequireDefault(__nccwpck_require__(1868));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_DAY = 86400000;
+exports.differenceInCalendarDays = differenceInCalendarDays;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(1310);
+var _index3 = __nccwpck_require__(1292);
 
 /**
  * @name differenceInCalendarDays
@@ -13911,10 +13381,12 @@ var MILLISECONDS_IN_DAY = 86400000;
  * Get the number of calendar days between the given dates. This means that the times are removed
  * from the dates and then the difference in days is calculated.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of calendar days
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of calendar days
  *
  * @example
  * // How many calendar days are between
@@ -13932,35 +13404,36 @@ var MILLISECONDS_IN_DAY = 86400000;
  * )
  * //=> 1
  */
-function differenceInCalendarDays(dirtyDateLeft, dirtyDateRight) {
-  (0, _index3.default)(2, arguments);
-  var startOfDayLeft = (0, _index2.default)(dirtyDateLeft);
-  var startOfDayRight = (0, _index2.default)(dirtyDateRight);
-  var timestampLeft = startOfDayLeft.getTime() - (0, _index.default)(startOfDayLeft);
-  var timestampRight = startOfDayRight.getTime() - (0, _index.default)(startOfDayRight);
+function differenceInCalendarDays(dateLeft, dateRight) {
+  const startOfDayLeft = (0, _index2.startOfDay)(dateLeft);
+  const startOfDayRight = (0, _index2.startOfDay)(dateRight);
+
+  const timestampLeft =
+    startOfDayLeft.getTime() -
+    (0, _index3.getTimezoneOffsetInMilliseconds)(startOfDayLeft);
+  const timestampRight =
+    startOfDayRight.getTime() -
+    (0, _index3.getTimezoneOffsetInMilliseconds)(startOfDayRight);
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a day is not constant
   // (e.g. it's different in the day of the daylight saving time clock shift)
-  return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_DAY);
+  return Math.round(
+    (timestampLeft - timestampRight) / _index.millisecondsInDay,
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6778:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9321:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInCalendarISOWeekYears = differenceInCalendarISOWeekYears;
+var _index = __nccwpck_require__(308);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarISOWeekYears;
-var _index = _interopRequireDefault(__nccwpck_require__(6991));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInCalendarISOWeekYears
  * @category ISO Week-Numbering Year Helpers
@@ -13971,10 +13444,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of calendar ISO week-numbering years
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of calendar ISO week-numbering years
  *
  * @example
  * // How many calendar ISO week-numbering years are 1 January 2010 and 1 January 2012?
@@ -13984,29 +13459,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> 2
  */
-function differenceInCalendarISOWeekYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  return (0, _index.default)(dirtyDateLeft) - (0, _index.default)(dirtyDateRight);
+function differenceInCalendarISOWeekYears(dateLeft, dateRight) {
+  return (
+    (0, _index.getISOWeekYear)(dateLeft) - (0, _index.getISOWeekYear)(dateRight)
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1656:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4765:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarISOWeeks;
-var _index = _interopRequireDefault(__nccwpck_require__(7032));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6307));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
+exports.differenceInCalendarISOWeeks = differenceInCalendarISOWeeks;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(9709);
+var _index3 = __nccwpck_require__(1292);
 
 /**
  * @name differenceInCalendarISOWeeks
@@ -14018,10 +13488,12 @@ var MILLISECONDS_IN_WEEK = 604800000;
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of calendar ISO weeks
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of calendar ISO weeks
  *
  * @example
  * // How many calendar ISO weeks are between 6 July 2014 and 21 July 2014?
@@ -14031,35 +13503,36 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * )
  * //=> 3
  */
-function differenceInCalendarISOWeeks(dirtyDateLeft, dirtyDateRight) {
-  (0, _index3.default)(2, arguments);
-  var startOfISOWeekLeft = (0, _index2.default)(dirtyDateLeft);
-  var startOfISOWeekRight = (0, _index2.default)(dirtyDateRight);
-  var timestampLeft = startOfISOWeekLeft.getTime() - (0, _index.default)(startOfISOWeekLeft);
-  var timestampRight = startOfISOWeekRight.getTime() - (0, _index.default)(startOfISOWeekRight);
+function differenceInCalendarISOWeeks(dateLeft, dateRight) {
+  const startOfISOWeekLeft = (0, _index2.startOfISOWeek)(dateLeft);
+  const startOfISOWeekRight = (0, _index2.startOfISOWeek)(dateRight);
+
+  const timestampLeft =
+    startOfISOWeekLeft.getTime() -
+    (0, _index3.getTimezoneOffsetInMilliseconds)(startOfISOWeekLeft);
+  const timestampRight =
+    startOfISOWeekRight.getTime() -
+    (0, _index3.getTimezoneOffsetInMilliseconds)(startOfISOWeekRight);
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
   // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_WEEK);
+  return Math.round(
+    (timestampLeft - timestampRight) / _index.millisecondsInWeek,
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5536:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4939:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInCalendarMonths = differenceInCalendarMonths;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarMonths;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInCalendarMonths
  * @category Month Helpers
@@ -14068,10 +13541,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of calendar months between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of calendar months
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of calendar months
  *
  * @example
  * // How many calendar months are between 31 January 2014 and 1 September 2014?
@@ -14081,32 +13556,28 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> 8
  */
-function differenceInCalendarMonths(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
-  var monthDiff = dateLeft.getMonth() - dateRight.getMonth();
+function differenceInCalendarMonths(dateLeft, dateRight) {
+  const _dateLeft = (0, _index.toDate)(dateLeft);
+  const _dateRight = (0, _index.toDate)(dateRight);
+
+  const yearDiff = _dateLeft.getFullYear() - _dateRight.getFullYear();
+  const monthDiff = _dateLeft.getMonth() - _dateRight.getMonth();
+
   return yearDiff * 12 + monthDiff;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2342:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3599:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInCalendarQuarters = differenceInCalendarQuarters;
+var _index = __nccwpck_require__(2243);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarQuarters;
-var _index = _interopRequireDefault(__nccwpck_require__(4523));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInCalendarQuarters
  * @category Quarter Helpers
@@ -14115,10 +13586,12 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of calendar quarters between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of calendar quarters
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+
+ * @returns The number of calendar quarters
  *
  * @example
  * // How many calendar quarters are between 31 December 2013 and 2 July 2014?
@@ -14128,33 +13601,34 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> 3
  */
-function differenceInCalendarQuarters(dirtyDateLeft, dirtyDateRight) {
-  (0, _index3.default)(2, arguments);
-  var dateLeft = (0, _index2.default)(dirtyDateLeft);
-  var dateRight = (0, _index2.default)(dirtyDateRight);
-  var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
-  var quarterDiff = (0, _index.default)(dateLeft) - (0, _index.default)(dateRight);
+function differenceInCalendarQuarters(dateLeft, dateRight) {
+  const _dateLeft = (0, _index2.toDate)(dateLeft);
+  const _dateRight = (0, _index2.toDate)(dateRight);
+
+  const yearDiff = _dateLeft.getFullYear() - _dateRight.getFullYear();
+  const quarterDiff =
+    (0, _index.getQuarter)(_dateLeft) - (0, _index.getQuarter)(_dateRight);
+
   return yearDiff * 4 + quarterDiff;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8620:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1538:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInCalendarWeeks = differenceInCalendarWeeks;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(6068);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarWeeks;
-var _index = _interopRequireDefault(__nccwpck_require__(9813));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
+var _index3 = __nccwpck_require__(1292);
+
+/**
+ * The {@link differenceInCalendarWeeks} function options.
+ */
 
 /**
  * @name differenceInCalendarWeeks
@@ -14164,14 +13638,13 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * @description
  * Get the number of calendar weeks between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Number} the number of calendar weeks
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ * @param options - An object with options.
+ *
+ * @returns The number of calendar weeks
  *
  * @example
  * // How many calendar weeks are between 5 July 2014 and 20 July 2014?
@@ -14191,35 +13664,36 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * )
  * //=> 2
  */
-function differenceInCalendarWeeks(dirtyDateLeft, dirtyDateRight, options) {
-  (0, _index3.default)(2, arguments);
-  var startOfWeekLeft = (0, _index.default)(dirtyDateLeft, options);
-  var startOfWeekRight = (0, _index.default)(dirtyDateRight, options);
-  var timestampLeft = startOfWeekLeft.getTime() - (0, _index2.default)(startOfWeekLeft);
-  var timestampRight = startOfWeekRight.getTime() - (0, _index2.default)(startOfWeekRight);
+function differenceInCalendarWeeks(dateLeft, dateRight, options) {
+  const startOfWeekLeft = (0, _index2.startOfWeek)(dateLeft, options);
+  const startOfWeekRight = (0, _index2.startOfWeek)(dateRight, options);
+
+  const timestampLeft =
+    startOfWeekLeft.getTime() -
+    (0, _index3.getTimezoneOffsetInMilliseconds)(startOfWeekLeft);
+  const timestampRight =
+    startOfWeekRight.getTime() -
+    (0, _index3.getTimezoneOffsetInMilliseconds)(startOfWeekRight);
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
   // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_WEEK);
+  return Math.round(
+    (timestampLeft - timestampRight) / _index.millisecondsInWeek,
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5237:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6143:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInCalendarYears = differenceInCalendarYears;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInCalendarYears;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInCalendarYears
  * @category Year Helpers
@@ -14228,10 +13702,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of calendar years between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of calendar years
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+
+ * @returns The number of calendar years
  *
  * @example
  * // How many calendar years are between 31 December 2013 and 11 February 2015?
@@ -14241,45 +13717,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> 2
  */
-function differenceInCalendarYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  return dateLeft.getFullYear() - dateRight.getFullYear();
+function differenceInCalendarYears(dateLeft, dateRight) {
+  const _dateLeft = (0, _index.toDate)(dateLeft);
+  const _dateRight = (0, _index.toDate)(dateRight);
+
+  return _dateLeft.getFullYear() - _dateRight.getFullYear();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6311:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6605:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInDays;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3086));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-// Like `compareAsc` but uses local time not UTC, which is needed
-// for accurate equality comparisons of UTC timestamps that end up
-// having the same representation in local time, e.g. one hour before
-// DST ends vs. the instant that DST ends.
-function compareLocalAsc(dateLeft, dateRight) {
-  var diff = dateLeft.getFullYear() - dateRight.getFullYear() || dateLeft.getMonth() - dateRight.getMonth() || dateLeft.getDate() - dateRight.getDate() || dateLeft.getHours() - dateRight.getHours() || dateLeft.getMinutes() - dateRight.getMinutes() || dateLeft.getSeconds() - dateRight.getSeconds() || dateLeft.getMilliseconds() - dateRight.getMilliseconds();
-  if (diff < 0) {
-    return -1;
-  } else if (diff > 0) {
-    return 1;
-    // Return 0 if diff is 0; return NaN if diff is NaN
-  } else {
-    return diff;
-  }
-}
+exports.differenceInDays = differenceInDays;
+var _index = __nccwpck_require__(338);
+var _index2 = __nccwpck_require__(3622);
 
 /**
  * @name differenceInDays
@@ -14297,11 +13752,12 @@ function compareLocalAsc(dateLeft, dateRight) {
  * To ignore DST and only measure exact 24-hour periods, use this instead:
  * `Math.floor(differenceInHours(dateLeft, dateRight)/24)|0`.
  *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of full days according to the local timezone
- * @throws {TypeError} 2 arguments required
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of full days according to the local timezone
  *
  * @example
  * // How many full days are between
@@ -14311,6 +13767,8 @@ function compareLocalAsc(dateLeft, dateRight) {
  *   new Date(2011, 6, 2, 23, 0)
  * )
  * //=> 365
+ *
+ * @example
  * // How many full days are between
  * // 2 July 2011 23:59:00 and 3 July 2011 00:01:00?
  * const result = differenceInDays(
@@ -14318,6 +13776,8 @@ function compareLocalAsc(dateLeft, dateRight) {
  *   new Date(2011, 6, 2, 23, 59)
  * )
  * //=> 0
+ *
+ * @example
  * // How many full days are between
  * // 1 March 2020 0:00 and 1 June 2020 0:00 ?
  * // Note: because local time is used, the
@@ -14328,42 +13788,71 @@ function compareLocalAsc(dateLeft, dateRight) {
  *   new Date(2020, 5, 1),
  *   new Date(2020, 2, 1)
  * )
-//=> 92
+ * //=> 92
  */
-function differenceInDays(dirtyDateLeft, dirtyDateRight) {
-  (0, _index3.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var sign = compareLocalAsc(dateLeft, dateRight);
-  var difference = Math.abs((0, _index2.default)(dateLeft, dateRight));
-  dateLeft.setDate(dateLeft.getDate() - sign * difference);
+function differenceInDays(dateLeft, dateRight) {
+  const _dateLeft = (0, _index2.toDate)(dateLeft);
+  const _dateRight = (0, _index2.toDate)(dateRight);
+
+  const sign = compareLocalAsc(_dateLeft, _dateRight);
+  const difference = Math.abs(
+    (0, _index.differenceInCalendarDays)(_dateLeft, _dateRight),
+  );
+
+  _dateLeft.setDate(_dateLeft.getDate() - sign * difference);
 
   // Math.abs(diff in full days - diff in calendar days) === 1 if last calendar day is not full
   // If so, result must be decreased by 1 in absolute value
-  var isLastDayNotFull = Number(compareLocalAsc(dateLeft, dateRight) === -sign);
-  var result = sign * (difference - isLastDayNotFull);
+  const isLastDayNotFull = Number(
+    compareLocalAsc(_dateLeft, _dateRight) === -sign,
+  );
+  const result = sign * (difference - isLastDayNotFull);
   // Prevent negative zero
   return result === 0 ? 0 : result;
 }
-module.exports = exports.default;
+
+// Like `compareAsc` but uses local time not UTC, which is needed
+// for accurate equality comparisons of UTC timestamps that end up
+// having the same representation in local time, e.g. one hour before
+// DST ends vs. the instant that DST ends.
+function compareLocalAsc(dateLeft, dateRight) {
+  const diff =
+    dateLeft.getFullYear() - dateRight.getFullYear() ||
+    dateLeft.getMonth() - dateRight.getMonth() ||
+    dateLeft.getDate() - dateRight.getDate() ||
+    dateLeft.getHours() - dateRight.getHours() ||
+    dateLeft.getMinutes() - dateRight.getMinutes() ||
+    dateLeft.getSeconds() - dateRight.getSeconds() ||
+    dateLeft.getMilliseconds() - dateRight.getMilliseconds();
+
+  if (diff < 0) {
+    return -1;
+  } else if (diff > 0) {
+    return 1;
+    // Return 0 if diff is 0; return NaN if diff is NaN
+  } else {
+    return diff;
+  }
+}
+
 
 /***/ }),
 
-/***/ 8740:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7407:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInHours = differenceInHours;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(5654);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInHours;
-var _index = __nccwpck_require__(5756);
-var _index2 = _interopRequireDefault(__nccwpck_require__(2288));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index4 = __nccwpck_require__(8016);
+var _index3 = __nccwpck_require__(304);
+
+/**
+ * The {@link differenceInHours} function options.
+ */
+
 /**
  * @name differenceInHours
  * @category Hour Helpers
@@ -14372,12 +13861,13 @@ var _index4 = __nccwpck_require__(8016);
  * @description
  * Get the number of hours between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @param {Object} [options] - an object with options.
- * @param {String} [options.roundingMethod='trunc'] - a rounding method (`ceil`, `floor`, `round` or `trunc`)
- * @returns {Number} the number of hours
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ * @param options - An object with options.
+ *
+ * @returns The number of hours
  *
  * @example
  * // How many hours are between 2 July 2014 06:50:00 and 2 July 2014 19:00:00?
@@ -14388,30 +13878,26 @@ var _index4 = __nccwpck_require__(8016);
  * //=> 12
  */
 function differenceInHours(dateLeft, dateRight, options) {
-  (0, _index3.default)(2, arguments);
-  var diff = (0, _index2.default)(dateLeft, dateRight) / _index.millisecondsInHour;
-  return (0, _index4.getRoundingMethod)(options === null || options === void 0 ? void 0 : options.roundingMethod)(diff);
+  const diff =
+    (0, _index2.differenceInMilliseconds)(dateLeft, dateRight) /
+    _index.millisecondsInHour;
+  return (0, _index3.getRoundingMethod)(options?.roundingMethod)(diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8815:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 797:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInISOWeekYears = differenceInISOWeekYears;
+var _index = __nccwpck_require__(6125);
+var _index2 = __nccwpck_require__(9321);
+var _index3 = __nccwpck_require__(4118);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInISOWeekYears;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6778));
-var _index3 = _interopRequireDefault(__nccwpck_require__(9818));
-var _index4 = _interopRequireDefault(__nccwpck_require__(3925));
-var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInISOWeekYears
  * @category ISO Week-Numbering Year Helpers
@@ -14422,10 +13908,12 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of full ISO week-numbering years
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of full ISO week-numbering years
  *
  * @example
  * // How many full ISO week-numbering years are between 1 January 2010 and 1 January 2012?
@@ -14435,39 +13923,38 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> 1
  */
-function differenceInISOWeekYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index5.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var sign = (0, _index3.default)(dateLeft, dateRight);
-  var difference = Math.abs((0, _index2.default)(dateLeft, dateRight));
-  dateLeft = (0, _index4.default)(dateLeft, sign * difference);
+function differenceInISOWeekYears(dateLeft, dateRight) {
+  let _dateLeft = (0, _index4.toDate)(dateLeft);
+  const _dateRight = (0, _index4.toDate)(dateRight);
+
+  const sign = (0, _index.compareAsc)(_dateLeft, _dateRight);
+  const difference = Math.abs(
+    (0, _index2.differenceInCalendarISOWeekYears)(_dateLeft, _dateRight),
+  );
+  _dateLeft = (0, _index3.subISOWeekYears)(_dateLeft, sign * difference);
 
   // Math.abs(diff in full ISO years - diff in calendar ISO years) === 1
   // if last calendar ISO year is not full
   // If so, result must be decreased by 1 in absolute value
-  var isLastISOWeekYearNotFull = Number((0, _index3.default)(dateLeft, dateRight) === -sign);
-  var result = sign * (difference - isLastISOWeekYearNotFull);
+  const isLastISOWeekYearNotFull = Number(
+    (0, _index.compareAsc)(_dateLeft, _dateRight) === -sign,
+  );
+  const result = sign * (difference - isLastISOWeekYearNotFull);
   // Prevent negative zero
   return result === 0 ? 0 : result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2288:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5654:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInMilliseconds = differenceInMilliseconds;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInMilliseconds
  * @category Millisecond Helpers
@@ -14476,10 +13963,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of milliseconds between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of milliseconds
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of milliseconds
  *
  * @example
  * // How many milliseconds are between
@@ -14491,28 +13980,30 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> 1100
  */
 function differenceInMilliseconds(dateLeft, dateRight) {
-  (0, _index2.default)(2, arguments);
-  return (0, _index.default)(dateLeft).getTime() - (0, _index.default)(dateRight).getTime();
+  return (
+    (0, _index.toDate)(dateLeft).getTime() -
+    (0, _index.toDate)(dateRight).getTime()
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3842:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6235:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInMinutes = differenceInMinutes;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(5654);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInMinutes;
-var _index = __nccwpck_require__(5756);
-var _index2 = _interopRequireDefault(__nccwpck_require__(2288));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index4 = __nccwpck_require__(8016);
+var _index3 = __nccwpck_require__(304);
+
+/**
+ * The {@link differenceInMinutes} function options.
+ */
+
 /**
  * @name differenceInMinutes
  * @category Minute Helpers
@@ -14521,12 +14012,13 @@ var _index4 = __nccwpck_require__(8016);
  * @description
  * Get the signed number of full (rounded towards 0) minutes between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @param {Object} [options] - an object with options.
- * @param {String} [options.roundingMethod='trunc'] - a rounding method (`ceil`, `floor`, `round` or `trunc`)
- * @returns {Number} the number of minutes
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ * @param options - An object with options.
+ *
+ * @returns The number of minutes
  *
  * @example
  * // How many minutes are between 2 July 2014 12:07:59 and 2 July 2014 12:20:00?
@@ -14545,30 +14037,26 @@ var _index4 = __nccwpck_require__(8016);
  * //=> -1
  */
 function differenceInMinutes(dateLeft, dateRight, options) {
-  (0, _index3.default)(2, arguments);
-  var diff = (0, _index2.default)(dateLeft, dateRight) / _index.millisecondsInMinute;
-  return (0, _index4.getRoundingMethod)(options === null || options === void 0 ? void 0 : options.roundingMethod)(diff);
+  const diff =
+    (0, _index2.differenceInMilliseconds)(dateLeft, dateRight) /
+    _index.millisecondsInMinute;
+  return (0, _index3.getRoundingMethod)(options?.roundingMethod)(diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2713:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8132:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInMonths = differenceInMonths;
+var _index = __nccwpck_require__(6125);
+var _index2 = __nccwpck_require__(4939);
+var _index3 = __nccwpck_require__(5894);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInMonths;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(5536));
-var _index3 = _interopRequireDefault(__nccwpck_require__(9818));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index5 = _interopRequireDefault(__nccwpck_require__(8506));
 /**
  * @name differenceInMonths
  * @category Month Helpers
@@ -14577,67 +14065,78 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(8506));
  * @description
  * Get the number of full months between the given dates using trunc as a default rounding method.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of full months
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of full months
  *
  * @example
  * // How many full months are between 31 January 2014 and 1 September 2014?
  * const result = differenceInMonths(new Date(2014, 8, 1), new Date(2014, 0, 31))
  * //=> 7
  */
-function differenceInMonths(dirtyDateLeft, dirtyDateRight) {
-  (0, _index4.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var sign = (0, _index3.default)(dateLeft, dateRight);
-  var difference = Math.abs((0, _index2.default)(dateLeft, dateRight));
-  var result;
+function differenceInMonths(dateLeft, dateRight) {
+  const _dateLeft = (0, _index4.toDate)(dateLeft);
+  const _dateRight = (0, _index4.toDate)(dateRight);
+
+  const sign = (0, _index.compareAsc)(_dateLeft, _dateRight);
+  const difference = Math.abs(
+    (0, _index2.differenceInCalendarMonths)(_dateLeft, _dateRight),
+  );
+  let result;
 
   // Check for the difference of less than month
   if (difference < 1) {
     result = 0;
   } else {
-    if (dateLeft.getMonth() === 1 && dateLeft.getDate() > 27) {
+    if (_dateLeft.getMonth() === 1 && _dateLeft.getDate() > 27) {
       // This will check if the date is end of Feb and assign a higher end of month date
       // to compare it with Jan
-      dateLeft.setDate(30);
+      _dateLeft.setDate(30);
     }
-    dateLeft.setMonth(dateLeft.getMonth() - sign * difference);
+
+    _dateLeft.setMonth(_dateLeft.getMonth() - sign * difference);
 
     // Math.abs(diff in full months - diff in calendar months) === 1 if last calendar month is not full
     // If so, result must be decreased by 1 in absolute value
-    var isLastMonthNotFull = (0, _index3.default)(dateLeft, dateRight) === -sign;
+    let isLastMonthNotFull =
+      (0, _index.compareAsc)(_dateLeft, _dateRight) === -sign;
 
     // Check for cases of one full calendar month
-    if ((0, _index5.default)((0, _index.default)(dirtyDateLeft)) && difference === 1 && (0, _index3.default)(dirtyDateLeft, dateRight) === 1) {
+    if (
+      (0, _index3.isLastDayOfMonth)((0, _index4.toDate)(dateLeft)) &&
+      difference === 1 &&
+      (0, _index.compareAsc)(dateLeft, _dateRight) === 1
+    ) {
       isLastMonthNotFull = false;
     }
+
     result = sign * (difference - Number(isLastMonthNotFull));
   }
 
   // Prevent negative zero
   return result === 0 ? 0 : result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7074:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 924:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInQuarters = differenceInQuarters;
+var _index = __nccwpck_require__(8132);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInQuarters;
-var _index = _interopRequireDefault(__nccwpck_require__(2713));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = __nccwpck_require__(8016);
+var _index2 = __nccwpck_require__(304);
+
+/**
+ * The {@link differenceInQuarters} function options.
+ */
+
 /**
  * @name differenceInQuarters
  * @category Quarter Helpers
@@ -14646,12 +14145,13 @@ var _index3 = __nccwpck_require__(8016);
  * @description
  * Get the number of quarters between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @param {Object} [options] - an object with options.
- * @param {String} [options.roundingMethod='trunc'] - a rounding method (`ceil`, `floor`, `round` or `trunc`)
- * @returns {Number} the number of full quarters
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ * @param options - An object with options.
+ *
+ * @returns The number of full quarters
  *
  * @example
  * // How many full quarters are between 31 December 2013 and 2 July 2014?
@@ -14659,28 +14159,27 @@ var _index3 = __nccwpck_require__(8016);
  * //=> 2
  */
 function differenceInQuarters(dateLeft, dateRight, options) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dateLeft, dateRight) / 3;
-  return (0, _index3.getRoundingMethod)(options === null || options === void 0 ? void 0 : options.roundingMethod)(diff);
+  const diff = (0, _index.differenceInMonths)(dateLeft, dateRight) / 3;
+  return (0, _index2.getRoundingMethod)(options?.roundingMethod)(diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9448:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4944:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInSeconds = differenceInSeconds;
+var _index = __nccwpck_require__(5654);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2288));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = __nccwpck_require__(8016);
+var _index2 = __nccwpck_require__(304);
+
+/**
+ * The {@link differenceInSeconds} function options.
+ */
+
 /**
  * @name differenceInSeconds
  * @category Second Helpers
@@ -14689,12 +14188,13 @@ var _index3 = __nccwpck_require__(8016);
  * @description
  * Get the number of seconds between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @param {Object} [options] - an object with options.
- * @param {String} [options.roundingMethod='trunc'] - a rounding method (`ceil`, `floor`, `round` or `trunc`)
- * @returns {Number} the number of seconds
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ * @param options - An object with options.
+ *
+ * @returns The number of seconds
  *
  * @example
  * // How many seconds are between
@@ -14706,28 +14206,27 @@ var _index3 = __nccwpck_require__(8016);
  * //=> 12
  */
 function differenceInSeconds(dateLeft, dateRight, options) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dateLeft, dateRight) / 1000;
-  return (0, _index3.getRoundingMethod)(options === null || options === void 0 ? void 0 : options.roundingMethod)(diff);
+  const diff = (0, _index.differenceInMilliseconds)(dateLeft, dateRight) / 1000;
+  return (0, _index2.getRoundingMethod)(options?.roundingMethod)(diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2701:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7488:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInWeeks = differenceInWeeks;
+var _index = __nccwpck_require__(6605);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInWeeks;
-var _index = _interopRequireDefault(__nccwpck_require__(6311));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = __nccwpck_require__(8016);
+var _index2 = __nccwpck_require__(304);
+
+/**
+ * The {@link differenceInWeeks} function options.
+ */
+
 /**
  * @name differenceInWeeks
  * @category Week Helpers
@@ -14744,19 +14243,20 @@ var _index3 = __nccwpck_require__(8016);
  * To ignore DST and only measure exact 7*24-hour periods, use this instead:
  * `Math.floor(differenceInHours(dateLeft, dateRight)/(7*24))|0`.
  *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @param {Object} [options] - an object with options.
- * @param {String} [options.roundingMethod='trunc'] - a rounding method (`ceil`, `floor`, `round` or `trunc`)
- * @returns {Number} the number of full weeks
- * @throws {TypeError} 2 arguments required
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ * @param options - An object with options
+ *
+ * @returns The number of full weeks
  *
  * @example
  * // How many full weeks are between 5 July 2014 and 20 July 2014?
  * const result = differenceInWeeks(new Date(2014, 6, 20), new Date(2014, 6, 5))
  * //=> 2
  *
+ * @example
  * // How many full weeks are between
  * // 1 March 2020 0:00 and 6 June 2020 0:00 ?
  * // Note: because local time is used, the
@@ -14770,29 +14270,23 @@ var _index3 = __nccwpck_require__(8016);
  * //=> 8
  */
 function differenceInWeeks(dateLeft, dateRight, options) {
-  (0, _index2.default)(2, arguments);
-  var diff = (0, _index.default)(dateLeft, dateRight) / 7;
-  return (0, _index3.getRoundingMethod)(options === null || options === void 0 ? void 0 : options.roundingMethod)(diff);
+  const diff = (0, _index.differenceInDays)(dateLeft, dateRight) / 7;
+  return (0, _index2.getRoundingMethod)(options?.roundingMethod)(diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3959:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 830:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.differenceInYears = differenceInYears;
+var _index = __nccwpck_require__(6125);
+var _index2 = __nccwpck_require__(6143);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = differenceInYears;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(5237));
-var _index3 = _interopRequireDefault(__nccwpck_require__(9818));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name differenceInYears
  * @category Year Helpers
@@ -14801,52 +14295,57 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of full years between the given dates.
  *
- * @param {Date|Number} dateLeft - the later date
- * @param {Date|Number} dateRight - the earlier date
- * @returns {Number} the number of full years
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The later date
+ * @param dateRight - The earlier date
+ *
+ * @returns The number of full years
  *
  * @example
  * // How many full years are between 31 December 2013 and 11 February 2015?
  * const result = differenceInYears(new Date(2015, 1, 11), new Date(2013, 11, 31))
  * //=> 1
  */
-function differenceInYears(dirtyDateLeft, dirtyDateRight) {
-  (0, _index4.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  var sign = (0, _index3.default)(dateLeft, dateRight);
-  var difference = Math.abs((0, _index2.default)(dateLeft, dateRight));
+function differenceInYears(dateLeft, dateRight) {
+  const _dateLeft = (0, _index3.toDate)(dateLeft);
+  const _dateRight = (0, _index3.toDate)(dateRight);
+
+  const sign = (0, _index.compareAsc)(_dateLeft, _dateRight);
+  const difference = Math.abs(
+    (0, _index2.differenceInCalendarYears)(_dateLeft, _dateRight),
+  );
 
   // Set both dates to a valid leap year for accurate comparison when dealing
   // with leap days
-  dateLeft.setFullYear(1584);
-  dateRight.setFullYear(1584);
+  _dateLeft.setFullYear(1584);
+  _dateRight.setFullYear(1584);
 
   // Math.abs(diff in full years - diff in calendar years) === 1 if last calendar year is not full
   // If so, result must be decreased by 1 in absolute value
-  var isLastYearNotFull = (0, _index3.default)(dateLeft, dateRight) === -sign;
-  var result = sign * (difference - Number(isLastYearNotFull));
+  const isLastYearNotFull =
+    (0, _index.compareAsc)(_dateLeft, _dateRight) === -sign;
+  const result = sign * (difference - +isLastYearNotFull);
+
   // Prevent negative zero
   return result === 0 ? 0 : result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6545:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2367:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachDayOfInterval = eachDayOfInterval;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachDayOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachDayOfInterval} function options.
+ */
+
 /**
  * @name eachDayOfInterval
  * @category Interval Helpers
@@ -14855,14 +14354,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the array of dates within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @param {Object} [options] - an object with options.
- * @param {Number} [options.step=1] - the step to increment by. The value should be more than 1.
- * @returns {Date[]} the array with starts of days from the day of the interval start to the day of the interval end
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.step` must be a number greater than 1
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ * @param options - An object with options.
+ *
+ * @returns The array with starts of days from the day of the interval start to the day of the interval end
  *
  * @example
  * // Each day between 6 October 2014 and 10 October 2014:
@@ -14878,48 +14375,49 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Fri Oct 10 2014 00:00:00
  * // ]
  */
-function eachDayOfInterval(dirtyInterval, options) {
-  var _options$step;
-  (0, _index2.default)(1, arguments);
-  var interval = dirtyInterval || {};
-  var startDate = (0, _index.default)(interval.start);
-  var endDate = (0, _index.default)(interval.end);
-  var endTime = endDate.getTime();
+function eachDayOfInterval(interval, options) {
+  const startDate = (0, _index.toDate)(interval.start);
+  const endDate = (0, _index.toDate)(interval.end);
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startDate.getTime() <= endTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  var dates = [];
-  var currentDate = startDate;
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  const currentDate = reversed ? endDate : startDate;
   currentDate.setHours(0, 0, 0, 0);
-  var step = Number((_options$step = options === null || options === void 0 ? void 0 : options.step) !== null && _options$step !== void 0 ? _options$step : 1);
-  if (step < 1 || isNaN(step)) throw new RangeError('`options.step` must be a number greater than 1');
-  while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index.default)(currentDate));
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
+  }
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push((0, _index.toDate)(currentDate));
     currentDate.setDate(currentDate.getDate() + step);
     currentDate.setHours(0, 0, 0, 0);
   }
-  return dates;
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6802:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4086:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachHourOfInterval = eachHourOfInterval;
+var _index = __nccwpck_require__(9994);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachHourOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(9956));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachHourOfInterval} function options.
+ */
+
 /**
  * @name eachHourOfInterval
  * @category Interval Helpers
@@ -14928,14 +14426,12 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the array of hours within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @param {Object} [options] - an object with options.
- * @param {Number} [options.step=1] - the step to increment by. The value should be more than 1.
- * @returns {Date[]} the array with starts of hours from the hour of the interval start to the hour of the interval end
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.step` must be a number greater than 1
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ * @param options - An object with options.
+ *
+ * @returns The array with starts of hours from the hour of the interval start to the hour of the interval end
  *
  * @example
  * // Each hour between 6 October 2014, 12:00 and 6 October 2014, 15:00
@@ -14950,49 +14446,49 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Mon Oct 06 2014 15:00:00
  * // ]
  */
-function eachHourOfInterval(dirtyInterval, options) {
-  var _options$step;
-  (0, _index3.default)(1, arguments);
-  var interval = dirtyInterval || {};
-  var startDate = (0, _index2.default)(interval.start);
-  var endDate = (0, _index2.default)(interval.end);
-  var startTime = startDate.getTime();
-  var endTime = endDate.getTime();
+function eachHourOfInterval(interval, options) {
+  const startDate = (0, _index2.toDate)(interval.start);
+  const endDate = (0, _index2.toDate)(interval.end);
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startTime <= endTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  var dates = [];
-  var currentDate = startDate;
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  let currentDate = reversed ? endDate : startDate;
   currentDate.setMinutes(0, 0, 0);
-  var step = Number((_options$step = options === null || options === void 0 ? void 0 : options.step) !== null && _options$step !== void 0 ? _options$step : 1);
-  if (step < 1 || isNaN(step)) throw new RangeError('`options.step` must be a number greater than 1');
-  while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index2.default)(currentDate));
-    currentDate = (0, _index.default)(currentDate, step);
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
   }
-  return dates;
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push((0, _index2.toDate)(currentDate));
+    currentDate = (0, _index.addHours)(currentDate, step);
+  }
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2029:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1836:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachMinuteOfInterval = eachMinuteOfInterval;
+var _index = __nccwpck_require__(7231);
+var _index2 = __nccwpck_require__(1831);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachMinuteOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(5268));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8567));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachMinuteOfInterval} function options.
+ */
+
 /**
  * @name eachMinuteOfInterval
  * @category Interval Helpers
@@ -15001,14 +14497,12 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Returns the array of minutes within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @param {Object} [options] - an object with options.
- * @param {Number} [options.step=1] - the step to increment by. The step must be equal to or greater than 1
- * @throws {TypeError} 1 argument required
- * @returns {Date[]} the array with starts of minutes from the minute of the interval start to the minute of the interval end
- * @throws {RangeError} `options.step` must be a number equal to or greater than 1
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ * @param options - An object with options.
+ *
+ * @returns The array with starts of minutes from the minute of the interval start to the minute of the interval end
  *
  * @example
  * // Each minute between 14 October 2020, 13:00 and 14 October 2020, 13:03
@@ -15024,42 +14518,47 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * // ]
  */
 function eachMinuteOfInterval(interval, options) {
-  var _options$step;
-  (0, _index4.default)(1, arguments);
-  var startDate = (0, _index3.default)((0, _index2.default)(interval.start));
-  var endDate = (0, _index2.default)(interval.end);
-  var startTime = startDate.getTime();
-  var endTime = endDate.getTime();
-  if (startTime >= endTime) {
-    throw new RangeError('Invalid interval');
+  const startDate = (0, _index2.startOfMinute)(
+    (0, _index3.toDate)(interval.start),
+  );
+  const endDate = (0, _index3.toDate)(interval.end);
+
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  let currentDate = reversed ? endDate : startDate;
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
   }
-  var dates = [];
-  var currentDate = startDate;
-  var step = Number((_options$step = options === null || options === void 0 ? void 0 : options.step) !== null && _options$step !== void 0 ? _options$step : 1);
-  if (step < 1 || isNaN(step)) throw new RangeError('`options.step` must be a number equal to or greater than 1');
-  while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index2.default)(currentDate));
-    currentDate = (0, _index.default)(currentDate, step);
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push((0, _index3.toDate)(currentDate));
+    currentDate = (0, _index.addMinutes)(currentDate, step);
   }
-  return dates;
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5879:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 425:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachMonthOfInterval = eachMonthOfInterval;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachMonthOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachMonthOfInterval} function options.
+ */
+
 /**
  * @name eachMonthOfInterval
  * @category Interval Helpers
@@ -15068,11 +14567,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the array of months within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @returns {Date[]} the array with starts of months from the month of the interval start to the month of the interval end
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval
+ *
+ * @returns The array with starts of months from the month of the interval start to the month of the interval end
  *
  * @example
  * // Each month between 6 February 2014 and 10 August 2014:
@@ -15090,46 +14589,50 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Fri Aug 01 2014 00:00:00
  * // ]
  */
-function eachMonthOfInterval(dirtyInterval) {
-  (0, _index2.default)(1, arguments);
-  var interval = dirtyInterval || {};
-  var startDate = (0, _index.default)(interval.start);
-  var endDate = (0, _index.default)(interval.end);
-  var endTime = endDate.getTime();
-  var dates = [];
+function eachMonthOfInterval(interval, options) {
+  const startDate = (0, _index.toDate)(interval.start);
+  const endDate = (0, _index.toDate)(interval.end);
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startDate.getTime() <= endTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  var currentDate = startDate;
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  const currentDate = reversed ? endDate : startDate;
   currentDate.setHours(0, 0, 0, 0);
   currentDate.setDate(1);
-  while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index.default)(currentDate));
-    currentDate.setMonth(currentDate.getMonth() + 1);
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
   }
-  return dates;
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push((0, _index.toDate)(currentDate));
+    currentDate.setMonth(currentDate.getMonth() + step);
+  }
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6516:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7978:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachQuarterOfInterval = eachQuarterOfInterval;
+var _index = __nccwpck_require__(7153);
+var _index2 = __nccwpck_require__(3148);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachQuarterOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(5149));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2932));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachQuarterOfInterval} function options.
+ */
+
 /**
  * @name eachQuarterOfInterval
  * @category Interval Helpers
@@ -15138,11 +14641,11 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the array of quarters within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @returns {Date[]} the array with starts of quarters from the quarter of the interval start to the quarter of the interval end
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval
+ *
+ * @returns The array with starts of quarters from the quarter of the interval start to the quarter of the interval end
  *
  * @example
  * // Each quarter within interval 6 February 2014 - 10 August 2014:
@@ -15156,47 +14659,52 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Tue Jul 01 2014 00:00:00,
  * // ]
  */
-function eachQuarterOfInterval(dirtyInterval) {
-  (0, _index4.default)(1, arguments);
-  var interval = dirtyInterval || {};
-  var startDate = (0, _index3.default)(interval.start);
-  var endDate = (0, _index3.default)(interval.end);
-  var endTime = endDate.getTime();
+function eachQuarterOfInterval(interval, options) {
+  const startDate = (0, _index3.toDate)(interval.start);
+  const endDate = (0, _index3.toDate)(interval.end);
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startDate.getTime() <= endTime)) {
-    throw new RangeError('Invalid interval');
+  let reversed = +startDate > +endDate;
+  const endTime = reversed
+    ? +(0, _index2.startOfQuarter)(startDate)
+    : +(0, _index2.startOfQuarter)(endDate);
+  let currentDate = reversed
+    ? (0, _index2.startOfQuarter)(endDate)
+    : (0, _index2.startOfQuarter)(startDate);
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
   }
-  var startDateQuarter = (0, _index2.default)(startDate);
-  var endDateQuarter = (0, _index2.default)(endDate);
-  endTime = endDateQuarter.getTime();
-  var quarters = [];
-  var currentQuarter = startDateQuarter;
-  while (currentQuarter.getTime() <= endTime) {
-    quarters.push((0, _index3.default)(currentQuarter));
-    currentQuarter = (0, _index.default)(currentQuarter, 1);
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push((0, _index3.toDate)(currentDate));
+    currentDate = (0, _index.addQuarters)(currentDate, step);
   }
-  return quarters;
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5994:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1103:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachWeekOfInterval = eachWeekOfInterval;
+var _index = __nccwpck_require__(6985);
+var _index2 = __nccwpck_require__(6068);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachWeekOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(7195));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9813));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachWeekOfInterval} function options.
+ */
+
 /**
  * @name eachWeekOfInterval
  * @category Interval Helpers
@@ -15205,15 +14713,12 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the array of weeks within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Date[]} the array with starts of weeks from the week of the interval start to the week of the interval end
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be 0, 1, ..., 6
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ * @param options - An object with options.
+ *
+ * @returns The array with starts of weeks from the week of the interval start to the week of the interval end
  *
  * @example
  * // Each week within interval 6 October 2014 - 23 November 2014:
@@ -15232,53 +14737,56 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Sun Nov 23 2014 00:00:00
  * // ]
  */
-function eachWeekOfInterval(dirtyInterval, options) {
-  (0, _index4.default)(1, arguments);
-  var interval = dirtyInterval || {};
-  var startDate = (0, _index3.default)(interval.start);
-  var endDate = (0, _index3.default)(interval.end);
-  var endTime = endDate.getTime();
+function eachWeekOfInterval(interval, options) {
+  const startDate = (0, _index3.toDate)(interval.start);
+  const endDate = (0, _index3.toDate)(interval.end);
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startDate.getTime() <= endTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  var startDateWeek = (0, _index2.default)(startDate, options);
-  var endDateWeek = (0, _index2.default)(endDate, options);
+  let reversed = +startDate > +endDate;
+  const startDateWeek = reversed
+    ? (0, _index2.startOfWeek)(endDate, options)
+    : (0, _index2.startOfWeek)(startDate, options);
+  const endDateWeek = reversed
+    ? (0, _index2.startOfWeek)(startDate, options)
+    : (0, _index2.startOfWeek)(endDate, options);
 
   // Some timezones switch DST at midnight, making start of day unreliable in these timezones, 3pm is a safe bet
   startDateWeek.setHours(15);
   endDateWeek.setHours(15);
-  endTime = endDateWeek.getTime();
-  var weeks = [];
-  var currentWeek = startDateWeek;
-  while (currentWeek.getTime() <= endTime) {
-    currentWeek.setHours(0);
-    weeks.push((0, _index3.default)(currentWeek));
-    currentWeek = (0, _index.default)(currentWeek, 1);
-    currentWeek.setHours(15);
+
+  const endTime = +endDateWeek.getTime();
+  let currentDate = startDateWeek;
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
   }
-  return weeks;
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    currentDate.setHours(0);
+    dates.push((0, _index3.toDate)(currentDate));
+    currentDate = (0, _index.addWeeks)(currentDate, step);
+    currentDate.setHours(15);
+  }
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1944:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5984:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachWeekendOfInterval = eachWeekendOfInterval;
+var _index = __nccwpck_require__(2367);
+var _index2 = __nccwpck_require__(5417);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachWeekendOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(6545));
-var _index2 = _interopRequireDefault(__nccwpck_require__(5852));
-var _index3 = _interopRequireDefault(__nccwpck_require__(403));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name eachWeekendOfInterval
  * @category Interval Helpers
@@ -15287,11 +14795,11 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get all the Saturdays and Sundays in the given date interval.
  *
- * @param {Interval} interval - the given interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @returns {Date[]} an array containing all the Saturdays and Sundays
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The given interval
+ *
+ * @returns An array containing all the Saturdays and Sundays
  *
  * @example
  * // Lists all Saturdays and Sundays in the given date interval
@@ -15307,38 +14815,29 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * // ]
  */
 function eachWeekendOfInterval(interval) {
-  (0, _index4.default)(1, arguments);
-  var dateInterval = (0, _index.default)(interval);
-  var weekends = [];
-  var index = 0;
+  const dateInterval = (0, _index.eachDayOfInterval)(interval);
+  const weekends = [];
+  let index = 0;
   while (index < dateInterval.length) {
-    var date = dateInterval[index++];
-    if ((0, _index3.default)(date)) {
-      weekends.push(date);
-      if ((0, _index2.default)(date)) index = index + 5;
-    }
+    const date = dateInterval[index++];
+    if ((0, _index2.isWeekend)(date)) weekends.push(date);
   }
   return weekends;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3973:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7633:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachWeekendOfMonth = eachWeekendOfMonth;
+var _index = __nccwpck_require__(5984);
+var _index2 = __nccwpck_require__(3434);
+var _index3 = __nccwpck_require__(50);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachWeekendOfMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(1944));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7182));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2621));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name eachWeekendOfMonth
  * @category Month Helpers
@@ -15347,10 +14846,11 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get all the Saturdays and Sundays in the given month.
  *
- * @param {Date|Number} date - the given month
- * @returns {Date[]} an array containing all the Saturdays and Sundays
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} The passed date is invalid
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given month
+ *
+ * @returns An array containing all the Saturdays and Sundays
  *
  * @example
  * // Lists all Saturdays and Sundays in the given month
@@ -15366,35 +14866,25 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Sun Feb 27 2022 00:00:00
  * // ]
  */
-function eachWeekendOfMonth(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var startDate = (0, _index2.default)(dirtyDate);
-  if (isNaN(startDate.getTime())) throw new RangeError('The passed date is invalid');
-  var endDate = (0, _index3.default)(dirtyDate);
-  return (0, _index.default)({
-    start: startDate,
-    end: endDate
-  });
+function eachWeekendOfMonth(date) {
+  const start = (0, _index3.startOfMonth)(date);
+  const end = (0, _index2.endOfMonth)(date);
+  return (0, _index.eachWeekendOfInterval)({ start, end });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7961:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4666:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachWeekendOfYear = eachWeekendOfYear;
+var _index = __nccwpck_require__(5984);
+var _index2 = __nccwpck_require__(6063);
+var _index3 = __nccwpck_require__(3304);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachWeekendOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(1944));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7079));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8225));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name eachWeekendOfYear
  * @category Year Helpers
@@ -15403,10 +14893,11 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get all the Saturdays and Sundays in the year.
  *
- * @param {Date|Number} date - the given year
- * @returns {Date[]} an array containing all the Saturdays and Sundays
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} The passed date is invalid
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given year
+ *
+ * @returns An array containing all the Saturdays and Sundays
  *
  * @example
  * // Lists all Saturdays and Sundays in the year
@@ -15419,32 +14910,27 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * // ]
  * ]
  */
-function eachWeekendOfYear(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var startDate = (0, _index3.default)(dirtyDate);
-  var endDate = (0, _index2.default)(dirtyDate);
-  return (0, _index.default)({
-    start: startDate,
-    end: endDate
-  });
+function eachWeekendOfYear(date) {
+  const start = (0, _index3.startOfYear)(date);
+  const end = (0, _index2.endOfYear)(date);
+  return (0, _index.eachWeekendOfInterval)({ start, end });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6525:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8256:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.eachYearOfInterval = eachYearOfInterval;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = eachYearOfInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link eachYearOfInterval} function options.
+ */
+
 /**
  * @name eachYearOfInterval
  * @category Interval Helpers
@@ -15453,11 +14939,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the array of yearly timestamps within the specified time interval.
  *
- * @param {Interval} interval - the interval. See [Interval]{@link https://date-fns.org/docs/Interval}
- * @returns {Date[]} the array with starts of yearly timestamps from the month of the interval start to the month of the interval end
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param interval - The interval.
+ *
+ * @returns The array with starts of yearly timestamps from the month of the interval start to the month of the interval end
  *
  * @example
  * // Each year between 6 February 2014 and 10 August 2017:
@@ -15472,44 +14958,44 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //   Sun Jan 01 2017 00:00:00
  * // ]
  */
-function eachYearOfInterval(dirtyInterval) {
-  (0, _index2.default)(1, arguments);
-  var interval = dirtyInterval || {};
-  var startDate = (0, _index.default)(interval.start);
-  var endDate = (0, _index.default)(interval.end);
-  var endTime = endDate.getTime();
+function eachYearOfInterval(interval, options) {
+  const startDate = (0, _index.toDate)(interval.start);
+  const endDate = (0, _index.toDate)(interval.end);
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startDate.getTime() <= endTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  var dates = [];
-  var currentDate = startDate;
+  let reversed = +startDate > +endDate;
+  const endTime = reversed ? +startDate : +endDate;
+  const currentDate = reversed ? endDate : startDate;
   currentDate.setHours(0, 0, 0, 0);
   currentDate.setMonth(0, 1);
-  while (currentDate.getTime() <= endTime) {
-    dates.push((0, _index.default)(currentDate));
-    currentDate.setFullYear(currentDate.getFullYear() + 1);
+
+  let step = options?.step ?? 1;
+  if (!step) return [];
+  if (step < 0) {
+    step = -step;
+    reversed = !reversed;
   }
-  return dates;
+
+  const dates = [];
+
+  while (+currentDate <= endTime) {
+    dates.push((0, _index.toDate)(currentDate));
+    currentDate.setFullYear(currentDate.getFullYear() + step);
+  }
+
+  return reversed ? dates.reverse() : dates;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8569:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6610:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfDay = endOfDay;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfDay;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfDay
  * @category Day Helpers
@@ -15519,38 +15005,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a day for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a day
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a day
  *
  * @example
  * // The end of a day for 2 September 2014 11:55:00:
  * const result = endOfDay(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 02 2014 23:59:59.999
  */
-function endOfDay(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setHours(23, 59, 59, 999);
-  return date;
+function endOfDay(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1517:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6877:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfDecade = endOfDecade;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfDecade;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfDecade
  * @category Decade Helpers
@@ -15559,44 +15041,37 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the end of a decade for the given date.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a decade
- * @param {Object} [options] - an object with options.
- * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a decade
  *
  * @example
  * // The end of a decade for 12 May 1984 00:00:00:
  * const result = endOfDecade(new Date(1984, 4, 12, 00, 00, 00))
  * //=> Dec 31 1989 23:59:59.999
  */
-function endOfDecade(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  var decade = 9 + Math.floor(year / 10) * 10;
-  date.setFullYear(decade, 11, 31);
-  date.setHours(23, 59, 59, 999);
-  return date;
+function endOfDecade(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  const decade = 9 + Math.floor(year / 10) * 10;
+  _date.setFullYear(decade, 11, 31);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1894:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2987:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfHour = endOfHour;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfHour;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfHour
  * @category Hour Helpers
@@ -15606,38 +15081,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of an hour for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of an hour
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of an hour
  *
  * @example
  * // The end of an hour for 2 September 2014 11:55:00:
  * const result = endOfHour(new Date(2014, 8, 2, 11, 55))
  * //=> Tue Sep 02 2014 11:59:59.999
  */
-function endOfHour(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setMinutes(59, 59, 999);
-  return date;
+function endOfHour(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMinutes(59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1920:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4056:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfISOWeek = endOfISOWeek;
+var _index = __nccwpck_require__(8135);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(5218));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfISOWeek
  * @category ISO Week Helpers
@@ -15649,39 +15120,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of an ISO week
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of an ISO week
  *
  * @example
  * // The end of an ISO week for 2 September 2014 11:55:00:
  * const result = endOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Sun Sep 07 2014 23:59:59.999
  */
-function endOfISOWeek(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, {
-    weekStartsOn: 1
-  });
+function endOfISOWeek(date) {
+  return (0, _index.endOfWeek)(date, { weekStartsOn: 1 });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9731:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2961:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfISOWeekYear = endOfISOWeekYear;
+var _index = __nccwpck_require__(308);
+var _index2 = __nccwpck_require__(9709);
+var _index3 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6991));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6307));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfISOWeekYear
  * @category ISO Week-Numbering Year Helpers
@@ -15694,42 +15160,38 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of an ISO week-numbering year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of an ISO week-numbering year
  *
  * @example
  * // The end of an ISO week-numbering year for 2 July 2005:
  * const result = endOfISOWeekYear(new Date(2005, 6, 2))
  * //=> Sun Jan 01 2006 23:59:59.999
  */
-function endOfISOWeekYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var year = (0, _index.default)(dirtyDate);
-  var fourthOfJanuaryOfNextYear = new Date(0);
+function endOfISOWeekYear(date) {
+  const year = (0, _index.getISOWeekYear)(date);
+  const fourthOfJanuaryOfNextYear = (0, _index3.constructFrom)(date, 0);
   fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
   fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
-  var date = (0, _index2.default)(fourthOfJanuaryOfNextYear);
-  date.setMilliseconds(date.getMilliseconds() - 1);
-  return date;
+  const _date = (0, _index2.startOfISOWeek)(fourthOfJanuaryOfNextYear);
+  _date.setMilliseconds(_date.getMilliseconds() - 1);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1389:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5953:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfMinute = endOfMinute;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfMinute;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfMinute
  * @category Minute Helpers
@@ -15739,38 +15201,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a minute for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a minute
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a minute
  *
  * @example
  * // The end of a minute for 1 December 2014 22:15:45.400:
  * const result = endOfMinute(new Date(2014, 11, 1, 22, 15, 45, 400))
  * //=> Mon Dec 01 2014 22:15:59.999
  */
-function endOfMinute(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setSeconds(59, 999);
-  return date;
+function endOfMinute(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setSeconds(59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2621:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3434:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfMonth = endOfMonth;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfMonth
  * @category Month Helpers
@@ -15780,40 +15238,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a month for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a month
  *
  * @example
  * // The end of a month for 2 September 2014 11:55:00:
  * const result = endOfMonth(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 30 2014 23:59:59.999
  */
-function endOfMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var month = date.getMonth();
-  date.setFullYear(date.getFullYear(), month + 1, 0);
-  date.setHours(23, 59, 59, 999);
-  return date;
+function endOfMonth(date) {
+  const _date = (0, _index.toDate)(date);
+  const month = _date.getMonth();
+  _date.setFullYear(_date.getFullYear(), month + 1, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5596:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9479:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfQuarter = endOfQuarter;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfQuarter
  * @category Quarter Helpers
@@ -15823,41 +15277,37 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a year quarter for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a quarter
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a quarter
  *
  * @example
  * // The end of a quarter for 2 September 2014 11:55:00:
  * const result = endOfQuarter(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 30 2014 23:59:59.999
  */
-function endOfQuarter(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var currentMonth = date.getMonth();
-  var month = currentMonth - currentMonth % 3 + 3;
-  date.setMonth(month, 0);
-  date.setHours(23, 59, 59, 999);
-  return date;
+function endOfQuarter(date) {
+  const _date = (0, _index.toDate)(date);
+  const currentMonth = _date.getMonth();
+  const month = currentMonth - (currentMonth % 3) + 3;
+  _date.setMonth(month, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6121:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6169:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfSecond = endOfSecond;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfSecond;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfSecond
  * @category Second Helpers
@@ -15867,37 +15317,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a second for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a second
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a second
  *
  * @example
  * // The end of a second for 1 December 2014 22:15:45.400:
  * const result = endOfSecond(new Date(2014, 11, 1, 22, 15, 45, 400))
  * //=> Mon Dec 01 2014 22:15:45.999
  */
-function endOfSecond(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setMilliseconds(999);
-  return date;
+function endOfSecond(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMilliseconds(999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5700:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfToday = endOfToday;
+var _index = __nccwpck_require__(6610);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfToday;
-var _index = _interopRequireDefault(__nccwpck_require__(8569));
 /**
  * @name endOfToday
  * @category Day Helpers
@@ -15907,10 +15354,9 @@ var _index = _interopRequireDefault(__nccwpck_require__(8569));
  * @description
  * Return the end of today.
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {Date} the end of today
+ * @returns The end of today
  *
  * @example
  * // If today is 6 October 2014:
@@ -15918,23 +15364,18 @@ var _index = _interopRequireDefault(__nccwpck_require__(8569));
  * //=> Mon Oct 6 2014 23:59:59.999
  */
 function endOfToday() {
-  return (0, _index.default)(Date.now());
+  return (0, _index.endOfDay)(Date.now());
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6935:
-/***/ ((module, exports) => {
+/***/ 2019:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfTomorrow;
-/**
+exports.endOfTomorrow = endOfTomorrow; /**
  * @name endOfTomorrow
  * @category Day Helpers
  * @summary Return the end of tomorrow.
@@ -15943,10 +15384,9 @@ exports["default"] = endOfTomorrow;
  * @description
  * Return the end of tomorrow.
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `new Date()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {Date} the end of tomorrow
+ * @returns The end of tomorrow
  *
  * @example
  * // If today is 6 October 2014:
@@ -15954,34 +15394,34 @@ exports["default"] = endOfTomorrow;
  * //=> Tue Oct 7 2014 23:59:59.999
  */
 function endOfTomorrow() {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = now.getMonth();
-  var day = now.getDate();
-  var date = new Date(0);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  const date = new Date(0);
   date.setFullYear(year, month, day + 1);
   date.setHours(23, 59, 59, 999);
   return date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5218:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8135:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfWeek = endOfWeek;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfWeek;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
+var _index2 = __nccwpck_require__(2466);
+
+/**
+ * The {@link endOfWeek} function options.
+ */
+
 /**
  * @name endOfWeek
  * @category Week Helpers
@@ -15991,13 +15431,12 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a week for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Date} the end of a week
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The end of a week
  *
  * @example
  * // The end of a week for 2 September 2014 11:55:00:
@@ -16009,40 +15448,35 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
  * //=> Sun Sep 07 2014 23:59:59.999
  */
-function endOfWeek(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index4.default)(1, arguments);
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  var weekStartsOn = (0, _index3.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
+function endOfWeek(date, options) {
+  const defaultOptions = (0, _index2.getDefaultOptions)();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
 
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = (0, _index2.default)(dirtyDate);
-  var day = date.getDay();
-  var diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
-  date.setDate(date.getDate() + diff);
-  date.setHours(23, 59, 59, 999);
-  return date;
+  const _date = (0, _index.toDate)(date);
+  const day = _date.getDay();
+  const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+
+  _date.setDate(_date.getDate() + diff);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7079:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6063:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.endOfYear = endOfYear;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name endOfYear
  * @category Year Helpers
@@ -16052,38 +15486,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the end of a year for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of a year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of a year
  *
  * @example
  * // The end of a year for 2 September 2014 11:55:00:
  * const result = endOfYear(new Date(2014, 8, 2, 11, 55, 00))
  * //=> Wed Dec 31 2014 23:59:59.999
  */
-function endOfYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  date.setFullYear(year + 1, 0, 0);
-  date.setHours(23, 59, 59, 999);
-  return date;
+function endOfYear(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  _date.setFullYear(year + 1, 0, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 66:
-/***/ ((module, exports) => {
+/***/ 9317:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = endOfYesterday;
-/**
+exports.endOfYesterday = endOfYesterday; /**
  * @name endOfYesterday
  * @category Day Helpers
  * @summary Return the end of yesterday.
@@ -16092,10 +15522,9 @@ exports["default"] = endOfYesterday;
  * @description
  * Return the end of yesterday.
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `new Date()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {Date} the end of yesterday
+ * @returns The end of yesterday
  *
  * @example
  * // If today is 6 October 2014:
@@ -16103,41 +15532,35 @@ exports["default"] = endOfYesterday;
  * //=> Sun Oct 5 2014 23:59:59.999
  */
 function endOfYesterday() {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = now.getMonth();
-  var day = now.getDate();
-  var date = new Date(0);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  const date = new Date(0);
   date.setFullYear(year, month, day - 1);
   date.setHours(23, 59, 59, 999);
   return date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2168:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1578:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.format = format;
+var _index = __nccwpck_require__(8915);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = format;
-var _index = _interopRequireDefault(__nccwpck_require__(9920));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7923));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(9257));
-var _index5 = _interopRequireDefault(__nccwpck_require__(8387));
-var _index6 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index7 = __nccwpck_require__(2509);
-var _index8 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index9 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index10 = __nccwpck_require__(9307);
-var _index11 = _interopRequireDefault(__nccwpck_require__(618));
+var _index3 = __nccwpck_require__(4092);
+var _index4 = __nccwpck_require__(2466);
+var _index5 = __nccwpck_require__(9892);
+var _index6 = __nccwpck_require__(8707);
+var _index7 = __nccwpck_require__(2147);
+
 // This RegExp consists of three parts separated by `|`:
 // - [yYQqMLwIdDecihHKkms]o matches any available ordinal number token
 //   (one of the certain letters followed by `o`)
@@ -16149,14 +15572,20 @@ var _index11 = _interopRequireDefault(__nccwpck_require__(618));
 //   If there is no matching single quote
 //   then the sequence will continue until the end of the string.
 // - . matches any single character unmatched by previous parts of the RegExps
-var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+const formattingTokensRegExp =
+  /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
 
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
-var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
-var escapedStringRegExp = /^'([^]*?)'?$/;
-var doubleQuoteRegExp = /''/g;
-var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+const longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+
+const escapedStringRegExp = /^'([^]*?)'?$/;
+const doubleQuoteRegExp = /''/g;
+const unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+
+/**
+ * The {@link format} function options.
+ */
 
 /**
  * @name format
@@ -16386,8 +15815,8 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  *
  *    The same difference is true for local and ISO week-numbering years (`Y` and `R`),
  *    except local week-numbering years are dependent on `options.weekStartsOn`
- *    and `options.firstWeekContainsDate` (compare [getISOWeekYear]{@link https://date-fns.org/docs/getISOWeekYear}
- *    and [getWeekYear]{@link https://date-fns.org/docs/getWeekYear}).
+ *    and `options.firstWeekContainsDate` (compare [getISOWeekYear](https://date-fns.org/docs/getISOWeekYear)
+ *    and [getWeekYear](https://date-fns.org/docs/getWeekYear)).
  *
  * 6. Specific non-location timezones are currently unavailable in `date-fns`,
  *    so right now these tokens fall back to GMT timezones.
@@ -16408,28 +15837,22 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * 9. `D` and `DD` tokens represent days of the year but they are often confused with days of the month.
  *    You should enable `options.useAdditionalDayOfYearTokens` to use them. See: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
  *
- * @param {Date|Number} date - the original date
- * @param {String} format - the string of tokens
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {Number} [options.firstWeekContainsDate=1] - the day of January, which is
- * @param {Boolean} [options.useAdditionalWeekYearTokens=false] - if true, allows usage of the week-numbering year tokens `YY` and `YYYY`;
- *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @param {Boolean} [options.useAdditionalDayOfYearTokens=false] - if true, allows usage of the day of year tokens `D` and `DD`;
- *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @returns {String} the formatted date string
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `options.locale` must contain `localize` property
- * @throws {RangeError} `options.locale` must contain `formatLong` property
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
- * @throws {RangeError} use `yyyy` instead of `YYYY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `yy` instead of `YY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `d` instead of `D` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `dd` instead of `DD` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} format string contains an unescaped latin alphabet character
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param format - The string of tokens
+ * @param options - An object with options
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `options.locale` must contain `localize` property
+ * @throws `options.locale` must contain `formatLong` property
+ * @throws use `yyyy` instead of `YYYY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `yy` instead of `YY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `d` instead of `D` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `dd` instead of `DD` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws format string contains an unescaped latin alphabet character
  *
  * @example
  * // Represent 11 February 2014 in middle-endian format:
@@ -16449,116 +15872,130 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * const result = format(new Date(2014, 6, 2, 15), "h 'o''clock'")
  * //=> "3 o'clock"
  */
+function format(date, formatStr, options) {
+  const defaultOptions = (0, _index4.getDefaultOptions)();
+  const locale =
+    options?.locale ?? defaultOptions.locale ?? _index3.defaultLocale;
 
-function format(dirtyDate, dirtyFormatStr, options) {
-  var _ref, _options$locale, _ref2, _ref3, _ref4, _options$firstWeekCon, _options$locale2, _options$locale2$opti, _defaultOptions$local, _defaultOptions$local2, _ref5, _ref6, _ref7, _options$weekStartsOn, _options$locale3, _options$locale3$opti, _defaultOptions$local3, _defaultOptions$local4;
-  (0, _index9.default)(2, arguments);
-  var formatStr = String(dirtyFormatStr);
-  var defaultOptions = (0, _index10.getDefaultOptions)();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _index11.default;
-  var firstWeekContainsDate = (0, _index8.default)((_ref2 = (_ref3 = (_ref4 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale2 = options.locale) === null || _options$locale2 === void 0 ? void 0 : (_options$locale2$opti = _options$locale2.options) === null || _options$locale2$opti === void 0 ? void 0 : _options$locale2$opti.firstWeekContainsDate) !== null && _ref4 !== void 0 ? _ref4 : defaultOptions.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : 1);
+  const firstWeekContainsDate =
+    options?.firstWeekContainsDate ??
+    options?.locale?.options?.firstWeekContainsDate ??
+    defaultOptions.firstWeekContainsDate ??
+    defaultOptions.locale?.options?.firstWeekContainsDate ??
+    1;
 
-  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
-  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
-    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
-  }
-  var weekStartsOn = (0, _index8.default)((_ref5 = (_ref6 = (_ref7 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale3 = options.locale) === null || _options$locale3 === void 0 ? void 0 : (_options$locale3$opti = _options$locale3.options) === null || _options$locale3$opti === void 0 ? void 0 : _options$locale3$opti.weekStartsOn) !== null && _ref7 !== void 0 ? _ref7 : defaultOptions.weekStartsOn) !== null && _ref6 !== void 0 ? _ref6 : (_defaultOptions$local3 = defaultOptions.locale) === null || _defaultOptions$local3 === void 0 ? void 0 : (_defaultOptions$local4 = _defaultOptions$local3.options) === null || _defaultOptions$local4 === void 0 ? void 0 : _defaultOptions$local4.weekStartsOn) !== null && _ref5 !== void 0 ? _ref5 : 0);
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
 
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  if (!locale.localize) {
-    throw new RangeError('locale must contain localize property');
-  }
-  if (!locale.formatLong) {
-    throw new RangeError('locale must contain formatLong property');
-  }
-  var originalDate = (0, _index3.default)(dirtyDate);
-  if (!(0, _index.default)(originalDate)) {
-    throw new RangeError('Invalid time value');
+  const originalDate = (0, _index2.toDate)(date);
+
+  if (!(0, _index.isValid)(originalDate)) {
+    throw new RangeError("Invalid time value");
   }
 
-  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
-  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
-  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
-  var timezoneOffset = (0, _index6.default)(originalDate);
-  var utcDate = (0, _index2.default)(originalDate, timezoneOffset);
-  var formatterOptions = {
+  const formatterOptions = {
     firstWeekContainsDate: firstWeekContainsDate,
     weekStartsOn: weekStartsOn,
     locale: locale,
-    _originalDate: originalDate
+    _originalDate: originalDate,
   };
-  var result = formatStr.match(longFormattingTokensRegExp).map(function (substring) {
-    var firstCharacter = substring[0];
-    if (firstCharacter === 'p' || firstCharacter === 'P') {
-      var longFormatter = _index5.default[firstCharacter];
-      return longFormatter(substring, locale.formatLong);
-    }
-    return substring;
-  }).join('').match(formattingTokensRegExp).map(function (substring) {
-    // Replace two single quote characters with one single quote character
-    if (substring === "''") {
-      return "'";
-    }
-    var firstCharacter = substring[0];
-    if (firstCharacter === "'") {
-      return cleanEscapedString(substring);
-    }
-    var formatter = _index4.default[firstCharacter];
-    if (formatter) {
-      if (!(options !== null && options !== void 0 && options.useAdditionalWeekYearTokens) && (0, _index7.isProtectedWeekYearToken)(substring)) {
-        (0, _index7.throwProtectedError)(substring, dirtyFormatStr, String(dirtyDate));
+
+  const result = formatStr
+    .match(longFormattingTokensRegExp)
+    .map(function (substring) {
+      const firstCharacter = substring[0];
+      if (firstCharacter === "p" || firstCharacter === "P") {
+        const longFormatter = _index6.longFormatters[firstCharacter];
+        return longFormatter(substring, locale.formatLong);
       }
-      if (!(options !== null && options !== void 0 && options.useAdditionalDayOfYearTokens) && (0, _index7.isProtectedDayOfYearToken)(substring)) {
-        (0, _index7.throwProtectedError)(substring, dirtyFormatStr, String(dirtyDate));
+      return substring;
+    })
+    .join("")
+    .match(formattingTokensRegExp)
+    .map(function (substring) {
+      // Replace two single quote characters with one single quote character
+      if (substring === "''") {
+        return "'";
       }
-      return formatter(utcDate, substring, locale.localize, formatterOptions);
-    }
-    if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
-      throw new RangeError('Format string contains an unescaped latin alphabet character `' + firstCharacter + '`');
-    }
-    return substring;
-  }).join('');
+
+      const firstCharacter = substring[0];
+      if (firstCharacter === "'") {
+        return cleanEscapedString(substring);
+      }
+
+      const formatter = _index5.formatters[firstCharacter];
+      if (formatter) {
+        if (
+          !options?.useAdditionalWeekYearTokens &&
+          (0, _index7.isProtectedWeekYearToken)(substring)
+        ) {
+          (0, _index7.throwProtectedError)(substring, formatStr, String(date));
+        }
+        if (
+          !options?.useAdditionalDayOfYearTokens &&
+          (0, _index7.isProtectedDayOfYearToken)(substring)
+        ) {
+          (0, _index7.throwProtectedError)(substring, formatStr, String(date));
+        }
+        return formatter(
+          originalDate,
+          substring,
+          locale.localize,
+          formatterOptions,
+        );
+      }
+
+      if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
+        throw new RangeError(
+          "Format string contains an unescaped latin alphabet character `" +
+            firstCharacter +
+            "`",
+        );
+      }
+
+      return substring;
+    })
+    .join("");
+
   return result;
 }
+
 function cleanEscapedString(input) {
-  var matched = input.match(escapedStringRegExp);
+  const matched = input.match(escapedStringRegExp);
+
   if (!matched) {
     return input;
   }
+
   return matched[1].replace(doubleQuoteRegExp, "'");
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8149:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3888:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatDistance = formatDistance;
+var _index = __nccwpck_require__(6125);
+var _index2 = __nccwpck_require__(7818);
+var _index3 = __nccwpck_require__(8132);
+var _index4 = __nccwpck_require__(4944);
+var _index5 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatDistance;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(9818));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2713));
-var _index4 = _interopRequireDefault(__nccwpck_require__(9448));
-var _index5 = _interopRequireDefault(__nccwpck_require__(618));
-var _index6 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index7 = _interopRequireDefault(__nccwpck_require__(7934));
-var _index8 = _interopRequireDefault(__nccwpck_require__(2631));
-var _index9 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index10 = _interopRequireDefault(__nccwpck_require__(2063));
-var MINUTES_IN_DAY = 1440;
-var MINUTES_IN_ALMOST_TWO_DAYS = 2520;
-var MINUTES_IN_MONTH = 43200;
-var MINUTES_IN_TWO_MONTHS = 86400;
+var _index6 = __nccwpck_require__(4092);
+var _index7 = __nccwpck_require__(2466);
+var _index8 = __nccwpck_require__(1292);
+
+/**
+ * The {@link formatDistance} function options.
+ */
 
 /**
  * @name formatDistance
@@ -16597,17 +16034,17 @@ var MINUTES_IN_TWO_MONTHS = 86400;
  * | 40 secs ... 60 secs    | less than a minute   |
  * | 60 secs ... 90 secs    | 1 minute             |
  *
- * @param {Date|Number} date - the date
- * @param {Date|Number} baseDate - the date to compare with
- * @param {Object} [options] - an object with options.
- * @param {Boolean} [options.includeSeconds=false] - distances less than a minute are more detailed
- * @param {Boolean} [options.addSuffix=false] - result indicates if the second date is earlier or later than the first
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @returns {String} the distance in words
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `baseDate` must not be Invalid Date
- * @throws {RangeError} `options.locale` must contain `formatDistance` property
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date
+ * @param baseDate - The date to compare with
+ * @param options - An object with options
+ *
+ * @returns The distance in words
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `baseDate` must not be Invalid Date
+ * @throws `options.locale` must contain `formatDistance` property
  *
  * @example
  * // What is the distance between 2 July 2014 and 1 January 2015?
@@ -16641,140 +16078,146 @@ var MINUTES_IN_TWO_MONTHS = 86400;
  * //=> 'pli ol 1 jaro'
  */
 
-function formatDistance(dirtyDate, dirtyBaseDate, options) {
-  var _ref, _options$locale;
-  (0, _index10.default)(2, arguments);
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _index5.default;
-  if (!locale.formatDistance) {
-    throw new RangeError('locale must contain formatDistance property');
-  }
-  var comparison = (0, _index2.default)(dirtyDate, dirtyBaseDate);
+function formatDistance(date, baseDate, options) {
+  const defaultOptions = (0, _index7.getDefaultOptions)();
+  const locale =
+    options?.locale ?? defaultOptions.locale ?? _index6.defaultLocale;
+  const minutesInAlmostTwoDays = 2520;
+
+  const comparison = (0, _index.compareAsc)(date, baseDate);
+
   if (isNaN(comparison)) {
-    throw new RangeError('Invalid time value');
+    throw new RangeError("Invalid time value");
   }
-  var localizeOptions = (0, _index8.default)((0, _index7.default)(options), {
-    addSuffix: Boolean(options === null || options === void 0 ? void 0 : options.addSuffix),
-    comparison: comparison
+
+  const localizeOptions = Object.assign({}, options, {
+    addSuffix: options?.addSuffix,
+    comparison: comparison,
   });
-  var dateLeft;
-  var dateRight;
+
+  let dateLeft;
+  let dateRight;
   if (comparison > 0) {
-    dateLeft = (0, _index6.default)(dirtyBaseDate);
-    dateRight = (0, _index6.default)(dirtyDate);
+    dateLeft = (0, _index5.toDate)(baseDate);
+    dateRight = (0, _index5.toDate)(date);
   } else {
-    dateLeft = (0, _index6.default)(dirtyDate);
-    dateRight = (0, _index6.default)(dirtyBaseDate);
+    dateLeft = (0, _index5.toDate)(date);
+    dateRight = (0, _index5.toDate)(baseDate);
   }
-  var seconds = (0, _index4.default)(dateRight, dateLeft);
-  var offsetInSeconds = ((0, _index9.default)(dateRight) - (0, _index9.default)(dateLeft)) / 1000;
-  var minutes = Math.round((seconds - offsetInSeconds) / 60);
-  var months;
+
+  const seconds = (0, _index4.differenceInSeconds)(dateRight, dateLeft);
+  const offsetInSeconds =
+    ((0, _index8.getTimezoneOffsetInMilliseconds)(dateRight) -
+      (0, _index8.getTimezoneOffsetInMilliseconds)(dateLeft)) /
+    1000;
+  const minutes = Math.round((seconds - offsetInSeconds) / 60);
+  let months;
 
   // 0 up to 2 mins
   if (minutes < 2) {
-    if (options !== null && options !== void 0 && options.includeSeconds) {
+    if (options?.includeSeconds) {
       if (seconds < 5) {
-        return locale.formatDistance('lessThanXSeconds', 5, localizeOptions);
+        return locale.formatDistance("lessThanXSeconds", 5, localizeOptions);
       } else if (seconds < 10) {
-        return locale.formatDistance('lessThanXSeconds', 10, localizeOptions);
+        return locale.formatDistance("lessThanXSeconds", 10, localizeOptions);
       } else if (seconds < 20) {
-        return locale.formatDistance('lessThanXSeconds', 20, localizeOptions);
+        return locale.formatDistance("lessThanXSeconds", 20, localizeOptions);
       } else if (seconds < 40) {
-        return locale.formatDistance('halfAMinute', 0, localizeOptions);
+        return locale.formatDistance("halfAMinute", 0, localizeOptions);
       } else if (seconds < 60) {
-        return locale.formatDistance('lessThanXMinutes', 1, localizeOptions);
+        return locale.formatDistance("lessThanXMinutes", 1, localizeOptions);
       } else {
-        return locale.formatDistance('xMinutes', 1, localizeOptions);
+        return locale.formatDistance("xMinutes", 1, localizeOptions);
       }
     } else {
       if (minutes === 0) {
-        return locale.formatDistance('lessThanXMinutes', 1, localizeOptions);
+        return locale.formatDistance("lessThanXMinutes", 1, localizeOptions);
       } else {
-        return locale.formatDistance('xMinutes', minutes, localizeOptions);
+        return locale.formatDistance("xMinutes", minutes, localizeOptions);
       }
     }
 
     // 2 mins up to 0.75 hrs
   } else if (minutes < 45) {
-    return locale.formatDistance('xMinutes', minutes, localizeOptions);
+    return locale.formatDistance("xMinutes", minutes, localizeOptions);
 
     // 0.75 hrs up to 1.5 hrs
   } else if (minutes < 90) {
-    return locale.formatDistance('aboutXHours', 1, localizeOptions);
+    return locale.formatDistance("aboutXHours", 1, localizeOptions);
 
     // 1.5 hrs up to 24 hrs
-  } else if (minutes < MINUTES_IN_DAY) {
-    var hours = Math.round(minutes / 60);
-    return locale.formatDistance('aboutXHours', hours, localizeOptions);
+  } else if (minutes < _index2.minutesInDay) {
+    const hours = Math.round(minutes / 60);
+    return locale.formatDistance("aboutXHours", hours, localizeOptions);
 
     // 1 day up to 1.75 days
-  } else if (minutes < MINUTES_IN_ALMOST_TWO_DAYS) {
-    return locale.formatDistance('xDays', 1, localizeOptions);
+  } else if (minutes < minutesInAlmostTwoDays) {
+    return locale.formatDistance("xDays", 1, localizeOptions);
 
     // 1.75 days up to 30 days
-  } else if (minutes < MINUTES_IN_MONTH) {
-    var days = Math.round(minutes / MINUTES_IN_DAY);
-    return locale.formatDistance('xDays', days, localizeOptions);
+  } else if (minutes < _index2.minutesInMonth) {
+    const days = Math.round(minutes / _index2.minutesInDay);
+    return locale.formatDistance("xDays", days, localizeOptions);
 
     // 1 month up to 2 months
-  } else if (minutes < MINUTES_IN_TWO_MONTHS) {
-    months = Math.round(minutes / MINUTES_IN_MONTH);
-    return locale.formatDistance('aboutXMonths', months, localizeOptions);
+  } else if (minutes < _index2.minutesInMonth * 2) {
+    months = Math.round(minutes / _index2.minutesInMonth);
+    return locale.formatDistance("aboutXMonths", months, localizeOptions);
   }
-  months = (0, _index3.default)(dateRight, dateLeft);
+
+  months = (0, _index3.differenceInMonths)(dateRight, dateLeft);
 
   // 2 months up to 12 months
   if (months < 12) {
-    var nearestMonth = Math.round(minutes / MINUTES_IN_MONTH);
-    return locale.formatDistance('xMonths', nearestMonth, localizeOptions);
+    const nearestMonth = Math.round(minutes / _index2.minutesInMonth);
+    return locale.formatDistance("xMonths", nearestMonth, localizeOptions);
 
     // 1 year up to max Date
   } else {
-    var monthsSinceStartOfYear = months % 12;
-    var years = Math.floor(months / 12);
+    const monthsSinceStartOfYear = months % 12;
+    const years = Math.floor(months / 12);
 
     // N years up to 1 years 3 months
     if (monthsSinceStartOfYear < 3) {
-      return locale.formatDistance('aboutXYears', years, localizeOptions);
+      return locale.formatDistance("aboutXYears", years, localizeOptions);
 
       // N years 3 months up to N years 9 months
     } else if (monthsSinceStartOfYear < 9) {
-      return locale.formatDistance('overXYears', years, localizeOptions);
+      return locale.formatDistance("overXYears", years, localizeOptions);
 
       // N years 9 months up to N year 12 months
     } else {
-      return locale.formatDistance('almostXYears', years + 1, localizeOptions);
+      return locale.formatDistance("almostXYears", years + 1, localizeOptions);
     }
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7128:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7916:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatDistanceStrict = formatDistanceStrict;
+var _index = __nccwpck_require__(6125);
+var _index2 = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatDistanceStrict;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index3 = _interopRequireDefault(__nccwpck_require__(9818));
-var _index4 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index5 = _interopRequireDefault(__nccwpck_require__(7934));
-var _index6 = _interopRequireDefault(__nccwpck_require__(2631));
-var _index7 = _interopRequireDefault(__nccwpck_require__(618));
-var _index8 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_MINUTE = 1000 * 60;
-var MINUTES_IN_DAY = 60 * 24;
-var MINUTES_IN_MONTH = MINUTES_IN_DAY * 30;
-var MINUTES_IN_YEAR = MINUTES_IN_DAY * 365;
+var _index3 = __nccwpck_require__(3622);
+
+var _index4 = __nccwpck_require__(4092);
+var _index5 = __nccwpck_require__(2466);
+var _index6 = __nccwpck_require__(1292);
+var _index7 = __nccwpck_require__(304);
+
+/**
+ * The {@link formatDistanceStrict} function options.
+ */
+
+/**
+ * The unit used to format the distance in {@link formatDistanceStrict}.
+ */
 
 /**
  * @name formatDistanceStrict
@@ -16795,20 +16238,18 @@ var MINUTES_IN_YEAR = MINUTES_IN_DAY * 365;
  * | 1 ... 11 months        | [1..11] months      |
  * | 1 ... N years          | [1..N]  years       |
  *
- * @param {Date|Number} date - the date
- * @param {Date|Number} baseDate - the date to compare with
- * @param {Object} [options] - an object with options.
- * @param {Boolean} [options.addSuffix=false] - result indicates if the second date is earlier or later than the first
- * @param {'second'|'minute'|'hour'|'day'|'month'|'year'} [options.unit] - if specified, will force a unit
- * @param {'floor'|'ceil'|'round'} [options.roundingMethod='round'] - which way to round partial units
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @returns {String} the distance in words
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `baseDate` must not be Invalid Date
- * @throws {RangeError} `options.roundingMethod` must be 'floor', 'ceil' or 'round'
- * @throws {RangeError} `options.unit` must be 'second', 'minute', 'hour', 'day', 'month' or 'year'
- * @throws {RangeError} `options.locale` must contain `formatDistance` property
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date
+ * @param baseDate - The date to compare with
+ * @param options - An object with options
+ *
+ * @returns The distance in words
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `baseDate` must not be Invalid Date
+ * @throws `options.unit` must be 'second', 'minute', 'hour', 'day', 'month' or 'year'
+ * @throws `options.locale` must contain `formatDistance` property
  *
  * @example
  * // What is the distance between 2 July 2014 and 1 January 2015?
@@ -16858,118 +16299,119 @@ var MINUTES_IN_YEAR = MINUTES_IN_DAY * 365;
  * //=> '1 jaro'
  */
 
-function formatDistanceStrict(dirtyDate, dirtyBaseDate, options) {
-  var _ref, _options$locale, _options$roundingMeth;
-  (0, _index8.default)(2, arguments);
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _index7.default;
-  if (!locale.formatDistance) {
-    throw new RangeError('locale must contain localize.formatDistance property');
-  }
-  var comparison = (0, _index3.default)(dirtyDate, dirtyBaseDate);
+function formatDistanceStrict(date, baseDate, options) {
+  const defaultOptions = (0, _index5.getDefaultOptions)();
+  const locale =
+    options?.locale ?? defaultOptions.locale ?? _index4.defaultLocale;
+
+  const comparison = (0, _index.compareAsc)(date, baseDate);
+
   if (isNaN(comparison)) {
-    throw new RangeError('Invalid time value');
+    throw new RangeError("Invalid time value");
   }
-  var localizeOptions = (0, _index6.default)((0, _index5.default)(options), {
-    addSuffix: Boolean(options === null || options === void 0 ? void 0 : options.addSuffix),
-    comparison: comparison
+
+  const localizeOptions = Object.assign({}, options, {
+    addSuffix: options?.addSuffix,
+    comparison: comparison,
   });
-  var dateLeft;
-  var dateRight;
+
+  let dateLeft;
+  let dateRight;
   if (comparison > 0) {
-    dateLeft = (0, _index4.default)(dirtyBaseDate);
-    dateRight = (0, _index4.default)(dirtyDate);
+    dateLeft = (0, _index3.toDate)(baseDate);
+    dateRight = (0, _index3.toDate)(date);
   } else {
-    dateLeft = (0, _index4.default)(dirtyDate);
-    dateRight = (0, _index4.default)(dirtyBaseDate);
+    dateLeft = (0, _index3.toDate)(date);
+    dateRight = (0, _index3.toDate)(baseDate);
   }
-  var roundingMethod = String((_options$roundingMeth = options === null || options === void 0 ? void 0 : options.roundingMethod) !== null && _options$roundingMeth !== void 0 ? _options$roundingMeth : 'round');
-  var roundingMethodFn;
-  if (roundingMethod === 'floor') {
-    roundingMethodFn = Math.floor;
-  } else if (roundingMethod === 'ceil') {
-    roundingMethodFn = Math.ceil;
-  } else if (roundingMethod === 'round') {
-    roundingMethodFn = Math.round;
-  } else {
-    throw new RangeError("roundingMethod must be 'floor', 'ceil' or 'round'");
-  }
-  var milliseconds = dateRight.getTime() - dateLeft.getTime();
-  var minutes = milliseconds / MILLISECONDS_IN_MINUTE;
-  var timezoneOffset = (0, _index2.default)(dateRight) - (0, _index2.default)(dateLeft);
+
+  const roundingMethod = (0, _index7.getRoundingMethod)(
+    options?.roundingMethod ?? "round",
+  );
+
+  const milliseconds = dateRight.getTime() - dateLeft.getTime();
+  const minutes = milliseconds / _index2.millisecondsInMinute;
+
+  const timezoneOffset =
+    (0, _index6.getTimezoneOffsetInMilliseconds)(dateRight) -
+    (0, _index6.getTimezoneOffsetInMilliseconds)(dateLeft);
 
   // Use DST-normalized difference in minutes for years, months and days;
   // use regular difference in minutes for hours, minutes and seconds.
-  var dstNormalizedMinutes = (milliseconds - timezoneOffset) / MILLISECONDS_IN_MINUTE;
-  var defaultUnit = options === null || options === void 0 ? void 0 : options.unit;
-  var unit;
+  const dstNormalizedMinutes =
+    (milliseconds - timezoneOffset) / _index2.millisecondsInMinute;
+
+  const defaultUnit = options?.unit;
+  let unit;
   if (!defaultUnit) {
     if (minutes < 1) {
-      unit = 'second';
+      unit = "second";
     } else if (minutes < 60) {
-      unit = 'minute';
-    } else if (minutes < MINUTES_IN_DAY) {
-      unit = 'hour';
-    } else if (dstNormalizedMinutes < MINUTES_IN_MONTH) {
-      unit = 'day';
-    } else if (dstNormalizedMinutes < MINUTES_IN_YEAR) {
-      unit = 'month';
+      unit = "minute";
+    } else if (minutes < _index2.minutesInDay) {
+      unit = "hour";
+    } else if (dstNormalizedMinutes < _index2.minutesInMonth) {
+      unit = "day";
+    } else if (dstNormalizedMinutes < _index2.minutesInYear) {
+      unit = "month";
     } else {
-      unit = 'year';
+      unit = "year";
     }
   } else {
-    unit = String(defaultUnit);
+    unit = defaultUnit;
   }
 
   // 0 up to 60 seconds
-  if (unit === 'second') {
-    var seconds = roundingMethodFn(milliseconds / 1000);
-    return locale.formatDistance('xSeconds', seconds, localizeOptions);
+  if (unit === "second") {
+    const seconds = roundingMethod(milliseconds / 1000);
+    return locale.formatDistance("xSeconds", seconds, localizeOptions);
 
     // 1 up to 60 mins
-  } else if (unit === 'minute') {
-    var roundedMinutes = roundingMethodFn(minutes);
-    return locale.formatDistance('xMinutes', roundedMinutes, localizeOptions);
+  } else if (unit === "minute") {
+    const roundedMinutes = roundingMethod(minutes);
+    return locale.formatDistance("xMinutes", roundedMinutes, localizeOptions);
 
     // 1 up to 24 hours
-  } else if (unit === 'hour') {
-    var hours = roundingMethodFn(minutes / 60);
-    return locale.formatDistance('xHours', hours, localizeOptions);
+  } else if (unit === "hour") {
+    const hours = roundingMethod(minutes / 60);
+    return locale.formatDistance("xHours", hours, localizeOptions);
 
     // 1 up to 30 days
-  } else if (unit === 'day') {
-    var days = roundingMethodFn(dstNormalizedMinutes / MINUTES_IN_DAY);
-    return locale.formatDistance('xDays', days, localizeOptions);
+  } else if (unit === "day") {
+    const days = roundingMethod(dstNormalizedMinutes / _index2.minutesInDay);
+    return locale.formatDistance("xDays", days, localizeOptions);
 
     // 1 up to 12 months
-  } else if (unit === 'month') {
-    var months = roundingMethodFn(dstNormalizedMinutes / MINUTES_IN_MONTH);
-    return months === 12 && defaultUnit !== 'month' ? locale.formatDistance('xYears', 1, localizeOptions) : locale.formatDistance('xMonths', months, localizeOptions);
+  } else if (unit === "month") {
+    const months = roundingMethod(
+      dstNormalizedMinutes / _index2.minutesInMonth,
+    );
+    return months === 12 && defaultUnit !== "month"
+      ? locale.formatDistance("xYears", 1, localizeOptions)
+      : locale.formatDistance("xMonths", months, localizeOptions);
 
     // 1 year up to max Date
-  } else if (unit === 'year') {
-    var years = roundingMethodFn(dstNormalizedMinutes / MINUTES_IN_YEAR);
-    return locale.formatDistance('xYears', years, localizeOptions);
+  } else {
+    const years = roundingMethod(dstNormalizedMinutes / _index2.minutesInYear);
+    return locale.formatDistance("xYears", years, localizeOptions);
   }
-  throw new RangeError("unit must be 'second', 'minute', 'hour', 'day', 'month' or 'year'");
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1163:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5228:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatDistanceToNow = formatDistanceToNow;
+var _index = __nccwpck_require__(3888);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatDistanceToNow;
-var _index = _interopRequireDefault(__nccwpck_require__(8149));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link formatDistanceToNow} function options.
+ */
+
 /**
  * @name formatDistanceToNow
  * @category Common Helpers
@@ -17008,18 +16450,15 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * | 40 secs ... 60 secs | less than a minute   |
  * | 60 secs ... 90 secs | 1 minute             |
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the given date
- * @param {Object} [options] - the object with options
- * @param {Boolean} [options.includeSeconds=false] - distances less than a minute are more detailed
- * @param {Boolean} [options.addSuffix=false] - result specifies if now is earlier or later than the passed date
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @returns {String} the distance in words
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `options.locale` must contain `formatDistance` property
+ * @param date - The given date
+ * @param options - The object with options
+ *
+ * @returns The distance in words
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `options.locale` must contain `formatDistance` property
  *
  * @example
  * // If today is 1 January 2015, what is the distance to 2 July 2014?
@@ -17056,27 +16495,25 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> 'pli ol 1 jaro'
  */
-function formatDistanceToNow(dirtyDate, options) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now(), options);
+function formatDistanceToNow(date, options) {
+  return (0, _index.formatDistance)(date, Date.now(), options);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4741:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4025:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatDistanceToNowStrict = formatDistanceToNowStrict;
+var _index = __nccwpck_require__(7916);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatDistanceToNowStrict;
-var _index = _interopRequireDefault(__nccwpck_require__(7128));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link formatDistanceToNowStrict} function options.
+ */
+
 /**
  * @name formatDistanceToNowStrict
  * @category Common Helpers
@@ -17097,16 +16534,15 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * | 1 ... 11 months        | [1..11] months      |
  * | 1 ... N years          | [1..N]  years       |
  *
- * @param {Date|Number} date - the given date
- * @param {Object} [options] - an object with options.
- * @param {Boolean} [options.addSuffix=false] - result indicates if the second date is earlier or later than the first
- * @param {'second'|'minute'|'hour'|'day'|'month'|'year'} [options.unit] - if specified, will force a unit
- * @param {'floor'|'ceil'|'round'} [options.roundingMethod='round'] - which way to round partial units
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @returns {String} the distance in words
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `options.locale` must contain `formatDistance` property
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ * @param options - An object with options.
+ *
+ * @returns The distance in words
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `options.locale` must contain `formatDistance` property
  *
  * @example
  * // If today is 1 January 2015, what is the distance to 2 July 2014?
@@ -17151,28 +16587,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> '1 jaro'
  */
-function formatDistanceToNowStrict(dirtyDate, options) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now(), options);
+function formatDistanceToNowStrict(date, options) {
+  return (0, _index.formatDistanceStrict)(date, Date.now(), options);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8917:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2630:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatDuration = formatDuration;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatDuration;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(618));
-var defaultFormat = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
+var _index = __nccwpck_require__(4092);
+var _index2 = __nccwpck_require__(2466);
+
+/**
+ * The {@link formatDuration} function options.
+ */
+
+const defaultFormat = [
+  "years",
+  "months",
+  "weeks",
+  "days",
+  "hours",
+  "minutes",
+  "seconds",
+];
 
 /**
  * @name formatDuration
@@ -17182,14 +16626,12 @@ var defaultFormat = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'se
  * @description
  * Return human-readable duration string i.e. "9 months 2 days"
  *
- * @param {Duration} duration - the duration to format
- * @param {Object} [options] - an object with options.
- * @param {string[]} [options.format=['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds']] - the array of units to format
- * @param {boolean} [options.zero=false] - should zeros be included in the output?
- * @param {string} [options.delimiter=' '] - delimiter string
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @returns {string} the formatted date string
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param duration - The duration to format
+ * @param options - An object with options.
+ *
+ * @returns The formatted date string
  *
  * @example
  * // Format full duration
@@ -17237,48 +16679,48 @@ var defaultFormat = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'se
  * //=> '2 years, 9 months, 3 weeks'
  */
 function formatDuration(duration, options) {
-  var _ref, _options$locale, _options$format, _options$zero, _options$delimiter;
-  if (arguments.length < 1) {
-    throw new TypeError("1 argument required, but only ".concat(arguments.length, " present"));
-  }
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _index2.default;
-  var format = (_options$format = options === null || options === void 0 ? void 0 : options.format) !== null && _options$format !== void 0 ? _options$format : defaultFormat;
-  var zero = (_options$zero = options === null || options === void 0 ? void 0 : options.zero) !== null && _options$zero !== void 0 ? _options$zero : false;
-  var delimiter = (_options$delimiter = options === null || options === void 0 ? void 0 : options.delimiter) !== null && _options$delimiter !== void 0 ? _options$delimiter : ' ';
+  const defaultOptions = (0, _index2.getDefaultOptions)();
+  const locale =
+    options?.locale ?? defaultOptions.locale ?? _index.defaultLocale;
+  const format = options?.format ?? defaultFormat;
+  const zero = options?.zero ?? false;
+  const delimiter = options?.delimiter ?? " ";
+
   if (!locale.formatDistance) {
-    return '';
+    return "";
   }
-  var result = format.reduce(function (acc, unit) {
-    var token = "x".concat(unit.replace(/(^.)/, function (m) {
-      return m.toUpperCase();
-    }));
-    var value = duration[unit];
-    if (typeof value === 'number' && (zero || duration[unit])) {
-      return acc.concat(locale.formatDistance(token, value));
-    }
-    return acc;
-  }, []).join(delimiter);
+
+  const result = format
+    .reduce((acc, unit) => {
+      const token = `x${unit.replace(/(^.)/, (m) => m.toUpperCase())}`;
+      const value = duration[unit];
+      if (value !== undefined && (zero || duration[unit])) {
+        return acc.concat(locale.formatDistance(token, value));
+      }
+      return acc;
+    }, [])
+    .join(delimiter);
+
   return result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3385:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5270:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatISO = formatISO;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatISO;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8794));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
+var _index2 = __nccwpck_require__(534);
+
+/**
+ * The {@link formatISO} function options.
+ */
+
 /**
  * @name formatISO
  * @category Common Helpers
@@ -17287,15 +16729,14 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the formatted date string in ISO 8601 format. Options may be passed to control the parts and notations of the date.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {'extended'|'basic'} [options.format='extended'] - if 'basic', hide delimiters between date and time values.
- * @param {'complete'|'date'|'time'} [options.representation='complete'] - format date, time with local time zone, or both.
- * @returns {String} the formatted date string (in local time zone)
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `options.format` must be 'extended' or 'basic'
- * @throws {RangeError} `options.representation` must be 'date', 'time' or 'complete'
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options.
+ *
+ * @returns The formatted date string (in loca.l time zone)
+ *
+ * @throws `date` must not be Invalid Date
  *
  * @example
  * // Represent 18 September 2019 in ISO 8601 format (local time zone is UTC):
@@ -17318,82 +16759,86 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> '19:00:52Z'
  */
 function formatISO(date, options) {
-  var _options$format, _options$representati;
-  (0, _index3.default)(1, arguments);
-  var originalDate = (0, _index.default)(date);
-  if (isNaN(originalDate.getTime())) {
-    throw new RangeError('Invalid time value');
+  const _date = (0, _index.toDate)(date);
+
+  if (isNaN(_date.getTime())) {
+    throw new RangeError("Invalid time value");
   }
-  var format = String((_options$format = options === null || options === void 0 ? void 0 : options.format) !== null && _options$format !== void 0 ? _options$format : 'extended');
-  var representation = String((_options$representati = options === null || options === void 0 ? void 0 : options.representation) !== null && _options$representati !== void 0 ? _options$representati : 'complete');
-  if (format !== 'extended' && format !== 'basic') {
-    throw new RangeError("format must be 'extended' or 'basic'");
-  }
-  if (representation !== 'date' && representation !== 'time' && representation !== 'complete') {
-    throw new RangeError("representation must be 'date', 'time', or 'complete'");
-  }
-  var result = '';
-  var tzOffset = '';
-  var dateDelimiter = format === 'extended' ? '-' : '';
-  var timeDelimiter = format === 'extended' ? ':' : '';
+
+  const format = options?.format ?? "extended";
+  const representation = options?.representation ?? "complete";
+
+  let result = "";
+  let tzOffset = "";
+
+  const dateDelimiter = format === "extended" ? "-" : "";
+  const timeDelimiter = format === "extended" ? ":" : "";
 
   // Representation is either 'date' or 'complete'
-  if (representation !== 'time') {
-    var day = (0, _index2.default)(originalDate.getDate(), 2);
-    var month = (0, _index2.default)(originalDate.getMonth() + 1, 2);
-    var year = (0, _index2.default)(originalDate.getFullYear(), 4);
+  if (representation !== "time") {
+    const day = (0, _index2.addLeadingZeros)(_date.getDate(), 2);
+    const month = (0, _index2.addLeadingZeros)(_date.getMonth() + 1, 2);
+    const year = (0, _index2.addLeadingZeros)(_date.getFullYear(), 4);
 
     // yyyyMMdd or yyyy-MM-dd.
-    result = "".concat(year).concat(dateDelimiter).concat(month).concat(dateDelimiter).concat(day);
+    result = `${year}${dateDelimiter}${month}${dateDelimiter}${day}`;
   }
 
   // Representation is either 'time' or 'complete'
-  if (representation !== 'date') {
+  if (representation !== "date") {
     // Add the timezone.
-    var offset = originalDate.getTimezoneOffset();
+    const offset = _date.getTimezoneOffset();
+
     if (offset !== 0) {
-      var absoluteOffset = Math.abs(offset);
-      var hourOffset = (0, _index2.default)(Math.floor(absoluteOffset / 60), 2);
-      var minuteOffset = (0, _index2.default)(absoluteOffset % 60, 2);
+      const absoluteOffset = Math.abs(offset);
+      const hourOffset = (0, _index2.addLeadingZeros)(
+        Math.floor(absoluteOffset / 60),
+        2,
+      );
+      const minuteOffset = (0, _index2.addLeadingZeros)(absoluteOffset % 60, 2);
       // If less than 0, the sign is +, because it is ahead of time.
-      var sign = offset < 0 ? '+' : '-';
-      tzOffset = "".concat(sign).concat(hourOffset, ":").concat(minuteOffset);
+      const sign = offset < 0 ? "+" : "-";
+
+      tzOffset = `${sign}${hourOffset}:${minuteOffset}`;
     } else {
-      tzOffset = 'Z';
+      tzOffset = "Z";
     }
-    var hour = (0, _index2.default)(originalDate.getHours(), 2);
-    var minute = (0, _index2.default)(originalDate.getMinutes(), 2);
-    var second = (0, _index2.default)(originalDate.getSeconds(), 2);
+
+    const hour = (0, _index2.addLeadingZeros)(_date.getHours(), 2);
+    const minute = (0, _index2.addLeadingZeros)(_date.getMinutes(), 2);
+    const second = (0, _index2.addLeadingZeros)(_date.getSeconds(), 2);
 
     // If there's also date, separate it with time with 'T'
-    var separator = result === '' ? '' : 'T';
+    const separator = result === "" ? "" : "T";
 
     // Creates a time string consisting of hour, minute, and second, separated by delimiters, if defined.
-    var time = [hour, minute, second].join(timeDelimiter);
+    const time = [hour, minute, second].join(timeDelimiter);
 
     // HHmmss or HH:mm:ss.
-    result = "".concat(result).concat(separator).concat(time).concat(tzOffset);
+    result = `${result}${separator}${time}${tzOffset}`;
   }
+
   return result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5296:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6964:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatISO9075 = formatISO9075;
+var _index = __nccwpck_require__(8915);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatISO9075;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9920));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8794));
+var _index3 = __nccwpck_require__(534);
+
+/**
+ * The {@link formatISO9075} function options.
+ */
+
 /**
  * @name formatISO9075
  * @category Common Helpers
@@ -17402,15 +16847,14 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(8794));
  * @description
  * Return the formatted date string in ISO 9075 format. Options may be passed to control the parts and notations of the date.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {'extended'|'basic'} [options.format='extended'] - if 'basic', hide delimiters between date and time values.
- * @param {'complete'|'date'|'time'} [options.representation='complete'] - format date, time, or both.
- * @returns {String} the formatted date string
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `options.format` must be 'extended' or 'basic'
- * @throws {RangeError} `options.representation` must be 'date', 'time' or 'complete'
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options.
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
  *
  * @example
  * // Represent 18 September 2019 in ISO 9075 format:
@@ -17432,81 +16876,68 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(8794));
  * const result = formatISO9075(new Date(2019, 8, 18, 19, 0, 52), { representation: 'time' })
  * //=> '19:00:52'
  */
-function formatISO9075(dirtyDate, options) {
-  var _options$format, _options$representati;
-  if (arguments.length < 1) {
-    throw new TypeError("1 argument required, but only ".concat(arguments.length, " present"));
+function formatISO9075(date, options) {
+  const _date = (0, _index2.toDate)(date);
+
+  if (!(0, _index.isValid)(_date)) {
+    throw new RangeError("Invalid time value");
   }
-  var originalDate = (0, _index.default)(dirtyDate);
-  if (!(0, _index2.default)(originalDate)) {
-    throw new RangeError('Invalid time value');
-  }
-  var format = String((_options$format = options === null || options === void 0 ? void 0 : options.format) !== null && _options$format !== void 0 ? _options$format : 'extended');
-  var representation = String((_options$representati = options === null || options === void 0 ? void 0 : options.representation) !== null && _options$representati !== void 0 ? _options$representati : 'complete');
-  if (format !== 'extended' && format !== 'basic') {
-    throw new RangeError("format must be 'extended' or 'basic'");
-  }
-  if (representation !== 'date' && representation !== 'time' && representation !== 'complete') {
-    throw new RangeError("representation must be 'date', 'time', or 'complete'");
-  }
-  var result = '';
-  var dateDelimiter = format === 'extended' ? '-' : '';
-  var timeDelimiter = format === 'extended' ? ':' : '';
+
+  const format = options?.format ?? "extended";
+  const representation = options?.representation ?? "complete";
+
+  let result = "";
+
+  const dateDelimiter = format === "extended" ? "-" : "";
+  const timeDelimiter = format === "extended" ? ":" : "";
 
   // Representation is either 'date' or 'complete'
-  if (representation !== 'time') {
-    var day = (0, _index3.default)(originalDate.getDate(), 2);
-    var month = (0, _index3.default)(originalDate.getMonth() + 1, 2);
-    var year = (0, _index3.default)(originalDate.getFullYear(), 4);
+  if (representation !== "time") {
+    const day = (0, _index3.addLeadingZeros)(_date.getDate(), 2);
+    const month = (0, _index3.addLeadingZeros)(_date.getMonth() + 1, 2);
+    const year = (0, _index3.addLeadingZeros)(_date.getFullYear(), 4);
 
     // yyyyMMdd or yyyy-MM-dd.
-    result = "".concat(year).concat(dateDelimiter).concat(month).concat(dateDelimiter).concat(day);
+    result = `${year}${dateDelimiter}${month}${dateDelimiter}${day}`;
   }
 
   // Representation is either 'time' or 'complete'
-  if (representation !== 'date') {
-    var hour = (0, _index3.default)(originalDate.getHours(), 2);
-    var minute = (0, _index3.default)(originalDate.getMinutes(), 2);
-    var second = (0, _index3.default)(originalDate.getSeconds(), 2);
+  if (representation !== "date") {
+    const hour = (0, _index3.addLeadingZeros)(_date.getHours(), 2);
+    const minute = (0, _index3.addLeadingZeros)(_date.getMinutes(), 2);
+    const second = (0, _index3.addLeadingZeros)(_date.getSeconds(), 2);
 
     // If there's also date, separate it with time with a space
-    var separator = result === '' ? '' : ' ';
+    const separator = result === "" ? "" : " ";
 
     // HHmmss or HH:mm:ss.
-    result = "".concat(result).concat(separator).concat(hour).concat(timeDelimiter).concat(minute).concat(timeDelimiter).concat(second);
+    result = `${result}${separator}${hour}${timeDelimiter}${minute}${timeDelimiter}${second}`;
   }
+
   return result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2448:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4827:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.formatISODuration = formatISODuration;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatISODuration;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name formatISODuration
  * @category Common Helpers
  * @summary Format a duration object according as ISO 8601 duration string
  *
  * @description
- * Format a duration object according to the ISO 8601 duration standard (https://www.digi.com/resources/documentation/digidocs/90001437-13/reference/r_iso_8601_duration_format.htm)
+ * Format a duration object according to the ISO 8601 duration standard (https://www.digi.com/resources/documentation/digidocs//90001488-13/reference/r_iso_8601_duration_format.htm)
  *
- * @param {Duration} duration - the duration to format
+ * @param duration - The duration to format
  *
- * @returns {String} The ISO 8601 duration string
- * @throws {TypeError} Requires 1 argument
- * @throws {Error} Argument must be an object
+ * @returns The ISO 8601 duration string
  *
  * @example
  * // Format the given duration as ISO 8601 string
@@ -17521,41 +16952,35 @@ var _index = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> 'P39Y2M20DT0H0M0S'
  */
 function formatISODuration(duration) {
-  (0, _index.default)(1, arguments);
-  if ((0, _typeof2.default)(duration) !== 'object') throw new Error('Duration must be an object');
-  var _duration$years = duration.years,
-    years = _duration$years === void 0 ? 0 : _duration$years,
-    _duration$months = duration.months,
-    months = _duration$months === void 0 ? 0 : _duration$months,
-    _duration$days = duration.days,
-    days = _duration$days === void 0 ? 0 : _duration$days,
-    _duration$hours = duration.hours,
-    hours = _duration$hours === void 0 ? 0 : _duration$hours,
-    _duration$minutes = duration.minutes,
-    minutes = _duration$minutes === void 0 ? 0 : _duration$minutes,
-    _duration$seconds = duration.seconds,
-    seconds = _duration$seconds === void 0 ? 0 : _duration$seconds;
-  return "P".concat(years, "Y").concat(months, "M").concat(days, "DT").concat(hours, "H").concat(minutes, "M").concat(seconds, "S");
+  const {
+    years = 0,
+    months = 0,
+    days = 0,
+    hours = 0,
+    minutes = 0,
+    seconds = 0,
+  } = duration;
+
+  return `P${years}Y${months}M${days}DT${hours}H${minutes}M${seconds}S`;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4182:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5568:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatRFC3339 = formatRFC3339;
+var _index = __nccwpck_require__(8915);
+var _index2 = __nccwpck_require__(3622);
+var _index3 = __nccwpck_require__(534);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatRFC3339;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9920));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8794));
-var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
+/**
+ * The {@link formatRFC3339} function options.
+ */
+
 /**
  * @name formatRFC3339
  * @category Common Helpers
@@ -17564,90 +16989,104 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Return the formatted date string in RFC 3339 format. Options may be passed to control the parts and notations of the date.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {0|1|2|3} [options.fractionDigits=0] - number of digits after the decimal point after seconds
- * @returns {String} the formatted date string
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `options.fractionDigits` must be between 0 and 3
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options.
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
  *
  * @example
  * // Represent 18 September 2019 in RFC 3339 format:
- * const result = formatRFC3339(new Date(2019, 8, 18, 19, 0, 52))
+ * formatRFC3339(new Date(2019, 8, 18, 19, 0, 52))
  * //=> '2019-09-18T19:00:52Z'
  *
  * @example
- * // Represent 18 September 2019 in RFC 3339 format, 2 digits of second fraction:
- * const result = formatRFC3339(new Date(2019, 8, 18, 19, 0, 52, 234), { fractionDigits: 2 })
- * //=> '2019-09-18T19:00:52.23Z'
- *
- * @example
  * // Represent 18 September 2019 in RFC 3339 format, 3 digits of second fraction
- * const result = formatRFC3339(new Date(2019, 8, 18, 19, 0, 52, 234), { fractionDigits: 3 })
+ * formatRFC3339(new Date(2019, 8, 18, 19, 0, 52, 234), {
+ *   fractionDigits: 3
+ * })
  * //=> '2019-09-18T19:00:52.234Z'
  */
-function formatRFC3339(dirtyDate, options) {
-  var _options$fractionDigi;
-  if (arguments.length < 1) {
-    throw new TypeError("1 arguments required, but only ".concat(arguments.length, " present"));
-  }
-  var originalDate = (0, _index.default)(dirtyDate);
-  if (!(0, _index2.default)(originalDate)) {
-    throw new RangeError('Invalid time value');
-  }
-  var fractionDigits = Number((_options$fractionDigi = options === null || options === void 0 ? void 0 : options.fractionDigits) !== null && _options$fractionDigi !== void 0 ? _options$fractionDigi : 0);
+function formatRFC3339(date, options) {
+  const _date = (0, _index2.toDate)(date);
 
-  // Test if fractionDigits is between 0 and 3 _and_ is not NaN
-  if (!(fractionDigits >= 0 && fractionDigits <= 3)) {
-    throw new RangeError('fractionDigits must be between 0 and 3 inclusively');
+  if (!(0, _index.isValid)(_date)) {
+    throw new RangeError("Invalid time value");
   }
-  var day = (0, _index3.default)(originalDate.getDate(), 2);
-  var month = (0, _index3.default)(originalDate.getMonth() + 1, 2);
-  var year = originalDate.getFullYear();
-  var hour = (0, _index3.default)(originalDate.getHours(), 2);
-  var minute = (0, _index3.default)(originalDate.getMinutes(), 2);
-  var second = (0, _index3.default)(originalDate.getSeconds(), 2);
-  var fractionalSecond = '';
+
+  const fractionDigits = options?.fractionDigits ?? 0;
+
+  const day = (0, _index3.addLeadingZeros)(_date.getDate(), 2);
+  const month = (0, _index3.addLeadingZeros)(_date.getMonth() + 1, 2);
+  const year = _date.getFullYear();
+
+  const hour = (0, _index3.addLeadingZeros)(_date.getHours(), 2);
+  const minute = (0, _index3.addLeadingZeros)(_date.getMinutes(), 2);
+  const second = (0, _index3.addLeadingZeros)(_date.getSeconds(), 2);
+
+  let fractionalSecond = "";
   if (fractionDigits > 0) {
-    var milliseconds = originalDate.getMilliseconds();
-    var fractionalSeconds = Math.floor(milliseconds * Math.pow(10, fractionDigits - 3));
-    fractionalSecond = '.' + (0, _index3.default)(fractionalSeconds, fractionDigits);
+    const milliseconds = _date.getMilliseconds();
+    const fractionalSeconds = Math.floor(
+      milliseconds * Math.pow(10, fractionDigits - 3),
+    );
+    fractionalSecond =
+      "." + (0, _index3.addLeadingZeros)(fractionalSeconds, fractionDigits);
   }
-  var offset = '';
-  var tzOffset = originalDate.getTimezoneOffset();
+
+  let offset = "";
+  const tzOffset = _date.getTimezoneOffset();
+
   if (tzOffset !== 0) {
-    var absoluteOffset = Math.abs(tzOffset);
-    var hourOffset = (0, _index3.default)((0, _index4.default)(absoluteOffset / 60), 2);
-    var minuteOffset = (0, _index3.default)(absoluteOffset % 60, 2);
+    const absoluteOffset = Math.abs(tzOffset);
+    const hourOffset = (0, _index3.addLeadingZeros)(
+      Math.trunc(absoluteOffset / 60),
+      2,
+    );
+    const minuteOffset = (0, _index3.addLeadingZeros)(absoluteOffset % 60, 2);
     // If less than 0, the sign is +, because it is ahead of time.
-    var sign = tzOffset < 0 ? '+' : '-';
-    offset = "".concat(sign).concat(hourOffset, ":").concat(minuteOffset);
+    const sign = tzOffset < 0 ? "+" : "-";
+
+    offset = `${sign}${hourOffset}:${minuteOffset}`;
   } else {
-    offset = 'Z';
+    offset = "Z";
   }
-  return "".concat(year, "-").concat(month, "-").concat(day, "T").concat(hour, ":").concat(minute, ":").concat(second).concat(fractionalSecond).concat(offset);
+
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}${fractionalSecond}${offset}`;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 402:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8558:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatRFC7231 = formatRFC7231;
+var _index = __nccwpck_require__(8915);
+var _index2 = __nccwpck_require__(3622);
+var _index3 = __nccwpck_require__(534);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatRFC7231;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9920));
-var _index3 = _interopRequireDefault(__nccwpck_require__(8794));
-var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 /**
  * @name formatRFC7231
@@ -17658,59 +17097,60 @@ var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oc
  * Return the formatted date string in RFC 7231 format.
  * The result will always be in UTC timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {String} the formatted date string
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `date` must not be Invalid Date
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
  *
  * @example
  * // Represent 18 September 2019 in RFC 7231 format:
  * const result = formatRFC7231(new Date(2019, 8, 18, 19, 0, 52))
  * //=> 'Wed, 18 Sep 2019 19:00:52 GMT'
  */
-function formatRFC7231(dirtyDate) {
-  if (arguments.length < 1) {
-    throw new TypeError("1 arguments required, but only ".concat(arguments.length, " present"));
+function formatRFC7231(date) {
+  const _date = (0, _index2.toDate)(date);
+
+  if (!(0, _index.isValid)(_date)) {
+    throw new RangeError("Invalid time value");
   }
-  var originalDate = (0, _index.default)(dirtyDate);
-  if (!(0, _index2.default)(originalDate)) {
-    throw new RangeError('Invalid time value');
-  }
-  var dayName = days[originalDate.getUTCDay()];
-  var dayOfMonth = (0, _index3.default)(originalDate.getUTCDate(), 2);
-  var monthName = months[originalDate.getUTCMonth()];
-  var year = originalDate.getUTCFullYear();
-  var hour = (0, _index3.default)(originalDate.getUTCHours(), 2);
-  var minute = (0, _index3.default)(originalDate.getUTCMinutes(), 2);
-  var second = (0, _index3.default)(originalDate.getUTCSeconds(), 2);
+
+  const dayName = days[_date.getUTCDay()];
+  const dayOfMonth = (0, _index3.addLeadingZeros)(_date.getUTCDate(), 2);
+  const monthName = months[_date.getUTCMonth()];
+  const year = _date.getUTCFullYear();
+
+  const hour = (0, _index3.addLeadingZeros)(_date.getUTCHours(), 2);
+  const minute = (0, _index3.addLeadingZeros)(_date.getUTCMinutes(), 2);
+  const second = (0, _index3.addLeadingZeros)(_date.getUTCSeconds(), 2);
 
   // Result variables.
-  return "".concat(dayName, ", ").concat(dayOfMonth, " ").concat(monthName, " ").concat(year, " ").concat(hour, ":").concat(minute, ":").concat(second, " GMT");
+  return `${dayName}, ${dayOfMonth} ${monthName} ${year} ${hour}:${minute}:${second} GMT`;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 675:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9429:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatRelative = formatRelative;
+var _index = __nccwpck_require__(338);
+var _index2 = __nccwpck_require__(1578);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = formatRelative;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(3086));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2168));
-var _index4 = _interopRequireDefault(__nccwpck_require__(618));
-var _index5 = _interopRequireDefault(__nccwpck_require__(7923));
-var _index6 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index7 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index8 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index9 = _interopRequireDefault(__nccwpck_require__(1985));
+var _index3 = __nccwpck_require__(3622);
+
+var _index4 = __nccwpck_require__(4092);
+var _index5 = __nccwpck_require__(2466);
+
+/**
+ * The {@link formatRelative} function options.
+ */
+
 /**
  * @name formatRelative
  * @category Common Helpers
@@ -17728,91 +17168,80 @@ var _index9 = _interopRequireDefault(__nccwpck_require__(1985));
  * | Next 6 days               | Sunday at 04:30 AM        |
  * | Other                     | 12/31/2017                |
  *
- * @param {Date|Number} date - the date to format
- * @param {Date|Number} baseDate - the date to compare with
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {String} the date in words
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `baseDate` must not be Invalid Date
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.locale` must contain `localize` property
- * @throws {RangeError} `options.locale` must contain `formatLong` property
- * @throws {RangeError} `options.locale` must contain `formatRelative` property
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to format
+ * @param baseDate - The date to compare with
+ * @param options - An object with options
+ *
+ * @returns The date in words
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `baseDate` must not be Invalid Date
+ * @throws `options.locale` must contain `localize` property
+ * @throws `options.locale` must contain `formatLong` property
+ * @throws `options.locale` must contain `formatRelative` property
  *
  * @example
  * // Represent the date of 6 days ago in words relative to the given base date. In this example, today is Wednesday
  * const result = formatRelative(addDays(new Date(), -6), new Date())
  * //=> "last Thursday at 12:45 AM"
  */
-function formatRelative(dirtyDate, dirtyBaseDate, options) {
-  var _ref, _options$locale, _ref2, _ref3, _ref4, _options$weekStartsOn, _options$locale2, _options$locale2$opti, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index8.default)(2, arguments);
-  var date = (0, _index6.default)(dirtyDate);
-  var baseDate = (0, _index6.default)(dirtyBaseDate);
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _index4.default;
-  var weekStartsOn = (0, _index9.default)((_ref2 = (_ref3 = (_ref4 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale2 = options.locale) === null || _options$locale2 === void 0 ? void 0 : (_options$locale2$opti = _options$locale2.options) === null || _options$locale2$opti === void 0 ? void 0 : _options$locale2$opti.weekStartsOn) !== null && _ref4 !== void 0 ? _ref4 : defaultOptions.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : 0);
-  if (!locale.localize) {
-    throw new RangeError('locale must contain localize property');
-  }
-  if (!locale.formatLong) {
-    throw new RangeError('locale must contain formatLong property');
-  }
-  if (!locale.formatRelative) {
-    throw new RangeError('locale must contain formatRelative property');
-  }
-  var diff = (0, _index2.default)(date, baseDate);
+function formatRelative(date, baseDate, options) {
+  const _date = (0, _index3.toDate)(date);
+  const _baseDate = (0, _index3.toDate)(baseDate);
+
+  const defaultOptions = (0, _index5.getDefaultOptions)();
+  const locale =
+    options?.locale ?? defaultOptions.locale ?? _index4.defaultLocale;
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
+
+  const diff = (0, _index.differenceInCalendarDays)(_date, _baseDate);
+
   if (isNaN(diff)) {
-    throw new RangeError('Invalid time value');
+    throw new RangeError("Invalid time value");
   }
-  var token;
+
+  let token;
   if (diff < -6) {
-    token = 'other';
+    token = "other";
   } else if (diff < -1) {
-    token = 'lastWeek';
+    token = "lastWeek";
   } else if (diff < 0) {
-    token = 'yesterday';
+    token = "yesterday";
   } else if (diff < 1) {
-    token = 'today';
+    token = "today";
   } else if (diff < 2) {
-    token = 'tomorrow';
+    token = "tomorrow";
   } else if (diff < 7) {
-    token = 'nextWeek';
+    token = "nextWeek";
   } else {
-    token = 'other';
+    token = "other";
   }
-  var utcDate = (0, _index5.default)(date, (0, _index7.default)(date));
-  var utcBaseDate = (0, _index5.default)(baseDate, (0, _index7.default)(baseDate));
-  var formatStr = locale.formatRelative(token, utcDate, utcBaseDate, {
-    locale: locale,
-    weekStartsOn: weekStartsOn
+
+  const formatStr = locale.formatRelative(token, _date, _baseDate, {
+    locale,
+    weekStartsOn,
   });
-  return (0, _index3.default)(date, formatStr, {
-    locale: locale,
-    weekStartsOn: weekStartsOn
-  });
+  return (0, _index2.format)(_date, formatStr, { locale, weekStartsOn });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4897:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7093:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.fromUnixTime = fromUnixTime;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = fromUnixTime;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name fromUnixTime
  * @category Timestamp Helpers
@@ -17821,37 +17250,30 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Create a date from a Unix timestamp (in seconds). Decimal values will be discarded.
  *
- * @param {Number} unixTime - the given Unix timestamp (in seconds)
- * @returns {Date} the date
- * @throws {TypeError} 1 argument required
+ * @param unixTime - The given Unix timestamp (in seconds)
+ *
+ * @returns The date
  *
  * @example
  * // Create the date 29 February 2012 11:45:05:
  * const result = fromUnixTime(1330515905)
  * //=> Wed Feb 29 2012 11:45:05
  */
-function fromUnixTime(dirtyUnixTime) {
-  (0, _index3.default)(1, arguments);
-  var unixTime = (0, _index2.default)(dirtyUnixTime);
-  return (0, _index.default)(unixTime * 1000);
+function fromUnixTime(unixTime) {
+  return (0, _index.toDate)(unixTime * 1000);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7626:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6326:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDate = getDate;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDate;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getDate
  * @category Day Helpers
@@ -17860,38 +17282,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the day of the month of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the day of month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The day of month
  *
  * @example
  * // Which day of the month is 29 February 2012?
  * const result = getDate(new Date(2012, 1, 29))
  * //=> 29
  */
-function getDate(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var dayOfMonth = date.getDate();
+function getDate(date) {
+  const _date = (0, _index.toDate)(date);
+  const dayOfMonth = _date.getDate();
   return dayOfMonth;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9361:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6172:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDay = getDay;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDay;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getDay
  * @category Weekday Helpers
@@ -17900,40 +17318,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the day of the week of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {0|1|2|3|4|5|6} the day of week, 0 represents Sunday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The day of week, 0 represents Sunday
  *
  * @example
  * // Which day of the week is 29 February 2012?
  * const result = getDay(new Date(2012, 1, 29))
  * //=> 3
  */
-function getDay(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getDay();
+function getDay(date) {
+  const _date = (0, _index.toDate)(date);
+  const day = _date.getDay();
   return day;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7468:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 900:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDayOfYear = getDayOfYear;
+var _index = __nccwpck_require__(338);
+var _index2 = __nccwpck_require__(3304);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDayOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8225));
-var _index3 = _interopRequireDefault(__nccwpck_require__(3086));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getDayOfYear
  * @category Day Helpers
@@ -17942,39 +17356,39 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the day of the year of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the day of year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The day of year
  *
  * @example
  * // Which day of the year is 2 July 2014?
  * const result = getDayOfYear(new Date(2014, 6, 2))
  * //=> 183
  */
-function getDayOfYear(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var diff = (0, _index3.default)(date, (0, _index2.default)(date));
-  var dayOfYear = diff + 1;
+function getDayOfYear(date) {
+  const _date = (0, _index3.toDate)(date);
+  const diff = (0, _index.differenceInCalendarDays)(
+    _date,
+    (0, _index2.startOfYear)(_date),
+  );
+  const dayOfYear = diff + 1;
   return dayOfYear;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7573:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5586:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDaysInMonth = getDaysInMonth;
+var _index = __nccwpck_require__(3622);
+var _index2 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDaysInMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getDaysInMonth
  * @category Month Helpers
@@ -17983,43 +17397,39 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of days in a month of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the number of days in a month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The number of days in a month
  *
  * @example
  * // How many days are in February 2000?
  * const result = getDaysInMonth(new Date(2000, 1))
  * //=> 29
  */
-function getDaysInMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  var monthIndex = date.getMonth();
-  var lastDayOfMonth = new Date(0);
+function getDaysInMonth(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  const monthIndex = _date.getMonth();
+  const lastDayOfMonth = (0, _index2.constructFrom)(date, 0);
   lastDayOfMonth.setFullYear(year, monthIndex + 1, 0);
   lastDayOfMonth.setHours(0, 0, 0, 0);
   return lastDayOfMonth.getDate();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2784:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6023:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDaysInYear = getDaysInYear;
+var _index = __nccwpck_require__(8260);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDaysInYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(74));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getDaysInYear
  * @category Year Helpers
@@ -18028,40 +17438,38 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of days in a year of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the number of days in a year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The number of days in a year
  *
  * @example
  * // How many days are in 2012?
  * const result = getDaysInYear(new Date(2012, 0, 1))
  * //=> 366
  */
-function getDaysInYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  if (String(new Date(date)) === 'Invalid Date') {
+function getDaysInYear(date) {
+  const _date = (0, _index2.toDate)(date);
+
+  if (String(new Date(_date)) === "Invalid Date") {
     return NaN;
   }
-  return (0, _index2.default)(date) ? 366 : 365;
+
+  return (0, _index.isLeapYear)(_date) ? 366 : 365;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9322:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7467:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDecade = getDecade;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDecade;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getDecade
  * @category Decade Helpers
@@ -18070,39 +17478,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the decade of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the year of decade
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The year of decade
  *
  * @example
  * // Which decade belongs 27 November 1942?
  * const result = getDecade(new Date(1942, 10, 27))
  * //=> 1940
  */
-function getDecade(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  var decade = Math.floor(year / 10) * 10;
+function getDecade(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  const decade = Math.floor(year / 10) * 10;
   return decade;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5795:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7157:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getDefaultOptions = getDefaultOptions;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getDefaultOptions;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(2631));
+var _index = __nccwpck_require__(2466);
+
 /**
  * @name getDefaultOptions
  * @category Common Helpers
@@ -18114,9 +17519,9 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2631));
  * `options.locale`, `options.weekStartsOn` and `options.firstWeekContainsDate`
  * arguments for all functions.
  *
- * You can change these with [setDefaultOptions]{@link https://date-fns.org/docs/setDefaultOptions}.
+ * You can change these with [setDefaultOptions](https://date-fns.org/docs/setDefaultOptions).
  *
- * @returns {Object} default options
+ * @returns The default options
  *
  * @example
  * const result = getDefaultOptions()
@@ -18128,25 +17533,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2631));
  * //=> { weekStarsOn: 1, firstWeekContainsDate: 4 }
  */
 function getDefaultOptions() {
-  return (0, _index2.default)({}, (0, _index.getDefaultOptions)());
+  return Object.assign({}, (0, _index.getDefaultOptions)());
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7941:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1078:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getHours = getHours;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getHours;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getHours
  * @category Hour Helpers
@@ -18155,38 +17555,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the hours of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the hours
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The hours
  *
  * @example
  * // Get the hours of 29 February 2012 11:45:00:
  * const result = getHours(new Date(2012, 1, 29, 11, 45))
  * //=> 11
  */
-function getHours(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var hours = date.getHours();
+function getHours(date) {
+  const _date = (0, _index.toDate)(date);
+  const hours = _date.getHours();
   return hours;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8313:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2924:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getISODay = getISODay;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getISODay;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getISODay
  * @category Weekday Helpers
@@ -18198,44 +17594,41 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the day of ISO week
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The day of ISO week
  *
  * @example
  * // Which day of the ISO week is 26 February 2012?
  * const result = getISODay(new Date(2012, 1, 26))
  * //=> 7
  */
-function getISODay(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getDay();
+function getISODay(date) {
+  const _date = (0, _index.toDate)(date);
+  let day = _date.getDay();
+
   if (day === 0) {
     day = 7;
   }
+
   return day;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9894:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6475:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6307));
-var _index3 = _interopRequireDefault(__nccwpck_require__(776));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
+exports.getISOWeek = getISOWeek;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(9709);
+var _index3 = __nccwpck_require__(7809);
+var _index4 = __nccwpck_require__(3622);
 
 /**
  * @name getISOWeek
@@ -18247,43 +17640,42 @@ var MILLISECONDS_IN_WEEK = 604800000;
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the ISO week
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The ISO week
  *
  * @example
  * // Which week of the ISO-week numbering year is 2 January 2005?
  * const result = getISOWeek(new Date(2005, 0, 2))
  * //=> 53
  */
-function getISOWeek(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var diff = (0, _index2.default)(date).getTime() - (0, _index3.default)(date).getTime();
+function getISOWeek(date) {
+  const _date = (0, _index4.toDate)(date);
+  const diff =
+    (0, _index2.startOfISOWeek)(_date).getTime() -
+    (0, _index3.startOfISOWeekYear)(_date).getTime();
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
   // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
+  return Math.round(diff / _index.millisecondsInWeek) + 1;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6991:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 308:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getISOWeekYear = getISOWeekYear;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(9709);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6307));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getISOWeekYear
  * @category ISO Week-Numbering Year Helpers
@@ -18295,54 +17687,56 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the ISO week-numbering year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The ISO week-numbering year
  *
  * @example
  * // Which ISO-week numbering year is 2 January 2005?
  * const result = getISOWeekYear(new Date(2005, 0, 2))
  * //=> 2004
  */
-function getISOWeekYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  var fourthOfJanuaryOfNextYear = new Date(0);
+function getISOWeekYear(date) {
+  const _date = (0, _index3.toDate)(date);
+  const year = _date.getFullYear();
+
+  const fourthOfJanuaryOfNextYear = (0, _index.constructFrom)(date, 0);
   fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
   fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
-  var startOfNextYear = (0, _index2.default)(fourthOfJanuaryOfNextYear);
-  var fourthOfJanuaryOfThisYear = new Date(0);
+  const startOfNextYear = (0, _index2.startOfISOWeek)(
+    fourthOfJanuaryOfNextYear,
+  );
+
+  const fourthOfJanuaryOfThisYear = (0, _index.constructFrom)(date, 0);
   fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
   fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
-  var startOfThisYear = (0, _index2.default)(fourthOfJanuaryOfThisYear);
-  if (date.getTime() >= startOfNextYear.getTime()) {
+  const startOfThisYear = (0, _index2.startOfISOWeek)(
+    fourthOfJanuaryOfThisYear,
+  );
+
+  if (_date.getTime() >= startOfNextYear.getTime()) {
     return year + 1;
-  } else if (date.getTime() >= startOfThisYear.getTime()) {
+  } else if (_date.getTime() >= startOfThisYear.getTime()) {
     return year;
   } else {
     return year - 1;
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5438:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3283:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getISOWeeksInYear;
-var _index = _interopRequireDefault(__nccwpck_require__(776));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7195));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
+exports.getISOWeeksInYear = getISOWeeksInYear;
+var _index = __nccwpck_require__(6985);
+var _index2 = __nccwpck_require__(7818);
+var _index3 = __nccwpck_require__(7809);
 
 /**
  * @name getISOWeeksInYear
@@ -18354,42 +17748,40 @@ var MILLISECONDS_IN_WEEK = 604800000;
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the number of ISO weeks in a year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The number of ISO weeks in a year
  *
  * @example
  * // How many weeks are in ISO week-numbering year 2015?
  * const result = getISOWeeksInYear(new Date(2015, 1, 11))
  * //=> 53
  */
-function getISOWeeksInYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var thisYear = (0, _index.default)(dirtyDate);
-  var nextYear = (0, _index.default)((0, _index2.default)(thisYear, 60));
-  var diff = nextYear.valueOf() - thisYear.valueOf();
+function getISOWeeksInYear(date) {
+  const thisYear = (0, _index3.startOfISOWeekYear)(date);
+  const nextYear = (0, _index3.startOfISOWeekYear)(
+    (0, _index.addWeeks)(thisYear, 60),
+  );
+  const diff = nextYear.valueOf() - thisYear.valueOf();
   // Round the number of weeks to the nearest integer
   // because the number of milliseconds in a week is not constant
   // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / MILLISECONDS_IN_WEEK);
+  return Math.round(diff / _index2.millisecondsInWeek);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7560:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5495:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getMilliseconds = getMilliseconds;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getMilliseconds
  * @category Millisecond Helpers
@@ -18398,38 +17790,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the milliseconds of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the milliseconds
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The milliseconds
  *
  * @example
  * // Get the milliseconds of 29 February 2012 11:45:05.123:
  * const result = getMilliseconds(new Date(2012, 1, 29, 11, 45, 5, 123))
  * //=> 123
  */
-function getMilliseconds(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var milliseconds = date.getMilliseconds();
+function getMilliseconds(date) {
+  const _date = (0, _index.toDate)(date);
+  const milliseconds = _date.getMilliseconds();
   return milliseconds;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7030:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6012:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getMinutes = getMinutes;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getMinutes
  * @category Minute Helpers
@@ -18438,38 +17826,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the minutes of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the minutes
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The minutes
  *
  * @example
  * // Get the minutes of 29 February 2012 11:45:05:
  * const result = getMinutes(new Date(2012, 1, 29, 11, 45, 5))
  * //=> 45
  */
-function getMinutes(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var minutes = date.getMinutes();
+function getMinutes(date) {
+  const _date = (0, _index.toDate)(date);
+  const minutes = _date.getMinutes();
   return minutes;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2194:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6829:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getMonth = getMonth;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getMonth
  * @category Month Helpers
@@ -18478,39 +17862,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the month of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The month
  *
  * @example
  * // Which month is 29 February 2012?
  * const result = getMonth(new Date(2012, 1, 29))
  * //=> 1
  */
-function getMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var month = date.getMonth();
+function getMonth(date) {
+  const _date = (0, _index.toDate)(date);
+  const month = _date.getMonth();
   return month;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7647:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1417:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getOverlappingDaysInIntervals;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
+exports.getOverlappingDaysInIntervals = getOverlappingDaysInIntervals;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(3622);
 
 /**
  * @name getOverlappingDaysInIntervals
@@ -18520,12 +17899,12 @@ var MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
  * @description
  * Get the number of days that overlap in two time intervals
  *
- * @param {Interval} intervalLeft - the first interval to compare. See [Interval]{@link docs/Interval}
- * @param {Interval} intervalRight - the second interval to compare. See [Interval]{@link docs/Interval}
- * @returns {Number} the number of days that overlap in two time intervals
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param intervalLeft - The first interval to compare.
+ * @param intervalRight - The second interval to compare.
+ *
+ * @returns The number of days that overlap in two time intervals
  *
  * @example
  * // For overlapping time intervals adds 1 for each started overlapping day:
@@ -18544,45 +17923,45 @@ var MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
  * //=> 0
  */
 
-function getOverlappingDaysInIntervals(dirtyIntervalLeft, dirtyIntervalRight) {
-  (0, _index2.default)(2, arguments);
-  var intervalLeft = dirtyIntervalLeft || {};
-  var intervalRight = dirtyIntervalRight || {};
-  var leftStartTime = (0, _index.default)(intervalLeft.start).getTime();
-  var leftEndTime = (0, _index.default)(intervalLeft.end).getTime();
-  var rightStartTime = (0, _index.default)(intervalRight.start).getTime();
-  var rightEndTime = (0, _index.default)(intervalRight.end).getTime();
+function getOverlappingDaysInIntervals(intervalLeft, intervalRight) {
+  const [leftStartTime, leftEndTime] = [
+    +(0, _index2.toDate)(intervalLeft.start),
+    +(0, _index2.toDate)(intervalLeft.end),
+  ].sort();
+  const [rightStartTime, rightEndTime] = [
+    +(0, _index2.toDate)(intervalRight.start),
+    +(0, _index2.toDate)(intervalRight.end),
+  ].sort();
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(leftStartTime <= leftEndTime && rightStartTime <= rightEndTime)) {
-    throw new RangeError('Invalid interval');
-  }
-  var isOverlapping = leftStartTime < rightEndTime && rightStartTime < leftEndTime;
+  const isOverlapping =
+    leftStartTime < rightEndTime && rightStartTime < leftEndTime;
+
   if (!isOverlapping) {
     return 0;
   }
-  var overlapStartDate = rightStartTime < leftStartTime ? leftStartTime : rightStartTime;
-  var overlapEndDate = rightEndTime > leftEndTime ? leftEndTime : rightEndTime;
-  var differenceInMs = overlapEndDate - overlapStartDate;
-  return Math.ceil(differenceInMs / MILLISECONDS_IN_DAY);
+
+  const overlapStartDate =
+    rightStartTime < leftStartTime ? leftStartTime : rightStartTime;
+
+  const overlapEndDate =
+    rightEndTime > leftEndTime ? leftEndTime : rightEndTime;
+
+  const differenceInMs = overlapEndDate - overlapStartDate;
+
+  return Math.ceil(differenceInMs / _index.millisecondsInDay);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4523:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2243:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getQuarter = getQuarter;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getQuarter
  * @category Quarter Helpers
@@ -18591,38 +17970,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the year quarter of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the quarter
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The quarter
  *
  * @example
  * // Which quarter is 2 July 2014?
  * const result = getQuarter(new Date(2014, 6, 2))
  * //=> 3
  */
-function getQuarter(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var quarter = Math.floor(date.getMonth() / 3) + 1;
+function getQuarter(date) {
+  const _date = (0, _index.toDate)(date);
+  const quarter = Math.floor(_date.getMonth() / 3) + 1;
   return quarter;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8755:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4426:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getSeconds = getSeconds;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getSeconds
  * @category Second Helpers
@@ -18631,38 +18006,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the seconds of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the seconds
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The seconds
  *
  * @example
  * // Get the seconds of 29 February 2012 11:45:05.123:
  * const result = getSeconds(new Date(2012, 1, 29, 11, 45, 5, 123))
  * //=> 5
  */
-function getSeconds(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var seconds = date.getSeconds();
+function getSeconds(date) {
+  const _date = (0, _index.toDate)(date);
+  const seconds = _date.getSeconds();
   return seconds;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5052:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8370:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getTime = getTime;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getTime;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getTime
  * @category Timestamp Helpers
@@ -18671,38 +18042,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the milliseconds timestamp of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the timestamp
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The timestamp
  *
  * @example
  * // Get the timestamp of 29 February 2012 11:45:05.123:
  * const result = getTime(new Date(2012, 1, 29, 11, 45, 5, 123))
  * //=> 1330515905123
  */
-function getTime(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var timestamp = date.getTime();
+function getTime(date) {
+  const _date = (0, _index.toDate)(date);
+  const timestamp = _date.getTime();
   return timestamp;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6476:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9493:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getUnixTime = getUnixTime;
+var _index = __nccwpck_require__(8370);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getUnixTime;
-var _index = _interopRequireDefault(__nccwpck_require__(5052));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getUnixTime
  * @category Timestamp Helpers
@@ -18711,39 +18078,38 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the seconds timestamp of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the timestamp
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The timestamp
  *
  * @example
  * // Get the timestamp of 29 February 2012 11:45:05 CET:
  * const result = getUnixTime(new Date(2012, 1, 29, 11, 45, 5))
  * //=> 1330512305
  */
-function getUnixTime(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return Math.floor((0, _index.default)(dirtyDate) / 1000);
+function getUnixTime(date) {
+  return Math.floor((0, _index.getTime)(date) / 1000);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 81:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 802:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getWeek = getWeek;
+var _index = __nccwpck_require__(7818);
+var _index2 = __nccwpck_require__(6068);
+var _index3 = __nccwpck_require__(1348);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(9813));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8014));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var MILLISECONDS_IN_WEEK = 604800000;
+/**
+ * The {@link getWeek} function options.
+ */
 
 /**
  * @name getWeek
@@ -18759,21 +18125,19 @@ var MILLISECONDS_IN_WEEK = 604800000;
  *
  * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
  *
- * @param {Date|Number} date - the given date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @returns {Number} the week
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ * @param options - An object with options
+ *
+ * @returns The week
  *
  * @example
  * // Which week of the local week numbering year is 2 January 2005 with default options?
  * const result = getWeek(new Date(2005, 0, 2))
  * //=> 2
  *
+ * @example
  * // Which week of the local week numbering year is 2 January 2005,
  * // if Monday is the first day of the week,
  * // and the first week of the year always contains 4 January?
@@ -18784,37 +18148,37 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * //=> 53
  */
 
-function getWeek(dirtyDate, options) {
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index3.default)(dirtyDate);
-  var diff = (0, _index.default)(date, options).getTime() - (0, _index2.default)(date, options).getTime();
+function getWeek(date, options) {
+  const _date = (0, _index4.toDate)(date);
+  const diff =
+    (0, _index2.startOfWeek)(_date, options).getTime() -
+    (0, _index3.startOfWeekYear)(_date, options).getTime();
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
   // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
+  return Math.round(diff / _index.millisecondsInWeek) + 1;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9229:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2088:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getWeekOfMonth = getWeekOfMonth;
+var _index = __nccwpck_require__(6326);
+var _index2 = __nccwpck_require__(6172);
+var _index3 = __nccwpck_require__(50);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getWeekOfMonth;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(7626));
-var _index3 = _interopRequireDefault(__nccwpck_require__(9361));
-var _index4 = _interopRequireDefault(__nccwpck_require__(7182));
-var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index6 = _interopRequireDefault(__nccwpck_require__(1985));
+var _index4 = __nccwpck_require__(2466);
+
+/**
+ * The {@link getWeekOfMonth} function options.
+ */
+
 /**
  * @name getWeekOfMonth
  * @category Week Helpers
@@ -18823,13 +18187,12 @@ var _index6 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Get the week of the month of the given date.
  *
- * @param {Date|Number} date - the given date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Number} the week of month
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6 inclusively
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ * @param options - An object with options.
+ *
+ * @returns The week of month
  *
  * @example
  * // Which week of the month is 9 November 2017?
@@ -18837,41 +18200,45 @@ var _index6 = _interopRequireDefault(__nccwpck_require__(1985));
  * //=> 2
  */
 function getWeekOfMonth(date, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index5.default)(1, arguments);
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  var weekStartsOn = (0, _index6.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var currentDayOfMonth = (0, _index2.default)(date);
+  const defaultOptions = (0, _index4.getDefaultOptions)();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
+
+  const currentDayOfMonth = (0, _index.getDate)(date);
   if (isNaN(currentDayOfMonth)) return NaN;
-  var startWeekDay = (0, _index3.default)((0, _index4.default)(date));
-  var lastDayOfFirstWeek = weekStartsOn - startWeekDay;
+
+  const startWeekDay = (0, _index2.getDay)((0, _index3.startOfMonth)(date));
+
+  let lastDayOfFirstWeek = weekStartsOn - startWeekDay;
   if (lastDayOfFirstWeek <= 0) lastDayOfFirstWeek += 7;
-  var remainingDaysAfterFirstWeek = currentDayOfMonth - lastDayOfFirstWeek;
+
+  const remainingDaysAfterFirstWeek = currentDayOfMonth - lastDayOfFirstWeek;
   return Math.ceil(remainingDaysAfterFirstWeek / 7) + 1;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3494:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7669:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getWeekYear = getWeekYear;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(6068);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(9813));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index5 = __nccwpck_require__(9307);
+var _index4 = __nccwpck_require__(2466);
+
+/**
+ * The {@link getWeekYear} function options.
+ */
+
 /**
  * @name getWeekYear
  * @category Week-Numbering Year Helpers
@@ -18886,15 +18253,12 @@ var _index5 = __nccwpck_require__(9307);
  *
  * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
  *
- * @param {Date|Number} date - the given date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @returns {Number} the local week-numbering year
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ * @param options - An object with options.
+ *
+ * @returns The local week-numbering year
  *
  * @example
  * // Which week numbering year is 26 December 2004 with the default settings?
@@ -18911,53 +18275,60 @@ var _index5 = __nccwpck_require__(9307);
  * const result = getWeekYear(new Date(2004, 11, 26), { firstWeekContainsDate: 4 })
  * //=> 2004
  */
-function getWeekYear(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var year = date.getFullYear();
-  var defaultOptions = (0, _index5.getDefaultOptions)();
-  var firstWeekContainsDate = (0, _index3.default)((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
+function getWeekYear(date, options) {
+  const _date = (0, _index3.toDate)(date);
+  const year = _date.getFullYear();
 
-  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
-  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
-    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
-  }
-  var firstWeekOfNextYear = new Date(0);
+  const defaultOptions = (0, _index4.getDefaultOptions)();
+  const firstWeekContainsDate =
+    options?.firstWeekContainsDate ??
+    options?.locale?.options?.firstWeekContainsDate ??
+    defaultOptions.firstWeekContainsDate ??
+    defaultOptions.locale?.options?.firstWeekContainsDate ??
+    1;
+
+  const firstWeekOfNextYear = (0, _index.constructFrom)(date, 0);
   firstWeekOfNextYear.setFullYear(year + 1, 0, firstWeekContainsDate);
   firstWeekOfNextYear.setHours(0, 0, 0, 0);
-  var startOfNextYear = (0, _index.default)(firstWeekOfNextYear, options);
-  var firstWeekOfThisYear = new Date(0);
+  const startOfNextYear = (0, _index2.startOfWeek)(
+    firstWeekOfNextYear,
+    options,
+  );
+
+  const firstWeekOfThisYear = (0, _index.constructFrom)(date, 0);
   firstWeekOfThisYear.setFullYear(year, 0, firstWeekContainsDate);
   firstWeekOfThisYear.setHours(0, 0, 0, 0);
-  var startOfThisYear = (0, _index.default)(firstWeekOfThisYear, options);
-  if (date.getTime() >= startOfNextYear.getTime()) {
+  const startOfThisYear = (0, _index2.startOfWeek)(
+    firstWeekOfThisYear,
+    options,
+  );
+
+  if (_date.getTime() >= startOfNextYear.getTime()) {
     return year + 1;
-  } else if (date.getTime() >= startOfThisYear.getTime()) {
+  } else if (_date.getTime() >= startOfThisYear.getTime()) {
     return year;
   } else {
     return year - 1;
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9482:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9051:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getWeeksInMonth = getWeeksInMonth;
+var _index = __nccwpck_require__(1538);
+var _index2 = __nccwpck_require__(7270);
+var _index3 = __nccwpck_require__(50);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getWeeksInMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(8620));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3346));
-var _index3 = _interopRequireDefault(__nccwpck_require__(7182));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link getWeeksInMonth} function options.
+ */
+
 /**
  * @name getWeeksInMonth
  * @category Week Helpers
@@ -18966,13 +18337,12 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the number of calendar weeks the month in the given date spans.
  *
- * @param {Date|Number} date - the given date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Number} the number of calendar weeks
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ * @param options - An object with options.
+ *
+ * @returns The number of calendar weeks
  *
  * @example
  * // How many calendar weeks does February 2015 span?
@@ -18986,26 +18356,26 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> 6
  */
 function getWeeksInMonth(date, options) {
-  (0, _index4.default)(1, arguments);
-  return (0, _index.default)((0, _index2.default)(date), (0, _index3.default)(date), options) + 1;
+  return (
+    (0, _index.differenceInCalendarWeeks)(
+      (0, _index2.lastDayOfMonth)(date),
+      (0, _index3.startOfMonth)(date),
+      options,
+    ) + 1
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5714:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6714:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.getYear = getYear;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = getYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name getYear
  * @category Year Helpers
@@ -19014,36 +18384,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Get the year of the given date.
  *
- * @param {Date|Number} date - the given date
- * @returns {Number} the year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The given date
+ *
+ * @returns The year
  *
  * @example
  * // Which year is 2 July 2014?
  * const result = getYear(new Date(2014, 6, 2))
  * //=> 2014
  */
-function getYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getFullYear();
+function getYear(date) {
+  return (0, _index.toDate)(date).getFullYear();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3895:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1656:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.hoursToMilliseconds = hoursToMilliseconds;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = hoursToMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name hoursToMilliseconds
  * @category  Conversion Helpers
@@ -19052,10 +18418,11 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of hours to a full number of milliseconds.
  *
- * @param {number} hours - number of hours to be converted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {number} the number of hours converted to milliseconds
- * @throws {TypeError} 1 argument required
+ * @param hours - number of hours to be converted
+ *
+ * @returns The number of hours converted to milliseconds
  *
  * @example
  * // Convert 2 hours to milliseconds:
@@ -19063,26 +18430,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 7200000
  */
 function hoursToMilliseconds(hours) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(hours * _index2.millisecondsInHour);
+  return Math.floor(hours * _index.millisecondsInHour);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2449:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6470:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.hoursToMinutes = hoursToMinutes;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = hoursToMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name hoursToMinutes
  * @category Conversion Helpers
@@ -19091,10 +18452,11 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of hours to a full number of minutes.
  *
- * @param {number} hours - number of hours to be converted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {number} the number of hours converted in minutes
- * @throws {TypeError} 1 argument required
+ * @param hours - number of hours to be converted
+ *
+ * @returns The number of hours converted in minutes
  *
  * @example
  * // Convert 2 hours to minutes:
@@ -19102,26 +18464,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 120
  */
 function hoursToMinutes(hours) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(hours * _index2.minutesInHour);
+  return Math.floor(hours * _index.minutesInHour);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 775:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4970:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.hoursToSeconds = hoursToSeconds;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = hoursToSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name hoursToSeconds
  * @category Conversion Helpers
@@ -19130,10 +18486,11 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of hours to a full number of seconds.
  *
- * @param {number} hours - number of hours to be converted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {number} the number of hours converted in seconds
- * @throws {TypeError} 1 argument required
+ * @param hours - The number of hours to be converted
+ *
+ * @returns The number of hours converted in seconds
  *
  * @example
  * // Convert 2 hours to seconds:
@@ -19141,10 +18498,9 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 7200
  */
 function hoursToSeconds(hours) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(hours * _index2.secondsInHour);
+  return Math.floor(hours * _index.secondsInHour);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
@@ -21075,39 +20431,103 @@ var _index239 = _interopRequireDefault(__nccwpck_require__(7384));
 var _index240 = __nccwpck_require__(5756);
 Object.keys(_index240).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
   if (key in exports && exports[key] === _index240[key]) return;
   Object.defineProperty(exports, key, {
     enumerable: true,
-    get: function get() {
+    get: function () {
       return _index240[key];
-    }
+    },
+  });
+});
+var _index241 = __nccwpck_require__(5556);
+Object.keys(_index241).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _index241[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _index241[key];
+    },
+  });
+});
+var _index242 = __nccwpck_require__(4117);
+Object.keys(_index242).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _index242[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _index242[key];
+    },
   });
 });
 
+
 /***/ }),
 
-/***/ 2079:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8039:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.interval = interval;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = intervalToDuration;
-var _index = _interopRequireDefault(__nccwpck_require__(9818));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6211));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6311));
-var _index4 = _interopRequireDefault(__nccwpck_require__(8740));
-var _index5 = _interopRequireDefault(__nccwpck_require__(3842));
-var _index6 = _interopRequireDefault(__nccwpck_require__(2713));
-var _index7 = _interopRequireDefault(__nccwpck_require__(9448));
-var _index8 = _interopRequireDefault(__nccwpck_require__(3959));
-var _index9 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index10 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link interval} function options.
+ */
+
+/**
+ * @name interval
+ * @category Interval Helpers
+ * @summary Creates an interval object and validates its values.
+ *
+ * @description
+ * Creates a normalized interval object and validates its values. If the interval is invalid, an exception is thrown.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param start - The start of the interval.
+ * @param end - The end of the interval.
+ * @param options - The options object.
+ *
+ * @throws `Start date is invalid` when `start` is invalid.
+ * @throws `End date is invalid` when `end` is invalid.
+ * @throws `End date must be after start date` when end is before `start` and `options.assertPositive` is true.
+ *
+ * @returns The normalized and validated interval object.
+ */
+function interval(start, end, options) {
+  const _start = (0, _index.toDate)(start);
+  if (isNaN(+_start)) throw new TypeError("Start date is invalid");
+
+  const _end = (0, _index.toDate)(end);
+  if (isNaN(+_end)) throw new TypeError("End date is invalid");
+
+  if (options?.assertPositive && +_start > +_end)
+    throw new TypeError("End date must be after start date");
+
+  return { start: _start, end: _end };
+}
+
+
+/***/ }),
+
+/***/ 8019:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.intervalToDuration = intervalToDuration;
+var _index = __nccwpck_require__(3110);
+var _index2 = __nccwpck_require__(6605);
+var _index3 = __nccwpck_require__(7407);
+var _index4 = __nccwpck_require__(6235);
+var _index5 = __nccwpck_require__(8132);
+var _index6 = __nccwpck_require__(4944);
+var _index7 = __nccwpck_require__(830);
+var _index8 = __nccwpck_require__(3622);
+
 /**
  * @name intervalToDuration
  * @category Common Helpers
@@ -21116,12 +20536,11 @@ var _index10 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Convert a interval object to a duration object.
  *
- * @param {Interval} interval - the interval to convert to duration
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {Duration} The duration Object
- * @throws {TypeError} Requires 2 arguments
- * @throws {RangeError} `start` must not be Invalid Date
- * @throws {RangeError} `end` must not be Invalid Date
+ * @param interval - The interval to convert to duration
+ *
+ * @returns The duration object
  *
  * @example
  * // Get the duration between January 15, 1929 and April 4, 1968.
@@ -21132,56 +20551,77 @@ var _index10 = _interopRequireDefault(__nccwpck_require__(2063));
  * // => { years: 39, months: 2, days: 20, hours: 7, minutes: 5, seconds: 0 }
  */
 function intervalToDuration(interval) {
-  (0, _index10.default)(1, arguments);
-  var start = (0, _index9.default)(interval.start);
-  var end = (0, _index9.default)(interval.end);
-  if (isNaN(start.getTime())) throw new RangeError('Start Date is invalid');
-  if (isNaN(end.getTime())) throw new RangeError('End Date is invalid');
-  var duration = {};
-  duration.years = Math.abs((0, _index8.default)(end, start));
-  var sign = (0, _index.default)(end, start);
-  var remainingMonths = (0, _index2.default)(start, {
-    years: sign * duration.years
+  const start = (0, _index8.toDate)(interval.start);
+  const end = (0, _index8.toDate)(interval.end);
+
+  const duration = {};
+
+  const years = (0, _index7.differenceInYears)(end, start);
+  if (years) duration.years = years;
+
+  const remainingMonths = (0, _index.add)(start, { years: duration.years });
+
+  const months = (0, _index5.differenceInMonths)(end, remainingMonths);
+  if (months) duration.months = months;
+
+  const remainingDays = (0, _index.add)(remainingMonths, {
+    months: duration.months,
   });
-  duration.months = Math.abs((0, _index6.default)(end, remainingMonths));
-  var remainingDays = (0, _index2.default)(remainingMonths, {
-    months: sign * duration.months
+
+  const days = (0, _index2.differenceInDays)(end, remainingDays);
+  if (days) duration.days = days;
+
+  const remainingHours = (0, _index.add)(remainingDays, {
+    days: duration.days,
   });
-  duration.days = Math.abs((0, _index3.default)(end, remainingDays));
-  var remainingHours = (0, _index2.default)(remainingDays, {
-    days: sign * duration.days
+
+  const hours = (0, _index3.differenceInHours)(end, remainingHours);
+  if (hours) duration.hours = hours;
+
+  const remainingMinutes = (0, _index.add)(remainingHours, {
+    hours: duration.hours,
   });
-  duration.hours = Math.abs((0, _index4.default)(end, remainingHours));
-  var remainingMinutes = (0, _index2.default)(remainingHours, {
-    hours: sign * duration.hours
+
+  const minutes = (0, _index4.differenceInMinutes)(end, remainingMinutes);
+  if (minutes) duration.minutes = minutes;
+
+  const remainingSeconds = (0, _index.add)(remainingMinutes, {
+    minutes: duration.minutes,
   });
-  duration.minutes = Math.abs((0, _index5.default)(end, remainingMinutes));
-  var remainingSeconds = (0, _index2.default)(remainingMinutes, {
-    minutes: sign * duration.minutes
-  });
-  duration.seconds = Math.abs((0, _index7.default)(end, remainingSeconds));
+
+  const seconds = (0, _index6.differenceInSeconds)(end, remainingSeconds);
+  if (seconds) duration.seconds = seconds;
+
   return duration;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1982:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6582:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.intlFormat = intlFormat;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = intlFormat;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The locale string (see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument).
+ */
+
+/**
+ * The format options (see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options)
+ */
+
+/**
+ * The locale options.
+ */
+
 /**
  * @name intlFormat
  * @category Common Helpers
- * @summary  Format the date with Intl.DateTimeFormat (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
+ * @summary Format the date with Intl.DateTimeFormat (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat).
  *
  * @description
  * Return the formatted date string in the given format.
@@ -21190,104 +20630,133 @@ var _index = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * > ⚠️ Please note that before Node version 13.0.0, only the locale data for en-US is available by default.
  *
- * @param {Date|Number} argument - the original date.
- * @param {Object} [formatOptions] - an object with options.
- * @param {'lookup'|'best fit'} [formatOptions.localeMatcher='best fit'] - locale selection algorithm.
- * @param {'narrow'|'short'|'long'} [formatOptions.weekday] - representation the days of the week.
- * @param {'narrow'|'short'|'long'} [formatOptions.era] - representation of eras.
- * @param {'numeric'|'2-digit'} [formatOptions.year] - representation of years.
- * @param {'numeric'|'2-digit'|'narrow'|'short'|'long'} [formatOptions.month='numeric'] - representation of month.
- * @param {'numeric'|'2-digit'} [formatOptions.day='numeric'] - representation of day.
- * @param {'numeric'|'2-digit'} [formatOptions.hour='numeric'] - representation of hours.
- * @param {'numeric'|'2-digit'} [formatOptions.minute] - representation of minutes.
- * @param {'numeric'|'2-digit'} [formatOptions.second] - representation of seconds.
- * @param {'short'|'long'} [formatOptions.timeZoneName] - representation of names of time zones.
- * @param {'basic'|'best fit'} [formatOptions.formatMatcher='best fit'] - format selection algorithm.
- * @param {Boolean} [formatOptions.hour12] - determines whether to use 12-hour time format.
- * @param {String} [formatOptions.timeZone] - the time zone to use.
- * @param {Object} [localeOptions] - an object with locale.
- * @param {String|String[]} [localeOptions.locale] - the locale code
- * @returns {String} the formatted date string.
- * @throws {TypeError} 1 argument required.
- * @throws {RangeError} `date` must not be Invalid Date
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @example
- * // Represent 10 October 2019 in German.
- * // Convert the date with format's options and locale's options.
- * const result = intlFormat(new Date(2019, 9, 4, 12, 30, 13, 456), {
- *      weekday: 'long',
- *      year: 'numeric',
- *      month: 'long',
- *      day: 'numeric',
- *    }, {
- *      locale: 'de-DE',
- *  })
- * //=> Freitag, 4. Oktober 2019
+ * @param date - The date to format
  *
- * @example
- * // Represent 10 October 2019.
- * // Convert the date with format's options.
- * const result = intlFormat.default(new Date(2019, 9, 4, 12, 30, 13, 456), {
- *      year: 'numeric',
- *      month: 'numeric',
- *      day: 'numeric',
- *      hour: 'numeric',
- *  })
- * //=> 10/4/2019, 12 PM
+ * @returns The formatted date string
  *
- * @example
- * // Represent 10 October 2019 in Korean.
- * // Convert the date with locale's options.
- * const result = intlFormat(new Date(2019, 9, 4, 12, 30, 13, 456), {
- *      locale: 'ko-KR',
- *  })
- * //=> 2019. 10. 4.
+ * @throws `date` must not be Invalid Date
  *
  * @example
  * // Represent 10 October 2019 in middle-endian format:
  * const result = intlFormat(new Date(2019, 9, 4, 12, 30, 13, 456))
  * //=> 10/4/2019
  */
+
+/**
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to format
+ * @param localeOptions - An object with locale
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
+ *
+ * @example
+ * // Represent 10 October 2019 in Korean.
+ * // Convert the date with locale's options.
+ * const result = intlFormat(new Date(2019, 9, 4, 12, 30, 13, 456), {
+ *   locale: 'ko-KR',
+ * })
+ * //=> 2019. 10. 4.
+ */
+
+/**
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to format
+ * @param formatOptions - The format options
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
+ *
+ * @example
+ * // Represent 10 October 2019.
+ * // Convert the date with format's options.
+ * const result = intlFormat.default(new Date(2019, 9, 4, 12, 30, 13, 456), {
+ *   year: 'numeric',
+ *   month: 'numeric',
+ *   day: 'numeric',
+ *   hour: 'numeric',
+ * })
+ * //=> 10/4/2019, 12 PM
+ */
+
+/**
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to format
+ * @param formatOptions - The format options
+ * @param localeOptions - An object with locale
+ *
+ * @returns The formatted date string
+ *
+ * @throws `date` must not be Invalid Date
+ *
+ * @example
+ * // Represent 10 October 2019 in German.
+ * // Convert the date with format's options and locale's options.
+ * const result = intlFormat(new Date(2019, 9, 4, 12, 30, 13, 456), {
+ *   weekday: 'long',
+ *   year: 'numeric',
+ *   month: 'long',
+ *   day: 'numeric',
+ * }, {
+ *   locale: 'de-DE',
+ * })
+ * //=> Freitag, 4. Oktober 2019
+ */
+
 function intlFormat(date, formatOrLocale, localeOptions) {
-  var _localeOptions;
-  (0, _index.default)(1, arguments);
-  var formatOptions;
+  let formatOptions;
+
   if (isFormatOptions(formatOrLocale)) {
     formatOptions = formatOrLocale;
   } else {
     localeOptions = formatOrLocale;
   }
-  return new Intl.DateTimeFormat((_localeOptions = localeOptions) === null || _localeOptions === void 0 ? void 0 : _localeOptions.locale, formatOptions).format(date);
+
+  return new Intl.DateTimeFormat(localeOptions?.locale, formatOptions).format(
+    (0, _index.toDate)(date),
+  );
 }
+
 function isFormatOptions(opts) {
-  return opts !== undefined && !('locale' in opts);
+  return opts !== undefined && !("locale" in opts);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3858:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7229:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.intlFormatDistance = intlFormatDistance;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = intlFormatDistance;
-var _index = __nccwpck_require__(5756);
-var _index2 = _interopRequireDefault(__nccwpck_require__(3086));
-var _index3 = _interopRequireDefault(__nccwpck_require__(5536));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2342));
-var _index5 = _interopRequireDefault(__nccwpck_require__(8620));
-var _index6 = _interopRequireDefault(__nccwpck_require__(5237));
-var _index7 = _interopRequireDefault(__nccwpck_require__(8740));
-var _index8 = _interopRequireDefault(__nccwpck_require__(3842));
-var _index9 = _interopRequireDefault(__nccwpck_require__(9448));
-var _index10 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index11 = _interopRequireDefault(__nccwpck_require__(2063));
+var _index2 = __nccwpck_require__(338);
+var _index3 = __nccwpck_require__(4939);
+var _index4 = __nccwpck_require__(3599);
+var _index5 = __nccwpck_require__(1538);
+var _index6 = __nccwpck_require__(6143);
+var _index7 = __nccwpck_require__(7407);
+var _index8 = __nccwpck_require__(6235);
+var _index9 = __nccwpck_require__(4944);
+var _index10 = __nccwpck_require__(3622);
+
+/**
+ * The {@link intlFormatDistance} function options.
+ */
+
+/**
+ * The unit used to format the distance in {@link intlFormatDistance}.
+ */
+
 /**
  * @name intlFormatDistance
  * @category Common Helpers
@@ -21318,25 +20787,23 @@ var _index11 = _interopRequireDefault(__nccwpck_require__(2063));
  * | 1 year                 | last year      | next year       |
  * | 2+ years               | X years ago    | in X years      |
  *
- * @param {Date|Number} date - the date
- * @param {Date|Number} baseDate - the date to compare with.
- * @param {Object} [options] - an object with options.
- * @param {String} [options.unit] - formats the distance with the given unit ('year', 'quarter', 'month', 'week', 'day', 'hour', 'minute', 'second').
- * @param {String|String[]} [options.locale] - the locale to use.
- * @param {String} [options.localeMatcher='best fit'] - the locale matching algorithm to use. Other value: 'lookup'.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date
+ * @param baseDate - The date to compare with.
+ * @param options - An object with options.
  * See MDN for details [Locale identification and negotiation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locale_identification_and_negotiation)
- * @param {String} [options.numeric='auto'] - the output message format. The values are 'auto' (e.g. `yesterday`), 'always'(e.g. `1 day ago`).
- * @param {String} [options.style='long'] - the length of the result. The values are: 'long' (e.g. `1 month`), 'short' (e.g. 'in 1 mo.'), 'narrow' (e.g. 'in 1 mo.').
  * The narrow one could be similar to the short one for some locales.
- * @returns {String} the distance in words according to language-sensitive relative time formatting.
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `date` must not be Invalid Date
- * @throws {RangeError} `baseDate` must not be Invalid Date
- * @throws {RangeError} `options.unit` must not be invalid Unit
- * @throws {RangeError} `options.locale` must not be invalid locale
- * @throws {RangeError} `options.localeMatcher` must not be invalid localeMatcher
- * @throws {RangeError} `options.numeric` must not be invalid numeric
- * @throws {RangeError} `options.style` must not be invalid style
+ *
+ * @returns The distance in words according to language-sensitive relative time formatting.
+ *
+ * @throws `date` must not be Invalid Date
+ * @throws `baseDate` must not be Invalid Date
+ * @throws `options.unit` must not be invalid Unit
+ * @throws `options.locale` must not be invalid locale
+ * @throws `options.localeMatcher` must not be invalid localeMatcher
+ * @throws `options.numeric` must not be invalid numeric
+ * @throws `options.style` must not be invalid style
  *
  * @example
  * // What is the distance between the dates when the fist date is after the second?
@@ -21390,90 +20857,94 @@ var _index11 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> 'in 2 yr'
  */
 function intlFormatDistance(date, baseDate, options) {
-  (0, _index11.default)(2, arguments);
-  var value = 0;
-  var unit;
-  var dateLeft = (0, _index10.default)(date);
-  var dateRight = (0, _index10.default)(baseDate);
-  if (!(options !== null && options !== void 0 && options.unit)) {
+  let value = 0;
+  let unit;
+  const dateLeft = (0, _index10.toDate)(date);
+  const dateRight = (0, _index10.toDate)(baseDate);
+
+  if (!options?.unit) {
     // Get the unit based on diffInSeconds calculations if no unit is specified
-    var diffInSeconds = (0, _index9.default)(dateLeft, dateRight); // The smallest unit
+    const diffInSeconds = (0, _index9.differenceInSeconds)(dateLeft, dateRight); // The smallest unit
 
     if (Math.abs(diffInSeconds) < _index.secondsInMinute) {
-      value = (0, _index9.default)(dateLeft, dateRight);
-      unit = 'second';
+      value = (0, _index9.differenceInSeconds)(dateLeft, dateRight);
+      unit = "second";
     } else if (Math.abs(diffInSeconds) < _index.secondsInHour) {
-      value = (0, _index8.default)(dateLeft, dateRight);
-      unit = 'minute';
-    } else if (Math.abs(diffInSeconds) < _index.secondsInDay && Math.abs((0, _index2.default)(dateLeft, dateRight)) < 1) {
-      value = (0, _index7.default)(dateLeft, dateRight);
-      unit = 'hour';
-    } else if (Math.abs(diffInSeconds) < _index.secondsInWeek && (value = (0, _index2.default)(dateLeft, dateRight)) && Math.abs(value) < 7) {
-      unit = 'day';
+      value = (0, _index8.differenceInMinutes)(dateLeft, dateRight);
+      unit = "minute";
+    } else if (
+      Math.abs(diffInSeconds) < _index.secondsInDay &&
+      Math.abs((0, _index2.differenceInCalendarDays)(dateLeft, dateRight)) < 1
+    ) {
+      value = (0, _index7.differenceInHours)(dateLeft, dateRight);
+      unit = "hour";
+    } else if (
+      Math.abs(diffInSeconds) < _index.secondsInWeek &&
+      (value = (0, _index2.differenceInCalendarDays)(dateLeft, dateRight)) &&
+      Math.abs(value) < 7
+    ) {
+      unit = "day";
     } else if (Math.abs(diffInSeconds) < _index.secondsInMonth) {
-      value = (0, _index5.default)(dateLeft, dateRight);
-      unit = 'week';
+      value = (0, _index5.differenceInCalendarWeeks)(dateLeft, dateRight);
+      unit = "week";
     } else if (Math.abs(diffInSeconds) < _index.secondsInQuarter) {
-      value = (0, _index3.default)(dateLeft, dateRight);
-      unit = 'month';
+      value = (0, _index3.differenceInCalendarMonths)(dateLeft, dateRight);
+      unit = "month";
     } else if (Math.abs(diffInSeconds) < _index.secondsInYear) {
-      if ((0, _index4.default)(dateLeft, dateRight) < 4) {
+      if ((0, _index4.differenceInCalendarQuarters)(dateLeft, dateRight) < 4) {
         // To filter out cases that are less than a year but match 4 quarters
-        value = (0, _index4.default)(dateLeft, dateRight);
-        unit = 'quarter';
+        value = (0, _index4.differenceInCalendarQuarters)(dateLeft, dateRight);
+        unit = "quarter";
       } else {
-        value = (0, _index6.default)(dateLeft, dateRight);
-        unit = 'year';
+        value = (0, _index6.differenceInCalendarYears)(dateLeft, dateRight);
+        unit = "year";
       }
     } else {
-      value = (0, _index6.default)(dateLeft, dateRight);
-      unit = 'year';
+      value = (0, _index6.differenceInCalendarYears)(dateLeft, dateRight);
+      unit = "year";
     }
   } else {
     // Get the value if unit is specified
-    unit = options === null || options === void 0 ? void 0 : options.unit;
-    if (unit === 'second') {
-      value = (0, _index9.default)(dateLeft, dateRight);
-    } else if (unit === 'minute') {
-      value = (0, _index8.default)(dateLeft, dateRight);
-    } else if (unit === 'hour') {
-      value = (0, _index7.default)(dateLeft, dateRight);
-    } else if (unit === 'day') {
-      value = (0, _index2.default)(dateLeft, dateRight);
-    } else if (unit === 'week') {
-      value = (0, _index5.default)(dateLeft, dateRight);
-    } else if (unit === 'month') {
-      value = (0, _index3.default)(dateLeft, dateRight);
-    } else if (unit === 'quarter') {
-      value = (0, _index4.default)(dateLeft, dateRight);
-    } else if (unit === 'year') {
-      value = (0, _index6.default)(dateLeft, dateRight);
+    unit = options?.unit;
+    if (unit === "second") {
+      value = (0, _index9.differenceInSeconds)(dateLeft, dateRight);
+    } else if (unit === "minute") {
+      value = (0, _index8.differenceInMinutes)(dateLeft, dateRight);
+    } else if (unit === "hour") {
+      value = (0, _index7.differenceInHours)(dateLeft, dateRight);
+    } else if (unit === "day") {
+      value = (0, _index2.differenceInCalendarDays)(dateLeft, dateRight);
+    } else if (unit === "week") {
+      value = (0, _index5.differenceInCalendarWeeks)(dateLeft, dateRight);
+    } else if (unit === "month") {
+      value = (0, _index3.differenceInCalendarMonths)(dateLeft, dateRight);
+    } else if (unit === "quarter") {
+      value = (0, _index4.differenceInCalendarQuarters)(dateLeft, dateRight);
+    } else if (unit === "year") {
+      value = (0, _index6.differenceInCalendarYears)(dateLeft, dateRight);
     }
   }
-  var rtf = new Intl.RelativeTimeFormat(options === null || options === void 0 ? void 0 : options.locale, {
-    localeMatcher: options === null || options === void 0 ? void 0 : options.localeMatcher,
-    numeric: (options === null || options === void 0 ? void 0 : options.numeric) || 'auto',
-    style: options === null || options === void 0 ? void 0 : options.style
+
+  const rtf = new Intl.RelativeTimeFormat(options?.locale, {
+    localeMatcher: options?.localeMatcher,
+    numeric: options?.numeric || "auto",
+    style: options?.style,
   });
+
   return rtf.format(value, unit);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2755:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3846:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isAfter = isAfter;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isAfter;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isAfter
  * @category Common Helpers
@@ -21482,39 +20953,35 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the first date after the second one?
  *
- * @param {Date|Number} date - the date that should be after the other one to return true
- * @param {Date|Number} dateToCompare - the date to compare with
- * @returns {Boolean} the first date is after the second date
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date that should be after the other one to return true
+ * @param dateToCompare - The date to compare with
+ *
+ * @returns The first date is after the second date
  *
  * @example
  * // Is 10 July 1989 after 11 February 1987?
  * const result = isAfter(new Date(1989, 6, 10), new Date(1987, 1, 11))
  * //=> true
  */
-function isAfter(dirtyDate, dirtyDateToCompare) {
-  (0, _index2.default)(2, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var dateToCompare = (0, _index.default)(dirtyDateToCompare);
-  return date.getTime() > dateToCompare.getTime();
+function isAfter(date, dateToCompare) {
+  const _date = (0, _index.toDate)(date);
+  const _dateToCompare = (0, _index.toDate)(dateToCompare);
+  return _date.getTime() > _dateToCompare.getTime();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9369:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3964:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isBefore = isBefore;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isBefore;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isBefore
  * @category Common Helpers
@@ -21523,40 +20990,33 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the first date before the second one?
  *
- * @param {Date|Number} date - the date that should be before the other one to return true
- * @param {Date|Number} dateToCompare - the date to compare with
- * @returns {Boolean} the first date is before the second date
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date that should be before the other one to return true
+ * @param dateToCompare - The date to compare with
+ *
+ * @returns The first date is before the second date
  *
  * @example
  * // Is 10 July 1989 before 11 February 1987?
  * const result = isBefore(new Date(1989, 6, 10), new Date(1987, 1, 11))
  * //=> false
  */
-function isBefore(dirtyDate, dirtyDateToCompare) {
-  (0, _index2.default)(2, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var dateToCompare = (0, _index.default)(dirtyDateToCompare);
-  return date.getTime() < dateToCompare.getTime();
+function isBefore(date, dateToCompare) {
+  const _date = (0, _index.toDate)(date);
+  const _dateToCompare = (0, _index.toDate)(dateToCompare);
+  return +_date < +_dateToCompare;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6801:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2272:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isDate;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-/**
+exports.isDate = isDate; /**
  * @name isDate
  * @category Common Helpers
  * @summary Is the given value a date?
@@ -21564,9 +21024,9 @@ var _index = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
  *
- * @param {*} value - the value to check
- * @returns {boolean} true if the given value is a date
- * @throws {TypeError} 1 arguments required
+ * @param value - The value to check
+ *
+ * @returns True if the given value is a date
  *
  * @example
  * // For a valid date:
@@ -21589,26 +21049,24 @@ var _index = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> false
  */
 function isDate(value) {
-  (0, _index.default)(1, arguments);
-  return value instanceof Date || (0, _typeof2.default)(value) === 'object' && Object.prototype.toString.call(value) === '[object Date]';
+  return (
+    value instanceof Date ||
+    (typeof value === "object" &&
+      Object.prototype.toString.call(value) === "[object Date]")
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4669:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1995:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isEqual = isEqual;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isEqual;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isEqual
  * @category Common Helpers
@@ -21617,10 +21075,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates equal?
  *
- * @param {Date|Number} dateLeft - the first date to compare
- * @param {Date|Number} dateRight - the second date to compare
- * @returns {Boolean} the dates are equal
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to compare
+ * @param dateRight - The second date to compare
+ *
+ * @returns The dates are equal
  *
  * @example
  * // Are 2 July 2014 06:30:45.000 and 2 July 2014 06:30:45.500 equal?
@@ -21630,27 +21090,21 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> false
  */
-function isEqual(dirtyLeftDate, dirtyRightDate) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyLeftDate);
-  var dateRight = (0, _index.default)(dirtyRightDate);
-  return dateLeft.getTime() === dateRight.getTime();
+function isEqual(leftDate, rightDate) {
+  const _dateLeft = (0, _index.toDate)(leftDate);
+  const _dateRight = (0, _index.toDate)(rightDate);
+  return +_dateLeft === +_dateRight;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7352:
-/***/ ((module, exports) => {
+/***/ 4912:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isExists;
-/**
+exports.isExists = isExists; /**
  * @name isExists
  * @category Common Helpers
  * @summary Is the given date exists?
@@ -21658,11 +21112,11 @@ exports["default"] = isExists;
  * @description
  * Checks if the given arguments convert to an existing date.
  *
- * @param {Number} year of the date to check
- * @param {Number} month of the date to check
- * @param {Number} day of the date to check
- * @returns {Boolean} the date exists
- * @throws {TypeError} 3 arguments required
+ * @param year - The year of the date to check
+ * @param month - The month of the date to check
+ * @param day - The day of the date to check
+ *
+ * @returns `true` if the date exists
  *
  * @example
  * // For the valid date:
@@ -21675,29 +21129,25 @@ exports["default"] = isExists;
  * //=> false
  */
 function isExists(year, month, day) {
-  if (arguments.length < 3) {
-    throw new TypeError('3 argument required, but only ' + arguments.length + ' present');
-  }
-  var date = new Date(year, month, day);
-  return date.getFullYear() === year && date.getMonth() === month && date.getDate() === day;
+  const date = new Date(year, month, day);
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() === month &&
+    date.getDate() === day
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5387:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4387:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isFirstDayOfMonth = isFirstDayOfMonth;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isFirstDayOfMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isFirstDayOfMonth
  * @category Month Helpers
@@ -21706,36 +21156,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date the first day of a month?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is the first day of a month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+
+ * @returns The date is the first day of a month
  *
  * @example
  * // Is 1 September 2014 the first day of a month?
  * const result = isFirstDayOfMonth(new Date(2014, 8, 1))
  * //=> true
  */
-function isFirstDayOfMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDate() === 1;
+function isFirstDayOfMonth(date) {
+  return (0, _index.toDate)(date).getDate() === 1;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1758:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1861:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isFriday = isFriday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isFriday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isFriday
  * @category Weekday Helpers
@@ -21744,36 +21190,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Friday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Friday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Friday
  *
  * @example
  * // Is 26 September 2014 Friday?
  * const result = isFriday(new Date(2014, 8, 26))
  * //=> true
  */
-function isFriday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDay() === 5;
+function isFriday(date) {
+  return (0, _index.toDate)(date).getDay() === 5;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6803:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6513:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isFuture = isFuture;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isFuture;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isFuture
  * @category Common Helpers
@@ -21783,41 +21225,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the future?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in the future
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in the future
  *
  * @example
  * // If today is 6 October 2014, is 31 December 2014 in the future?
  * const result = isFuture(new Date(2014, 11, 31))
  * //=> true
  */
-function isFuture(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getTime() > Date.now();
+function isFuture(date) {
+  return +(0, _index.toDate)(date) > Date.now();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8506:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5894:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isLastDayOfMonth = isLastDayOfMonth;
+var _index = __nccwpck_require__(6610);
+var _index2 = __nccwpck_require__(3434);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isLastDayOfMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8569));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2621));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isLastDayOfMonth
  * @category Month Helpers
@@ -21826,37 +21261,33 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date the last day of a month?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is the last day of a month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+
+ * @returns The date is the last day of a month
  *
  * @example
  * // Is 28 February 2014 the last day of a month?
  * const result = isLastDayOfMonth(new Date(2014, 1, 28))
  * //=> true
  */
-function isLastDayOfMonth(dirtyDate) {
-  (0, _index4.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  return (0, _index2.default)(date).getTime() === (0, _index3.default)(date).getTime();
+function isLastDayOfMonth(date) {
+  const _date = (0, _index3.toDate)(date);
+  return +(0, _index.endOfDay)(_date) === +(0, _index2.endOfMonth)(_date);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 74:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8260:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isLeapYear = isLeapYear;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isLeapYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isLeapYear
  * @category Year Helpers
@@ -21865,39 +21296,39 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the leap year?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in the leap year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is in the leap year
  *
  * @example
  * // Is 1 September 2012 in the leap year?
  * const result = isLeapYear(new Date(2012, 8, 1))
  * //=> true
  */
-function isLeapYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+function isLeapYear(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 525:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4699:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isMatch = isMatch;
+var _index = __nccwpck_require__(8915);
+var _index2 = __nccwpck_require__(9884);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isMatch;
-var _index = _interopRequireDefault(__nccwpck_require__(1287));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9920));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link isMatch} function options.
+ */
+
 /**
  * @name isMatch
  * @category Common Helpers
@@ -22119,8 +21550,8 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  *    The same difference is true for local and ISO week-numbering years (`Y` and `R`),
  *    except local week-numbering years are dependent on `options.weekStartsOn`
- *    and `options.firstWeekContainsDate` (compare [setISOWeekYear]{@link https://date-fns.org/docs/setISOWeekYear}
- *    and [setWeekYear]{@link https://date-fns.org/docs/setWeekYear}).
+ *    and `options.firstWeekContainsDate` (compare [setISOWeekYear](https://date-fns.org/docs/setISOWeekYear)
+ *    and [setWeekYear](https://date-fns.org/docs/setWeekYear)).
  *
  * 5. These patterns are not in the Unicode Technical Standard #35:
  *    - `i`: ISO day of week
@@ -22154,28 +21585,22 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * If `formatString` matches with `dateString` but does not provides tokens, `referenceDate` will be returned.
  *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
+ * @param dateStr - The date string to verify
+ * @param format - The string of tokens
+ * @param options - An object with options.
+ *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
  *
- * @param {String} dateString - the date string to verify
- * @param {String} formatString - the string of tokens
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @param {Boolean} [options.useAdditionalWeekYearTokens=false] - if true, allows usage of the week-numbering year tokens `YY` and `YYYY`;
- *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @param {Boolean} [options.useAdditionalDayOfYearTokens=false] - if true, allows usage of the day of year tokens `D` and `DD`;
- *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @returns {Boolean}
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
- * @throws {RangeError} `options.locale` must contain `match` property
- * @throws {RangeError} use `yyyy` instead of `YYYY` for formatting years; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `yy` instead of `YY` for formatting years; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `d` instead of `D` for formatting days of the month; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `dd` instead of `DD` for formatting days of the month; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} format string contains an unescaped latin alphabet character
+ * @returns Is format string a match for date string?
+ *
+ * @throws `options.locale` must contain `match` property
+ * @throws use `yyyy` instead of `YYYY` for formatting years; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `yy` instead of `YY` for formatting years; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `d` instead of `D` for formatting days of the month; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `dd` instead of `DD` for formatting days of the month; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws format string contains an unescaped latin alphabet character
  *
  * @example
  * // Match 11 February 2014 from middle-endian format:
@@ -22190,27 +21615,23 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * })
  * //=> true
  */
-function isMatch(dateString, formatString, options) {
-  (0, _index3.default)(2, arguments);
-  return (0, _index2.default)((0, _index.default)(dateString, formatString, new Date(), options));
+function isMatch(dateStr, formatStr, options) {
+  return (0, _index.isValid)(
+    (0, _index2.parse)(dateStr, formatStr, new Date(), options),
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6030:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7369:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isMonday = isMonday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isMonday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isMonday
  * @category Weekday Helpers
@@ -22219,9 +21640,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Monday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Monday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Monday
  *
  * @example
  * // Is 22 September 2014 Monday?
@@ -22229,26 +21652,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> true
  */
 function isMonday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date).getDay() === 1;
+  return (0, _index.toDate)(date).getDay() === 1;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9543:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4687:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isPast = isPast;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isPast;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isPast
  * @category Common Helpers
@@ -22258,39 +21675,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the past?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in the past
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in the past
  *
  * @example
  * // If today is 6 October 2014, is 2 July 2014 in the past?
  * const result = isPast(new Date(2014, 6, 2))
  * //=> true
  */
-function isPast(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getTime() < Date.now();
+function isPast(date) {
+  return +(0, _index.toDate)(date) < Date.now();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2154:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8512:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameDay = isSameDay;
+var _index = __nccwpck_require__(1310);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameDay;
-var _index = _interopRequireDefault(__nccwpck_require__(1868));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameDay
  * @category Day Helpers
@@ -22299,10 +21709,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same day (and year and month)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same day (and year and month)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+
+ * @returns The dates are in the same day (and year and month)
  *
  * @example
  * // Are 4 September 06:00:00 and 4 September 18:00:00 in the same day?
@@ -22319,29 +21731,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isSameDay(new Date(2014, 8, 4), new Date(2015, 8, 4))
  * //=> false
  */
-function isSameDay(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfDay = (0, _index.default)(dirtyDateLeft);
-  var dateRightStartOfDay = (0, _index.default)(dirtyDateRight);
-  return dateLeftStartOfDay.getTime() === dateRightStartOfDay.getTime();
+function isSameDay(dateLeft, dateRight) {
+  const dateLeftStartOfDay = (0, _index.startOfDay)(dateLeft);
+  const dateRightStartOfDay = (0, _index.startOfDay)(dateRight);
+
+  return +dateLeftStartOfDay === +dateRightStartOfDay;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2489:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1108:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameHour = isSameHour;
+var _index = __nccwpck_require__(8079);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameHour;
-var _index = _interopRequireDefault(__nccwpck_require__(6277));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameHour
  * @category Hour Helpers
@@ -22350,10 +21757,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same hour (and same day)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same hour (and same day)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same hour (and same day)
  *
  * @example
  * // Are 4 September 2014 06:00:00 and 4 September 06:30:00 in the same hour?
@@ -22365,29 +21774,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isSameHour(new Date(2014, 8, 4, 6, 0), new Date(2014, 8, 5, 6, 0))
  * //=> false
  */
-function isSameHour(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfHour = (0, _index.default)(dirtyDateLeft);
-  var dateRightStartOfHour = (0, _index.default)(dirtyDateRight);
-  return dateLeftStartOfHour.getTime() === dateRightStartOfHour.getTime();
+function isSameHour(dateLeft, dateRight) {
+  const dateLeftStartOfHour = (0, _index.startOfHour)(dateLeft);
+  const dateRightStartOfHour = (0, _index.startOfHour)(dateRight);
+
+  return +dateLeftStartOfHour === +dateRightStartOfHour;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9852:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 741:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameISOWeek = isSameISOWeek;
+var _index = __nccwpck_require__(5644);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(7013));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameISOWeek
  * @category ISO Week Helpers
@@ -22398,10 +21802,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same ISO week (and year)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same ISO week (and year)
  *
  * @example
  * // Are 1 September 2014 and 7 September 2014 in the same ISO week?
@@ -22413,29 +21819,21 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isSameISOWeek(new Date(2014, 8, 1), new Date(2015, 8, 1))
  * //=> false
  */
-function isSameISOWeek(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  return (0, _index.default)(dirtyDateLeft, dirtyDateRight, {
-    weekStartsOn: 1
-  });
+function isSameISOWeek(dateLeft, dateRight) {
+  return (0, _index.isSameWeek)(dateLeft, dateRight, { weekStartsOn: 1 });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3944:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5295:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameISOWeekYear = isSameISOWeekYear;
+var _index = __nccwpck_require__(7809);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(776));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameISOWeekYear
  * @category ISO Week-Numbering Year Helpers
@@ -22446,39 +21844,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same ISO week-numbering year
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same ISO week-numbering year
  *
  * @example
  * // Are 29 December 2003 and 2 January 2005 in the same ISO week-numbering year?
  * const result = isSameISOWeekYear(new Date(2003, 11, 29), new Date(2005, 0, 2))
  * //=> true
  */
-function isSameISOWeekYear(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfYear = (0, _index.default)(dirtyDateLeft);
-  var dateRightStartOfYear = (0, _index.default)(dirtyDateRight);
-  return dateLeftStartOfYear.getTime() === dateRightStartOfYear.getTime();
+function isSameISOWeekYear(dateLeft, dateRight) {
+  const dateLeftStartOfYear = (0, _index.startOfISOWeekYear)(dateLeft);
+  const dateRightStartOfYear = (0, _index.startOfISOWeekYear)(dateRight);
+
+  return +dateLeftStartOfYear === +dateRightStartOfYear;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3197:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3494:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameMinute = isSameMinute;
+var _index = __nccwpck_require__(1831);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameMinute;
-var _index = _interopRequireDefault(__nccwpck_require__(8567));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameMinute
  * @category Minute Helpers
@@ -22487,10 +21882,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same minute (and hour and day)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same minute (and hour and day)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same minute (and hour and day)
  *
  * @example
  * // Are 4 September 2014 06:30:00 and 4 September 2014 06:30:15 in the same minute?
@@ -22508,29 +21905,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> false
  */
-function isSameMinute(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfMinute = (0, _index.default)(dirtyDateLeft);
-  var dateRightStartOfMinute = (0, _index.default)(dirtyDateRight);
-  return dateLeftStartOfMinute.getTime() === dateRightStartOfMinute.getTime();
+function isSameMinute(dateLeft, dateRight) {
+  const dateLeftStartOfMinute = (0, _index.startOfMinute)(dateLeft);
+  const dateRightStartOfMinute = (0, _index.startOfMinute)(dateRight);
+
+  return +dateLeftStartOfMinute === +dateRightStartOfMinute;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5421:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6679:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameMonth = isSameMonth;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameMonth
  * @category Month Helpers
@@ -22539,10 +21931,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same month (and year)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same month (and year)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same month (and year)
  *
  * @example
  * // Are 2 September 2014 and 25 September 2014 in the same month?
@@ -22554,29 +21948,26 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isSameMonth(new Date(2014, 8, 2), new Date(2015, 8, 25))
  * //=> false
  */
-function isSameMonth(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  return dateLeft.getFullYear() === dateRight.getFullYear() && dateLeft.getMonth() === dateRight.getMonth();
+function isSameMonth(dateLeft, dateRight) {
+  const _dateLeft = (0, _index.toDate)(dateLeft);
+  const _dateRight = (0, _index.toDate)(dateRight);
+  return (
+    _dateLeft.getFullYear() === _dateRight.getFullYear() &&
+    _dateLeft.getMonth() === _dateRight.getMonth()
+  );
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 938:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 883:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameQuarter = isSameQuarter;
+var _index = __nccwpck_require__(3148);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(2932));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameQuarter
  * @category Quarter Helpers
@@ -22585,10 +21976,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same quarter (and year)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same quarter (and year)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+
+ * @returns The dates are in the same quarter (and year)
  *
  * @example
  * // Are 1 January 2014 and 8 March 2014 in the same quarter?
@@ -22600,29 +21993,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isSameQuarter(new Date(2014, 0, 1), new Date(2015, 0, 1))
  * //=> false
  */
-function isSameQuarter(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfQuarter = (0, _index.default)(dirtyDateLeft);
-  var dateRightStartOfQuarter = (0, _index.default)(dirtyDateRight);
-  return dateLeftStartOfQuarter.getTime() === dateRightStartOfQuarter.getTime();
+function isSameQuarter(dateLeft, dateRight) {
+  const dateLeftStartOfQuarter = (0, _index.startOfQuarter)(dateLeft);
+  const dateRightStartOfQuarter = (0, _index.startOfQuarter)(dateRight);
+
+  return +dateLeftStartOfQuarter === +dateRightStartOfQuarter;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1988:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 821:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameSecond = isSameSecond;
+var _index = __nccwpck_require__(2991);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameSecond;
-var _index = _interopRequireDefault(__nccwpck_require__(6738));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameSecond
  * @category Second Helpers
@@ -22631,10 +22019,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same second (and hour and day)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same second (and hour and day)
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same second (and hour and day)
  *
  * @example
  * // Are 4 September 2014 06:30:15.000 and 4 September 2014 06:30.15.500 in the same second?
@@ -22660,29 +22050,28 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * )
  * //=> false
  */
-function isSameSecond(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfSecond = (0, _index.default)(dirtyDateLeft);
-  var dateRightStartOfSecond = (0, _index.default)(dirtyDateRight);
-  return dateLeftStartOfSecond.getTime() === dateRightStartOfSecond.getTime();
+function isSameSecond(dateLeft, dateRight) {
+  const dateLeftStartOfSecond = (0, _index.startOfSecond)(dateLeft);
+  const dateRightStartOfSecond = (0, _index.startOfSecond)(dateRight);
+
+  return +dateLeftStartOfSecond === +dateRightStartOfSecond;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7013:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5644:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameWeek = isSameWeek;
+var _index = __nccwpck_require__(6068);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(9813));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link isSameWeek} function options.
+ */
+
 /**
  * @name isSameWeek
  * @category Week Helpers
@@ -22691,14 +22080,13 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same week (and month and year)?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Boolean} the dates are in the same week (and month and year)
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ * @param options - An object with options
+ *
+ * @returns The dates are in the same week (and month and year)
  *
  * @example
  * // Are 31 August 2014 and 4 September 2014 in the same week?
@@ -22718,29 +22106,24 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isSameWeek(new Date(2014, 0, 1), new Date(2015, 0, 1))
  * //=> false
  */
-function isSameWeek(dirtyDateLeft, dirtyDateRight, options) {
-  (0, _index2.default)(2, arguments);
-  var dateLeftStartOfWeek = (0, _index.default)(dirtyDateLeft, options);
-  var dateRightStartOfWeek = (0, _index.default)(dirtyDateRight, options);
-  return dateLeftStartOfWeek.getTime() === dateRightStartOfWeek.getTime();
+function isSameWeek(dateLeft, dateRight, options) {
+  const dateLeftStartOfWeek = (0, _index.startOfWeek)(dateLeft, options);
+  const dateRightStartOfWeek = (0, _index.startOfWeek)(dateRight, options);
+
+  return +dateLeftStartOfWeek === +dateRightStartOfWeek;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9821:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5694:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSameYear = isSameYear;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSameYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSameYear
  * @category Year Helpers
@@ -22749,39 +22132,35 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Are the given dates in the same year?
  *
- * @param {Date|Number} dateLeft - the first date to check
- * @param {Date|Number} dateRight - the second date to check
- * @returns {Boolean} the dates are in the same year
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateLeft - The first date to check
+ * @param dateRight - The second date to check
+ *
+ * @returns The dates are in the same year
  *
  * @example
  * // Are 2 September 2014 and 25 September 2014 in the same year?
  * const result = isSameYear(new Date(2014, 8, 2), new Date(2014, 8, 25))
  * //=> true
  */
-function isSameYear(dirtyDateLeft, dirtyDateRight) {
-  (0, _index2.default)(2, arguments);
-  var dateLeft = (0, _index.default)(dirtyDateLeft);
-  var dateRight = (0, _index.default)(dirtyDateRight);
-  return dateLeft.getFullYear() === dateRight.getFullYear();
+function isSameYear(dateLeft, dateRight) {
+  const _dateLeft = (0, _index.toDate)(dateLeft);
+  const _dateRight = (0, _index.toDate)(dateRight);
+  return _dateLeft.getFullYear() === _dateRight.getFullYear();
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6308:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2320:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSaturday = isSaturday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSaturday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSaturday
  * @category Weekday Helpers
@@ -22790,36 +22169,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Saturday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Saturday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Saturday
  *
  * @example
  * // Is 27 September 2014 Saturday?
  * const result = isSaturday(new Date(2014, 8, 27))
  * //=> true
  */
-function isSaturday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDay() === 6;
+function isSaturday(date) {
+  return (0, _index.toDate)(date).getDay() === 6;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5852:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9267:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isSunday = isSunday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isSunday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isSunday
  * @category Weekday Helpers
@@ -22828,36 +22203,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Sunday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Sunday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Sunday
  *
  * @example
  * // Is 21 September 2014 Sunday?
  * const result = isSunday(new Date(2014, 8, 21))
  * //=> true
  */
-function isSunday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDay() === 0;
+function isSunday(date) {
+  return (0, _index.toDate)(date).getDay() === 0;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4078:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4872:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisHour = isThisHour;
+var _index = __nccwpck_require__(1108);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisHour;
-var _index = _interopRequireDefault(__nccwpck_require__(2489));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisHour
  * @category Hour Helpers
@@ -22867,12 +22238,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same hour as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this hour
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this hour
  *
  * @example
  * // If now is 25 September 2014 18:30:15.500,
@@ -22880,27 +22250,21 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isThisHour(new Date(2014, 8, 25, 18))
  * //=> true
  */
-function isThisHour(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(Date.now(), dirtyDate);
+function isThisHour(date) {
+  return (0, _index.isSameHour)(Date.now(), date);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6065:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5573:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisISOWeek = isThisISOWeek;
+var _index = __nccwpck_require__(741);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(9852));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisISOWeek
  * @category ISO Week Helpers
@@ -22912,12 +22276,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this ISO week
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this ISO week
  *
  * @example
  * // If today is 25 September 2014, is 22 September 2014 in this ISO week?
@@ -22925,27 +22288,21 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> true
  */
 
-function isThisISOWeek(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now());
+function isThisISOWeek(date) {
+  return (0, _index.isSameISOWeek)(date, Date.now());
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3413:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6051:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisMinute = isThisMinute;
+var _index = __nccwpck_require__(3494);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisMinute;
-var _index = _interopRequireDefault(__nccwpck_require__(3197));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisMinute
  * @category Minute Helpers
@@ -22955,12 +22312,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same minute as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this minute
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this minute
  *
  * @example
  * // If now is 25 September 2014 18:30:15.500,
@@ -22969,27 +22325,21 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> true
  */
 
-function isThisMinute(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(Date.now(), dirtyDate);
+function isThisMinute(date) {
+  return (0, _index.isSameMinute)(Date.now(), date);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1157:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3335:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisMonth = isThisMonth;
+var _index = __nccwpck_require__(6679);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(5421));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisMonth
  * @category Month Helpers
@@ -22999,12 +22349,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same month as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this month
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this month
  *
  * @example
  * // If today is 25 September 2014, is 15 September 2014 in this month?
@@ -23012,27 +22361,26 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> true
  */
 
-function isThisMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(Date.now(), dirtyDate);
+function isThisMonth(date) {
+  return (0, _index.isSameMonth)(Date.now(), date);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 5122:
 /***/ ((module, exports, __nccwpck_require__) => {
+=======
+/***/ 4474:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+>>>>>>> e0ac81e (feat(docs): add source excalidraw document for component diagram)
 
 "use strict";
 
+exports.isThisQuarter = isThisQuarter;
+var _index = __nccwpck_require__(883);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(938));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisQuarter
  * @category Quarter Helpers
@@ -23042,39 +22390,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same quarter as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this quarter
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this quarter
  *
  * @example
  * // If today is 25 September 2014, is 2 July 2014 in this quarter?
  * const result = isThisQuarter(new Date(2014, 6, 2))
  * //=> true
  */
-function isThisQuarter(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(Date.now(), dirtyDate);
+function isThisQuarter(date) {
+  return (0, _index.isSameQuarter)(Date.now(), date);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4641:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1000:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisSecond = isThisSecond;
+var _index = __nccwpck_require__(821);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisSecond;
-var _index = _interopRequireDefault(__nccwpck_require__(1988));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisSecond
  * @category Second Helpers
@@ -23084,12 +22425,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same second as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this second
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this second
  *
  * @example
  * // If now is 25 September 2014 18:30:15.500,
@@ -23097,27 +22437,25 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isThisSecond(new Date(2014, 8, 25, 18, 30, 15))
  * //=> true
  */
-function isThisSecond(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(Date.now(), dirtyDate);
+function isThisSecond(date) {
+  return (0, _index.isSameSecond)(Date.now(), date);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2373:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6738:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisWeek = isThisWeek;
+var _index = __nccwpck_require__(5644);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(7013));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+/**
+ * The {@link isThisWeek} function options.
+ */
+
 /**
  * @name isThisWeek
  * @category Week Helpers
@@ -23127,16 +22465,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same week as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @param {Object} [options] - the object with options
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Boolean} the date is in this week
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @param date - The date to check
+ * @param options - The object with options
+ *
+ * @returns The date is in this week
  *
  * @example
  * // If today is 25 September 2014, is 21 September 2014 in this week?
@@ -23149,28 +22483,21 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isThisWeek(new Date(2014, 8, 21), { weekStartsOn: 1 })
  * //=> false
  */
-
-function isThisWeek(dirtyDate, options) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now(), options);
+function isThisWeek(date, options) {
+  return (0, _index.isSameWeek)(date, Date.now(), options);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 856:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 871:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThisYear = isThisYear;
+var _index = __nccwpck_require__(5694);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThisYear;
-var _index = _interopRequireDefault(__nccwpck_require__(9821));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThisYear
  * @category Year Helpers
@@ -23180,39 +22507,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date in the same year as the current date?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is in this year
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is in this year
  *
  * @example
  * // If today is 25 September 2014, is 2 July 2014 in this year?
  * const result = isThisYear(new Date(2014, 6, 2))
  * //=> true
  */
-function isThisYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now());
+function isThisYear(date) {
+  return (0, _index.isSameYear)(date, Date.now());
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4350:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2573:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isThursday = isThursday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isThursday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isThursday
  * @category Weekday Helpers
@@ -23221,36 +22541,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Thursday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Thursday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Thursday
  *
  * @example
  * // Is 25 September 2014 Thursday?
  * const result = isThursday(new Date(2014, 8, 25))
  * //=> true
  */
-function isThursday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDay() === 4;
+function isThursday(date) {
+  return (0, _index.toDate)(date).getDay() === 4;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7185:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6045:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isToday = isToday;
+var _index = __nccwpck_require__(8512);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isToday;
-var _index = _interopRequireDefault(__nccwpck_require__(2154));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isToday
  * @category Day Helpers
@@ -23260,40 +22576,33 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date today?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is today
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is today
  *
  * @example
  * // If today is 6 October 2014, is 6 October 14:00:00 today?
  * const result = isToday(new Date(2014, 9, 6, 14, 0))
  * //=> true
  */
-function isToday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, Date.now());
+function isToday(date) {
+  return (0, _index.isSameDay)(date, Date.now());
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3014:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3845:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isTomorrow = isTomorrow;
+var _index = __nccwpck_require__(8361);
+var _index2 = __nccwpck_require__(8512);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isTomorrow;
-var _index = _interopRequireDefault(__nccwpck_require__(6227));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2154));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isTomorrow
  * @category Day Helpers
@@ -23303,39 +22612,32 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date tomorrow?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is tomorrow
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is tomorrow
  *
  * @example
  * // If today is 6 October 2014, is 7 October 14:00:00 tomorrow?
  * const result = isTomorrow(new Date(2014, 9, 7, 14, 0))
  * //=> true
  */
-function isTomorrow(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  return (0, _index2.default)(dirtyDate, (0, _index.default)(Date.now(), 1));
+function isTomorrow(date) {
+  return (0, _index2.isSameDay)(date, (0, _index.addDays)(Date.now(), 1));
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8235:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 78:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isTuesday = isTuesday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isTuesday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isTuesday
  * @category Weekday Helpers
@@ -23344,37 +22646,33 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Tuesday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Tuesday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Tuesday
  *
  * @example
  * // Is 23 September 2014 Tuesday?
  * const result = isTuesday(new Date(2014, 8, 23))
  * //=> true
  */
-function isTuesday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDay() === 2;
+function isTuesday(date) {
+  return (0, _index.toDate)(date).getDay() === 2;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9920:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8915:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isValid = isValid;
+var _index = __nccwpck_require__(2272);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isValid;
-var _index = _interopRequireDefault(__nccwpck_require__(6801));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isValid
  * @category Common Helpers
@@ -23382,14 +22680,16 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * @description
  * Returns false if argument is Invalid Date and true otherwise.
- * Argument is converted to Date using `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * Argument is converted to Date using `toDate`. See [toDate](https://date-fns.org/docs/toDate)
  * Invalid Date is a Date, whose time value is NaN.
  *
  * Time value of Date: http://es5.github.io/#x15.9.1.1
  *
- * @param {*} date - the date to check
- * @returns {Boolean} the date is valid
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is valid
  *
  * @example
  * // For the valid date:
@@ -23406,31 +22706,25 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = isValid(new Date(''))
  * //=> false
  */
-function isValid(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  if (!(0, _index.default)(dirtyDate) && typeof dirtyDate !== 'number') {
+function isValid(date) {
+  if (!(0, _index.isDate)(date) && typeof date !== "number") {
     return false;
   }
-  var date = (0, _index2.default)(dirtyDate);
-  return !isNaN(Number(date));
+  const _date = (0, _index2.toDate)(date);
+  return !isNaN(Number(_date));
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9218:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8880:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isWednesday = isWednesday;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isWednesday;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isWednesday
  * @category Weekday Helpers
@@ -23439,36 +22733,32 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date Wednesday?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is Wednesday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date is Wednesday
  *
  * @example
  * // Is 24 September 2014 Wednesday?
  * const result = isWednesday(new Date(2014, 8, 24))
  * //=> true
  */
-function isWednesday(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate).getDay() === 3;
+function isWednesday(date) {
+  return (0, _index.toDate)(date).getDay() === 3;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 403:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5417:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isWeekend = isWeekend;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isWeekend;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isWeekend
  * @category Weekday Helpers
@@ -23477,38 +22767,33 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Does the given date fall on a weekend?
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date falls on a weekend
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ *
+ * @returns The date falls on a weekend
  *
  * @example
  * // Does 5 October 2014 fall on a weekend?
  * const result = isWeekend(new Date(2014, 9, 5))
  * //=> true
  */
-function isWeekend(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getDay();
+function isWeekend(date) {
+  const day = (0, _index.toDate)(date).getDay();
   return day === 0 || day === 6;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4419:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6460:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isWithinInterval = isWithinInterval;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isWithinInterval;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isWithinInterval
  * @category Interval Helpers
@@ -23517,12 +22802,12 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date within the interval? (Including start and end.)
  *
- * @param {Date|Number} date - the date to check
- * @param {Interval} interval - the interval to check
- * @returns {Boolean} the date is within the interval
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} The start of an interval cannot be after its end
- * @throws {RangeError} Date in interval cannot be `Invalid Date`
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ * @param interval - The interval to check
+ *
+ * @returns The date is within the interval
  *
  * @example
  * // For the date within the interval:
@@ -23542,42 +22827,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * @example
  * // For date equal to interval start:
- * isWithinInterval(date, { start, end: date }) // => true
+ * isWithinInterval(date, { start, end: date })
+ * // => true
  *
  * @example
  * // For date equal to interval end:
- * isWithinInterval(date, { start: date, end }) // => true
+ * isWithinInterval(date, { start: date, end })
+ * // => true
  */
-function isWithinInterval(dirtyDate, interval) {
-  (0, _index2.default)(2, arguments);
-  var time = (0, _index.default)(dirtyDate).getTime();
-  var startTime = (0, _index.default)(interval.start).getTime();
-  var endTime = (0, _index.default)(interval.end).getTime();
+function isWithinInterval(date, interval) {
+  const time = +(0, _index.toDate)(date);
+  const [startTime, endTime] = [
+    +(0, _index.toDate)(interval.start),
+    +(0, _index.toDate)(interval.end),
+  ].sort();
 
-  // Throw an exception if start date is after end date or if any date is `Invalid Date`
-  if (!(startTime <= endTime)) {
-    throw new RangeError('Invalid interval');
-  }
   return time >= startTime && time <= endTime;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9583:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3673:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.isYesterday = isYesterday;
+var _index = __nccwpck_require__(8512);
+var _index2 = __nccwpck_require__(9771);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = isYesterday;
-var _index = _interopRequireDefault(__nccwpck_require__(2154));
-var _index2 = _interopRequireDefault(__nccwpck_require__(970));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name isYesterday
  * @category Day Helpers
@@ -23587,39 +22866,32 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Is the given date yesterday?
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @param {Date|Number} date - the date to check
- * @returns {Boolean} the date is yesterday
- * @throws {TypeError} 1 argument required
+ * @param date - The date to check
+ *
+ * @returns The date is yesterday
  *
  * @example
  * // If today is 6 October 2014, is 5 October 14:00:00 yesterday?
  * const result = isYesterday(new Date(2014, 9, 5, 14, 0))
  * //=> true
  */
-function isYesterday(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, (0, _index2.default)(Date.now(), 1));
+function isYesterday(date) {
+  return (0, _index.isSameDay)(date, (0, _index2.subDays)(Date.now(), 1));
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4864:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4615:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfDecade = lastDayOfDecade;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfDecade;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name lastDayOfDecade
  * @category Decade Helpers
@@ -23628,41 +22900,37 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the last day of a decade for the given date.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the last day of a decade
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The last day of a decade
  *
  * @example
  * // The last day of a decade for 21 December 2012 21:12:00:
  * const result = lastDayOfDecade(new Date(2012, 11, 21, 21, 12, 00))
  * //=> Wed Dec 31 2019 00:00:00
  */
-function lastDayOfDecade(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  var decade = 9 + Math.floor(year / 10) * 10;
-  date.setFullYear(decade + 1, 0, 0);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function lastDayOfDecade(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  const decade = 9 + Math.floor(year / 10) * 10;
+  _date.setFullYear(decade + 1, 0, 0);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7692:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2494:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfISOWeek = lastDayOfISOWeek;
+var _index = __nccwpck_require__(8228);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(666));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name lastDayOfISOWeek
  * @category ISO Week Helpers
@@ -23674,39 +22942,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the last day of an ISO week
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The last day of an ISO week
  *
  * @example
  * // The last day of an ISO week for 2 September 2014 11:55:00:
  * const result = lastDayOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Sun Sep 07 2014 00:00:00
  */
-function lastDayOfISOWeek(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, {
-    weekStartsOn: 1
-  });
+function lastDayOfISOWeek(date) {
+  return (0, _index.lastDayOfWeek)(date, { weekStartsOn: 1 });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 217:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8454:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfISOWeekYear = lastDayOfISOWeekYear;
+var _index = __nccwpck_require__(308);
+var _index2 = __nccwpck_require__(9709);
+var _index3 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6991));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6307));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name lastDayOfISOWeekYear
  * @category ISO Week-Numbering Year Helpers
@@ -23719,42 +22982,38 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the end of an ISO week-numbering year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The end of an ISO week-numbering year
  *
  * @example
  * // The last day of an ISO week-numbering year for 2 July 2005:
  * const result = lastDayOfISOWeekYear(new Date(2005, 6, 2))
  * //=> Sun Jan 01 2006 00:00:00
  */
-function lastDayOfISOWeekYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var year = (0, _index.default)(dirtyDate);
-  var fourthOfJanuary = new Date(0);
+function lastDayOfISOWeekYear(date) {
+  const year = (0, _index.getISOWeekYear)(date);
+  const fourthOfJanuary = (0, _index3.constructFrom)(date, 0);
   fourthOfJanuary.setFullYear(year + 1, 0, 4);
   fourthOfJanuary.setHours(0, 0, 0, 0);
-  var date = (0, _index2.default)(fourthOfJanuary);
-  date.setDate(date.getDate() - 1);
-  return date;
+  const _date = (0, _index2.startOfISOWeek)(fourthOfJanuary);
+  _date.setDate(_date.getDate() - 1);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3346:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7270:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfMonth = lastDayOfMonth;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name lastDayOfMonth
  * @category Month Helpers
@@ -23764,40 +23023,36 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the last day of a month for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the last day of a month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The last day of a month
  *
  * @example
  * // The last day of a month for 2 September 2014 11:55:00:
  * const result = lastDayOfMonth(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 30 2014 00:00:00
  */
-function lastDayOfMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var month = date.getMonth();
-  date.setFullYear(date.getFullYear(), month + 1, 0);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function lastDayOfMonth(date) {
+  const _date = (0, _index.toDate)(date);
+  const month = _date.getMonth();
+  _date.setFullYear(_date.getFullYear(), month + 1, 0);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8635:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8921:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfQuarter = lastDayOfQuarter;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name lastDayOfQuarter
  * @category Quarter Helpers
@@ -23807,46 +23062,43 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the last day of a year quarter for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {0|1|2} [options.additionalDigits=2] - passed to `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
- * @returns {Date} the last day of a quarter
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The last day of a quarter
  *
  * @example
  * // The last day of a quarter for 2 September 2014 11:55:00:
  * const result = lastDayOfQuarter(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 30 2014 00:00:00
  */
-function lastDayOfQuarter(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var currentMonth = date.getMonth();
-  var month = currentMonth - currentMonth % 3 + 3;
-  date.setMonth(month, 0);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function lastDayOfQuarter(date) {
+  const _date = (0, _index.toDate)(date);
+  const currentMonth = _date.getMonth();
+  const month = currentMonth - (currentMonth % 3) + 3;
+  _date.setMonth(month, 0);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 666:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8228:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfWeek = lastDayOfWeek;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index4 = __nccwpck_require__(9307);
+var _index2 = __nccwpck_require__(2466);
+
+/**
+ * The {@link lastDayOfWeek} function options.
+ */
+
 /**
  * @name lastDayOfWeek
  * @category Week Helpers
@@ -23856,13 +23108,12 @@ var _index4 = __nccwpck_require__(9307);
  * Return the last day of a week for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Date} the last day of a week
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The last day of a week
  *
  * @example
  * // The last day of a week for 2 September 2014 11:55:00:
@@ -23874,40 +23125,35 @@ var _index4 = __nccwpck_require__(9307);
  * const result = lastDayOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
  * //=> Sun Sep 07 2014 00:00:00
  */
-function lastDayOfWeek(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index3.default)(1, arguments);
-  var defaultOptions = (0, _index4.getDefaultOptions)();
-  var weekStartsOn = (0, _index2.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
+function lastDayOfWeek(date, options) {
+  const defaultOptions = (0, _index2.getDefaultOptions)();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
 
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6');
-  }
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getDay();
-  var diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
-  date.setHours(0, 0, 0, 0);
-  date.setDate(date.getDate() + diff);
-  return date;
+  const _date = (0, _index.toDate)(date);
+  const day = _date.getDay();
+  const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+
+  _date.setHours(0, 0, 0, 0);
+  _date.setDate(_date.getDate() + diff);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9771:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6317:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lastDayOfYear = lastDayOfYear;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lastDayOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name lastDayOfYear
  * @category Year Helpers
@@ -23917,44 +23163,38 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the last day of a year for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the last day of a year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The last day of a year
  *
  * @example
  * // The last day of a year for 2 September 2014 11:55:00:
  * const result = lastDayOfYear(new Date(2014, 8, 2, 11, 55, 00))
  * //=> Wed Dec 31 2014 00:00:00
  */
-function lastDayOfYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  date.setFullYear(year + 1, 0, 0);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function lastDayOfYear(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  _date.setFullYear(year + 1, 0, 0);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4018:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 100:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.lightFormat = lightFormat;
+var _index = __nccwpck_require__(8915);
+var _index2 = __nccwpck_require__(3622);
+var _index3 = __nccwpck_require__(6961);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = lightFormat;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(289));
-var _index3 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index4 = _interopRequireDefault(__nccwpck_require__(9920));
-var _index5 = _interopRequireDefault(__nccwpck_require__(7923));
-var _index6 = _interopRequireDefault(__nccwpck_require__(2063));
 // This RegExp consists of three parts separated by `|`:
 // - (\w)\1* matches any sequences of the same letter
 // - '' matches two quote characters in a row
@@ -23964,10 +23204,15 @@ var _index6 = _interopRequireDefault(__nccwpck_require__(2063));
 //   If there is no matching single quote
 //   then the sequence will continue until the end of the string.
 // - . matches any single character unmatched by previous parts of the RegExps
-var formattingTokensRegExp = /(\w)\1*|''|'(''|[^'])+('|$)|./g;
-var escapedStringRegExp = /^'([^]*?)'?$/;
-var doubleQuoteRegExp = /''/g;
-var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+const formattingTokensRegExp = /(\w)\1*|''|'(''|[^'])+('|$)|./g;
+
+const escapedStringRegExp = /^'([^]*?)'?$/;
+const doubleQuoteRegExp = /''/g;
+const unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+
+/**
+ * @private
+ */
 
 /**
  * @name lightFormat
@@ -24014,485 +23259,629 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * |                                 | SSS     | 000, 001, ..., 999                |
  * |                                 | SSSS    | ...                               |
  *
- * @param {Date|Number} date - the original date
- * @param {String} format - the string of tokens
- * @returns {String} the formatted date string
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} format string contains an unescaped latin alphabet character
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param format - The string of tokens
+ *
+ * @returns The formatted date string
+ *
+ * @throws `Invalid time value` if the date is invalid
+ * @throws format string contains an unescaped latin alphabet character
  *
  * @example
  * const result = lightFormat(new Date(2014, 1, 11), 'yyyy-MM-dd')
  * //=> '2014-02-11'
  */
+function lightFormat(date, formatStr) {
+  const _date = (0, _index2.toDate)(date);
 
-function lightFormat(dirtyDate, formatStr) {
-  (0, _index6.default)(2, arguments);
-  var originalDate = (0, _index.default)(dirtyDate);
-  if (!(0, _index4.default)(originalDate)) {
-    throw new RangeError('Invalid time value');
+  if (!(0, _index.isValid)(_date)) {
+    throw new RangeError("Invalid time value");
   }
 
-  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
-  // This ensures that when UTC functions will be implemented, locales will be compatible with them.
-  // See an issue about UTC functions: https://github.com/date-fns/date-fns/issues/376
-  var timezoneOffset = (0, _index3.default)(originalDate);
-  var utcDate = (0, _index5.default)(originalDate, timezoneOffset);
-  var tokens = formatStr.match(formattingTokensRegExp);
+  const tokens = formatStr.match(formattingTokensRegExp);
 
   // The only case when formattingTokensRegExp doesn't match the string is when it's empty
-  if (!tokens) return '';
-  var result = tokens.map(function (substring) {
-    // Replace two single quote characters with one single quote character
-    if (substring === "''") {
-      return "'";
-    }
-    var firstCharacter = substring[0];
-    if (firstCharacter === "'") {
-      return cleanEscapedString(substring);
-    }
-    var formatter = _index2.default[firstCharacter];
-    if (formatter) {
-      return formatter(utcDate, substring);
-    }
-    if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
-      throw new RangeError('Format string contains an unescaped latin alphabet character `' + firstCharacter + '`');
-    }
-    return substring;
-  }).join('');
+  if (!tokens) return "";
+
+  const result = tokens
+    .map((substring) => {
+      // Replace two single quote characters with one single quote character
+      if (substring === "''") {
+        return "'";
+      }
+
+      const firstCharacter = substring[0];
+      if (firstCharacter === "'") {
+        return cleanEscapedString(substring);
+      }
+
+      const formatter = _index3.lightFormatters[firstCharacter];
+      if (formatter) {
+        return formatter(_date, substring);
+      }
+
+      if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
+        throw new RangeError(
+          "Format string contains an unescaped latin alphabet character `" +
+            firstCharacter +
+            "`",
+        );
+      }
+
+      return substring;
+    })
+    .join("");
+
   return result;
 }
+
 function cleanEscapedString(input) {
-  var matches = input.match(escapedStringRegExp);
+  const matches = input.match(escapedStringRegExp);
+
   if (!matches) {
     return input;
   }
+
   return matches[1].replace(doubleQuoteRegExp, "'");
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1244:
-/***/ ((module, exports) => {
+/***/ 9839:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.buildFormatLongFn = buildFormatLongFn;
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = buildFormatLongFn;
 function buildFormatLongFn(args) {
-  return function () {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return (options = {}) => {
     // TODO: Remove String()
-    var width = options.width ? String(options.width) : args.defaultWidth;
-    var format = args.formats[width] || args.formats[args.defaultWidth];
+    const width = options.width ? String(options.width) : args.defaultWidth;
+    const format = args.formats[width] || args.formats[args.defaultWidth];
     return format;
   };
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3647:
-/***/ ((module, exports) => {
+/***/ 2080:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.buildLocalizeFn = buildLocalizeFn; /* eslint-disable no-unused-vars */
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = buildLocalizeFn;
+/**
+ * The localize function argument callback which allows to convert raw value to
+ * the actual type.
+ *
+ * @param value - The value to convert
+ *
+ * @returns The converted value
+ */
+
+/**
+ * The map of localized values for each width.
+ */
+
+/**
+ * The index type of the locale unit value. It types conversion of units of
+ * values that don't start at 0 (i.e. quarters).
+ */
+
+/**
+ * Converts the unit value to the tuple of values.
+ */
+
+/**
+ * The tuple of localized era values. The first element represents BC,
+ * the second element represents AD.
+ */
+
+/**
+ * The tuple of localized quarter values. The first element represents Q1.
+ */
+
+/**
+ * The tuple of localized day values. The first element represents Sunday.
+ */
+
+/**
+ * The tuple of localized month values. The first element represents January.
+ */
+
 function buildLocalizeFn(args) {
-  return function (dirtyIndex, options) {
-    var context = options !== null && options !== void 0 && options.context ? String(options.context) : 'standalone';
-    var valuesArray;
-    if (context === 'formatting' && args.formattingValues) {
-      var defaultWidth = args.defaultFormattingWidth || args.defaultWidth;
-      var width = options !== null && options !== void 0 && options.width ? String(options.width) : defaultWidth;
-      valuesArray = args.formattingValues[width] || args.formattingValues[defaultWidth];
+  return (value, options) => {
+    const context = options?.context ? String(options.context) : "standalone";
+
+    let valuesArray;
+    if (context === "formatting" && args.formattingValues) {
+      const defaultWidth = args.defaultFormattingWidth || args.defaultWidth;
+      const width = options?.width ? String(options.width) : defaultWidth;
+
+      valuesArray =
+        args.formattingValues[width] || args.formattingValues[defaultWidth];
     } else {
-      var _defaultWidth = args.defaultWidth;
-      var _width = options !== null && options !== void 0 && options.width ? String(options.width) : args.defaultWidth;
-      valuesArray = args.values[_width] || args.values[_defaultWidth];
+      const defaultWidth = args.defaultWidth;
+      const width = options?.width ? String(options.width) : args.defaultWidth;
+
+      valuesArray = args.values[width] || args.values[defaultWidth];
     }
-    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex;
-    // @ts-ignore: For some reason TypeScript just don't want to match it, no matter how hard we try. I challenge you to try to remove it!
+    const index = args.argumentCallback ? args.argumentCallback(value) : value;
+
+    // @ts-expect-error - For some reason TypeScript just don't want to match it, no matter how hard we try. I challenge you to try to remove it!
     return valuesArray[index];
   };
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4029:
-/***/ ((module, exports) => {
+/***/ 8867:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.buildMatchFn = buildMatchFn;
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = buildMatchFn;
 function buildMatchFn(args) {
-  return function (string) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var width = options.width;
-    var matchPattern = width && args.matchPatterns[width] || args.matchPatterns[args.defaultMatchWidth];
-    var matchResult = string.match(matchPattern);
+  return (string, options = {}) => {
+    const width = options.width;
+
+    const matchPattern =
+      (width && args.matchPatterns[width]) ||
+      args.matchPatterns[args.defaultMatchWidth];
+    const matchResult = string.match(matchPattern);
+
     if (!matchResult) {
       return null;
     }
-    var matchedString = matchResult[0];
-    var parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
-    var key = Array.isArray(parsePatterns) ? findIndex(parsePatterns, function (pattern) {
-      return pattern.test(matchedString);
-    }) : findKey(parsePatterns, function (pattern) {
-      return pattern.test(matchedString);
-    });
-    var value;
+    const matchedString = matchResult[0];
+
+    const parsePatterns =
+      (width && args.parsePatterns[width]) ||
+      args.parsePatterns[args.defaultParseWidth];
+
+    const key = Array.isArray(parsePatterns)
+      ? findIndex(parsePatterns, (pattern) => pattern.test(matchedString))
+      : // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
+        findKey(parsePatterns, (pattern) => pattern.test(matchedString));
+
+    let value;
+
     value = args.valueCallback ? args.valueCallback(key) : key;
-    value = options.valueCallback ? options.valueCallback(value) : value;
-    var rest = string.slice(matchedString.length);
-    return {
-      value: value,
-      rest: rest
-    };
+    value = options.valueCallback
+      ? // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
+        options.valueCallback(value)
+      : value;
+
+    const rest = string.slice(matchedString.length);
+
+    return { value, rest };
   };
 }
+
 function findKey(object, predicate) {
-  for (var key in object) {
-    if (object.hasOwnProperty(key) && predicate(object[key])) {
+  for (const key in object) {
+    if (
+      Object.prototype.hasOwnProperty.call(object, key) &&
+      predicate(object[key])
+    ) {
       return key;
     }
   }
   return undefined;
 }
+
 function findIndex(array, predicate) {
-  for (var key = 0; key < array.length; key++) {
+  for (let key = 0; key < array.length; key++) {
     if (predicate(array[key])) {
       return key;
     }
   }
   return undefined;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3364:
-/***/ ((module, exports) => {
+/***/ 4719:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.buildMatchPatternFn = buildMatchPatternFn;
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = buildMatchPatternFn;
 function buildMatchPatternFn(args) {
-  return function (string) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var matchResult = string.match(args.matchPattern);
+  return (string, options = {}) => {
+    const matchResult = string.match(args.matchPattern);
     if (!matchResult) return null;
-    var matchedString = matchResult[0];
-    var parseResult = string.match(args.parsePattern);
+    const matchedString = matchResult[0];
+
+    const parseResult = string.match(args.parsePattern);
     if (!parseResult) return null;
-    var value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
+    let value = args.valueCallback
+      ? args.valueCallback(parseResult[0])
+      : parseResult[0];
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
     value = options.valueCallback ? options.valueCallback(value) : value;
-    var rest = string.slice(matchedString.length);
-    return {
-      value: value,
-      rest: rest
-    };
+
+    const rest = string.slice(matchedString.length);
+
+    return { value, rest };
   };
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4846:
-/***/ ((module, exports) => {
+/***/ 55:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.enUS = void 0;
+var _index = __nccwpck_require__(5163);
+var _index2 = __nccwpck_require__(7666);
+var _index3 = __nccwpck_require__(4908);
+var _index4 = __nccwpck_require__(6229);
+var _index5 = __nccwpck_require__(2403);
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var formatDistanceLocale = {
+/**
+ * @category Locales
+ * @summary English locale (United States).
+ * @language English
+ * @iso-639-2 eng
+ * @author Sasha Koss [@kossnocorp](https://github.com/kossnocorp)
+ * @author Lesha Koss [@leshakoss](https://github.com/leshakoss)
+ */
+const enUS = (exports.enUS = {
+  code: "en-US",
+  formatDistance: _index.formatDistance,
+  formatLong: _index2.formatLong,
+  formatRelative: _index3.formatRelative,
+  localize: _index4.localize,
+  match: _index5.match,
+  options: {
+    weekStartsOn: 0 /* Sunday */,
+    firstWeekContainsDate: 1,
+  },
+});
+
+
+/***/ }),
+
+/***/ 5163:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+exports.formatDistance = void 0;
+
+const formatDistanceLocale = {
   lessThanXSeconds: {
-    one: 'less than a second',
-    other: 'less than {{count}} seconds'
+    one: "less than a second",
+    other: "less than {{count}} seconds",
   },
+
   xSeconds: {
-    one: '1 second',
-    other: '{{count}} seconds'
+    one: "1 second",
+    other: "{{count}} seconds",
   },
-  halfAMinute: 'half a minute',
+
+  halfAMinute: "half a minute",
+
   lessThanXMinutes: {
-    one: 'less than a minute',
-    other: 'less than {{count}} minutes'
+    one: "less than a minute",
+    other: "less than {{count}} minutes",
   },
+
   xMinutes: {
-    one: '1 minute',
-    other: '{{count}} minutes'
+    one: "1 minute",
+    other: "{{count}} minutes",
   },
+
   aboutXHours: {
-    one: 'about 1 hour',
-    other: 'about {{count}} hours'
+    one: "about 1 hour",
+    other: "about {{count}} hours",
   },
+
   xHours: {
-    one: '1 hour',
-    other: '{{count}} hours'
+    one: "1 hour",
+    other: "{{count}} hours",
   },
+
   xDays: {
-    one: '1 day',
-    other: '{{count}} days'
+    one: "1 day",
+    other: "{{count}} days",
   },
+
   aboutXWeeks: {
-    one: 'about 1 week',
-    other: 'about {{count}} weeks'
+    one: "about 1 week",
+    other: "about {{count}} weeks",
   },
+
   xWeeks: {
-    one: '1 week',
-    other: '{{count}} weeks'
+    one: "1 week",
+    other: "{{count}} weeks",
   },
+
   aboutXMonths: {
-    one: 'about 1 month',
-    other: 'about {{count}} months'
+    one: "about 1 month",
+    other: "about {{count}} months",
   },
+
   xMonths: {
-    one: '1 month',
-    other: '{{count}} months'
+    one: "1 month",
+    other: "{{count}} months",
   },
+
   aboutXYears: {
-    one: 'about 1 year',
-    other: 'about {{count}} years'
+    one: "about 1 year",
+    other: "about {{count}} years",
   },
+
   xYears: {
-    one: '1 year',
-    other: '{{count}} years'
+    one: "1 year",
+    other: "{{count}} years",
   },
+
   overXYears: {
-    one: 'over 1 year',
-    other: 'over {{count}} years'
+    one: "over 1 year",
+    other: "over {{count}} years",
   },
+
   almostXYears: {
-    one: 'almost 1 year',
-    other: 'almost {{count}} years'
-  }
+    one: "almost 1 year",
+    other: "almost {{count}} years",
+  },
 };
-var formatDistance = function formatDistance(token, count, options) {
-  var result;
-  var tokenValue = formatDistanceLocale[token];
-  if (typeof tokenValue === 'string') {
+
+const formatDistance = (token, count, options) => {
+  let result;
+
+  const tokenValue = formatDistanceLocale[token];
+  if (typeof tokenValue === "string") {
     result = tokenValue;
   } else if (count === 1) {
     result = tokenValue.one;
   } else {
-    result = tokenValue.other.replace('{{count}}', count.toString());
+    result = tokenValue.other.replace("{{count}}", count.toString());
   }
-  if (options !== null && options !== void 0 && options.addSuffix) {
+
+  if (options?.addSuffix) {
     if (options.comparison && options.comparison > 0) {
-      return 'in ' + result;
+      return "in " + result;
     } else {
-      return result + ' ago';
+      return result + " ago";
     }
   }
+
   return result;
 };
-var _default = formatDistance;
-exports["default"] = _default;
-module.exports = exports.default;
+exports.formatDistance = formatDistance;
+
 
 /***/ }),
 
-/***/ 368:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7666:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.formatLong = void 0;
+var _index = __nccwpck_require__(9839);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(1244));
-var dateFormats = {
-  full: 'EEEE, MMMM do, y',
-  long: 'MMMM do, y',
-  medium: 'MMM d, y',
-  short: 'MM/dd/yyyy'
+const dateFormats = {
+  full: "EEEE, MMMM do, y",
+  long: "MMMM do, y",
+  medium: "MMM d, y",
+  short: "MM/dd/yyyy",
 };
-var timeFormats = {
-  full: 'h:mm:ss a zzzz',
-  long: 'h:mm:ss a z',
-  medium: 'h:mm:ss a',
-  short: 'h:mm a'
+
+const timeFormats = {
+  full: "h:mm:ss a zzzz",
+  long: "h:mm:ss a z",
+  medium: "h:mm:ss a",
+  short: "h:mm a",
 };
-var dateTimeFormats = {
+
+const dateTimeFormats = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
-  medium: '{{date}}, {{time}}',
-  short: '{{date}}, {{time}}'
+  medium: "{{date}}, {{time}}",
+  short: "{{date}}, {{time}}",
 };
-var formatLong = {
-  date: (0, _index.default)({
+
+const formatLong = (exports.formatLong = {
+  date: (0, _index.buildFormatLongFn)({
     formats: dateFormats,
-    defaultWidth: 'full'
+    defaultWidth: "full",
   }),
-  time: (0, _index.default)({
+
+  time: (0, _index.buildFormatLongFn)({
     formats: timeFormats,
-    defaultWidth: 'full'
+    defaultWidth: "full",
   }),
-  dateTime: (0, _index.default)({
+
+  dateTime: (0, _index.buildFormatLongFn)({
     formats: dateTimeFormats,
-    defaultWidth: 'full'
-  })
-};
-var _default = formatLong;
-exports["default"] = _default;
-module.exports = exports.default;
+    defaultWidth: "full",
+  }),
+});
+
 
 /***/ }),
 
-/***/ 2430:
-/***/ ((module, exports) => {
+/***/ 4908:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.formatRelative = void 0;
 
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var formatRelativeLocale = {
+const formatRelativeLocale = {
   lastWeek: "'last' eeee 'at' p",
   yesterday: "'yesterday at' p",
   today: "'today at' p",
   tomorrow: "'tomorrow at' p",
   nextWeek: "eeee 'at' p",
-  other: 'P'
+  other: "P",
 };
-var formatRelative = function formatRelative(token, _date, _baseDate, _options) {
-  return formatRelativeLocale[token];
-};
-var _default = formatRelative;
-exports["default"] = _default;
-module.exports = exports.default;
+
+const formatRelative = (token, _date, _baseDate, _options) =>
+  formatRelativeLocale[token];
+exports.formatRelative = formatRelative;
+
 
 /***/ }),
 
-/***/ 5474:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6229:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.localize = void 0;
+var _index = __nccwpck_require__(2080);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(3647));
-var eraValues = {
-  narrow: ['B', 'A'],
-  abbreviated: ['BC', 'AD'],
-  wide: ['Before Christ', 'Anno Domini']
+const eraValues = {
+  narrow: ["B", "A"],
+  abbreviated: ["BC", "AD"],
+  wide: ["Before Christ", "Anno Domini"],
 };
-var quarterValues = {
-  narrow: ['1', '2', '3', '4'],
-  abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
-  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
+
+const quarterValues = {
+  narrow: ["1", "2", "3", "4"],
+  abbreviated: ["Q1", "Q2", "Q3", "Q4"],
+  wide: ["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"],
 };
 
 // Note: in English, the names of days of the week and months are capitalized.
 // If you are making a new locale based on this one, check if the same is true for the language you're working on.
 // Generally, formatted dates should look like they are in the middle of a sentence,
 // e.g. in Spanish language the weekdays and months should be in the lowercase.
-var monthValues = {
-  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-  abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+const monthValues = {
+  narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+  abbreviated: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+
+  wide: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
 };
-var dayValues = {
-  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-  short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-  abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+const dayValues = {
+  narrow: ["S", "M", "T", "W", "T", "F", "S"],
+  short: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+  abbreviated: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  wide: [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
 };
-var dayPeriodValues = {
+
+const dayPeriodValues = {
   narrow: {
-    am: 'a',
-    pm: 'p',
-    midnight: 'mi',
-    noon: 'n',
-    morning: 'morning',
-    afternoon: 'afternoon',
-    evening: 'evening',
-    night: 'night'
+    am: "a",
+    pm: "p",
+    midnight: "mi",
+    noon: "n",
+    morning: "morning",
+    afternoon: "afternoon",
+    evening: "evening",
+    night: "night",
   },
   abbreviated: {
-    am: 'AM',
-    pm: 'PM',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'morning',
-    afternoon: 'afternoon',
-    evening: 'evening',
-    night: 'night'
+    am: "AM",
+    pm: "PM",
+    midnight: "midnight",
+    noon: "noon",
+    morning: "morning",
+    afternoon: "afternoon",
+    evening: "evening",
+    night: "night",
   },
   wide: {
-    am: 'a.m.',
-    pm: 'p.m.',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'morning',
-    afternoon: 'afternoon',
-    evening: 'evening',
-    night: 'night'
-  }
+    am: "a.m.",
+    pm: "p.m.",
+    midnight: "midnight",
+    noon: "noon",
+    morning: "morning",
+    afternoon: "afternoon",
+    evening: "evening",
+    night: "night",
+  },
 };
-var formattingDayPeriodValues = {
+
+const formattingDayPeriodValues = {
   narrow: {
-    am: 'a',
-    pm: 'p',
-    midnight: 'mi',
-    noon: 'n',
-    morning: 'in the morning',
-    afternoon: 'in the afternoon',
-    evening: 'in the evening',
-    night: 'at night'
+    am: "a",
+    pm: "p",
+    midnight: "mi",
+    noon: "n",
+    morning: "in the morning",
+    afternoon: "in the afternoon",
+    evening: "in the evening",
+    night: "at night",
   },
   abbreviated: {
-    am: 'AM',
-    pm: 'PM',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'in the morning',
-    afternoon: 'in the afternoon',
-    evening: 'in the evening',
-    night: 'at night'
+    am: "AM",
+    pm: "PM",
+    midnight: "midnight",
+    noon: "noon",
+    morning: "in the morning",
+    afternoon: "in the afternoon",
+    evening: "in the evening",
+    night: "at night",
   },
   wide: {
-    am: 'a.m.',
-    pm: 'p.m.',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'in the morning',
-    afternoon: 'in the afternoon',
-    evening: 'in the evening',
-    night: 'at night'
-  }
+    am: "a.m.",
+    pm: "p.m.",
+    midnight: "midnight",
+    noon: "noon",
+    morning: "in the morning",
+    afternoon: "in the afternoon",
+    evening: "in the evening",
+    night: "at night",
+  },
 };
-var ordinalNumber = function ordinalNumber(dirtyNumber, _options) {
-  var number = Number(dirtyNumber);
+
+const ordinalNumber = (dirtyNumber, _options) => {
+  const number = Number(dirtyNumber);
 
   // If ordinal numbers depend on context, for example,
   // if they are different for different grammatical genders,
@@ -24501,108 +23890,139 @@ var ordinalNumber = function ordinalNumber(dirtyNumber, _options) {
   // `unit` can be 'year', 'quarter', 'month', 'week', 'date', 'dayOfYear',
   // 'day', 'hour', 'minute', 'second'.
 
-  var rem100 = number % 100;
+  const rem100 = number % 100;
   if (rem100 > 20 || rem100 < 10) {
     switch (rem100 % 10) {
       case 1:
-        return number + 'st';
+        return number + "st";
       case 2:
-        return number + 'nd';
+        return number + "nd";
       case 3:
-        return number + 'rd';
+        return number + "rd";
     }
   }
-  return number + 'th';
+  return number + "th";
 };
-var localize = {
-  ordinalNumber: ordinalNumber,
-  era: (0, _index.default)({
+
+const localize = (exports.localize = {
+  ordinalNumber,
+
+  era: (0, _index.buildLocalizeFn)({
     values: eraValues,
-    defaultWidth: 'wide'
+    defaultWidth: "wide",
   }),
-  quarter: (0, _index.default)({
+
+  quarter: (0, _index.buildLocalizeFn)({
     values: quarterValues,
-    defaultWidth: 'wide',
-    argumentCallback: function argumentCallback(quarter) {
-      return quarter - 1;
-    }
+    defaultWidth: "wide",
+    argumentCallback: (quarter) => quarter - 1,
   }),
-  month: (0, _index.default)({
+
+  month: (0, _index.buildLocalizeFn)({
     values: monthValues,
-    defaultWidth: 'wide'
+    defaultWidth: "wide",
   }),
-  day: (0, _index.default)({
+
+  day: (0, _index.buildLocalizeFn)({
     values: dayValues,
-    defaultWidth: 'wide'
+    defaultWidth: "wide",
   }),
-  dayPeriod: (0, _index.default)({
+
+  dayPeriod: (0, _index.buildLocalizeFn)({
     values: dayPeriodValues,
-    defaultWidth: 'wide',
+    defaultWidth: "wide",
     formattingValues: formattingDayPeriodValues,
-    defaultFormattingWidth: 'wide'
-  })
-};
-var _default = localize;
-exports["default"] = _default;
-module.exports = exports.default;
+    defaultFormattingWidth: "wide",
+  }),
+});
+
 
 /***/ }),
 
-/***/ 1338:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2403:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.match = void 0;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(4029));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3364));
-var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
-var parseOrdinalNumberPattern = /\d+/i;
-var matchEraPatterns = {
+var _index = __nccwpck_require__(8867);
+var _index2 = __nccwpck_require__(4719);
+
+const matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
+const parseOrdinalNumberPattern = /\d+/i;
+
+const matchEraPatterns = {
   narrow: /^(b|a)/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
-  wide: /^(before christ|before common era|anno domini|common era)/i
+  wide: /^(before christ|before common era|anno domini|common era)/i,
 };
-var parseEraPatterns = {
-  any: [/^b/i, /^(a|c)/i]
+const parseEraPatterns = {
+  any: [/^b/i, /^(a|c)/i],
 };
-var matchQuarterPatterns = {
+
+const matchQuarterPatterns = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
-  wide: /^[1234](th|st|nd|rd)? quarter/i
+  wide: /^[1234](th|st|nd|rd)? quarter/i,
 };
-var parseQuarterPatterns = {
-  any: [/1/i, /2/i, /3/i, /4/i]
+const parseQuarterPatterns = {
+  any: [/1/i, /2/i, /3/i, /4/i],
 };
-var matchMonthPatterns = {
+
+const matchMonthPatterns = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
-  wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
+  wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i,
 };
-var parseMonthPatterns = {
-  narrow: [/^j/i, /^f/i, /^m/i, /^a/i, /^m/i, /^j/i, /^j/i, /^a/i, /^s/i, /^o/i, /^n/i, /^d/i],
-  any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i, /^n/i, /^d/i]
+const parseMonthPatterns = {
+  narrow: [
+    /^j/i,
+    /^f/i,
+    /^m/i,
+    /^a/i,
+    /^m/i,
+    /^j/i,
+    /^j/i,
+    /^a/i,
+    /^s/i,
+    /^o/i,
+    /^n/i,
+    /^d/i,
+  ],
+
+  any: [
+    /^ja/i,
+    /^f/i,
+    /^mar/i,
+    /^ap/i,
+    /^may/i,
+    /^jun/i,
+    /^jul/i,
+    /^au/i,
+    /^s/i,
+    /^o/i,
+    /^n/i,
+    /^d/i,
+  ],
 };
-var matchDayPatterns = {
+
+const matchDayPatterns = {
   narrow: /^[smtwf]/i,
   short: /^(su|mo|tu|we|th|fr|sa)/i,
   abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
-  wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
+  wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i,
 };
-var parseDayPatterns = {
+const parseDayPatterns = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i],
 };
-var matchDayPeriodPatterns = {
+
+const matchDayPeriodPatterns = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
-  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i,
 };
-var parseDayPeriodPatterns = {
+const parseDayPeriodPatterns = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -24611,114 +24031,65 @@ var parseDayPeriodPatterns = {
     morning: /morning/i,
     afternoon: /afternoon/i,
     evening: /evening/i,
-    night: /night/i
-  }
+    night: /night/i,
+  },
 };
-var match = {
-  ordinalNumber: (0, _index2.default)({
+
+const match = (exports.match = {
+  ordinalNumber: (0, _index2.buildMatchPatternFn)({
     matchPattern: matchOrdinalNumberPattern,
     parsePattern: parseOrdinalNumberPattern,
-    valueCallback: function valueCallback(value) {
-      return parseInt(value, 10);
-    }
+    valueCallback: (value) => parseInt(value, 10),
   }),
-  era: (0, _index.default)({
+
+  era: (0, _index.buildMatchFn)({
     matchPatterns: matchEraPatterns,
-    defaultMatchWidth: 'wide',
+    defaultMatchWidth: "wide",
     parsePatterns: parseEraPatterns,
-    defaultParseWidth: 'any'
+    defaultParseWidth: "any",
   }),
-  quarter: (0, _index.default)({
+
+  quarter: (0, _index.buildMatchFn)({
     matchPatterns: matchQuarterPatterns,
-    defaultMatchWidth: 'wide',
+    defaultMatchWidth: "wide",
     parsePatterns: parseQuarterPatterns,
-    defaultParseWidth: 'any',
-    valueCallback: function valueCallback(index) {
-      return index + 1;
-    }
+    defaultParseWidth: "any",
+    valueCallback: (index) => index + 1,
   }),
-  month: (0, _index.default)({
+
+  month: (0, _index.buildMatchFn)({
     matchPatterns: matchMonthPatterns,
-    defaultMatchWidth: 'wide',
+    defaultMatchWidth: "wide",
     parsePatterns: parseMonthPatterns,
-    defaultParseWidth: 'any'
+    defaultParseWidth: "any",
   }),
-  day: (0, _index.default)({
+
+  day: (0, _index.buildMatchFn)({
     matchPatterns: matchDayPatterns,
-    defaultMatchWidth: 'wide',
+    defaultMatchWidth: "wide",
     parsePatterns: parseDayPatterns,
-    defaultParseWidth: 'any'
+    defaultParseWidth: "any",
   }),
-  dayPeriod: (0, _index.default)({
+
+  dayPeriod: (0, _index.buildMatchFn)({
     matchPatterns: matchDayPeriodPatterns,
-    defaultMatchWidth: 'any',
+    defaultMatchWidth: "any",
     parsePatterns: parseDayPeriodPatterns,
-    defaultParseWidth: 'any'
-  })
-};
-var _default = match;
-exports["default"] = _default;
-module.exports = exports.default;
+    defaultParseWidth: "any",
+  }),
+});
+
 
 /***/ }),
 
-/***/ 1773:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7679:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.max = max;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-var _index = _interopRequireDefault(__nccwpck_require__(4846));
-var _index2 = _interopRequireDefault(__nccwpck_require__(368));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2430));
-var _index4 = _interopRequireDefault(__nccwpck_require__(5474));
-var _index5 = _interopRequireDefault(__nccwpck_require__(1338));
-/**
- * @type {Locale}
- * @category Locales
- * @summary English locale (United States).
- * @language English
- * @iso-639-2 eng
- * @author Sasha Koss [@kossnocorp]{@link https://github.com/kossnocorp}
- * @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
- */
-var locale = {
-  code: 'en-US',
-  formatDistance: _index.default,
-  formatLong: _index2.default,
-  formatRelative: _index3.default,
-  localize: _index4.default,
-  match: _index5.default,
-  options: {
-    weekStartsOn: 0 /* Sunday */,
-    firstWeekContainsDate: 1
-  }
-};
-var _default = locale;
-exports["default"] = _default;
-module.exports = exports.default;
-
-/***/ }),
-
-/***/ 5815:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = max;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name max
  * @category Common Helpers
@@ -24727,9 +24098,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the latest of the given dates.
  *
- * @param {Date[]|Number[]} datesArray - the dates to compare
- * @returns {Date} the latest of the dates
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dates - The dates to compare
+ *
+ * @returns The latest of the dates
  *
  * @example
  * // Which of these dates is the latest?
@@ -24741,48 +24114,33 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * ])
  * //=> Sun Jul 02 1995 00:00:00
  */
-function max(dirtyDatesArray) {
-  (0, _index2.default)(1, arguments);
-  var datesArray;
-  // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
-  if (dirtyDatesArray && typeof dirtyDatesArray.forEach === 'function') {
-    datesArray = dirtyDatesArray;
+function max(dates) {
+  let result;
+  dates.forEach(function (dirtyDate) {
+    const currentDate = (0, _index.toDate)(dirtyDate);
 
-    // If `dirtyDatesArray` is Array-like Object, convert to Array.
-  } else if ((0, _typeof2.default)(dirtyDatesArray) === 'object' && dirtyDatesArray !== null) {
-    datesArray = Array.prototype.slice.call(dirtyDatesArray);
-  } else {
-    // `dirtyDatesArray` is non-iterable, return Invalid Date
-    return new Date(NaN);
-  }
-  var result;
-  datesArray.forEach(function (dirtyDate) {
-    var currentDate = (0, _index.default)(dirtyDate);
-    if (result === undefined || result < currentDate || isNaN(Number(currentDate))) {
+    if (
+      result === undefined ||
+      result < currentDate ||
+      isNaN(Number(currentDate))
+    ) {
       result = currentDate;
     }
   });
+
   return result || new Date(NaN);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6133:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3152:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = milliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-// Leap year occures every 4 years, except for years that are divisable by 100 and not divisable by 400.
-// 1 mean year = (365+1/4-1/100+1/400) days = 365.2425 days
-var daysInYear = 365.2425;
+exports.milliseconds = milliseconds;
+var _index = __nccwpck_require__(7818);
 
 /**
  * @name milliseconds
@@ -24800,9 +24158,9 @@ var daysInYear = 365.2425;
  *
  * One month is a year divided by 12.
  *
- * @param {Duration} duration - the object with years, months, weeks, days, hours, minutes and seconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {number} the milliseconds
- * @throws {TypeError} 1 argument required
+ * @param duration - The object with years, months, weeks, days, hours, minutes and seconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The milliseconds
  *
  * @example
  * // 1 year in milliseconds
@@ -24813,43 +24171,34 @@ var daysInYear = 365.2425;
  * milliseconds({ months: 3 })
  * //=> 7889238000
  */
-function milliseconds(_ref) {
-  var years = _ref.years,
-    months = _ref.months,
-    weeks = _ref.weeks,
-    days = _ref.days,
-    hours = _ref.hours,
-    minutes = _ref.minutes,
-    seconds = _ref.seconds;
-  (0, _index.default)(1, arguments);
-  var totalDays = 0;
-  if (years) totalDays += years * daysInYear;
-  if (months) totalDays += months * (daysInYear / 12);
+function milliseconds({ years, months, weeks, days, hours, minutes, seconds }) {
+  let totalDays = 0;
+
+  if (years) totalDays += years * _index.daysInYear;
+  if (months) totalDays += months * (_index.daysInYear / 12);
   if (weeks) totalDays += weeks * 7;
   if (days) totalDays += days;
-  var totalSeconds = totalDays * 24 * 60 * 60;
+
+  let totalSeconds = totalDays * 24 * 60 * 60;
+
   if (hours) totalSeconds += hours * 60 * 60;
   if (minutes) totalSeconds += minutes * 60;
   if (seconds) totalSeconds += seconds;
+
   return Math.round(totalSeconds * 1000);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9571:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3067:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.millisecondsToHours = millisecondsToHours;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = millisecondsToHours;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name millisecondsToHours
  * @category Conversion Helpers
@@ -24858,10 +24207,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of milliseconds to a full number of hours.
  *
- * @param {number} milliseconds - number of milliseconds to be converted
+ * @param milliseconds - The number of milliseconds to be converted
  *
- * @returns {number} the number of milliseconds converted in hours
- * @throws {TypeError} 1 argument required
+ * @returns The number of milliseconds converted in hours
  *
  * @example
  * // Convert 7200000 milliseconds to hours:
@@ -24874,27 +24222,21 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 1
  */
 function millisecondsToHours(milliseconds) {
-  (0, _index.default)(1, arguments);
-  var hours = milliseconds / _index2.millisecondsInHour;
+  const hours = milliseconds / _index.millisecondsInHour;
   return Math.floor(hours);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5419:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3883:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.millisecondsToMinutes = millisecondsToMinutes;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = millisecondsToMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name millisecondsToMinutes
  * @category Conversion Helpers
@@ -24903,10 +24245,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of milliseconds to a full number of minutes.
  *
- * @param {number} milliseconds - number of milliseconds to be converted.
+ * @param milliseconds - The number of milliseconds to be converted
  *
- * @returns {number} the number of milliseconds converted in minutes
- * @throws {TypeError} 1 argument required
+ * @returns The number of milliseconds converted in minutes
  *
  * @example
  * // Convert 60000 milliseconds to minutes:
@@ -24919,27 +24260,21 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 1
  */
 function millisecondsToMinutes(milliseconds) {
-  (0, _index.default)(1, arguments);
-  var minutes = milliseconds / _index2.millisecondsInMinute;
+  const minutes = milliseconds / _index.millisecondsInMinute;
   return Math.floor(minutes);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2294:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3913:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.millisecondsToSeconds = millisecondsToSeconds;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = millisecondsToSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name millisecondsToSeconds
  * @category Conversion Helpers
@@ -24948,10 +24283,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of milliseconds to a full number of seconds.
  *
- * @param {number} milliseconds - number of milliseconds to be converted
+ * @param milliseconds - The number of milliseconds to be converted
  *
- * @returns {number} the number of milliseconds converted in seconds
- * @throws {TypeError} 1 argument required
+ * @returns The number of milliseconds converted in seconds
  *
  * @example
  * // Convert 1000 miliseconds to seconds:
@@ -24964,28 +24298,21 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 1
  */
 function millisecondsToSeconds(milliseconds) {
-  (0, _index.default)(1, arguments);
-  var seconds = milliseconds / _index2.millisecondsInSecond;
+  const seconds = milliseconds / _index.millisecondsInSecond;
   return Math.floor(seconds);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5310:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3607:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.min = min;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = min;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name min
  * @category Common Helpers
@@ -24994,9 +24321,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Returns the earliest of the given dates.
  *
- * @param {Date[]|Number[]} datesArray - the dates to compare
- * @returns {Date} - the earliest of the dates
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dates - The dates to compare
+ *
+ * @returns The earliest of the dates
  *
  * @example
  * // Which of these dates is the earliest?
@@ -25008,45 +24337,30 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * ])
  * //=> Wed Feb 11 1987 00:00:00
  */
-function min(dirtyDatesArray) {
-  (0, _index2.default)(1, arguments);
-  var datesArray;
-  // `dirtyDatesArray` is Array, Set or Map, or object with custom `forEach` method
-  if (dirtyDatesArray && typeof dirtyDatesArray.forEach === 'function') {
-    datesArray = dirtyDatesArray;
-    // If `dirtyDatesArray` is Array-like Object, convert to Array.
-  } else if ((0, _typeof2.default)(dirtyDatesArray) === 'object' && dirtyDatesArray !== null) {
-    datesArray = Array.prototype.slice.call(dirtyDatesArray);
-  } else {
-    // `dirtyDatesArray` is non-iterable, return Invalid Date
-    return new Date(NaN);
-  }
-  var result;
-  datesArray.forEach(function (dirtyDate) {
-    var currentDate = (0, _index.default)(dirtyDate);
-    if (result === undefined || result > currentDate || isNaN(currentDate.getDate())) {
-      result = currentDate;
+function min(dates) {
+  let result;
+
+  dates.forEach((dirtyDate) => {
+    const date = (0, _index.toDate)(dirtyDate);
+    if (!result || result > date || isNaN(+date)) {
+      result = date;
     }
   });
+
   return result || new Date(NaN);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2516:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2278:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.minutesToHours = minutesToHours;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = minutesToHours;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name minutesToHours
  * @category Conversion Helpers
@@ -25055,10 +24369,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of minutes to a full number of hours.
  *
- * @param {number} minutes - number of minutes to be converted
+ * @param minutes - The number of minutes to be converted
  *
- * @returns {number} the number of minutes converted in hours
- * @throws {TypeError} 1 argument required
+ * @returns The number of minutes converted in hours
  *
  * @example
  * // Convert 140 minutes to hours:
@@ -25071,27 +24384,21 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 2
  */
 function minutesToHours(minutes) {
-  (0, _index.default)(1, arguments);
-  var hours = minutes / _index2.minutesInHour;
+  const hours = minutes / _index.minutesInHour;
   return Math.floor(hours);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1886:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1361:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.minutesToMilliseconds = minutesToMilliseconds;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = minutesToMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name minutesToMilliseconds
  * @category Conversion Helpers
@@ -25100,10 +24407,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of minutes to a full number of milliseconds.
  *
- * @param {number} minutes - number of minutes to be converted
+ * @param minutes - The number of minutes to be converted
  *
- * @returns {number} the number of minutes converted in milliseconds
- * @throws {TypeError} 1 argument required
+ * @returns The number of minutes converted in milliseconds
  *
  * @example
  * // Convert 2 minutes to milliseconds
@@ -25111,26 +24417,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 120000
  */
 function minutesToMilliseconds(minutes) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(minutes * _index2.millisecondsInMinute);
+  return Math.floor(minutes * _index.millisecondsInMinute);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8192:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6298:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.minutesToSeconds = minutesToSeconds;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = minutesToSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name minutesToSeconds
  * @category Conversion Helpers
@@ -25139,10 +24439,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of minutes to a full number of seconds.
  *
- * @param { number } minutes - number of minutes to be converted
+ * @param minutes - The number of minutes to be converted
  *
- * @returns {number} the number of minutes converted in seconds
- * @throws {TypeError} 1 argument required
+ * @returns The number of minutes converted in seconds
  *
  * @example
  * // Convert 2 minutes to seconds
@@ -25150,26 +24449,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 120
  */
 function minutesToSeconds(minutes) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(minutes * _index2.secondsInMinute);
+  return Math.floor(minutes * _index.secondsInMinute);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1142:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4428:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.monthsToQuarters = monthsToQuarters;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = monthsToQuarters;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name monthsToQuarters
  * @category Conversion Helpers
@@ -25178,10 +24471,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of months to a full number of quarters.
  *
- * @param {number} months - number of months to be converted.
+ * @param months - The number of months to be converted.
  *
- * @returns {number} the number of months converted in quarters
- * @throws {TypeError} 1 argument required
+ * @returns The number of months converted in quarters
  *
  * @example
  * // Convert 6 months to quarters:
@@ -25194,27 +24486,21 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 2
  */
 function monthsToQuarters(months) {
-  (0, _index.default)(1, arguments);
-  var quarters = months / _index2.monthsInQuarter;
+  const quarters = months / _index.monthsInQuarter;
   return Math.floor(quarters);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3757:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3832:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.monthsToYears = monthsToYears;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = monthsToYears;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name monthsToYears
  * @category Conversion Helpers
@@ -25223,10 +24509,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of months to a full number of years.
  *
- * @param {number} months - number of months to be converted
+ * @param months - The number of months to be converted
  *
- * @returns {number} the number of months converted in years
- * @throws {TypeError} 1 argument required
+ * @returns The number of months converted in years
  *
  * @example
  * // Convert 36 months to years:
@@ -25238,28 +24523,22 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 3
  */
 function monthsToYears(months) {
-  (0, _index.default)(1, arguments);
-  var years = months / _index2.monthsInYear;
+  const years = months / _index.monthsInYear;
   return Math.floor(years);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6771:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9043:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextDay = nextDay;
+var _index = __nccwpck_require__(8361);
+var _index2 = __nccwpck_require__(6172);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextDay;
-var _index = _interopRequireDefault(__nccwpck_require__(6227));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9361));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextDay
  * @category Weekday Helpers
@@ -25268,10 +24547,12 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next day of the week? 0-6 the day of the week, 0 represents Sunday.
  *
- * @param {Date | number} date - the date to check
- * @param {Day} day - day of the week
- * @returns {Date} - the date is the next day of week
- * @throws {TypeError} - 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ * @param day - day of the week
+ *
+ * @returns The date is the next day of week
  *
  * @example
  * // When is the next Monday after Mar, 20, 2020?
@@ -25284,28 +24565,23 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Tue Mar 24 2020 00:00:00
  */
 function nextDay(date, day) {
-  (0, _index3.default)(2, arguments);
-  var delta = day - (0, _index2.default)(date);
+  let delta = day - (0, _index2.getDay)(date);
   if (delta <= 0) delta += 7;
-  return (0, _index.default)(date, delta);
+
+  return (0, _index.addDays)(date, delta);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1491:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2598:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextFriday = nextFriday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextFriday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextFriday
  * @category Weekday Helpers
@@ -25314,9 +24590,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Friday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Friday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Friday
  *
  * @example
  * // When is the next Friday after Mar, 22, 2020?
@@ -25324,26 +24602,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Fri Mar 27 2020 00:00:00
  */
 function nextFriday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 5);
+  return (0, _index.nextDay)(date, 5);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5947:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1686:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextMonday = nextMonday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextMonday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextMonday
  * @category Weekday Helpers
@@ -25352,9 +24624,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Monday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Monday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Monday
  *
  * @example
  * // When is the next Monday after Mar, 22, 2020?
@@ -25362,26 +24636,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Mon Mar 23 2020 00:00:00
  */
 function nextMonday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 1);
+  return (0, _index.nextDay)(date, 1);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 363:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9643:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextSaturday = nextSaturday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextSaturday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextSaturday
  * @category Weekday Helpers
@@ -25390,9 +24658,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Saturday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Saturday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Saturday
  *
  * @example
  * // When is the next Saturday after Mar, 22, 2020?
@@ -25400,26 +24670,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Sat Mar 28 2020 00:00:00
  */
 function nextSaturday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 6);
+  return (0, _index.nextDay)(date, 6);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7266:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9870:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextSunday = nextSunday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextSunday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextSunday
  * @category Weekday Helpers
@@ -25428,9 +24692,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Sunday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Sunday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Sunday
  *
  * @example
  * // When is the next Sunday after Mar, 22, 2020?
@@ -25438,26 +24704,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Sun Mar 29 2020 00:00:00
  */
 function nextSunday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 0);
+  return (0, _index.nextDay)(date, 0);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9457:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 933:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextThursday = nextThursday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextThursday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextThursday
  * @category Weekday Helpers
@@ -25466,9 +24726,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Thursday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Thursday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Thursday
  *
  * @example
  * // When is the next Thursday after Mar, 22, 2020?
@@ -25476,26 +24738,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Thur Mar 26 2020 00:00:00
  */
 function nextThursday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 4);
+  return (0, _index.nextDay)(date, 4);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7894:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2634:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextTuesday = nextTuesday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextTuesday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextTuesday
  * @category Weekday Helpers
@@ -25504,9 +24760,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Tuesday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Tuesday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Tuesday
  *
  * @example
  * // When is the next Tuesday after Mar, 22, 2020?
@@ -25514,26 +24772,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Tue Mar 24 2020 00:00:00
  */
 function nextTuesday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 2);
+  return (0, _index.nextDay)(date, 2);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 29:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3585:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.nextWednesday = nextWednesday;
+var _index = __nccwpck_require__(9043);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = nextWednesday;
-var _index = _interopRequireDefault(__nccwpck_require__(6771));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name nextWednesday
  * @category Weekday Helpers
@@ -25542,9 +24794,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * When is the next Wednesday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the next Wednesday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The next Wednesday
  *
  * @example
  * // When is the next Wednesday after Mar, 22, 2020?
@@ -25552,2936 +24806,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Wed Mar 25 2020 00:00:00
  */
 function nextWednesday(date) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(date, 3);
+  return (0, _index.nextDay)(date, 3);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5619:
+/***/ 9884:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.parse = parse;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(7157);
+var _index3 = __nccwpck_require__(55);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.Parser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
+var _index5 = __nccwpck_require__(8707);
+var _index6 = __nccwpck_require__(2147);
+
+var _index7 = __nccwpck_require__(6874);
+
 var _Setter = __nccwpck_require__(5665);
-var Parser = /*#__PURE__*/function () {
-  function Parser() {
-    (0, _classCallCheck2.default)(this, Parser);
-    (0, _defineProperty2.default)(this, "incompatibleTokens", void 0);
-    (0, _defineProperty2.default)(this, "priority", void 0);
-    (0, _defineProperty2.default)(this, "subPriority", void 0);
-  }
-  (0, _createClass2.default)(Parser, [{
-    key: "run",
-    value: function run(dateString, token, match, options) {
-      var result = this.parse(dateString, token, match, options);
-      if (!result) {
-        return null;
-      }
-      return {
-        setter: new _Setter.ValueSetter(result.value, this.validate, this.set, this.priority, this.subPriority),
-        rest: result.rest
-      };
-    }
-  }, {
-    key: "validate",
-    value: function validate(_utcDate, _value, _options) {
-      return true;
-    }
-  }]);
-  return Parser;
-}();
-exports.Parser = Parser;
 
-/***/ }),
-
-/***/ 5665:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ValueSetter = exports.Setter = exports.DateToSystemTimezoneSetter = void 0;
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var TIMEZONE_UNIT_PRIORITY = 10;
-var Setter = /*#__PURE__*/function () {
-  function Setter() {
-    (0, _classCallCheck2.default)(this, Setter);
-    (0, _defineProperty2.default)(this, "priority", void 0);
-    (0, _defineProperty2.default)(this, "subPriority", 0);
-  }
-  (0, _createClass2.default)(Setter, [{
-    key: "validate",
-    value: function validate(_utcDate, _options) {
-      return true;
-    }
-  }]);
-  return Setter;
-}();
-exports.Setter = Setter;
-var ValueSetter = /*#__PURE__*/function (_Setter) {
-  (0, _inherits2.default)(ValueSetter, _Setter);
-  var _super = (0, _createSuper2.default)(ValueSetter);
-  function ValueSetter(value, validateValue, setValue, priority, subPriority) {
-    var _this;
-    (0, _classCallCheck2.default)(this, ValueSetter);
-    _this = _super.call(this);
-    _this.value = value;
-    _this.validateValue = validateValue;
-    _this.setValue = setValue;
-    _this.priority = priority;
-    if (subPriority) {
-      _this.subPriority = subPriority;
-    }
-    return _this;
-  }
-  (0, _createClass2.default)(ValueSetter, [{
-    key: "validate",
-    value: function validate(utcDate, options) {
-      return this.validateValue(utcDate, this.value, options);
-    }
-  }, {
-    key: "set",
-    value: function set(utcDate, flags, options) {
-      return this.setValue(utcDate, flags, this.value, options);
-    }
-  }]);
-  return ValueSetter;
-}(Setter);
-exports.ValueSetter = ValueSetter;
-var DateToSystemTimezoneSetter = /*#__PURE__*/function (_Setter2) {
-  (0, _inherits2.default)(DateToSystemTimezoneSetter, _Setter2);
-  var _super2 = (0, _createSuper2.default)(DateToSystemTimezoneSetter);
-  function DateToSystemTimezoneSetter() {
-    var _this2;
-    (0, _classCallCheck2.default)(this, DateToSystemTimezoneSetter);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this2 = _super2.call.apply(_super2, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "priority", TIMEZONE_UNIT_PRIORITY);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "subPriority", -1);
-    return _this2;
-  }
-  (0, _createClass2.default)(DateToSystemTimezoneSetter, [{
-    key: "set",
-    value: function set(date, flags) {
-      if (flags.timestampIsSet) {
-        return date;
-      }
-      var convertedDate = new Date(0);
-      convertedDate.setFullYear(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-      convertedDate.setHours(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
-      return convertedDate;
-    }
-  }]);
-  return DateToSystemTimezoneSetter;
-}(Setter);
-exports.DateToSystemTimezoneSetter = DateToSystemTimezoneSetter;
-
-/***/ }),
-
-/***/ 463:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.timezonePatterns = exports.numericPatterns = void 0;
-var numericPatterns = {
-  month: /^(1[0-2]|0?\d)/,
-  // 0 to 12
-  date: /^(3[0-1]|[0-2]?\d)/,
-  // 0 to 31
-  dayOfYear: /^(36[0-6]|3[0-5]\d|[0-2]?\d?\d)/,
-  // 0 to 366
-  week: /^(5[0-3]|[0-4]?\d)/,
-  // 0 to 53
-  hour23h: /^(2[0-3]|[0-1]?\d)/,
-  // 0 to 23
-  hour24h: /^(2[0-4]|[0-1]?\d)/,
-  // 0 to 24
-  hour11h: /^(1[0-1]|0?\d)/,
-  // 0 to 11
-  hour12h: /^(1[0-2]|0?\d)/,
-  // 0 to 12
-  minute: /^[0-5]?\d/,
-  // 0 to 59
-  second: /^[0-5]?\d/,
-  // 0 to 59
-
-  singleDigit: /^\d/,
-  // 0 to 9
-  twoDigits: /^\d{1,2}/,
-  // 0 to 99
-  threeDigits: /^\d{1,3}/,
-  // 0 to 999
-  fourDigits: /^\d{1,4}/,
-  // 0 to 9999
-
-  anyDigitsSigned: /^-?\d+/,
-  singleDigitSigned: /^-?\d/,
-  // 0 to 9, -0 to -9
-  twoDigitsSigned: /^-?\d{1,2}/,
-  // 0 to 99, -0 to -99
-  threeDigitsSigned: /^-?\d{1,3}/,
-  // 0 to 999, -0 to -999
-  fourDigitsSigned: /^-?\d{1,4}/ // 0 to 9999, -0 to -9999
-};
-exports.numericPatterns = numericPatterns;
-var timezonePatterns = {
-  basicOptionalMinutes: /^([+-])(\d{2})(\d{2})?|Z/,
-  basic: /^([+-])(\d{2})(\d{2})|Z/,
-  basicOptionalSeconds: /^([+-])(\d{2})(\d{2})((\d{2}))?|Z/,
-  extended: /^([+-])(\d{2}):(\d{2})|Z/,
-  extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/
-};
-exports.timezonePatterns = timezonePatterns;
-
-/***/ }),
-
-/***/ 9187:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.AMPMMidnightParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var AMPMMidnightParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(AMPMMidnightParser, _Parser);
-  var _super = (0, _createSuper2.default)(AMPMMidnightParser);
-  function AMPMMidnightParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, AMPMMidnightParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 80);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['a', 'B', 'H', 'k', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(AMPMMidnightParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'b':
-        case 'bb':
-        case 'bbb':
-          return match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'bbbbb':
-          return match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'bbbb':
-        default:
-          return match.dayPeriod(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours((0, _utils.dayPeriodEnumToHours)(value), 0, 0, 0);
-      return date;
-    }
-  }]);
-  return AMPMMidnightParser;
-}(_Parser2.Parser);
-exports.AMPMMidnightParser = AMPMMidnightParser;
-
-/***/ }),
-
-/***/ 8678:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.AMPMParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var AMPMParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(AMPMParser, _Parser);
-  var _super = (0, _createSuper2.default)(AMPMParser);
-  function AMPMParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, AMPMParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 80);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['b', 'B', 'H', 'k', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(AMPMParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'a':
-        case 'aa':
-        case 'aaa':
-          return match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'aaaaa':
-          return match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'aaaa':
-        default:
-          return match.dayPeriod(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours((0, _utils.dayPeriodEnumToHours)(value), 0, 0, 0);
-      return date;
-    }
-  }]);
-  return AMPMParser;
-}(_Parser2.Parser);
-exports.AMPMParser = AMPMParser;
-
-/***/ }),
-
-/***/ 4757:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.DateParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _utils = __nccwpck_require__(9042);
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-var DAYS_IN_MONTH_LEAP_YEAR = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-// Day of the month
-var DateParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(DateParser, _Parser);
-  var _super = (0, _createSuper2.default)(DateParser);
-  function DateParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, DateParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 90);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "subPriority", 1);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(DateParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'd':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.date, dateString);
-        case 'do':
-          return match.ordinalNumber(dateString, {
-            unit: 'date'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(date, value) {
-      var year = date.getUTCFullYear();
-      var isLeapYear = (0, _utils.isLeapYearIndex)(year);
-      var month = date.getUTCMonth();
-      if (isLeapYear) {
-        return value >= 1 && value <= DAYS_IN_MONTH_LEAP_YEAR[month];
-      } else {
-        return value >= 1 && value <= DAYS_IN_MONTH[month];
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCDate(value);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return DateParser;
-}(_Parser2.Parser);
-exports.DateParser = DateParser;
-
-/***/ }),
-
-/***/ 7001:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.DayOfYearParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var DayOfYearParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(DayOfYearParser, _Parser);
-  var _super = (0, _createSuper2.default)(DayOfYearParser);
-  function DayOfYearParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, DayOfYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 90);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "subpriority", 1);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'M', 'L', 'w', 'I', 'd', 'E', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(DayOfYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'D':
-        case 'DD':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.dayOfYear, dateString);
-        case 'Do':
-          return match.ordinalNumber(dateString, {
-            unit: 'date'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(date, value) {
-      var year = date.getUTCFullYear();
-      var isLeapYear = (0, _utils.isLeapYearIndex)(year);
-      if (isLeapYear) {
-        return value >= 1 && value <= 366;
-      } else {
-        return value >= 1 && value <= 365;
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth(0, value);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return DayOfYearParser;
-}(_Parser2.Parser);
-exports.DayOfYearParser = DayOfYearParser;
-
-/***/ }),
-
-/***/ 2280:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.DayParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _index = _interopRequireDefault(__nccwpck_require__(2694));
-// Day of week
-var DayParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(DayParser, _Parser);
-  var _super = (0, _createSuper2.default)(DayParser);
-  function DayParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, DayParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 90);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(DayParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        // Tue
-        case 'E':
-        case 'EE':
-        case 'EEE':
-          return match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // T
-        case 'EEEEE':
-          return match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // Tu
-        case 'EEEEEE':
-          return match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // Tuesday
-        case 'EEEE':
-        default:
-          return match.day(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 6;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value, options) {
-      date = (0, _index.default)(date, value, options);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return DayParser;
-}(_Parser2.Parser);
-exports.DayParser = DayParser;
-
-/***/ }),
-
-/***/ 9273:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.DayPeriodParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-// in the morning, in the afternoon, in the evening, at night
-var DayPeriodParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(DayPeriodParser, _Parser);
-  var _super = (0, _createSuper2.default)(DayPeriodParser);
-  function DayPeriodParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, DayPeriodParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 80);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['a', 'b', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(DayPeriodParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'B':
-        case 'BB':
-        case 'BBB':
-          return match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'BBBBB':
-          return match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'BBBB':
-        default:
-          return match.dayPeriod(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours((0, _utils.dayPeriodEnumToHours)(value), 0, 0, 0);
-      return date;
-    }
-  }]);
-  return DayPeriodParser;
-}(_Parser2.Parser);
-exports.DayPeriodParser = DayPeriodParser;
-
-/***/ }),
-
-/***/ 6309:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.EraParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var EraParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(EraParser, _Parser);
-  var _super = (0, _createSuper2.default)(EraParser);
-  function EraParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, EraParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 140);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['R', 'u', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(EraParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        // AD, BC
-        case 'G':
-        case 'GG':
-        case 'GGG':
-          return match.era(dateString, {
-            width: 'abbreviated'
-          }) || match.era(dateString, {
-            width: 'narrow'
-          });
-        // A, B
-        case 'GGGGG':
-          return match.era(dateString, {
-            width: 'narrow'
-          });
-        // Anno Domini, Before Christ
-        case 'GGGG':
-        default:
-          return match.era(dateString, {
-            width: 'wide'
-          }) || match.era(dateString, {
-            width: 'abbreviated'
-          }) || match.era(dateString, {
-            width: 'narrow'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      flags.era = value;
-      date.setUTCFullYear(value, 0, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return EraParser;
-}(_Parser2.Parser);
-exports.EraParser = EraParser;
-
-/***/ }),
-
-/***/ 4754:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ExtendedYearParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var ExtendedYearParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(ExtendedYearParser, _Parser);
-  var _super = (0, _createSuper2.default)(ExtendedYearParser);
-  function ExtendedYearParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, ExtendedYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 130);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['G', 'y', 'Y', 'R', 'w', 'I', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(ExtendedYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      if (token === 'u') {
-        return (0, _utils.parseNDigitsSigned)(4, dateString);
-      }
-      return (0, _utils.parseNDigitsSigned)(token.length, dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCFullYear(value, 0, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return ExtendedYearParser;
-}(_Parser2.Parser);
-exports.ExtendedYearParser = ExtendedYearParser;
-
-/***/ }),
-
-/***/ 5194:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.FractionOfSecondParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var FractionOfSecondParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(FractionOfSecondParser, _Parser);
-  var _super = (0, _createSuper2.default)(FractionOfSecondParser);
-  function FractionOfSecondParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, FractionOfSecondParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 30);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['t', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(FractionOfSecondParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      var valueCallback = function valueCallback(value) {
-        return Math.floor(value * Math.pow(10, -token.length + 3));
-      };
-      return (0, _utils.mapValue)((0, _utils.parseNDigits)(token.length, dateString), valueCallback);
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMilliseconds(value);
-      return date;
-    }
-  }]);
-  return FractionOfSecondParser;
-}(_Parser2.Parser);
-exports.FractionOfSecondParser = FractionOfSecondParser;
-
-/***/ }),
-
-/***/ 323:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.Hour0To11Parser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var Hour0To11Parser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(Hour0To11Parser, _Parser);
-  var _super = (0, _createSuper2.default)(Hour0To11Parser);
-  function Hour0To11Parser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, Hour0To11Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 70);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['h', 'H', 'k', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(Hour0To11Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'K':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.hour11h, dateString);
-        case 'Ko':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 11;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      var isPM = date.getUTCHours() >= 12;
-      if (isPM && value < 12) {
-        date.setUTCHours(value + 12, 0, 0, 0);
-      } else {
-        date.setUTCHours(value, 0, 0, 0);
-      }
-      return date;
-    }
-  }]);
-  return Hour0To11Parser;
-}(_Parser2.Parser);
-exports.Hour0To11Parser = Hour0To11Parser;
-
-/***/ }),
-
-/***/ 2610:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.Hour0to23Parser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var Hour0to23Parser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(Hour0to23Parser, _Parser);
-  var _super = (0, _createSuper2.default)(Hour0to23Parser);
-  function Hour0to23Parser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, Hour0to23Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 70);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['a', 'b', 'h', 'K', 'k', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(Hour0to23Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'H':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.hour23h, dateString);
-        case 'Ho':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 23;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours(value, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return Hour0to23Parser;
-}(_Parser2.Parser);
-exports.Hour0to23Parser = Hour0to23Parser;
-
-/***/ }),
-
-/***/ 5980:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.Hour1To24Parser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var Hour1To24Parser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(Hour1To24Parser, _Parser);
-  var _super = (0, _createSuper2.default)(Hour1To24Parser);
-  function Hour1To24Parser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, Hour1To24Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 70);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['a', 'b', 'h', 'H', 'K', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(Hour1To24Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'k':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.hour24h, dateString);
-        case 'ko':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 24;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      var hours = value <= 24 ? value % 24 : value;
-      date.setUTCHours(hours, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return Hour1To24Parser;
-}(_Parser2.Parser);
-exports.Hour1To24Parser = Hour1To24Parser;
-
-/***/ }),
-
-/***/ 7929:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.Hour1to12Parser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var Hour1to12Parser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(Hour1to12Parser, _Parser);
-  var _super = (0, _createSuper2.default)(Hour1to12Parser);
-  function Hour1to12Parser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, Hour1to12Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 70);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['H', 'K', 'k', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(Hour1to12Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'h':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.hour12h, dateString);
-        case 'ho':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 12;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      var isPM = date.getUTCHours() >= 12;
-      if (isPM && value < 12) {
-        date.setUTCHours(value + 12, 0, 0, 0);
-      } else if (!isPM && value === 12) {
-        date.setUTCHours(0, 0, 0, 0);
-      } else {
-        date.setUTCHours(value, 0, 0, 0);
-      }
-      return date;
-    }
-  }]);
-  return Hour1to12Parser;
-}(_Parser2.Parser);
-exports.Hour1to12Parser = Hour1to12Parser;
-
-/***/ }),
-
-/***/ 6376:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ISODayParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(7985));
-// ISO day of week
-var ISODayParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(ISODayParser, _Parser);
-  var _super = (0, _createSuper2.default)(ISODayParser);
-  function ISODayParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, ISODayParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 90);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'E', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(ISODayParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(value) {
-        if (value === 0) {
-          return 7;
-        }
-        return value;
-      };
-      switch (token) {
-        // 2
-        case 'i':
-        case 'ii':
-          // 02
-          return (0, _utils.parseNDigits)(token.length, dateString);
-        // 2nd
-        case 'io':
-          return match.ordinalNumber(dateString, {
-            unit: 'day'
-          });
-        // Tue
-        case 'iii':
-          return (0, _utils.mapValue)(match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-        // T
-        case 'iiiii':
-          return (0, _utils.mapValue)(match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-        // Tu
-        case 'iiiiii':
-          return (0, _utils.mapValue)(match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-        // Tuesday
-        case 'iiii':
-        default:
-          return (0, _utils.mapValue)(match.day(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 7;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date = (0, _index.default)(date, value);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return ISODayParser;
-}(_Parser2.Parser);
-exports.ISODayParser = ISODayParser;
-
-/***/ }),
-
-/***/ 9874:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ISOTimezoneParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-// Timezone (ISO-8601)
-var ISOTimezoneParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(ISOTimezoneParser, _Parser);
-  var _super = (0, _createSuper2.default)(ISOTimezoneParser);
-  function ISOTimezoneParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, ISOTimezoneParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 10);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['t', 'T', 'X']);
-    return _this;
-  }
-  (0, _createClass2.default)(ISOTimezoneParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      switch (token) {
-        case 'x':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.basicOptionalMinutes, dateString);
-        case 'xx':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.basic, dateString);
-        case 'xxxx':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.basicOptionalSeconds, dateString);
-        case 'xxxxx':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.extendedOptionalSeconds, dateString);
-        case 'xxx':
-        default:
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.extended, dateString);
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      if (flags.timestampIsSet) {
-        return date;
-      }
-      return new Date(date.getTime() - value);
-    }
-  }]);
-  return ISOTimezoneParser;
-}(_Parser2.Parser);
-exports.ISOTimezoneParser = ISOTimezoneParser;
-
-/***/ }),
-
-/***/ 9822:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ISOTimezoneWithZParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-// Timezone (ISO-8601. +00:00 is `'Z'`)
-var ISOTimezoneWithZParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(ISOTimezoneWithZParser, _Parser);
-  var _super = (0, _createSuper2.default)(ISOTimezoneWithZParser);
-  function ISOTimezoneWithZParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, ISOTimezoneWithZParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 10);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['t', 'T', 'x']);
-    return _this;
-  }
-  (0, _createClass2.default)(ISOTimezoneWithZParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      switch (token) {
-        case 'X':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.basicOptionalMinutes, dateString);
-        case 'XX':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.basic, dateString);
-        case 'XXXX':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.basicOptionalSeconds, dateString);
-        case 'XXXXX':
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.extendedOptionalSeconds, dateString);
-        case 'XXX':
-        default:
-          return (0, _utils.parseTimezonePattern)(_constants.timezonePatterns.extended, dateString);
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      if (flags.timestampIsSet) {
-        return date;
-      }
-      return new Date(date.getTime() - value);
-    }
-  }]);
-  return ISOTimezoneWithZParser;
-}(_Parser2.Parser);
-exports.ISOTimezoneWithZParser = ISOTimezoneWithZParser;
-
-/***/ }),
-
-/***/ 2127:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ISOWeekParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(8921));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3061));
-// ISO week of year
-var ISOWeekParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(ISOWeekParser, _Parser);
-  var _super = (0, _createSuper2.default)(ISOWeekParser);
-  function ISOWeekParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, ISOWeekParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 100);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(ISOWeekParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'I':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.week, dateString);
-        case 'Io':
-          return match.ordinalNumber(dateString, {
-            unit: 'week'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 53;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      return (0, _index2.default)((0, _index.default)(date, value));
-    }
-  }]);
-  return ISOWeekParser;
-}(_Parser2.Parser);
-exports.ISOWeekParser = ISOWeekParser;
-
-/***/ }),
-
-/***/ 519:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.ISOWeekYearParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(3061));
-// ISO week-numbering year
-var ISOWeekYearParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(ISOWeekYearParser, _Parser);
-  var _super = (0, _createSuper2.default)(ISOWeekYearParser);
-  function ISOWeekYearParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, ISOWeekYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 130);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['G', 'y', 'Y', 'u', 'Q', 'q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(ISOWeekYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      if (token === 'R') {
-        return (0, _utils.parseNDigitsSigned)(4, dateString);
-      }
-      return (0, _utils.parseNDigitsSigned)(token.length, dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(_date, _flags, value) {
-      var firstWeekOfYear = new Date(0);
-      firstWeekOfYear.setUTCFullYear(value, 0, 4);
-      firstWeekOfYear.setUTCHours(0, 0, 0, 0);
-      return (0, _index.default)(firstWeekOfYear);
-    }
-  }]);
-  return ISOWeekYearParser;
-}(_Parser2.Parser);
-exports.ISOWeekYearParser = ISOWeekYearParser;
-
-/***/ }),
-
-/***/ 1190:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.LocalDayParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(2694));
-// Local day of week
-var LocalDayParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(LocalDayParser, _Parser);
-  var _super = (0, _createSuper2.default)(LocalDayParser);
-  function LocalDayParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, LocalDayParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 90);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'E', 'i', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(LocalDayParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match, options) {
-      var valueCallback = function valueCallback(value) {
-        var wholeWeekDays = Math.floor((value - 1) / 7) * 7;
-        return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays;
-      };
-      switch (token) {
-        // 3
-        case 'e':
-        case 'ee':
-          // 03
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(token.length, dateString), valueCallback);
-        // 3rd
-        case 'eo':
-          return (0, _utils.mapValue)(match.ordinalNumber(dateString, {
-            unit: 'day'
-          }), valueCallback);
-        // Tue
-        case 'eee':
-          return match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // T
-        case 'eeeee':
-          return match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // Tu
-        case 'eeeeee':
-          return match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // Tuesday
-        case 'eeee':
-        default:
-          return match.day(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 6;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value, options) {
-      date = (0, _index.default)(date, value, options);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return LocalDayParser;
-}(_Parser2.Parser);
-exports.LocalDayParser = LocalDayParser;
-
-/***/ }),
-
-/***/ 6125:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.LocalWeekParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(3285));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2258));
-// Local week of year
-var LocalWeekParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(LocalWeekParser, _Parser);
-  var _super = (0, _createSuper2.default)(LocalWeekParser);
-  function LocalWeekParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, LocalWeekParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 100);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(LocalWeekParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'w':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.week, dateString);
-        case 'wo':
-          return match.ordinalNumber(dateString, {
-            unit: 'week'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 53;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value, options) {
-      return (0, _index2.default)((0, _index.default)(date, value, options), options);
-    }
-  }]);
-  return LocalWeekParser;
-}(_Parser2.Parser);
-exports.LocalWeekParser = LocalWeekParser;
-
-/***/ }),
-
-/***/ 85:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.LocalWeekYearParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(8050));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2258));
-// Local week-numbering year
-var LocalWeekYearParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(LocalWeekYearParser, _Parser);
-  var _super = (0, _createSuper2.default)(LocalWeekYearParser);
-  function LocalWeekYearParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, LocalWeekYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 130);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['y', 'R', 'u', 'Q', 'q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(LocalWeekYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(year) {
-        return {
-          year: year,
-          isTwoDigitYear: token === 'YY'
-        };
-      };
-      switch (token) {
-        case 'Y':
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(4, dateString), valueCallback);
-        case 'Yo':
-          return (0, _utils.mapValue)(match.ordinalNumber(dateString, {
-            unit: 'year'
-          }), valueCallback);
-        default:
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(token.length, dateString), valueCallback);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value.isTwoDigitYear || value.year > 0;
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value, options) {
-      var currentYear = (0, _index.default)(date, options);
-      if (value.isTwoDigitYear) {
-        var normalizedTwoDigitYear = (0, _utils.normalizeTwoDigitYear)(value.year, currentYear);
-        date.setUTCFullYear(normalizedTwoDigitYear, 0, options.firstWeekContainsDate);
-        date.setUTCHours(0, 0, 0, 0);
-        return (0, _index2.default)(date, options);
-      }
-      var year = !('era' in flags) || flags.era === 1 ? value.year : 1 - value.year;
-      date.setUTCFullYear(year, 0, options.firstWeekContainsDate);
-      date.setUTCHours(0, 0, 0, 0);
-      return (0, _index2.default)(date, options);
-    }
-  }]);
-  return LocalWeekYearParser;
-}(_Parser2.Parser);
-exports.LocalWeekYearParser = LocalWeekYearParser;
-
-/***/ }),
-
-/***/ 4254:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.MinuteParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var MinuteParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(MinuteParser, _Parser);
-  var _super = (0, _createSuper2.default)(MinuteParser);
-  function MinuteParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, MinuteParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 60);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['t', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(MinuteParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'm':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.minute, dateString);
-        case 'mo':
-          return match.ordinalNumber(dateString, {
-            unit: 'minute'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 59;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMinutes(value, 0, 0);
-      return date;
-    }
-  }]);
-  return MinuteParser;
-}(_Parser2.Parser);
-exports.MinuteParser = MinuteParser;
-
-/***/ }),
-
-/***/ 9581:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.MonthParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _utils = __nccwpck_require__(9042);
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var MonthParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(MonthParser, _Parser);
-  var _super = (0, _createSuper2.default)(MonthParser);
-  function MonthParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, MonthParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'L', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 110);
-    return _this;
-  }
-  (0, _createClass2.default)(MonthParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(value) {
-        return value - 1;
-      };
-      switch (token) {
-        // 1, 2, ..., 12
-        case 'M':
-          return (0, _utils.mapValue)((0, _utils.parseNumericPattern)(_constants.numericPatterns.month, dateString), valueCallback);
-        // 01, 02, ..., 12
-        case 'MM':
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(2, dateString), valueCallback);
-        // 1st, 2nd, ..., 12th
-        case 'Mo':
-          return (0, _utils.mapValue)(match.ordinalNumber(dateString, {
-            unit: 'month'
-          }), valueCallback);
-        // Jan, Feb, ..., Dec
-        case 'MMM':
-          return match.month(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // J, F, ..., D
-        case 'MMMMM':
-          return match.month(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // January, February, ..., December
-        case 'MMMM':
-        default:
-          return match.month(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.month(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 11;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth(value, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return MonthParser;
-}(_Parser2.Parser);
-exports.MonthParser = MonthParser;
-
-/***/ }),
-
-/***/ 5667:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.QuarterParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var QuarterParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(QuarterParser, _Parser);
-  var _super = (0, _createSuper2.default)(QuarterParser);
-  function QuarterParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, QuarterParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 120);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'q', 'M', 'L', 'w', 'I', 'd', 'D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(QuarterParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        // 1, 2, 3, 4
-        case 'Q':
-        case 'QQ':
-          // 01, 02, 03, 04
-          return (0, _utils.parseNDigits)(token.length, dateString);
-        // 1st, 2nd, 3rd, 4th
-        case 'Qo':
-          return match.ordinalNumber(dateString, {
-            unit: 'quarter'
-          });
-        // Q1, Q2, Q3, Q4
-        case 'QQQ':
-          return match.quarter(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.quarter(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-        case 'QQQQQ':
-          return match.quarter(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // 1st quarter, 2nd quarter, ...
-        case 'QQQQ':
-        default:
-          return match.quarter(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.quarter(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.quarter(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 4;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth((value - 1) * 3, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return QuarterParser;
-}(_Parser2.Parser);
-exports.QuarterParser = QuarterParser;
-
-/***/ }),
-
-/***/ 3478:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.SecondParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var SecondParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(SecondParser, _Parser);
-  var _super = (0, _createSuper2.default)(SecondParser);
-  function SecondParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, SecondParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 50);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['t', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(SecondParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 's':
-          return (0, _utils.parseNumericPattern)(_constants.numericPatterns.second, dateString);
-        case 'so':
-          return match.ordinalNumber(dateString, {
-            unit: 'second'
-          });
-        default:
-          return (0, _utils.parseNDigits)(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 59;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCSeconds(value, 0);
-      return date;
-    }
-  }]);
-  return SecondParser;
-}(_Parser2.Parser);
-exports.SecondParser = SecondParser;
-
-/***/ }),
-
-/***/ 1556:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.StandAloneLocalDayParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var _index = _interopRequireDefault(__nccwpck_require__(2694));
-// Stand-alone local day of week
-var StandAloneLocalDayParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(StandAloneLocalDayParser, _Parser);
-  var _super = (0, _createSuper2.default)(StandAloneLocalDayParser);
-  function StandAloneLocalDayParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, StandAloneLocalDayParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 90);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'E', 'i', 'e', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(StandAloneLocalDayParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match, options) {
-      var valueCallback = function valueCallback(value) {
-        var wholeWeekDays = Math.floor((value - 1) / 7) * 7;
-        return (value + options.weekStartsOn + 6) % 7 + wholeWeekDays;
-      };
-      switch (token) {
-        // 3
-        case 'c':
-        case 'cc':
-          // 03
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(token.length, dateString), valueCallback);
-        // 3rd
-        case 'co':
-          return (0, _utils.mapValue)(match.ordinalNumber(dateString, {
-            unit: 'day'
-          }), valueCallback);
-        // Tue
-        case 'ccc':
-          return match.day(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'standalone'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // T
-        case 'ccccc':
-          return match.day(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // Tu
-        case 'cccccc':
-          return match.day(dateString, {
-            width: 'short',
-            context: 'standalone'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // Tuesday
-        case 'cccc':
-        default:
-          return match.day(dateString, {
-            width: 'wide',
-            context: 'standalone'
-          }) || match.day(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'standalone'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 6;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value, options) {
-      date = (0, _index.default)(date, value, options);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return StandAloneLocalDayParser;
-}(_Parser2.Parser);
-exports.StandAloneLocalDayParser = StandAloneLocalDayParser;
-
-/***/ }),
-
-/***/ 9915:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.StandAloneMonthParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _constants = __nccwpck_require__(463);
-var _utils = __nccwpck_require__(9042);
-var StandAloneMonthParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(StandAloneMonthParser, _Parser);
-  var _super = (0, _createSuper2.default)(StandAloneMonthParser);
-  function StandAloneMonthParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, StandAloneMonthParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 110);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'M', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(StandAloneMonthParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(value) {
-        return value - 1;
-      };
-      switch (token) {
-        // 1, 2, ..., 12
-        case 'L':
-          return (0, _utils.mapValue)((0, _utils.parseNumericPattern)(_constants.numericPatterns.month, dateString), valueCallback);
-        // 01, 02, ..., 12
-        case 'LL':
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(2, dateString), valueCallback);
-        // 1st, 2nd, ..., 12th
-        case 'Lo':
-          return (0, _utils.mapValue)(match.ordinalNumber(dateString, {
-            unit: 'month'
-          }), valueCallback);
-        // Jan, Feb, ..., Dec
-        case 'LLL':
-          return match.month(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // J, F, ..., D
-        case 'LLLLL':
-          return match.month(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // January, February, ..., December
-        case 'LLLL':
-        default:
-          return match.month(dateString, {
-            width: 'wide',
-            context: 'standalone'
-          }) || match.month(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 11;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth(value, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return StandAloneMonthParser;
-}(_Parser2.Parser);
-exports.StandAloneMonthParser = StandAloneMonthParser;
-
-/***/ }),
-
-/***/ 2898:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.StandAloneQuarterParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var StandAloneQuarterParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(StandAloneQuarterParser, _Parser);
-  var _super = (0, _createSuper2.default)(StandAloneQuarterParser);
-  function StandAloneQuarterParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, StandAloneQuarterParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 120);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'Q', 'M', 'L', 'w', 'I', 'd', 'D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(StandAloneQuarterParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        // 1, 2, 3, 4
-        case 'q':
-        case 'qq':
-          // 01, 02, 03, 04
-          return (0, _utils.parseNDigits)(token.length, dateString);
-        // 1st, 2nd, 3rd, 4th
-        case 'qo':
-          return match.ordinalNumber(dateString, {
-            unit: 'quarter'
-          });
-        // Q1, Q2, Q3, Q4
-        case 'qqq':
-          return match.quarter(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.quarter(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-        case 'qqqqq':
-          return match.quarter(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // 1st quarter, 2nd quarter, ...
-        case 'qqqq':
-        default:
-          return match.quarter(dateString, {
-            width: 'wide',
-            context: 'standalone'
-          }) || match.quarter(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.quarter(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 4;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth((value - 1) * 3, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return StandAloneQuarterParser;
-}(_Parser2.Parser);
-exports.StandAloneQuarterParser = StandAloneQuarterParser;
-
-/***/ }),
-
-/***/ 3726:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.TimestampMillisecondsParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var TimestampMillisecondsParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(TimestampMillisecondsParser, _Parser);
-  var _super = (0, _createSuper2.default)(TimestampMillisecondsParser);
-  function TimestampMillisecondsParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, TimestampMillisecondsParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 20);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", '*');
-    return _this;
-  }
-  (0, _createClass2.default)(TimestampMillisecondsParser, [{
-    key: "parse",
-    value: function parse(dateString) {
-      return (0, _utils.parseAnyDigitsSigned)(dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(_date, _flags, value) {
-      return [new Date(value), {
-        timestampIsSet: true
-      }];
-    }
-  }]);
-  return TimestampMillisecondsParser;
-}(_Parser2.Parser);
-exports.TimestampMillisecondsParser = TimestampMillisecondsParser;
-
-/***/ }),
-
-/***/ 771:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.TimestampSecondsParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-var TimestampSecondsParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(TimestampSecondsParser, _Parser);
-  var _super = (0, _createSuper2.default)(TimestampSecondsParser);
-  function TimestampSecondsParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, TimestampSecondsParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 40);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", '*');
-    return _this;
-  }
-  (0, _createClass2.default)(TimestampSecondsParser, [{
-    key: "parse",
-    value: function parse(dateString) {
-      return (0, _utils.parseAnyDigitsSigned)(dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(_date, _flags, value) {
-      return [new Date(value * 1000), {
-        timestampIsSet: true
-      }];
-    }
-  }]);
-  return TimestampSecondsParser;
-}(_Parser2.Parser);
-exports.TimestampSecondsParser = TimestampSecondsParser;
-
-/***/ }),
-
-/***/ 2493:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.YearParser = void 0;
-var _classCallCheck2 = _interopRequireDefault(__nccwpck_require__(6383));
-var _createClass2 = _interopRequireDefault(__nccwpck_require__(1957));
-var _assertThisInitialized2 = _interopRequireDefault(__nccwpck_require__(5492));
-var _inherits2 = _interopRequireDefault(__nccwpck_require__(2946));
-var _createSuper2 = _interopRequireDefault(__nccwpck_require__(2588));
-var _defineProperty2 = _interopRequireDefault(__nccwpck_require__(1814));
-var _Parser2 = __nccwpck_require__(5619);
-var _utils = __nccwpck_require__(9042);
-// From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
-// | Year     |     y | yy |   yyy |  yyyy | yyyyy |
-// |----------|-------|----|-------|-------|-------|
-// | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
-// | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
-// | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
-// | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
-// | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
-var YearParser = /*#__PURE__*/function (_Parser) {
-  (0, _inherits2.default)(YearParser, _Parser);
-  var _super = (0, _createSuper2.default)(YearParser);
-  function YearParser() {
-    var _this;
-    (0, _classCallCheck2.default)(this, YearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "priority", 130);
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "incompatibleTokens", ['Y', 'R', 'u', 'w', 'I', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  (0, _createClass2.default)(YearParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(year) {
-        return {
-          year: year,
-          isTwoDigitYear: token === 'yy'
-        };
-      };
-      switch (token) {
-        case 'y':
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(4, dateString), valueCallback);
-        case 'yo':
-          return (0, _utils.mapValue)(match.ordinalNumber(dateString, {
-            unit: 'year'
-          }), valueCallback);
-        default:
-          return (0, _utils.mapValue)((0, _utils.parseNDigits)(token.length, dateString), valueCallback);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value.isTwoDigitYear || value.year > 0;
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      var currentYear = date.getUTCFullYear();
-      if (value.isTwoDigitYear) {
-        var normalizedTwoDigitYear = (0, _utils.normalizeTwoDigitYear)(value.year, currentYear);
-        date.setUTCFullYear(normalizedTwoDigitYear, 0, 1);
-        date.setUTCHours(0, 0, 0, 0);
-        return date;
-      }
-      var year = !('era' in flags) || flags.era === 1 ? value.year : 1 - value.year;
-      date.setUTCFullYear(year, 0, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return YearParser;
-}(_Parser2.Parser);
-exports.YearParser = YearParser;
-
-/***/ }),
-
-/***/ 5193:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.parsers = void 0;
-var _EraParser = __nccwpck_require__(6309);
-var _YearParser = __nccwpck_require__(2493);
-var _LocalWeekYearParser = __nccwpck_require__(85);
-var _ISOWeekYearParser = __nccwpck_require__(519);
-var _ExtendedYearParser = __nccwpck_require__(4754);
-var _QuarterParser = __nccwpck_require__(5667);
-var _StandAloneQuarterParser = __nccwpck_require__(2898);
-var _MonthParser = __nccwpck_require__(9581);
-var _StandAloneMonthParser = __nccwpck_require__(9915);
-var _LocalWeekParser = __nccwpck_require__(6125);
-var _ISOWeekParser = __nccwpck_require__(2127);
-var _DateParser = __nccwpck_require__(4757);
-var _DayOfYearParser = __nccwpck_require__(7001);
-var _DayParser = __nccwpck_require__(2280);
-var _LocalDayParser = __nccwpck_require__(1190);
-var _StandAloneLocalDayParser = __nccwpck_require__(1556);
-var _ISODayParser = __nccwpck_require__(6376);
-var _AMPMParser = __nccwpck_require__(8678);
-var _AMPMMidnightParser = __nccwpck_require__(9187);
-var _DayPeriodParser = __nccwpck_require__(9273);
-var _Hour1to12Parser = __nccwpck_require__(7929);
-var _Hour0to23Parser = __nccwpck_require__(2610);
-var _Hour0To11Parser = __nccwpck_require__(323);
-var _Hour1To24Parser = __nccwpck_require__(5980);
-var _MinuteParser = __nccwpck_require__(4254);
-var _SecondParser = __nccwpck_require__(3478);
-var _FractionOfSecondParser = __nccwpck_require__(5194);
-var _ISOTimezoneWithZParser = __nccwpck_require__(9822);
-var _ISOTimezoneParser = __nccwpck_require__(9874);
-var _TimestampSecondsParser = __nccwpck_require__(771);
-var _TimestampMillisecondsParser = __nccwpck_require__(3726);
-/*
- * |     | Unit                           |     | Unit                           |
- * |-----|--------------------------------|-----|--------------------------------|
- * |  a  | AM, PM                         |  A* | Milliseconds in day            |
- * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
- * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
- * |  d  | Day of month                   |  D  | Day of year                    |
- * |  e  | Local day of week              |  E  | Day of week                    |
- * |  f  |                                |  F* | Day of week in month           |
- * |  g* | Modified Julian day            |  G  | Era                            |
- * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
- * |  i! | ISO day of week                |  I! | ISO week of year               |
- * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
- * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
- * |  l* | (deprecated)                   |  L  | Stand-alone month              |
- * |  m  | Minute                         |  M  | Month                          |
- * |  n  |                                |  N  |                                |
- * |  o! | Ordinal number modifier        |  O* | Timezone (GMT)                 |
- * |  p  |                                |  P  |                                |
- * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
- * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
- * |  s  | Second                         |  S  | Fraction of second             |
- * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
- * |  u  | Extended year                  |  U* | Cyclic year                    |
- * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
- * |  w  | Local week of year             |  W* | Week of month                  |
- * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
- * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
- * |  z* | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
- *
- * Letters marked by * are not implemented but reserved by Unicode standard.
- *
- * Letters marked by ! are non-standard, but implemented by date-fns:
- * - `o` modifies the previous token to turn it into an ordinal (see `parse` docs)
- * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
- *   i.e. 7 for Sunday, 1 for Monday, etc.
- * - `I` is ISO week of year, as opposed to `w` which is local week of year.
- * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
- *   `R` is supposed to be used in conjunction with `I` and `i`
- *   for universal ISO week-numbering date, whereas
- *   `Y` is supposed to be used in conjunction with `w` and `e`
- *   for week-numbering date specific to the locale.
+/**
+ * The {@link parse} function options.
  */
-var parsers = {
-  G: new _EraParser.EraParser(),
-  y: new _YearParser.YearParser(),
-  Y: new _LocalWeekYearParser.LocalWeekYearParser(),
-  R: new _ISOWeekYearParser.ISOWeekYearParser(),
-  u: new _ExtendedYearParser.ExtendedYearParser(),
-  Q: new _QuarterParser.QuarterParser(),
-  q: new _StandAloneQuarterParser.StandAloneQuarterParser(),
-  M: new _MonthParser.MonthParser(),
-  L: new _StandAloneMonthParser.StandAloneMonthParser(),
-  w: new _LocalWeekParser.LocalWeekParser(),
-  I: new _ISOWeekParser.ISOWeekParser(),
-  d: new _DateParser.DateParser(),
-  D: new _DayOfYearParser.DayOfYearParser(),
-  E: new _DayParser.DayParser(),
-  e: new _LocalDayParser.LocalDayParser(),
-  c: new _StandAloneLocalDayParser.StandAloneLocalDayParser(),
-  i: new _ISODayParser.ISODayParser(),
-  a: new _AMPMParser.AMPMParser(),
-  b: new _AMPMMidnightParser.AMPMMidnightParser(),
-  B: new _DayPeriodParser.DayPeriodParser(),
-  h: new _Hour1to12Parser.Hour1to12Parser(),
-  H: new _Hour0to23Parser.Hour0to23Parser(),
-  K: new _Hour0To11Parser.Hour0To11Parser(),
-  k: new _Hour1To24Parser.Hour1To24Parser(),
-  m: new _MinuteParser.MinuteParser(),
-  s: new _SecondParser.SecondParser(),
-  S: new _FractionOfSecondParser.FractionOfSecondParser(),
-  X: new _ISOTimezoneWithZParser.ISOTimezoneWithZParser(),
-  x: new _ISOTimezoneParser.ISOTimezoneParser(),
-  t: new _TimestampSecondsParser.TimestampSecondsParser(),
-  T: new _TimestampMillisecondsParser.TimestampMillisecondsParser()
-};
-exports.parsers = parsers;
 
-/***/ }),
-
-/***/ 9042:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.dayPeriodEnumToHours = dayPeriodEnumToHours;
-exports.isLeapYearIndex = isLeapYearIndex;
-exports.mapValue = mapValue;
-exports.normalizeTwoDigitYear = normalizeTwoDigitYear;
-exports.parseAnyDigitsSigned = parseAnyDigitsSigned;
-exports.parseNDigits = parseNDigits;
-exports.parseNDigitsSigned = parseNDigitsSigned;
-exports.parseNumericPattern = parseNumericPattern;
-exports.parseTimezonePattern = parseTimezonePattern;
-var _index = __nccwpck_require__(5756);
-var _constants = __nccwpck_require__(463);
-function mapValue(parseFnResult, mapFn) {
-  if (!parseFnResult) {
-    return parseFnResult;
-  }
-  return {
-    value: mapFn(parseFnResult.value),
-    rest: parseFnResult.rest
-  };
-}
-function parseNumericPattern(pattern, dateString) {
-  var matchResult = dateString.match(pattern);
-  if (!matchResult) {
-    return null;
-  }
-  return {
-    value: parseInt(matchResult[0], 10),
-    rest: dateString.slice(matchResult[0].length)
-  };
-}
-function parseTimezonePattern(pattern, dateString) {
-  var matchResult = dateString.match(pattern);
-  if (!matchResult) {
-    return null;
-  }
-
-  // Input is 'Z'
-  if (matchResult[0] === 'Z') {
-    return {
-      value: 0,
-      rest: dateString.slice(1)
-    };
-  }
-  var sign = matchResult[1] === '+' ? 1 : -1;
-  var hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
-  var minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
-  var seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
-  return {
-    value: sign * (hours * _index.millisecondsInHour + minutes * _index.millisecondsInMinute + seconds * _index.millisecondsInSecond),
-    rest: dateString.slice(matchResult[0].length)
-  };
-}
-function parseAnyDigitsSigned(dateString) {
-  return parseNumericPattern(_constants.numericPatterns.anyDigitsSigned, dateString);
-}
-function parseNDigits(n, dateString) {
-  switch (n) {
-    case 1:
-      return parseNumericPattern(_constants.numericPatterns.singleDigit, dateString);
-    case 2:
-      return parseNumericPattern(_constants.numericPatterns.twoDigits, dateString);
-    case 3:
-      return parseNumericPattern(_constants.numericPatterns.threeDigits, dateString);
-    case 4:
-      return parseNumericPattern(_constants.numericPatterns.fourDigits, dateString);
-    default:
-      return parseNumericPattern(new RegExp('^\\d{1,' + n + '}'), dateString);
-  }
-}
-function parseNDigitsSigned(n, dateString) {
-  switch (n) {
-    case 1:
-      return parseNumericPattern(_constants.numericPatterns.singleDigitSigned, dateString);
-    case 2:
-      return parseNumericPattern(_constants.numericPatterns.twoDigitsSigned, dateString);
-    case 3:
-      return parseNumericPattern(_constants.numericPatterns.threeDigitsSigned, dateString);
-    case 4:
-      return parseNumericPattern(_constants.numericPatterns.fourDigitsSigned, dateString);
-    default:
-      return parseNumericPattern(new RegExp('^-?\\d{1,' + n + '}'), dateString);
-  }
-}
-function dayPeriodEnumToHours(dayPeriod) {
-  switch (dayPeriod) {
-    case 'morning':
-      return 4;
-    case 'evening':
-      return 17;
-    case 'pm':
-    case 'noon':
-    case 'afternoon':
-      return 12;
-    case 'am':
-    case 'midnight':
-    case 'night':
-    default:
-      return 0;
-  }
-}
-function normalizeTwoDigitYear(twoDigitYear, currentYear) {
-  var isCommonEra = currentYear > 0;
-  // Absolute number of the current year:
-  // 1 -> 1 AC
-  // 0 -> 1 BC
-  // -1 -> 2 BC
-  var absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
-  var result;
-  if (absCurrentYear <= 50) {
-    result = twoDigitYear || 100;
-  } else {
-    var rangeEnd = absCurrentYear + 50;
-    var rangeEndCentury = Math.floor(rangeEnd / 100) * 100;
-    var isPreviousCentury = twoDigitYear >= rangeEnd % 100;
-    result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
-  }
-  return isCommonEra ? result : 1 - result;
-}
-function isLeapYearIndex(year) {
-  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
-}
-
-/***/ }),
-
-/***/ 1287:
-/***/ ((module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = parse;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _createForOfIteratorHelper2 = _interopRequireDefault(__nccwpck_require__(8425));
-var _index = _interopRequireDefault(__nccwpck_require__(618));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7923));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2631));
-var _index5 = _interopRequireDefault(__nccwpck_require__(8387));
-var _index6 = _interopRequireDefault(__nccwpck_require__(7032));
-var _index7 = __nccwpck_require__(2509);
-var _index8 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index9 = _interopRequireDefault(__nccwpck_require__(2063));
-var _Setter = __nccwpck_require__(5665);
-var _index10 = __nccwpck_require__(5193);
-var _index11 = __nccwpck_require__(9307);
 // This RegExp consists of three parts separated by `|`:
 // - [yYQqMLwIdDecihHKkms]o matches any available ordinal number token
 //   (one of the certain letters followed by `o`)
@@ -28493,15 +24845,18 @@ var _index11 = __nccwpck_require__(9307);
 //   If there is no matching single quote
 //   then the sequence will continue until the end of the string.
 // - . matches any single character unmatched by previous parts of the RegExps
-var formattingTokensRegExp = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
+const formattingTokensRegExp =
+  /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g;
 
 // This RegExp catches symbols escaped by quotes, and also
 // sequences of symbols P, p, and the combinations like `PPPPPPPppppp`
-var longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
-var escapedStringRegExp = /^'([^]*?)'?$/;
-var doubleQuoteRegExp = /''/g;
-var notWhitespaceRegExp = /\S/;
-var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
+const longFormattingTokensRegExp = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g;
+
+const escapedStringRegExp = /^'([^]*?)'?$/;
+const doubleQuoteRegExp = /''/g;
+
+const notWhitespaceRegExp = /\S/;
+const unescapedLatinCharacterRegExp = /[a-zA-Z]/;
 
 /**
  * @name parse
@@ -28723,8 +25078,8 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  *
  *    The same difference is true for local and ISO week-numbering years (`Y` and `R`),
  *    except local week-numbering years are dependent on `options.weekStartsOn`
- *    and `options.firstWeekContainsDate` (compare [setISOWeekYear]{@link https://date-fns.org/docs/setISOWeekYear}
- *    and [setWeekYear]{@link https://date-fns.org/docs/setWeekYear}).
+ *    and `options.firstWeekContainsDate` (compare [setISOWeekYear](https://date-fns.org/docs/setISOWeekYear)
+ *    and [setWeekYear](https://date-fns.org/docs/setWeekYear)).
  *
  * 5. These patterns are not in the Unicode Technical Standard #35:
  *    - `i`: ISO day of week
@@ -28769,27 +25124,23 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * Invalid Date is a Date, whose time value is NaN.
  * Time value of Date: http://es5.github.io/#x15.9.1.1
  *
- * @param {String} dateString - the string to parse
- * @param {String} formatString - the string of tokens
- * @param {Date|Number} referenceDate - defines values missing from the parsed dateString
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @param {Boolean} [options.useAdditionalWeekYearTokens=false] - if true, allows usage of the week-numbering year tokens `YY` and `YYYY`;
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param dateStr - The string to parse
+ * @param formatStr - The string of tokens
+ * @param referenceDate - defines values missing from the parsed dateString
+ * @param options - An object with options.
  *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @param {Boolean} [options.useAdditionalDayOfYearTokens=false] - if true, allows usage of the day of year tokens `D` and `DD`;
  *   see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @returns {Date} the parsed date
- * @throws {TypeError} 3 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
- * @throws {RangeError} `options.locale` must contain `match` property
- * @throws {RangeError} use `yyyy` instead of `YYYY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `yy` instead of `YY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `d` instead of `D` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} use `dd` instead of `DD` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
- * @throws {RangeError} format string contains an unescaped latin alphabet character
+ *
+ * @returns The parsed date
+ *
+ * @throws `options.locale` must contain `match` property
+ * @throws use `yyyy` instead of `YYYY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `yy` instead of `YY` for formatting years using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `d` instead of `D` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws use `dd` instead of `DD` for formatting days of the month using [format provided] to the input [input provided]; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md
+ * @throws format string contains an unescaped latin alphabet character
  *
  * @example
  * // Parse 11 February 2014 from middle-endian format:
@@ -28804,194 +25155,2717 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  * })
  * //=> Sun Feb 28 2010 00:00:00
  */
-function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) {
-  var _ref, _options$locale, _ref2, _ref3, _ref4, _options$firstWeekCon, _options$locale2, _options$locale2$opti, _defaultOptions$local, _defaultOptions$local2, _ref5, _ref6, _ref7, _options$weekStartsOn, _options$locale3, _options$locale3$opti, _defaultOptions$local3, _defaultOptions$local4;
-  (0, _index9.default)(3, arguments);
-  var dateString = String(dirtyDateString);
-  var formatString = String(dirtyFormatString);
-  var defaultOptions = (0, _index11.getDefaultOptions)();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _index.default;
-  if (!locale.match) {
-    throw new RangeError('locale must contain match property');
-  }
-  var firstWeekContainsDate = (0, _index8.default)((_ref2 = (_ref3 = (_ref4 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale2 = options.locale) === null || _options$locale2 === void 0 ? void 0 : (_options$locale2$opti = _options$locale2.options) === null || _options$locale2$opti === void 0 ? void 0 : _options$locale2$opti.firstWeekContainsDate) !== null && _ref4 !== void 0 ? _ref4 : defaultOptions.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : 1);
+function parse(dateStr, formatStr, referenceDate, options) {
+  const defaultOptions = (0, _index2.getDefaultOptions)();
+  const locale = options?.locale ?? defaultOptions.locale ?? _index3.enUS;
 
-  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
-  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
-    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
-  }
-  var weekStartsOn = (0, _index8.default)((_ref5 = (_ref6 = (_ref7 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale3 = options.locale) === null || _options$locale3 === void 0 ? void 0 : (_options$locale3$opti = _options$locale3.options) === null || _options$locale3$opti === void 0 ? void 0 : _options$locale3$opti.weekStartsOn) !== null && _ref7 !== void 0 ? _ref7 : defaultOptions.weekStartsOn) !== null && _ref6 !== void 0 ? _ref6 : (_defaultOptions$local3 = defaultOptions.locale) === null || _defaultOptions$local3 === void 0 ? void 0 : (_defaultOptions$local4 = _defaultOptions$local3.options) === null || _defaultOptions$local4 === void 0 ? void 0 : _defaultOptions$local4.weekStartsOn) !== null && _ref5 !== void 0 ? _ref5 : 0);
+  const firstWeekContainsDate =
+    options?.firstWeekContainsDate ??
+    options?.locale?.options?.firstWeekContainsDate ??
+    defaultOptions.firstWeekContainsDate ??
+    defaultOptions.locale?.options?.firstWeekContainsDate ??
+    1;
 
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  if (formatString === '') {
-    if (dateString === '') {
-      return (0, _index3.default)(dirtyReferenceDate);
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
+
+  if (formatStr === "") {
+    if (dateStr === "") {
+      return (0, _index4.toDate)(referenceDate);
     } else {
-      return new Date(NaN);
+      return (0, _index.constructFrom)(referenceDate, NaN);
     }
   }
-  var subFnOptions = {
-    firstWeekContainsDate: firstWeekContainsDate,
-    weekStartsOn: weekStartsOn,
-    locale: locale
+
+  const subFnOptions = {
+    firstWeekContainsDate,
+    weekStartsOn,
+    locale,
   };
 
   // If timezone isn't specified, it will be set to the system timezone
-  var setters = [new _Setter.DateToSystemTimezoneSetter()];
-  var tokens = formatString.match(longFormattingTokensRegExp).map(function (substring) {
-    var firstCharacter = substring[0];
-    if (firstCharacter in _index5.default) {
-      var longFormatter = _index5.default[firstCharacter];
-      return longFormatter(substring, locale.formatLong);
+  const setters = [new _Setter.DateToSystemTimezoneSetter()];
+
+  const tokens = formatStr
+    .match(longFormattingTokensRegExp)
+    .map((substring) => {
+      const firstCharacter = substring[0];
+      if (firstCharacter in _index5.longFormatters) {
+        const longFormatter = _index5.longFormatters[firstCharacter];
+        return longFormatter(substring, locale.formatLong);
+      }
+      return substring;
+    })
+    .join("")
+    .match(formattingTokensRegExp);
+
+  const usedTokens = [];
+
+  for (let token of tokens) {
+    if (
+      !options?.useAdditionalWeekYearTokens &&
+      (0, _index6.isProtectedWeekYearToken)(token)
+    ) {
+      (0, _index6.throwProtectedError)(token, formatStr, dateStr);
     }
-    return substring;
-  }).join('').match(formattingTokensRegExp);
-  var usedTokens = [];
-  var _iterator = (0, _createForOfIteratorHelper2.default)(tokens),
-    _step;
-  try {
-    var _loop = function _loop() {
-      var token = _step.value;
-      if (!(options !== null && options !== void 0 && options.useAdditionalWeekYearTokens) && (0, _index7.isProtectedWeekYearToken)(token)) {
-        (0, _index7.throwProtectedError)(token, formatString, dirtyDateString);
-      }
-      if (!(options !== null && options !== void 0 && options.useAdditionalDayOfYearTokens) && (0, _index7.isProtectedDayOfYearToken)(token)) {
-        (0, _index7.throwProtectedError)(token, formatString, dirtyDateString);
-      }
-      var firstCharacter = token[0];
-      var parser = _index10.parsers[firstCharacter];
-      if (parser) {
-        var incompatibleTokens = parser.incompatibleTokens;
-        if (Array.isArray(incompatibleTokens)) {
-          var incompatibleToken = usedTokens.find(function (usedToken) {
-            return incompatibleTokens.includes(usedToken.token) || usedToken.token === firstCharacter;
-          });
-          if (incompatibleToken) {
-            throw new RangeError("The format string mustn't contain `".concat(incompatibleToken.fullToken, "` and `").concat(token, "` at the same time"));
-          }
-        } else if (parser.incompatibleTokens === '*' && usedTokens.length > 0) {
-          throw new RangeError("The format string mustn't contain `".concat(token, "` and any other token at the same time"));
+    if (
+      !options?.useAdditionalDayOfYearTokens &&
+      (0, _index6.isProtectedDayOfYearToken)(token)
+    ) {
+      (0, _index6.throwProtectedError)(token, formatStr, dateStr);
+    }
+
+    const firstCharacter = token[0];
+    const parser = _index7.parsers[firstCharacter];
+    if (parser) {
+      const { incompatibleTokens } = parser;
+      if (Array.isArray(incompatibleTokens)) {
+        const incompatibleToken = usedTokens.find(
+          (usedToken) =>
+            incompatibleTokens.includes(usedToken.token) ||
+            usedToken.token === firstCharacter,
+        );
+        if (incompatibleToken) {
+          throw new RangeError(
+            `The format string mustn't contain \`${incompatibleToken.fullToken}\` and \`${token}\` at the same time`,
+          );
         }
-        usedTokens.push({
-          token: firstCharacter,
-          fullToken: token
-        });
-        var parseResult = parser.run(dateString, token, locale.match, subFnOptions);
-        if (!parseResult) {
-          return {
-            v: new Date(NaN)
-          };
-        }
-        setters.push(parseResult.setter);
-        dateString = parseResult.rest;
+      } else if (parser.incompatibleTokens === "*" && usedTokens.length > 0) {
+        throw new RangeError(
+          `The format string mustn't contain \`${token}\` and any other token at the same time`,
+        );
+      }
+
+      usedTokens.push({ token: firstCharacter, fullToken: token });
+
+      const parseResult = parser.run(
+        dateStr,
+        token,
+        locale.match,
+        subFnOptions,
+      );
+
+      if (!parseResult) {
+        return (0, _index.constructFrom)(referenceDate, NaN);
+      }
+
+      setters.push(parseResult.setter);
+
+      dateStr = parseResult.rest;
+    } else {
+      if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
+        throw new RangeError(
+          "Format string contains an unescaped latin alphabet character `" +
+            firstCharacter +
+            "`",
+        );
+      }
+
+      // Replace two single quote characters with one single quote character
+      if (token === "''") {
+        token = "'";
+      } else if (firstCharacter === "'") {
+        token = cleanEscapedString(token);
+      }
+
+      // Cut token from string, or, if string doesn't match the token, return Invalid Date
+      if (dateStr.indexOf(token) === 0) {
+        dateStr = dateStr.slice(token.length);
       } else {
-        if (firstCharacter.match(unescapedLatinCharacterRegExp)) {
-          throw new RangeError('Format string contains an unescaped latin alphabet character `' + firstCharacter + '`');
-        }
-
-        // Replace two single quote characters with one single quote character
-        if (token === "''") {
-          token = "'";
-        } else if (firstCharacter === "'") {
-          token = cleanEscapedString(token);
-        }
-
-        // Cut token from string, or, if string doesn't match the token, return Invalid Date
-        if (dateString.indexOf(token) === 0) {
-          dateString = dateString.slice(token.length);
-        } else {
-          return {
-            v: new Date(NaN)
-          };
-        }
+        return (0, _index.constructFrom)(referenceDate, NaN);
       }
-    };
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var _ret = _loop();
-      if ((0, _typeof2.default)(_ret) === "object") return _ret.v;
     }
+  }
 
-    // Check if the remaining input contains something other than whitespace
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
+  // Check if the remaining input contains something other than whitespace
+  if (dateStr.length > 0 && notWhitespaceRegExp.test(dateStr)) {
+    return (0, _index.constructFrom)(referenceDate, NaN);
   }
-  if (dateString.length > 0 && notWhitespaceRegExp.test(dateString)) {
-    return new Date(NaN);
-  }
-  var uniquePrioritySetters = setters.map(function (setter) {
-    return setter.priority;
-  }).sort(function (a, b) {
-    return b - a;
-  }).filter(function (priority, index, array) {
-    return array.indexOf(priority) === index;
-  }).map(function (priority) {
-    return setters.filter(function (setter) {
-      return setter.priority === priority;
-    }).sort(function (a, b) {
-      return b.subPriority - a.subPriority;
-    });
-  }).map(function (setterArray) {
-    return setterArray[0];
-  });
-  var date = (0, _index3.default)(dirtyReferenceDate);
+
+  const uniquePrioritySetters = setters
+    .map((setter) => setter.priority)
+    .sort((a, b) => b - a)
+    .filter((priority, index, array) => array.indexOf(priority) === index)
+    .map((priority) =>
+      setters
+        .filter((setter) => setter.priority === priority)
+        .sort((a, b) => b.subPriority - a.subPriority),
+    )
+    .map((setterArray) => setterArray[0]);
+
+  let date = (0, _index4.toDate)(referenceDate);
+
   if (isNaN(date.getTime())) {
-    return new Date(NaN);
+    return (0, _index.constructFrom)(referenceDate, NaN);
   }
 
-  // Convert the date in system timezone to the same date in UTC+00:00 timezone.
-  var utcDate = (0, _index2.default)(date, (0, _index6.default)(date));
-  var flags = {};
-  var _iterator2 = (0, _createForOfIteratorHelper2.default)(uniquePrioritySetters),
-    _step2;
-  try {
-    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-      var setter = _step2.value;
-      if (!setter.validate(utcDate, subFnOptions)) {
-        return new Date(NaN);
-      }
-      var result = setter.set(utcDate, flags, subFnOptions);
-      // Result is tuple (date, flags)
-      if (Array.isArray(result)) {
-        utcDate = result[0];
-        (0, _index4.default)(flags, result[1]);
-        // Result is date
-      } else {
-        utcDate = result;
-      }
+  const flags = {};
+  for (const setter of uniquePrioritySetters) {
+    if (!setter.validate(date, subFnOptions)) {
+      return (0, _index.constructFrom)(referenceDate, NaN);
     }
-  } catch (err) {
-    _iterator2.e(err);
-  } finally {
-    _iterator2.f();
+
+    const result = setter.set(date, flags, subFnOptions);
+    // Result is tuple (date, flags)
+    if (Array.isArray(result)) {
+      date = result[0];
+      Object.assign(flags, result[1]);
+      // Result is date
+    } else {
+      date = result;
+    }
   }
-  return utcDate;
+
+  return (0, _index.constructFrom)(referenceDate, date);
 }
+
 function cleanEscapedString(input) {
   return input.match(escapedStringRegExp)[1].replace(doubleQuoteRegExp, "'");
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3390:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5619:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.Parser = void 0;
+var _Setter = __nccwpck_require__(5665);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = parseISO;
-var _index = __nccwpck_require__(5756);
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
+class Parser {
+  run(dateString, token, match, options) {
+    const result = this.parse(dateString, token, match, options);
+    if (!result) {
+      return null;
+    }
+
+    return {
+      setter: new _Setter.ValueSetter(
+        result.value,
+        this.validate,
+        this.set,
+        this.priority,
+        this.subPriority,
+      ),
+      rest: result.rest,
+    };
+  }
+
+  validate(_utcDate, _value, _options) {
+    return true;
+  }
+}
+exports.Parser = Parser;
+
+
+/***/ }),
+
+/***/ 5665:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ValueSetter =
+  exports.Setter =
+  exports.DateToSystemTimezoneSetter =
+    void 0;
+var _index = __nccwpck_require__(1881);
+var _index2 = __nccwpck_require__(2736);
+
+const TIMEZONE_UNIT_PRIORITY = 10;
+
+class Setter {
+  subPriority = 0;
+
+  validate(_utcDate, _options) {
+    return true;
+  }
+}
+exports.Setter = Setter;
+
+class ValueSetter extends Setter {
+  constructor(
+    value,
+
+    validateValue,
+
+    setValue,
+
+    priority,
+    subPriority,
+  ) {
+    super();
+    this.value = value;
+    this.validateValue = validateValue;
+    this.setValue = setValue;
+    this.priority = priority;
+    if (subPriority) {
+      this.subPriority = subPriority;
+    }
+  }
+
+  validate(date, options) {
+    return this.validateValue(date, this.value, options);
+  }
+
+  set(date, flags, options) {
+    return this.setValue(date, flags, this.value, options);
+  }
+}
+exports.ValueSetter = ValueSetter;
+
+class DateToSystemTimezoneSetter extends Setter {
+  priority = TIMEZONE_UNIT_PRIORITY;
+  subPriority = -1;
+  set(date, flags) {
+    if (flags.timestampIsSet) return date;
+    return (0, _index2.constructFrom)(date, (0, _index.transpose)(date, Date));
+  }
+}
+exports.DateToSystemTimezoneSetter = DateToSystemTimezoneSetter;
+
+
+/***/ }),
+
+/***/ 463:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+exports.timezonePatterns = exports.numericPatterns = void 0;
+const numericPatterns = (exports.numericPatterns = {
+  month: /^(1[0-2]|0?\d)/, // 0 to 12
+  date: /^(3[0-1]|[0-2]?\d)/, // 0 to 31
+  dayOfYear: /^(36[0-6]|3[0-5]\d|[0-2]?\d?\d)/, // 0 to 366
+  week: /^(5[0-3]|[0-4]?\d)/, // 0 to 53
+  hour23h: /^(2[0-3]|[0-1]?\d)/, // 0 to 23
+  hour24h: /^(2[0-4]|[0-1]?\d)/, // 0 to 24
+  hour11h: /^(1[0-1]|0?\d)/, // 0 to 11
+  hour12h: /^(1[0-2]|0?\d)/, // 0 to 12
+  minute: /^[0-5]?\d/, // 0 to 59
+  second: /^[0-5]?\d/, // 0 to 59
+
+  singleDigit: /^\d/, // 0 to 9
+  twoDigits: /^\d{1,2}/, // 0 to 99
+  threeDigits: /^\d{1,3}/, // 0 to 999
+  fourDigits: /^\d{1,4}/, // 0 to 9999
+
+  anyDigitsSigned: /^-?\d+/,
+  singleDigitSigned: /^-?\d/, // 0 to 9, -0 to -9
+  twoDigitsSigned: /^-?\d{1,2}/, // 0 to 99, -0 to -99
+  threeDigitsSigned: /^-?\d{1,3}/, // 0 to 999, -0 to -999
+  fourDigitsSigned: /^-?\d{1,4}/, // 0 to 9999, -0 to -9999
+});
+
+const timezonePatterns = (exports.timezonePatterns = {
+  basicOptionalMinutes: /^([+-])(\d{2})(\d{2})?|Z/,
+  basic: /^([+-])(\d{2})(\d{2})|Z/,
+  basicOptionalSeconds: /^([+-])(\d{2})(\d{2})((\d{2}))?|Z/,
+  extended: /^([+-])(\d{2}):(\d{2})|Z/,
+  extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/,
+});
+
+
+/***/ }),
+
+/***/ 6874:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.parsers = void 0;
+var _EraParser = __nccwpck_require__(6309);
+var _YearParser = __nccwpck_require__(2493);
+var _LocalWeekYearParser = __nccwpck_require__(85);
+var _ISOWeekYearParser = __nccwpck_require__(519);
+var _ExtendedYearParser = __nccwpck_require__(4754);
+var _QuarterParser = __nccwpck_require__(5667);
+var _StandAloneQuarterParser = __nccwpck_require__(2898);
+var _MonthParser = __nccwpck_require__(9581);
+var _StandAloneMonthParser = __nccwpck_require__(9915);
+var _LocalWeekParser = __nccwpck_require__(6555);
+var _ISOWeekParser = __nccwpck_require__(2127);
+var _DateParser = __nccwpck_require__(4757);
+var _DayOfYearParser = __nccwpck_require__(7001);
+var _DayParser = __nccwpck_require__(2280);
+var _LocalDayParser = __nccwpck_require__(1190);
+var _StandAloneLocalDayParser = __nccwpck_require__(1556);
+var _ISODayParser = __nccwpck_require__(6376);
+var _AMPMParser = __nccwpck_require__(8678);
+var _AMPMMidnightParser = __nccwpck_require__(9187);
+var _DayPeriodParser = __nccwpck_require__(9273);
+var _Hour1to12Parser = __nccwpck_require__(7929);
+var _Hour0to23Parser = __nccwpck_require__(2610);
+var _Hour0To11Parser = __nccwpck_require__(323);
+var _Hour1To24Parser = __nccwpck_require__(5980);
+var _MinuteParser = __nccwpck_require__(4254);
+var _SecondParser = __nccwpck_require__(3478);
+var _FractionOfSecondParser = __nccwpck_require__(5194);
+var _ISOTimezoneWithZParser = __nccwpck_require__(9822);
+var _ISOTimezoneParser = __nccwpck_require__(9874);
+var _TimestampSecondsParser = __nccwpck_require__(771);
+var _TimestampMillisecondsParser = __nccwpck_require__(3726);
+
+/*
+ * |     | Unit                           |     | Unit                           |
+ * |-----|--------------------------------|-----|--------------------------------|
+ * |  a  | AM, PM                         |  A* | Milliseconds in day            |
+ * |  b  | AM, PM, noon, midnight         |  B  | Flexible day period            |
+ * |  c  | Stand-alone local day of week  |  C* | Localized hour w/ day period   |
+ * |  d  | Day of month                   |  D  | Day of year                    |
+ * |  e  | Local day of week              |  E  | Day of week                    |
+ * |  f  |                                |  F* | Day of week in month           |
+ * |  g* | Modified Julian day            |  G  | Era                            |
+ * |  h  | Hour [1-12]                    |  H  | Hour [0-23]                    |
+ * |  i! | ISO day of week                |  I! | ISO week of year               |
+ * |  j* | Localized hour w/ day period   |  J* | Localized hour w/o day period  |
+ * |  k  | Hour [1-24]                    |  K  | Hour [0-11]                    |
+ * |  l* | (deprecated)                   |  L  | Stand-alone month              |
+ * |  m  | Minute                         |  M  | Month                          |
+ * |  n  |                                |  N  |                                |
+ * |  o! | Ordinal number modifier        |  O* | Timezone (GMT)                 |
+ * |  p  |                                |  P  |                                |
+ * |  q  | Stand-alone quarter            |  Q  | Quarter                        |
+ * |  r* | Related Gregorian year         |  R! | ISO week-numbering year        |
+ * |  s  | Second                         |  S  | Fraction of second             |
+ * |  t! | Seconds timestamp              |  T! | Milliseconds timestamp         |
+ * |  u  | Extended year                  |  U* | Cyclic year                    |
+ * |  v* | Timezone (generic non-locat.)  |  V* | Timezone (location)            |
+ * |  w  | Local week of year             |  W* | Week of month                  |
+ * |  x  | Timezone (ISO-8601 w/o Z)      |  X  | Timezone (ISO-8601)            |
+ * |  y  | Year (abs)                     |  Y  | Local week-numbering year      |
+ * |  z* | Timezone (specific non-locat.) |  Z* | Timezone (aliases)             |
+ *
+ * Letters marked by * are not implemented but reserved by Unicode standard.
+ *
+ * Letters marked by ! are non-standard, but implemented by date-fns:
+ * - `o` modifies the previous token to turn it into an ordinal (see `parse` docs)
+ * - `i` is ISO day of week. For `i` and `ii` is returns numeric ISO week days,
+ *   i.e. 7 for Sunday, 1 for Monday, etc.
+ * - `I` is ISO week of year, as opposed to `w` which is local week of year.
+ * - `R` is ISO week-numbering year, as opposed to `Y` which is local week-numbering year.
+ *   `R` is supposed to be used in conjunction with `I` and `i`
+ *   for universal ISO week-numbering date, whereas
+ *   `Y` is supposed to be used in conjunction with `w` and `e`
+ *   for week-numbering date specific to the locale.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- It's ok, we want any here
+const parsers = (exports.parsers = {
+  G: new _EraParser.EraParser(),
+  y: new _YearParser.YearParser(),
+  Y: new _LocalWeekYearParser.LocalWeekYearParser(),
+  R: new _ISOWeekYearParser.ISOWeekYearParser(),
+  u: new _ExtendedYearParser.ExtendedYearParser(),
+  Q: new _QuarterParser.QuarterParser(),
+  q: new _StandAloneQuarterParser.StandAloneQuarterParser(),
+  M: new _MonthParser.MonthParser(),
+  L: new _StandAloneMonthParser.StandAloneMonthParser(),
+  w: new _LocalWeekParser.LocalWeekParser(),
+  I: new _ISOWeekParser.ISOWeekParser(),
+  d: new _DateParser.DateParser(),
+  D: new _DayOfYearParser.DayOfYearParser(),
+  E: new _DayParser.DayParser(),
+  e: new _LocalDayParser.LocalDayParser(),
+  c: new _StandAloneLocalDayParser.StandAloneLocalDayParser(),
+  i: new _ISODayParser.ISODayParser(),
+  a: new _AMPMParser.AMPMParser(),
+  b: new _AMPMMidnightParser.AMPMMidnightParser(),
+  B: new _DayPeriodParser.DayPeriodParser(),
+  h: new _Hour1to12Parser.Hour1to12Parser(),
+  H: new _Hour0to23Parser.Hour0to23Parser(),
+  K: new _Hour0To11Parser.Hour0To11Parser(),
+  k: new _Hour1To24Parser.Hour1To24Parser(),
+  m: new _MinuteParser.MinuteParser(),
+  s: new _SecondParser.SecondParser(),
+  S: new _FractionOfSecondParser.FractionOfSecondParser(),
+  X: new _ISOTimezoneWithZParser.ISOTimezoneWithZParser(),
+  x: new _ISOTimezoneParser.ISOTimezoneParser(),
+  t: new _TimestampSecondsParser.TimestampSecondsParser(),
+  T: new _TimestampMillisecondsParser.TimestampMillisecondsParser(),
+});
+
+
+/***/ }),
+
+/***/ 9187:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.AMPMMidnightParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class AMPMMidnightParser extends _Parser.Parser {
+  priority = 80;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "b":
+      case "bb":
+      case "bbb":
+        return (
+          match.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+
+      case "bbbbb":
+        return match.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      case "bbbb":
+      default:
+        return (
+          match.dayPeriod(dateString, {
+            width: "wide",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+    }
+  }
+
+  set(date, _flags, value) {
+    date.setHours((0, _utils.dayPeriodEnumToHours)(value), 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["a", "B", "H", "k", "t", "T"];
+}
+exports.AMPMMidnightParser = AMPMMidnightParser;
+
+
+/***/ }),
+
+/***/ 8678:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.AMPMParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class AMPMParser extends _Parser.Parser {
+  priority = 80;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "a":
+      case "aa":
+      case "aaa":
+        return (
+          match.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+
+      case "aaaaa":
+        return match.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      case "aaaa":
+      default:
+        return (
+          match.dayPeriod(dateString, {
+            width: "wide",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+    }
+  }
+
+  set(date, _flags, value) {
+    date.setHours((0, _utils.dayPeriodEnumToHours)(value), 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["b", "B", "H", "k", "t", "T"];
+}
+exports.AMPMParser = AMPMParser;
+
+
+/***/ }),
+
+/***/ 4757:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.DateParser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const DAYS_IN_MONTH_LEAP_YEAR = [
+  31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+];
+
+// Day of the month
+class DateParser extends _Parser.Parser {
+  priority = 90;
+  subPriority = 1;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "d":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.date,
+          dateString,
+        );
+      case "do":
+        return match.ordinalNumber(dateString, { unit: "date" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(date, value) {
+    const year = date.getFullYear();
+    const isLeapYear = (0, _utils.isLeapYearIndex)(year);
+    const month = date.getMonth();
+    if (isLeapYear) {
+      return value >= 1 && value <= DAYS_IN_MONTH_LEAP_YEAR[month];
+    } else {
+      return value >= 1 && value <= DAYS_IN_MONTH[month];
+    }
+  }
+
+  set(date, _flags, value) {
+    date.setDate(value);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "w",
+    "I",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.DateParser = DateParser;
+
+
+/***/ }),
+
+/***/ 7001:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.DayOfYearParser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class DayOfYearParser extends _Parser.Parser {
+  priority = 90;
+
+  subpriority = 1;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "D":
+      case "DD":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.dayOfYear,
+          dateString,
+        );
+      case "Do":
+        return match.ordinalNumber(dateString, { unit: "date" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(date, value) {
+    const year = date.getFullYear();
+    const isLeapYear = (0, _utils.isLeapYearIndex)(year);
+    if (isLeapYear) {
+      return value >= 1 && value <= 366;
+    } else {
+      return value >= 1 && value <= 365;
+    }
+  }
+
+  set(date, _flags, value) {
+    date.setMonth(0, value);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "I",
+    "d",
+    "E",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.DayOfYearParser = DayOfYearParser;
+
+
+/***/ }),
+
+/***/ 2280:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.DayParser = void 0;
+var _index = __nccwpck_require__(9424);
+var _Parser = __nccwpck_require__(5619);
+
+// Day of week
+class DayParser extends _Parser.Parser {
+  priority = 90;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      // Tue
+      case "E":
+      case "EE":
+      case "EEE":
+        return (
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.day(dateString, { width: "short", context: "formatting" }) ||
+          match.day(dateString, { width: "narrow", context: "formatting" })
+        );
+
+      // T
+      case "EEEEE":
+        return match.day(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      // Tu
+      case "EEEEEE":
+        return (
+          match.day(dateString, { width: "short", context: "formatting" }) ||
+          match.day(dateString, { width: "narrow", context: "formatting" })
+        );
+
+      // Tuesday
+      case "EEEE":
+      default:
+        return (
+          match.day(dateString, { width: "wide", context: "formatting" }) ||
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.day(dateString, { width: "short", context: "formatting" }) ||
+          match.day(dateString, { width: "narrow", context: "formatting" })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 6;
+  }
+
+  set(date, _flags, value, options) {
+    date = (0, _index.setDay)(date, value, options);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["D", "i", "e", "c", "t", "T"];
+}
+exports.DayParser = DayParser;
+
+
+/***/ }),
+
+/***/ 9273:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.DayPeriodParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// in the morning, in the afternoon, in the evening, at night
+class DayPeriodParser extends _Parser.Parser {
+  priority = 80;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "B":
+      case "BB":
+      case "BBB":
+        return (
+          match.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+
+      case "BBBBB":
+        return match.dayPeriod(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      case "BBBB":
+      default:
+        return (
+          match.dayPeriod(dateString, {
+            width: "wide",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.dayPeriod(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+    }
+  }
+
+  set(date, _flags, value) {
+    date.setHours((0, _utils.dayPeriodEnumToHours)(value), 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["a", "b", "t", "T"];
+}
+exports.DayPeriodParser = DayPeriodParser;
+
+
+/***/ }),
+
+/***/ 6309:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.EraParser = void 0;
+
+var _Parser = __nccwpck_require__(5619);
+
+class EraParser extends _Parser.Parser {
+  priority = 140;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      // AD, BC
+      case "G":
+      case "GG":
+      case "GGG":
+        return (
+          match.era(dateString, { width: "abbreviated" }) ||
+          match.era(dateString, { width: "narrow" })
+        );
+
+      // A, B
+      case "GGGGG":
+        return match.era(dateString, { width: "narrow" });
+      // Anno Domini, Before Christ
+      case "GGGG":
+      default:
+        return (
+          match.era(dateString, { width: "wide" }) ||
+          match.era(dateString, { width: "abbreviated" }) ||
+          match.era(dateString, { width: "narrow" })
+        );
+    }
+  }
+
+  set(date, flags, value) {
+    flags.era = value;
+    date.setFullYear(value, 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["R", "u", "t", "T"];
+}
+exports.EraParser = EraParser;
+
+
+/***/ }),
+
+/***/ 4754:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ExtendedYearParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class ExtendedYearParser extends _Parser.Parser {
+  priority = 130;
+
+  parse(dateString, token) {
+    if (token === "u") {
+      return (0, _utils.parseNDigitsSigned)(4, dateString);
+    }
+
+    return (0, _utils.parseNDigitsSigned)(token.length, dateString);
+  }
+
+  set(date, _flags, value) {
+    date.setFullYear(value, 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["G", "y", "Y", "R", "w", "I", "i", "e", "c", "t", "T"];
+}
+exports.ExtendedYearParser = ExtendedYearParser;
+
+
+/***/ }),
+
+/***/ 5194:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.FractionOfSecondParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class FractionOfSecondParser extends _Parser.Parser {
+  priority = 30;
+
+  parse(dateString, token) {
+    const valueCallback = (value) =>
+      Math.floor(value * Math.pow(10, -token.length + 3));
+    return (0, _utils.mapValue)(
+      (0, _utils.parseNDigits)(token.length, dateString),
+      valueCallback,
+    );
+  }
+
+  set(date, _flags, value) {
+    date.setMilliseconds(value);
+    return date;
+  }
+
+  incompatibleTokens = ["t", "T"];
+}
+exports.FractionOfSecondParser = FractionOfSecondParser;
+
+
+/***/ }),
+
+/***/ 323:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.Hour0To11Parser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class Hour0To11Parser extends _Parser.Parser {
+  priority = 70;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "K":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.hour11h,
+          dateString,
+        );
+      case "Ko":
+        return match.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 11;
+  }
+
+  set(date, _flags, value) {
+    const isPM = date.getHours() >= 12;
+    if (isPM && value < 12) {
+      date.setHours(value + 12, 0, 0, 0);
+    } else {
+      date.setHours(value, 0, 0, 0);
+    }
+    return date;
+  }
+
+  incompatibleTokens = ["h", "H", "k", "t", "T"];
+}
+exports.Hour0To11Parser = Hour0To11Parser;
+
+
+/***/ }),
+
+/***/ 2610:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.Hour0to23Parser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class Hour0to23Parser extends _Parser.Parser {
+  priority = 70;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "H":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.hour23h,
+          dateString,
+        );
+      case "Ho":
+        return match.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 23;
+  }
+
+  set(date, _flags, value) {
+    date.setHours(value, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["a", "b", "h", "K", "k", "t", "T"];
+}
+exports.Hour0to23Parser = Hour0to23Parser;
+
+
+/***/ }),
+
+/***/ 5980:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.Hour1To24Parser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class Hour1To24Parser extends _Parser.Parser {
+  priority = 70;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "k":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.hour24h,
+          dateString,
+        );
+      case "ko":
+        return match.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 24;
+  }
+
+  set(date, _flags, value) {
+    const hours = value <= 24 ? value % 24 : value;
+    date.setHours(hours, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["a", "b", "h", "H", "K", "t", "T"];
+}
+exports.Hour1To24Parser = Hour1To24Parser;
+
+
+/***/ }),
+
+/***/ 7929:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.Hour1to12Parser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class Hour1to12Parser extends _Parser.Parser {
+  priority = 70;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "h":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.hour12h,
+          dateString,
+        );
+      case "ho":
+        return match.ordinalNumber(dateString, { unit: "hour" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 12;
+  }
+
+  set(date, _flags, value) {
+    const isPM = date.getHours() >= 12;
+    if (isPM && value < 12) {
+      date.setHours(value + 12, 0, 0, 0);
+    } else if (!isPM && value === 12) {
+      date.setHours(0, 0, 0, 0);
+    } else {
+      date.setHours(value, 0, 0, 0);
+    }
+    return date;
+  }
+
+  incompatibleTokens = ["H", "K", "k", "t", "T"];
+}
+exports.Hour1to12Parser = Hour1to12Parser;
+
+
+/***/ }),
+
+/***/ 6376:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ISODayParser = void 0;
+var _index = __nccwpck_require__(665);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// ISO day of week
+class ISODayParser extends _Parser.Parser {
+  priority = 90;
+
+  parse(dateString, token, match) {
+    const valueCallback = (value) => {
+      if (value === 0) {
+        return 7;
+      }
+      return value;
+    };
+
+    switch (token) {
+      // 2
+      case "i":
+      case "ii": // 02
+        return (0, _utils.parseNDigits)(token.length, dateString);
+      // 2nd
+      case "io":
+        return match.ordinalNumber(dateString, { unit: "day" });
+      // Tue
+      case "iii":
+        return (0, _utils.mapValue)(
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+            match.day(dateString, {
+              width: "short",
+              context: "formatting",
+            }) ||
+            match.day(dateString, {
+              width: "narrow",
+              context: "formatting",
+            }),
+          valueCallback,
+        );
+      // T
+      case "iiiii":
+        return (0, _utils.mapValue)(
+          match.day(dateString, {
+            width: "narrow",
+            context: "formatting",
+          }),
+          valueCallback,
+        );
+      // Tu
+      case "iiiiii":
+        return (0, _utils.mapValue)(
+          match.day(dateString, {
+            width: "short",
+            context: "formatting",
+          }) ||
+            match.day(dateString, {
+              width: "narrow",
+              context: "formatting",
+            }),
+          valueCallback,
+        );
+      // Tuesday
+      case "iiii":
+      default:
+        return (0, _utils.mapValue)(
+          match.day(dateString, {
+            width: "wide",
+            context: "formatting",
+          }) ||
+            match.day(dateString, {
+              width: "abbreviated",
+              context: "formatting",
+            }) ||
+            match.day(dateString, {
+              width: "short",
+              context: "formatting",
+            }) ||
+            match.day(dateString, {
+              width: "narrow",
+              context: "formatting",
+            }),
+          valueCallback,
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 7;
+  }
+
+  set(date, _flags, value) {
+    date = (0, _index.setISODay)(date, value);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "y",
+    "Y",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "d",
+    "D",
+    "E",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.ISODayParser = ISODayParser;
+
+
+/***/ }),
+
+/***/ 9874:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ISOTimezoneParser = void 0;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(1292);
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// Timezone (ISO-8601)
+class ISOTimezoneParser extends _Parser.Parser {
+  priority = 10;
+
+  parse(dateString, token) {
+    switch (token) {
+      case "x":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.basicOptionalMinutes,
+          dateString,
+        );
+      case "xx":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.basic,
+          dateString,
+        );
+      case "xxxx":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.basicOptionalSeconds,
+          dateString,
+        );
+      case "xxxxx":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.extendedOptionalSeconds,
+          dateString,
+        );
+      case "xxx":
+      default:
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.extended,
+          dateString,
+        );
+    }
+  }
+
+  set(date, flags, value) {
+    if (flags.timestampIsSet) return date;
+    return (0, _index.constructFrom)(
+      date,
+      date.getTime() -
+        (0, _index2.getTimezoneOffsetInMilliseconds)(date) -
+        value,
+    );
+  }
+
+  incompatibleTokens = ["t", "T", "X"];
+}
+exports.ISOTimezoneParser = ISOTimezoneParser;
+
+
+/***/ }),
+
+/***/ 9822:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ISOTimezoneWithZParser = void 0;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(1292);
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// Timezone (ISO-8601. +00:00 is `'Z'`)
+class ISOTimezoneWithZParser extends _Parser.Parser {
+  priority = 10;
+
+  parse(dateString, token) {
+    switch (token) {
+      case "X":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.basicOptionalMinutes,
+          dateString,
+        );
+      case "XX":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.basic,
+          dateString,
+        );
+      case "XXXX":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.basicOptionalSeconds,
+          dateString,
+        );
+      case "XXXXX":
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.extendedOptionalSeconds,
+          dateString,
+        );
+      case "XXX":
+      default:
+        return (0, _utils.parseTimezonePattern)(
+          _constants.timezonePatterns.extended,
+          dateString,
+        );
+    }
+  }
+
+  set(date, flags, value) {
+    if (flags.timestampIsSet) return date;
+    return (0, _index.constructFrom)(
+      date,
+      date.getTime() -
+        (0, _index2.getTimezoneOffsetInMilliseconds)(date) -
+        value,
+    );
+  }
+
+  incompatibleTokens = ["t", "T", "x"];
+}
+exports.ISOTimezoneWithZParser = ISOTimezoneWithZParser;
+
+
+/***/ }),
+
+/***/ 2127:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ISOWeekParser = void 0;
+var _index = __nccwpck_require__(1308);
+var _index2 = __nccwpck_require__(9709);
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// ISO week of year
+class ISOWeekParser extends _Parser.Parser {
+  priority = 100;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "I":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.week,
+          dateString,
+        );
+      case "Io":
+        return match.ordinalNumber(dateString, { unit: "week" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 53;
+  }
+
+  set(date, _flags, value) {
+    return (0, _index2.startOfISOWeek)((0, _index.setISOWeek)(date, value));
+  }
+
+  incompatibleTokens = [
+    "y",
+    "Y",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "d",
+    "D",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.ISOWeekParser = ISOWeekParser;
+
+
+/***/ }),
+
+/***/ 519:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.ISOWeekYearParser = void 0;
+var _index = __nccwpck_require__(9709);
+var _index2 = __nccwpck_require__(2736);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// ISO week-numbering year
+class ISOWeekYearParser extends _Parser.Parser {
+  priority = 130;
+
+  parse(dateString, token) {
+    if (token === "R") {
+      return (0, _utils.parseNDigitsSigned)(4, dateString);
+    }
+
+    return (0, _utils.parseNDigitsSigned)(token.length, dateString);
+  }
+
+  set(date, _flags, value) {
+    const firstWeekOfYear = (0, _index2.constructFrom)(date, 0);
+    firstWeekOfYear.setFullYear(value, 0, 4);
+    firstWeekOfYear.setHours(0, 0, 0, 0);
+    return (0, _index.startOfISOWeek)(firstWeekOfYear);
+  }
+
+  incompatibleTokens = [
+    "G",
+    "y",
+    "Y",
+    "u",
+    "Q",
+    "q",
+    "M",
+    "L",
+    "w",
+    "d",
+    "D",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.ISOWeekYearParser = ISOWeekYearParser;
+
+
+/***/ }),
+
+/***/ 1190:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.LocalDayParser = void 0;
+var _index = __nccwpck_require__(9424);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// Local day of week
+class LocalDayParser extends _Parser.Parser {
+  priority = 90;
+  parse(dateString, token, match, options) {
+    const valueCallback = (value) => {
+      const wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+      return ((value + options.weekStartsOn + 6) % 7) + wholeWeekDays;
+    };
+
+    switch (token) {
+      // 3
+      case "e":
+      case "ee": // 03
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(token.length, dateString),
+          valueCallback,
+        );
+      // 3rd
+      case "eo":
+        return (0, _utils.mapValue)(
+          match.ordinalNumber(dateString, {
+            unit: "day",
+          }),
+          valueCallback,
+        );
+      // Tue
+      case "eee":
+        return (
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.day(dateString, { width: "short", context: "formatting" }) ||
+          match.day(dateString, { width: "narrow", context: "formatting" })
+        );
+
+      // T
+      case "eeeee":
+        return match.day(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      // Tu
+      case "eeeeee":
+        return (
+          match.day(dateString, { width: "short", context: "formatting" }) ||
+          match.day(dateString, { width: "narrow", context: "formatting" })
+        );
+
+      // Tuesday
+      case "eeee":
+      default:
+        return (
+          match.day(dateString, { width: "wide", context: "formatting" }) ||
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.day(dateString, { width: "short", context: "formatting" }) ||
+          match.day(dateString, { width: "narrow", context: "formatting" })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 6;
+  }
+
+  set(date, _flags, value, options) {
+    date = (0, _index.setDay)(date, value, options);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "E",
+    "i",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.LocalDayParser = LocalDayParser;
+
+
+/***/ }),
+
+/***/ 6555:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.LocalWeekParser = void 0;
+var _index = __nccwpck_require__(8476);
+var _index2 = __nccwpck_require__(6068);
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// Local week of year
+class LocalWeekParser extends _Parser.Parser {
+  priority = 100;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "w":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.week,
+          dateString,
+        );
+      case "wo":
+        return match.ordinalNumber(dateString, { unit: "week" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 53;
+  }
+
+  set(date, _flags, value, options) {
+    return (0, _index2.startOfWeek)(
+      (0, _index.setWeek)(date, value, options),
+      options,
+    );
+  }
+
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "i",
+    "t",
+    "T",
+  ];
+}
+exports.LocalWeekParser = LocalWeekParser;
+
+
+/***/ }),
+
+/***/ 85:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.LocalWeekYearParser = void 0;
+var _index = __nccwpck_require__(7669);
+
+var _index2 = __nccwpck_require__(6068);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// Local week-numbering year
+class LocalWeekYearParser extends _Parser.Parser {
+  priority = 130;
+
+  parse(dateString, token, match) {
+    const valueCallback = (year) => ({
+      year,
+      isTwoDigitYear: token === "YY",
+    });
+
+    switch (token) {
+      case "Y":
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(4, dateString),
+          valueCallback,
+        );
+      case "Yo":
+        return (0, _utils.mapValue)(
+          match.ordinalNumber(dateString, {
+            unit: "year",
+          }),
+          valueCallback,
+        );
+      default:
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(token.length, dateString),
+          valueCallback,
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value.isTwoDigitYear || value.year > 0;
+  }
+
+  set(date, flags, value, options) {
+    const currentYear = (0, _index.getWeekYear)(date, options);
+
+    if (value.isTwoDigitYear) {
+      const normalizedTwoDigitYear = (0, _utils.normalizeTwoDigitYear)(
+        value.year,
+        currentYear,
+      );
+      date.setFullYear(
+        normalizedTwoDigitYear,
+        0,
+        options.firstWeekContainsDate,
+      );
+      date.setHours(0, 0, 0, 0);
+      return (0, _index2.startOfWeek)(date, options);
+    }
+
+    const year =
+      !("era" in flags) || flags.era === 1 ? value.year : 1 - value.year;
+    date.setFullYear(year, 0, options.firstWeekContainsDate);
+    date.setHours(0, 0, 0, 0);
+    return (0, _index2.startOfWeek)(date, options);
+  }
+
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "Q",
+    "q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "i",
+    "t",
+    "T",
+  ];
+}
+exports.LocalWeekYearParser = LocalWeekYearParser;
+
+
+/***/ }),
+
+/***/ 4254:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.MinuteParser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class MinuteParser extends _Parser.Parser {
+  priority = 60;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "m":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.minute,
+          dateString,
+        );
+      case "mo":
+        return match.ordinalNumber(dateString, { unit: "minute" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 59;
+  }
+
+  set(date, _flags, value) {
+    date.setMinutes(value, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["t", "T"];
+}
+exports.MinuteParser = MinuteParser;
+
+
+/***/ }),
+
+/***/ 9581:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.MonthParser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class MonthParser extends _Parser.Parser {
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "L",
+    "w",
+    "I",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+
+  priority = 110;
+
+  parse(dateString, token, match) {
+    const valueCallback = (value) => value - 1;
+
+    switch (token) {
+      // 1, 2, ..., 12
+      case "M":
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNumericPattern)(
+            _constants.numericPatterns.month,
+            dateString,
+          ),
+          valueCallback,
+        );
+      // 01, 02, ..., 12
+      case "MM":
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(2, dateString),
+          valueCallback,
+        );
+      // 1st, 2nd, ..., 12th
+      case "Mo":
+        return (0, _utils.mapValue)(
+          match.ordinalNumber(dateString, {
+            unit: "month",
+          }),
+          valueCallback,
+        );
+      // Jan, Feb, ..., Dec
+      case "MMM":
+        return (
+          match.month(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.month(dateString, { width: "narrow", context: "formatting" })
+        );
+
+      // J, F, ..., D
+      case "MMMMM":
+        return match.month(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      // January, February, ..., December
+      case "MMMM":
+      default:
+        return (
+          match.month(dateString, { width: "wide", context: "formatting" }) ||
+          match.month(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.month(dateString, { width: "narrow", context: "formatting" })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 11;
+  }
+
+  set(date, _flags, value) {
+    date.setMonth(value, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+}
+exports.MonthParser = MonthParser;
+
+
+/***/ }),
+
+/***/ 5667:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.QuarterParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class QuarterParser extends _Parser.Parser {
+  priority = 120;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      // 1, 2, 3, 4
+      case "Q":
+      case "QQ": // 01, 02, 03, 04
+        return (0, _utils.parseNDigits)(token.length, dateString);
+      // 1st, 2nd, 3rd, 4th
+      case "Qo":
+        return match.ordinalNumber(dateString, { unit: "quarter" });
+      // Q1, Q2, Q3, Q4
+      case "QQQ":
+        return (
+          match.quarter(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.quarter(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+      case "QQQQQ":
+        return match.quarter(dateString, {
+          width: "narrow",
+          context: "formatting",
+        });
+      // 1st quarter, 2nd quarter, ...
+      case "QQQQ":
+      default:
+        return (
+          match.quarter(dateString, {
+            width: "wide",
+            context: "formatting",
+          }) ||
+          match.quarter(dateString, {
+            width: "abbreviated",
+            context: "formatting",
+          }) ||
+          match.quarter(dateString, {
+            width: "narrow",
+            context: "formatting",
+          })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 4;
+  }
+
+  set(date, _flags, value) {
+    date.setMonth((value - 1) * 3, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "M",
+    "L",
+    "w",
+    "I",
+    "d",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.QuarterParser = QuarterParser;
+
+
+/***/ }),
+
+/***/ 3478:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.SecondParser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class SecondParser extends _Parser.Parser {
+  priority = 50;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      case "s":
+        return (0, _utils.parseNumericPattern)(
+          _constants.numericPatterns.second,
+          dateString,
+        );
+      case "so":
+        return match.ordinalNumber(dateString, { unit: "second" });
+      default:
+        return (0, _utils.parseNDigits)(token.length, dateString);
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 59;
+  }
+
+  set(date, _flags, value) {
+    date.setSeconds(value, 0);
+    return date;
+  }
+
+  incompatibleTokens = ["t", "T"];
+}
+exports.SecondParser = SecondParser;
+
+
+/***/ }),
+
+/***/ 1556:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.StandAloneLocalDayParser = void 0;
+var _index = __nccwpck_require__(9424);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// Stand-alone local day of week
+class StandAloneLocalDayParser extends _Parser.Parser {
+  priority = 90;
+
+  parse(dateString, token, match, options) {
+    const valueCallback = (value) => {
+      const wholeWeekDays = Math.floor((value - 1) / 7) * 7;
+      return ((value + options.weekStartsOn + 6) % 7) + wholeWeekDays;
+    };
+
+    switch (token) {
+      // 3
+      case "c":
+      case "cc": // 03
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(token.length, dateString),
+          valueCallback,
+        );
+      // 3rd
+      case "co":
+        return (0, _utils.mapValue)(
+          match.ordinalNumber(dateString, {
+            unit: "day",
+          }),
+          valueCallback,
+        );
+      // Tue
+      case "ccc":
+        return (
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "standalone",
+          }) ||
+          match.day(dateString, { width: "short", context: "standalone" }) ||
+          match.day(dateString, { width: "narrow", context: "standalone" })
+        );
+
+      // T
+      case "ccccc":
+        return match.day(dateString, {
+          width: "narrow",
+          context: "standalone",
+        });
+      // Tu
+      case "cccccc":
+        return (
+          match.day(dateString, { width: "short", context: "standalone" }) ||
+          match.day(dateString, { width: "narrow", context: "standalone" })
+        );
+
+      // Tuesday
+      case "cccc":
+      default:
+        return (
+          match.day(dateString, { width: "wide", context: "standalone" }) ||
+          match.day(dateString, {
+            width: "abbreviated",
+            context: "standalone",
+          }) ||
+          match.day(dateString, { width: "short", context: "standalone" }) ||
+          match.day(dateString, { width: "narrow", context: "standalone" })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 6;
+  }
+
+  set(date, _flags, value, options) {
+    date = (0, _index.setDay)(date, value, options);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "y",
+    "R",
+    "u",
+    "q",
+    "Q",
+    "M",
+    "L",
+    "I",
+    "d",
+    "D",
+    "E",
+    "i",
+    "e",
+    "t",
+    "T",
+  ];
+}
+exports.StandAloneLocalDayParser = StandAloneLocalDayParser;
+
+
+/***/ }),
+
+/***/ 9915:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.StandAloneMonthParser = void 0;
+var _constants = __nccwpck_require__(463);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class StandAloneMonthParser extends _Parser.Parser {
+  priority = 110;
+
+  parse(dateString, token, match) {
+    const valueCallback = (value) => value - 1;
+
+    switch (token) {
+      // 1, 2, ..., 12
+      case "L":
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNumericPattern)(
+            _constants.numericPatterns.month,
+            dateString,
+          ),
+          valueCallback,
+        );
+      // 01, 02, ..., 12
+      case "LL":
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(2, dateString),
+          valueCallback,
+        );
+      // 1st, 2nd, ..., 12th
+      case "Lo":
+        return (0, _utils.mapValue)(
+          match.ordinalNumber(dateString, {
+            unit: "month",
+          }),
+          valueCallback,
+        );
+      // Jan, Feb, ..., Dec
+      case "LLL":
+        return (
+          match.month(dateString, {
+            width: "abbreviated",
+            context: "standalone",
+          }) ||
+          match.month(dateString, { width: "narrow", context: "standalone" })
+        );
+
+      // J, F, ..., D
+      case "LLLLL":
+        return match.month(dateString, {
+          width: "narrow",
+          context: "standalone",
+        });
+      // January, February, ..., December
+      case "LLLL":
+      default:
+        return (
+          match.month(dateString, { width: "wide", context: "standalone" }) ||
+          match.month(dateString, {
+            width: "abbreviated",
+            context: "standalone",
+          }) ||
+          match.month(dateString, { width: "narrow", context: "standalone" })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 0 && value <= 11;
+  }
+
+  set(date, _flags, value) {
+    date.setMonth(value, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "q",
+    "Q",
+    "M",
+    "w",
+    "I",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.StandAloneMonthParser = StandAloneMonthParser;
+
+
+/***/ }),
+
+/***/ 2898:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.StandAloneQuarterParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class StandAloneQuarterParser extends _Parser.Parser {
+  priority = 120;
+
+  parse(dateString, token, match) {
+    switch (token) {
+      // 1, 2, 3, 4
+      case "q":
+      case "qq": // 01, 02, 03, 04
+        return (0, _utils.parseNDigits)(token.length, dateString);
+      // 1st, 2nd, 3rd, 4th
+      case "qo":
+        return match.ordinalNumber(dateString, { unit: "quarter" });
+      // Q1, Q2, Q3, Q4
+      case "qqq":
+        return (
+          match.quarter(dateString, {
+            width: "abbreviated",
+            context: "standalone",
+          }) ||
+          match.quarter(dateString, {
+            width: "narrow",
+            context: "standalone",
+          })
+        );
+
+      // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+      case "qqqqq":
+        return match.quarter(dateString, {
+          width: "narrow",
+          context: "standalone",
+        });
+      // 1st quarter, 2nd quarter, ...
+      case "qqqq":
+      default:
+        return (
+          match.quarter(dateString, {
+            width: "wide",
+            context: "standalone",
+          }) ||
+          match.quarter(dateString, {
+            width: "abbreviated",
+            context: "standalone",
+          }) ||
+          match.quarter(dateString, {
+            width: "narrow",
+            context: "standalone",
+          })
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value >= 1 && value <= 4;
+  }
+
+  set(date, _flags, value) {
+    date.setMonth((value - 1) * 3, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+
+  incompatibleTokens = [
+    "Y",
+    "R",
+    "Q",
+    "M",
+    "L",
+    "w",
+    "I",
+    "d",
+    "D",
+    "i",
+    "e",
+    "c",
+    "t",
+    "T",
+  ];
+}
+exports.StandAloneQuarterParser = StandAloneQuarterParser;
+
+
+/***/ }),
+
+/***/ 3726:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.TimestampMillisecondsParser = void 0;
+var _index = __nccwpck_require__(2736);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class TimestampMillisecondsParser extends _Parser.Parser {
+  priority = 20;
+
+  parse(dateString) {
+    return (0, _utils.parseAnyDigitsSigned)(dateString);
+  }
+
+  set(date, _flags, value) {
+    return [(0, _index.constructFrom)(date, value), { timestampIsSet: true }];
+  }
+
+  incompatibleTokens = "*";
+}
+exports.TimestampMillisecondsParser = TimestampMillisecondsParser;
+
+
+/***/ }),
+
+/***/ 771:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.TimestampSecondsParser = void 0;
+var _index = __nccwpck_require__(2736);
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+class TimestampSecondsParser extends _Parser.Parser {
+  priority = 40;
+
+  parse(dateString) {
+    return (0, _utils.parseAnyDigitsSigned)(dateString);
+  }
+
+  set(date, _flags, value) {
+    return [
+      (0, _index.constructFrom)(date, value * 1000),
+      { timestampIsSet: true },
+    ];
+  }
+
+  incompatibleTokens = "*";
+}
+exports.TimestampSecondsParser = TimestampSecondsParser;
+
+
+/***/ }),
+
+/***/ 2493:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.YearParser = void 0;
+var _Parser = __nccwpck_require__(5619);
+
+var _utils = __nccwpck_require__(9042);
+
+// From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
+// | Year     |     y | yy |   yyy |  yyyy | yyyyy |
+// |----------|-------|----|-------|-------|-------|
+// | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
+// | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
+// | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
+// | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
+// | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
+class YearParser extends _Parser.Parser {
+  priority = 130;
+  incompatibleTokens = ["Y", "R", "u", "w", "I", "i", "e", "c", "t", "T"];
+
+  parse(dateString, token, match) {
+    const valueCallback = (year) => ({
+      year,
+      isTwoDigitYear: token === "yy",
+    });
+
+    switch (token) {
+      case "y":
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(4, dateString),
+          valueCallback,
+        );
+      case "yo":
+        return (0, _utils.mapValue)(
+          match.ordinalNumber(dateString, {
+            unit: "year",
+          }),
+          valueCallback,
+        );
+      default:
+        return (0, _utils.mapValue)(
+          (0, _utils.parseNDigits)(token.length, dateString),
+          valueCallback,
+        );
+    }
+  }
+
+  validate(_date, value) {
+    return value.isTwoDigitYear || value.year > 0;
+  }
+
+  set(date, flags, value) {
+    const currentYear = date.getFullYear();
+
+    if (value.isTwoDigitYear) {
+      const normalizedTwoDigitYear = (0, _utils.normalizeTwoDigitYear)(
+        value.year,
+        currentYear,
+      );
+      date.setFullYear(normalizedTwoDigitYear, 0, 1);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+
+    const year =
+      !("era" in flags) || flags.era === 1 ? value.year : 1 - value.year;
+    date.setFullYear(year, 0, 1);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+}
+exports.YearParser = YearParser;
+
+
+/***/ }),
+
+/***/ 9042:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.dayPeriodEnumToHours = dayPeriodEnumToHours;
+exports.isLeapYearIndex = isLeapYearIndex;
+exports.mapValue = mapValue;
+exports.normalizeTwoDigitYear = normalizeTwoDigitYear;
+exports.parseAnyDigitsSigned = parseAnyDigitsSigned;
+exports.parseNDigits = parseNDigits;
+exports.parseNDigitsSigned = parseNDigitsSigned;
+exports.parseNumericPattern = parseNumericPattern;
+exports.parseTimezonePattern = parseTimezonePattern;
+var _index = __nccwpck_require__(7818);
+
+var _constants = __nccwpck_require__(463);
+
+function mapValue(parseFnResult, mapFn) {
+  if (!parseFnResult) {
+    return parseFnResult;
+  }
+
+  return {
+    value: mapFn(parseFnResult.value),
+    rest: parseFnResult.rest,
+  };
+}
+
+function parseNumericPattern(pattern, dateString) {
+  const matchResult = dateString.match(pattern);
+
+  if (!matchResult) {
+    return null;
+  }
+
+  return {
+    value: parseInt(matchResult[0], 10),
+    rest: dateString.slice(matchResult[0].length),
+  };
+}
+
+function parseTimezonePattern(pattern, dateString) {
+  const matchResult = dateString.match(pattern);
+
+  if (!matchResult) {
+    return null;
+  }
+
+  // Input is 'Z'
+  if (matchResult[0] === "Z") {
+    return {
+      value: 0,
+      rest: dateString.slice(1),
+    };
+  }
+
+  const sign = matchResult[1] === "+" ? 1 : -1;
+  const hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
+  const minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
+  const seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
+
+  return {
+    value:
+      sign *
+      (hours * _index.millisecondsInHour +
+        minutes * _index.millisecondsInMinute +
+        seconds * _index.millisecondsInSecond),
+    rest: dateString.slice(matchResult[0].length),
+  };
+}
+
+function parseAnyDigitsSigned(dateString) {
+  return parseNumericPattern(
+    _constants.numericPatterns.anyDigitsSigned,
+    dateString,
+  );
+}
+
+function parseNDigits(n, dateString) {
+  switch (n) {
+    case 1:
+      return parseNumericPattern(
+        _constants.numericPatterns.singleDigit,
+        dateString,
+      );
+    case 2:
+      return parseNumericPattern(
+        _constants.numericPatterns.twoDigits,
+        dateString,
+      );
+    case 3:
+      return parseNumericPattern(
+        _constants.numericPatterns.threeDigits,
+        dateString,
+      );
+    case 4:
+      return parseNumericPattern(
+        _constants.numericPatterns.fourDigits,
+        dateString,
+      );
+    default:
+      return parseNumericPattern(new RegExp("^\\d{1," + n + "}"), dateString);
+  }
+}
+
+function parseNDigitsSigned(n, dateString) {
+  switch (n) {
+    case 1:
+      return parseNumericPattern(
+        _constants.numericPatterns.singleDigitSigned,
+        dateString,
+      );
+    case 2:
+      return parseNumericPattern(
+        _constants.numericPatterns.twoDigitsSigned,
+        dateString,
+      );
+    case 3:
+      return parseNumericPattern(
+        _constants.numericPatterns.threeDigitsSigned,
+        dateString,
+      );
+    case 4:
+      return parseNumericPattern(
+        _constants.numericPatterns.fourDigitsSigned,
+        dateString,
+      );
+    default:
+      return parseNumericPattern(new RegExp("^-?\\d{1," + n + "}"), dateString);
+  }
+}
+
+function dayPeriodEnumToHours(dayPeriod) {
+  switch (dayPeriod) {
+    case "morning":
+      return 4;
+    case "evening":
+      return 17;
+    case "pm":
+    case "noon":
+    case "afternoon":
+      return 12;
+    case "am":
+    case "midnight":
+    case "night":
+    default:
+      return 0;
+  }
+}
+
+function normalizeTwoDigitYear(twoDigitYear, currentYear) {
+  const isCommonEra = currentYear > 0;
+  // Absolute number of the current year:
+  // 1 -> 1 AC
+  // 0 -> 1 BC
+  // -1 -> 2 BC
+  const absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
+
+  let result;
+  if (absCurrentYear <= 50) {
+    result = twoDigitYear || 100;
+  } else {
+    const rangeEnd = absCurrentYear + 50;
+    const rangeEndCentury = Math.floor(rangeEnd / 100) * 100;
+    const isPreviousCentury = twoDigitYear >= rangeEnd % 100;
+    result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
+  }
+
+  return isCommonEra ? result : 1 - result;
+}
+
+function isLeapYearIndex(year) {
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
+}
+
+
+/***/ }),
+
+/***/ 3822:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.parseISO = parseISO;
+var _index = __nccwpck_require__(7818);
+
+/**
+ * The {@link parseISO} function options.
+ */
+
 /**
  * @name parseISO
  * @category Common Helpers
@@ -29006,12 +27880,12 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * If the argument isn't a string, the function cannot parse the string or
  * the values are invalid, it returns Invalid Date.
  *
- * @param {String} argument - the value to convert
- * @param {Object} [options] - an object with options.
- * @param {0|1|2} [options.additionalDigits=2] - the additional number of digits in the extended year format
- * @returns {Date} the parsed date in the local time zone
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.additionalDigits` must be 0, 1 or 2
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param argument - The value to convert
+ * @param options - An object with options
+ *
+ * @returns The parsed date in the local time zone
  *
  * @example
  * // Convert string '2014-02-11T11:30:30' to date:
@@ -29025,70 +27899,83 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * //=> Fri Apr 11 2014 00:00:00
  */
 function parseISO(argument, options) {
-  var _options$additionalDi;
-  (0, _index2.default)(1, arguments);
-  var additionalDigits = (0, _index3.default)((_options$additionalDi = options === null || options === void 0 ? void 0 : options.additionalDigits) !== null && _options$additionalDi !== void 0 ? _options$additionalDi : 2);
-  if (additionalDigits !== 2 && additionalDigits !== 1 && additionalDigits !== 0) {
-    throw new RangeError('additionalDigits must be 0, 1 or 2');
-  }
-  if (!(typeof argument === 'string' || Object.prototype.toString.call(argument) === '[object String]')) {
-    return new Date(NaN);
-  }
-  var dateStrings = splitDateString(argument);
-  var date;
+  const additionalDigits = options?.additionalDigits ?? 2;
+  const dateStrings = splitDateString(argument);
+
+  let date;
   if (dateStrings.date) {
-    var parseYearResult = parseYear(dateStrings.date, additionalDigits);
+    const parseYearResult = parseYear(dateStrings.date, additionalDigits);
     date = parseDate(parseYearResult.restDateString, parseYearResult.year);
   }
+
   if (!date || isNaN(date.getTime())) {
     return new Date(NaN);
   }
-  var timestamp = date.getTime();
-  var time = 0;
-  var offset;
+
+  const timestamp = date.getTime();
+  let time = 0;
+  let offset;
+
   if (dateStrings.time) {
     time = parseTime(dateStrings.time);
     if (isNaN(time)) {
       return new Date(NaN);
     }
   }
+
   if (dateStrings.timezone) {
     offset = parseTimezone(dateStrings.timezone);
     if (isNaN(offset)) {
       return new Date(NaN);
     }
   } else {
-    var dirtyDate = new Date(timestamp + time);
-    // js parsed string assuming it's in UTC timezone
+    const dirtyDate = new Date(timestamp + time);
+    // JS parsed string assuming it's in UTC timezone
     // but we need it to be parsed in our timezone
     // so we use utc values to build date in our timezone.
     // Year values from 0 to 99 map to the years 1900 to 1999
     // so set year explicitly with setFullYear.
-    var result = new Date(0);
-    result.setFullYear(dirtyDate.getUTCFullYear(), dirtyDate.getUTCMonth(), dirtyDate.getUTCDate());
-    result.setHours(dirtyDate.getUTCHours(), dirtyDate.getUTCMinutes(), dirtyDate.getUTCSeconds(), dirtyDate.getUTCMilliseconds());
+    const result = new Date(0);
+    result.setFullYear(
+      dirtyDate.getUTCFullYear(),
+      dirtyDate.getUTCMonth(),
+      dirtyDate.getUTCDate(),
+    );
+    result.setHours(
+      dirtyDate.getUTCHours(),
+      dirtyDate.getUTCMinutes(),
+      dirtyDate.getUTCSeconds(),
+      dirtyDate.getUTCMilliseconds(),
+    );
     return result;
   }
+
   return new Date(timestamp + time + offset);
 }
-var patterns = {
+
+const patterns = {
   dateTimeDelimiter: /[T ]/,
   timeZoneDelimiter: /[Z ]/i,
-  timezone: /([Z+-].*)$/
+  timezone: /([Z+-].*)$/,
 };
-var dateRegex = /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
-var timeRegex = /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
-var timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
+
+const dateRegex =
+  /^-?(?:(\d{3})|(\d{2})(?:-?(\d{2}))?|W(\d{2})(?:-?(\d{1}))?|)$/;
+const timeRegex =
+  /^(\d{2}(?:[.,]\d*)?)(?::?(\d{2}(?:[.,]\d*)?))?(?::?(\d{2}(?:[.,]\d*)?))?$/;
+const timezoneRegex = /^([+-])(\d{2})(?::?(\d{2}))?$/;
+
 function splitDateString(dateString) {
-  var dateStrings = {};
-  var array = dateString.split(patterns.dateTimeDelimiter);
-  var timeString;
+  const dateStrings = {};
+  const array = dateString.split(patterns.dateTimeDelimiter);
+  let timeString;
 
   // The regex match should only return at maximum two array elements.
   // [date], [time], or [date, time].
   if (array.length > 2) {
     return dateStrings;
   }
+
   if (/:/.test(array[0])) {
     timeString = array[0];
   } else {
@@ -29096,98 +27983,134 @@ function splitDateString(dateString) {
     timeString = array[1];
     if (patterns.timeZoneDelimiter.test(dateStrings.date)) {
       dateStrings.date = dateString.split(patterns.timeZoneDelimiter)[0];
-      timeString = dateString.substr(dateStrings.date.length, dateString.length);
+      timeString = dateString.substr(
+        dateStrings.date.length,
+        dateString.length,
+      );
     }
   }
+
   if (timeString) {
-    var token = patterns.timezone.exec(timeString);
+    const token = patterns.timezone.exec(timeString);
     if (token) {
-      dateStrings.time = timeString.replace(token[1], '');
+      dateStrings.time = timeString.replace(token[1], "");
       dateStrings.timezone = token[1];
     } else {
       dateStrings.time = timeString;
     }
   }
+
   return dateStrings;
 }
+
 function parseYear(dateString, additionalDigits) {
-  var regex = new RegExp('^(?:(\\d{4}|[+-]\\d{' + (4 + additionalDigits) + '})|(\\d{2}|[+-]\\d{' + (2 + additionalDigits) + '})$)');
-  var captures = dateString.match(regex);
+  const regex = new RegExp(
+    "^(?:(\\d{4}|[+-]\\d{" +
+      (4 + additionalDigits) +
+      "})|(\\d{2}|[+-]\\d{" +
+      (2 + additionalDigits) +
+      "})$)",
+  );
+
+  const captures = dateString.match(regex);
   // Invalid ISO-formatted year
-  if (!captures) return {
-    year: NaN,
-    restDateString: ''
-  };
-  var year = captures[1] ? parseInt(captures[1]) : null;
-  var century = captures[2] ? parseInt(captures[2]) : null;
+  if (!captures) return { year: NaN, restDateString: "" };
+
+  const year = captures[1] ? parseInt(captures[1]) : null;
+  const century = captures[2] ? parseInt(captures[2]) : null;
 
   // either year or century is null, not both
   return {
     year: century === null ? year : century * 100,
-    restDateString: dateString.slice((captures[1] || captures[2]).length)
+    restDateString: dateString.slice((captures[1] || captures[2]).length),
   };
 }
+
 function parseDate(dateString, year) {
   // Invalid ISO-formatted year
   if (year === null) return new Date(NaN);
-  var captures = dateString.match(dateRegex);
+
+  const captures = dateString.match(dateRegex);
   // Invalid ISO-formatted string
   if (!captures) return new Date(NaN);
-  var isWeekDate = !!captures[4];
-  var dayOfYear = parseDateUnit(captures[1]);
-  var month = parseDateUnit(captures[2]) - 1;
-  var day = parseDateUnit(captures[3]);
-  var week = parseDateUnit(captures[4]);
-  var dayOfWeek = parseDateUnit(captures[5]) - 1;
+
+  const isWeekDate = !!captures[4];
+  const dayOfYear = parseDateUnit(captures[1]);
+  const month = parseDateUnit(captures[2]) - 1;
+  const day = parseDateUnit(captures[3]);
+  const week = parseDateUnit(captures[4]);
+  const dayOfWeek = parseDateUnit(captures[5]) - 1;
+
   if (isWeekDate) {
     if (!validateWeekDate(year, week, dayOfWeek)) {
       return new Date(NaN);
     }
     return dayOfISOWeekYear(year, week, dayOfWeek);
   } else {
-    var date = new Date(0);
-    if (!validateDate(year, month, day) || !validateDayOfYearDate(year, dayOfYear)) {
+    const date = new Date(0);
+    if (
+      !validateDate(year, month, day) ||
+      !validateDayOfYearDate(year, dayOfYear)
+    ) {
       return new Date(NaN);
     }
     date.setUTCFullYear(year, month, Math.max(dayOfYear, day));
     return date;
   }
 }
+
 function parseDateUnit(value) {
   return value ? parseInt(value) : 1;
 }
+
 function parseTime(timeString) {
-  var captures = timeString.match(timeRegex);
+  const captures = timeString.match(timeRegex);
   if (!captures) return NaN; // Invalid ISO-formatted time
 
-  var hours = parseTimeUnit(captures[1]);
-  var minutes = parseTimeUnit(captures[2]);
-  var seconds = parseTimeUnit(captures[3]);
+  const hours = parseTimeUnit(captures[1]);
+  const minutes = parseTimeUnit(captures[2]);
+  const seconds = parseTimeUnit(captures[3]);
+
   if (!validateTime(hours, minutes, seconds)) {
     return NaN;
   }
-  return hours * _index.millisecondsInHour + minutes * _index.millisecondsInMinute + seconds * 1000;
+
+  return (
+    hours * _index.millisecondsInHour +
+    minutes * _index.millisecondsInMinute +
+    seconds * 1000
+  );
 }
+
 function parseTimeUnit(value) {
-  return value && parseFloat(value.replace(',', '.')) || 0;
+  return (value && parseFloat(value.replace(",", "."))) || 0;
 }
+
 function parseTimezone(timezoneString) {
-  if (timezoneString === 'Z') return 0;
-  var captures = timezoneString.match(timezoneRegex);
+  if (timezoneString === "Z") return 0;
+
+  const captures = timezoneString.match(timezoneRegex);
   if (!captures) return 0;
-  var sign = captures[1] === '+' ? -1 : 1;
-  var hours = parseInt(captures[2]);
-  var minutes = captures[3] && parseInt(captures[3]) || 0;
+
+  const sign = captures[1] === "+" ? -1 : 1;
+  const hours = parseInt(captures[2]);
+  const minutes = (captures[3] && parseInt(captures[3])) || 0;
+
   if (!validateTimezone(hours, minutes)) {
     return NaN;
   }
-  return sign * (hours * _index.millisecondsInHour + minutes * _index.millisecondsInMinute);
+
+  return (
+    sign *
+    (hours * _index.millisecondsInHour + minutes * _index.millisecondsInMinute)
+  );
 }
+
 function dayOfISOWeekYear(isoWeekYear, week, day) {
-  var date = new Date(0);
+  const date = new Date(0);
   date.setUTCFullYear(isoWeekYear, 0, 4);
-  var fourthOfJanuaryDay = date.getUTCDay() || 7;
-  var diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
+  const fourthOfJanuaryDay = date.getUTCDay() || 7;
+  const diff = (week - 1) * 7 + day + 1 - fourthOfJanuaryDay;
   date.setUTCDate(date.getUTCDate() + diff);
   return date;
 }
@@ -29195,46 +28118,57 @@ function dayOfISOWeekYear(isoWeekYear, week, day) {
 // Validation functions
 
 // February is null to handle the leap year (using ||)
-var daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const daysInMonths = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
 function isLeapYearIndex(year) {
-  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+  return year % 400 === 0 || (year % 4 === 0 && year % 100 !== 0);
 }
+
 function validateDate(year, month, date) {
-  return month >= 0 && month <= 11 && date >= 1 && date <= (daysInMonths[month] || (isLeapYearIndex(year) ? 29 : 28));
+  return (
+    month >= 0 &&
+    month <= 11 &&
+    date >= 1 &&
+    date <= (daysInMonths[month] || (isLeapYearIndex(year) ? 29 : 28))
+  );
 }
+
 function validateDayOfYearDate(year, dayOfYear) {
   return dayOfYear >= 1 && dayOfYear <= (isLeapYearIndex(year) ? 366 : 365);
 }
+
 function validateWeekDate(_year, week, day) {
   return week >= 1 && week <= 53 && day >= 0 && day <= 6;
 }
+
 function validateTime(hours, minutes, seconds) {
   if (hours === 24) {
     return minutes === 0 && seconds === 0;
   }
-  return seconds >= 0 && seconds < 60 && minutes >= 0 && minutes < 60 && hours >= 0 && hours < 25;
+
+  return (
+    seconds >= 0 &&
+    seconds < 60 &&
+    minutes >= 0 &&
+    minutes < 60 &&
+    hours >= 0 &&
+    hours < 25
+  );
 }
+
 function validateTimezone(_hours, minutes) {
   return minutes >= 0 && minutes <= 59;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8159:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 135:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = parseJSON;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-/**
+exports.parseJSON = parseJSON; /**
  * @name parseJSON
  * @category Common Helpers
  * @summary Parse a JSON date string
@@ -29257,47 +28191,50 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * - `2000-03-15 05:20:10`: With a space instead of a 'T' separator for APIs returning a SQL date without reformatting
  *
  * For convenience and ease of use these other input types are also supported
- * via [toDate]{@link https://date-fns.org/docs/toDate}:
+ * via [toDate](https://date-fns.org/docs/toDate):
  *
  * - A `Date` instance will be cloned
  * - A `number` will be treated as a timestamp
  *
  * Any other input type or invalid date strings will return an `Invalid Date`.
  *
- * @param {String|Number|Date} argument A fully formed ISO8601 date string to convert
- * @returns {Date} the parsed date in the local time zone
- * @throws {TypeError} 1 argument required
+ * @param dateStr - A fully formed ISO8601 date string to convert
+ *
+ * @returns The parsed date in the local time zone
  */
-function parseJSON(argument) {
-  (0, _index2.default)(1, arguments);
-  if (typeof argument === 'string') {
-    var parts = argument.match(/(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})(?:\.(\d{0,7}))?(?:Z|(.)(\d{2}):?(\d{2})?)?/);
-    if (parts) {
-      // Group 8 matches the sign
-      return new Date(Date.UTC(+parts[1], +parts[2] - 1, +parts[3], +parts[4] - (+parts[9] || 0) * (parts[8] == '-' ? -1 : 1), +parts[5] - (+parts[10] || 0) * (parts[8] == '-' ? -1 : 1), +parts[6], +((parts[7] || '0') + '00').substring(0, 3)));
-    }
-    return new Date(NaN);
+function parseJSON(dateStr) {
+  const parts = dateStr.match(
+    /(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})(?:\.(\d{0,7}))?(?:Z|(.)(\d{2}):?(\d{2})?)?/,
+  );
+  if (parts) {
+    // Group 8 matches the sign
+    return new Date(
+      Date.UTC(
+        +parts[1],
+        +parts[2] - 1,
+        +parts[3],
+        +parts[4] - (+parts[9] || 0) * (parts[8] == "-" ? -1 : 1),
+        +parts[5] - (+parts[10] || 0) * (parts[8] == "-" ? -1 : 1),
+        +parts[6],
+        +((parts[7] || "0") + "00").substring(0, 3),
+      ),
+    );
   }
-  return (0, _index.default)(argument);
+  return new Date(NaN);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8756:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 456:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousDay = previousDay;
+var _index = __nccwpck_require__(6172);
+var _index2 = __nccwpck_require__(9771);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousDay;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9361));
-var _index3 = _interopRequireDefault(__nccwpck_require__(970));
 /**
  * @name previousDay
  * @category Weekday Helpers
@@ -29306,10 +28243,12 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(970));
  * @description
  * When is the previous day of the week? 0-6 the day of the week, 0 represents Sunday.
  *
- * @param {Date | number} date - the date to check
- * @param {number} day - day of the week
- * @returns {Date} - the date is the previous day of week
- * @throws {TypeError} - 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to check
+ * @param day - The day of the week
+ *
+ * @returns The date is the previous day of week
  *
  * @example
  * // When is the previous Monday before Mar, 20, 2020?
@@ -29322,28 +28261,23 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(970));
  * //=> Tue Mar 17 2020 00:00:00
  */
 function previousDay(date, day) {
-  (0, _index.default)(2, arguments);
-  var delta = (0, _index2.default)(date) - day;
+  let delta = (0, _index.getDay)(date) - day;
   if (delta <= 0) delta += 7;
-  return (0, _index3.default)(date, delta);
+
+  return (0, _index2.subDays)(date, delta);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9558:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1812:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousFriday = previousFriday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousFriday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousFriday
  * @category Weekday Helpers
@@ -29352,9 +28286,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Friday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Friday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Friday
  *
  * @example
  * // When is the previous Friday before Jun, 19, 2021?
@@ -29362,26 +28298,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Fri June 18 2021 00:00:00
  */
 function previousFriday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 5);
+  return (0, _index.previousDay)(date, 5);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8386:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9484:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousMonday = previousMonday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousMonday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousMonday
  * @category Weekday Helpers
@@ -29390,9 +28320,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Monday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Monday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Monday
  *
  * @example
  * // When is the previous Monday before Jun, 18, 2021?
@@ -29400,26 +28332,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Mon June 14 2021 00:00:00
  */
 function previousMonday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 1);
+  return (0, _index.previousDay)(date, 1);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4834:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5648:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousSaturday = previousSaturday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousSaturday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousSaturday
  * @category Weekday Helpers
@@ -29428,9 +28354,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Saturday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Saturday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Saturday
  *
  * @example
  * // When is the previous Saturday before Jun, 20, 2021?
@@ -29438,26 +28366,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Sat June 19 2021 00:00:00
  */
 function previousSaturday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 6);
+  return (0, _index.previousDay)(date, 6);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 264:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9010:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousSunday = previousSunday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousSunday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousSunday
  * @category Weekday Helpers
@@ -29466,9 +28388,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Sunday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Sunday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Sunday
  *
  * @example
  * // When is the previous Sunday before Jun, 21, 2021?
@@ -29476,26 +28400,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Sun June 20 2021 00:00:00
  */
 function previousSunday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 0);
+  return (0, _index.previousDay)(date, 0);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 19:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 582:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousThursday = previousThursday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousThursday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousThursday
  * @category Weekday Helpers
@@ -29504,9 +28422,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Thursday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Thursday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Thursday
  *
  * @example
  * // When is the previous Thursday before Jun, 18, 2021?
@@ -29514,26 +28434,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Thu June 17 2021 00:00:00
  */
 function previousThursday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 4);
+  return (0, _index.previousDay)(date, 4);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3294:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7967:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousTuesday = previousTuesday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousTuesday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousTuesday
  * @category Weekday Helpers
@@ -29542,9 +28456,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Tuesday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Tuesday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Tuesday
  *
  * @example
  * // When is the previous Tuesday before Jun, 18, 2021?
@@ -29552,26 +28468,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Tue June 15 2021 00:00:00
  */
 function previousTuesday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 2);
+  return (0, _index.previousDay)(date, 2);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8630:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 615:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.previousWednesday = previousWednesday;
+var _index = __nccwpck_require__(456);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = previousWednesday;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
 /**
  * @name previousWednesday
  * @category Weekday Helpers
@@ -29580,9 +28490,11 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * @description
  * When is the previous Wednesday?
  *
- * @param {Date | number} date - the date to start counting from
- * @returns {Date} the previous Wednesday
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to start counting from
+ *
+ * @returns The previous Wednesday
  *
  * @example
  * // When is the previous Wednesday before Jun, 18, 2021?
@@ -29590,26 +28502,20 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(8756));
  * //=> Wed June 16 2021 00:00:00
  */
 function previousWednesday(date) {
-  (0, _index.default)(1, arguments);
-  return (0, _index2.default)(date, 3);
+  return (0, _index.previousDay)(date, 3);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8995:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 912:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.quartersToMonths = quartersToMonths;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = quartersToMonths;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name quartersToMonths
  * @category Conversion Helpers
@@ -29618,10 +28524,11 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of quarters to a full number of months.
  *
- * @param {number} quarters - number of quarters to be converted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {number} the number of quarters converted in months
- * @throws {TypeError} 1 argument required
+ * @param quarters - The number of quarters to be converted
+ *
+ * @returns The number of quarters converted in months
  *
  * @example
  * // Convert 2 quarters to months
@@ -29629,26 +28536,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 6
  */
 function quartersToMonths(quarters) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(quarters * _index2.monthsInQuarter);
+  return Math.floor(quarters * _index.monthsInQuarter);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 883:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7330:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.quartersToYears = quartersToYears;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = quartersToYears;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name quartersToYears
  * @category Conversion Helpers
@@ -29657,10 +28558,11 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of quarters to a full number of years.
  *
- * @param {number} quarters - number of quarters to be converted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
  *
- * @returns {number} the number of quarters converted in years
- * @throws {TypeError} 1 argument required
+ * @param quarters - The number of quarters to be converted
+ *
+ * @returns The number of quarters converted in years
  *
  * @example
  * // Convert 8 quarters to years
@@ -29673,28 +28575,28 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 2
  */
 function quartersToYears(quarters) {
-  (0, _index.default)(1, arguments);
-  var years = quarters / _index2.quartersInYear;
+  const years = quarters / _index.quartersInYear;
   return Math.floor(years);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5515:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 295:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.roundToNearestMinutes = roundToNearestMinutes;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = roundToNearestMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = __nccwpck_require__(8016);
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
+var _index3 = __nccwpck_require__(304);
+
+/**
+ * The {@link roundToNearestMinutes} function options.
+ */
+
 /**
  * @name roundToNearestMinutes
  * @category Minute Helpers
@@ -29704,13 +28606,12 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * Rounds the given date to the nearest minute (or number of minutes).
  * Rounds up when the given date is exactly between the nearest round minutes.
  *
- * @param {Date|Number} date - the date to round
- * @param {Object} [options] - an object with options.
- * @param {Number} [options.nearestTo=1] - nearest number of minutes to round to. E.g. `15` to round to quarter hours.
- * @param {String} [options.roundingMethod='trunc'] - a rounding method (`ceil`, `floor`, `round` or `trunc`)
- * @returns {Date} the new date rounded to the closest minute
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.nearestTo` must be between 1 and 30
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to round
+ * @param options - An object with options.
+ *
+ * @returns The new date rounded to the closest minute
  *
  * @example
  * // Round 10 July 2014 12:12:34 to nearest minute:
@@ -29723,41 +28624,38 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * // rounds up because given date is exactly between 12:00:00 and 12:15:00
  * //=> Thu Jul 10 2014 12:15:00
  */
-function roundToNearestMinutes(dirtyDate, options) {
-  var _options$nearestTo;
-  if (arguments.length < 1) {
-    throw new TypeError('1 argument required, but only none provided present');
-  }
-  var nearestTo = (0, _index3.default)((_options$nearestTo = options === null || options === void 0 ? void 0 : options.nearestTo) !== null && _options$nearestTo !== void 0 ? _options$nearestTo : 1);
-  if (nearestTo < 1 || nearestTo > 30) {
-    throw new RangeError('`options.nearestTo` must be between 1 and 30');
-  }
-  var date = (0, _index.default)(dirtyDate);
-  var seconds = date.getSeconds(); // relevant if nearestTo is 1, which is the default case
-  var minutes = date.getMinutes() + seconds / 60;
-  var roundingMethod = (0, _index2.getRoundingMethod)(options === null || options === void 0 ? void 0 : options.roundingMethod);
-  var roundedMinutes = roundingMethod(minutes / nearestTo) * nearestTo;
-  var remainderMinutes = minutes % nearestTo;
-  var addedMinutes = Math.round(remainderMinutes / nearestTo) * nearestTo;
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), roundedMinutes + addedMinutes);
+function roundToNearestMinutes(date, options) {
+  const nearestTo = options?.nearestTo ?? 1;
+
+  if (nearestTo < 1 || nearestTo > 30)
+    return (0, _index.constructFrom)(date, NaN);
+
+  const _date = (0, _index2.toDate)(date);
+  const seconds = _date.getSeconds(); // relevant if nearestTo is 1, which is the default case
+  const minutes = _date.getMinutes() + seconds / 60;
+  const roundingMethod = (0, _index3.getRoundingMethod)(
+    options?.roundingMethod,
+  );
+  const roundedMinutes = roundingMethod(minutes / nearestTo) * nearestTo;
+  const remainderMinutes = minutes % nearestTo;
+  const addedMinutes = Math.round(remainderMinutes / nearestTo) * nearestTo;
+
+  const result = (0, _index.constructFrom)(_date, _date);
+  result.setMinutes(roundedMinutes + addedMinutes, 0, 0);
+  return result;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 594:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1528:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.secondsToHours = secondsToHours;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = secondsToHours;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name secondsToHours
  * @category Conversion Helpers
@@ -29766,10 +28664,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of seconds to a full number of hours.
  *
- * @param {number} seconds - number of seconds to be converted
+ * @param seconds - The number of seconds to be converted
  *
- * @returns {number} the number of seconds converted in hours
- * @throws {TypeError} 1 argument required
+ * @returns The number of seconds converted in hours
  *
  * @example
  * // Convert 7200 seconds into hours
@@ -29782,27 +28679,21 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 1
  */
 function secondsToHours(seconds) {
-  (0, _index.default)(1, arguments);
-  var hours = seconds / _index2.secondsInHour;
+  const hours = seconds / _index.secondsInHour;
   return Math.floor(hours);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6779:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4812:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.secondsToMilliseconds = secondsToMilliseconds;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = secondsToMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name secondsToMilliseconds
  * @category Conversion Helpers
@@ -29811,10 +28702,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of seconds to a full number of milliseconds.
  *
- * @param {number} seconds - number of seconds to be converted
+ * @param seconds - The number of seconds to be converted
  *
- * @returns {number} the number of seconds converted in milliseconds
- * @throws {TypeError} 1 argument required
+ * @returns The number of seconds converted in milliseconds
  *
  * @example
  * // Convert 2 seconds into milliseconds
@@ -29822,26 +28712,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 2000
  */
 function secondsToMilliseconds(seconds) {
-  (0, _index.default)(1, arguments);
-  return seconds * _index2.millisecondsInSecond;
+  return seconds * _index.millisecondsInSecond;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8438:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8217:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.secondsToMinutes = secondsToMinutes;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = secondsToMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name secondsToMinutes
  * @category Conversion Helpers
@@ -29850,10 +28734,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of seconds to a full number of minutes.
  *
- * @param {number} seconds - number of seconds to be converted
+ * @param seconds - The number of seconds to be converted
  *
- * @returns {number} the number of seconds converted in minutes
- * @throws {TypeError} 1 argument required
+ * @returns The number of seconds converted in minutes
  *
  * @example
  * // Convert 120 seconds into minutes
@@ -29866,30 +28749,23 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 1
  */
 function secondsToMinutes(seconds) {
-  (0, _index.default)(1, arguments);
-  var minutes = seconds / _index2.secondsInMinute;
+  const minutes = seconds / _index.secondsInMinute;
   return Math.floor(minutes);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2031:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5027:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.set = set;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(1771);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = set;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(847));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name set
  * @category Common Helpers
@@ -29905,18 +28781,12 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * to use native `Date#setX` methods. If you use this function, you may not want to include the
  * other `setX` functions that date-fns provides if you are concerned about the bundle size.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Object} values - an object with options
- * @param {Number} [values.year] - the number of years to be set
- * @param {Number} [values.month] - the number of months to be set
- * @param {Number} [values.date] - the number of days to be set
- * @param {Number} [values.hours] - the number of hours to be set
- * @param {Number} [values.minutes] - the number of minutes to be set
- * @param {Number} [values.seconds] - the number of seconds to be set
- * @param {Number} [values.milliseconds] - the number of milliseconds to be set
- * @returns {Date} the new date with options set
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `values` must be an object
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param values - The date values to be set
+ *
+ * @returns The new date with options set
  *
  * @example
  * // Transform 1 September 2014 into 20 October 2015 in a single line:
@@ -29928,58 +28798,57 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = set(new Date(2014, 8, 1, 1, 23, 45), { hours: 12 })
  * //=> Mon Sep 01 2014 12:23:45
  */
-function set(dirtyDate, values) {
-  (0, _index4.default)(2, arguments);
-  if ((0, _typeof2.default)(values) !== 'object' || values === null) {
-    throw new RangeError('values parameter must be an object');
-  }
-  var date = (0, _index.default)(dirtyDate);
+
+function set(date, values) {
+  let _date = (0, _index3.toDate)(date);
 
   // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
-  if (isNaN(date.getTime())) {
-    return new Date(NaN);
+  if (isNaN(+_date)) {
+    return (0, _index.constructFrom)(date, NaN);
   }
+
   if (values.year != null) {
-    date.setFullYear(values.year);
+    _date.setFullYear(values.year);
   }
+
   if (values.month != null) {
-    date = (0, _index2.default)(date, values.month);
+    _date = (0, _index2.setMonth)(_date, values.month);
   }
+
   if (values.date != null) {
-    date.setDate((0, _index3.default)(values.date));
+    _date.setDate(values.date);
   }
+
   if (values.hours != null) {
-    date.setHours((0, _index3.default)(values.hours));
+    _date.setHours(values.hours);
   }
+
   if (values.minutes != null) {
-    date.setMinutes((0, _index3.default)(values.minutes));
+    _date.setMinutes(values.minutes);
   }
+
   if (values.seconds != null) {
-    date.setSeconds((0, _index3.default)(values.seconds));
+    _date.setSeconds(values.seconds);
   }
+
   if (values.milliseconds != null) {
-    date.setMilliseconds((0, _index3.default)(values.milliseconds));
+    _date.setMilliseconds(values.milliseconds);
   }
-  return date;
+
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8760:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5574:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setDate = setDate;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setDate;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setDate
  * @category Day Helpers
@@ -29988,43 +28857,42 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the day of the month to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} dayOfMonth - the day of the month of the new date
- * @returns {Date} the new date with the day of the month set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param dayOfMonth - The day of the month of the new date
+ *
+ * @returns The new date with the day of the month set
  *
  * @example
  * // Set the 30th day of the month to 1 September 2014:
  * const result = setDate(new Date(2014, 8, 1), 30)
  * //=> Tue Sep 30 2014 00:00:00
  */
-function setDate(dirtyDate, dirtyDayOfMonth) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var dayOfMonth = (0, _index.default)(dirtyDayOfMonth);
-  date.setDate(dayOfMonth);
-  return date;
+function setDate(date, dayOfMonth) {
+  const _date = (0, _index.toDate)(date);
+  _date.setDate(dayOfMonth);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9540:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9424:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setDay = setDay;
+var _index = __nccwpck_require__(8361);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setDay;
-var _index = _interopRequireDefault(__nccwpck_require__(6227));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index5 = __nccwpck_require__(9307);
+var _index3 = __nccwpck_require__(2466);
+
+/**
+ * The {@link setDay} function options.
+ */
+
 /**
  * @name setDay
  * @category Weekday Helpers
@@ -30033,14 +28901,13 @@ var _index5 = __nccwpck_require__(9307);
  * @description
  * Set the day of the week to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} day - the day of the week of the new date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Date} the new date with the day of the week set
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param day - The day of the week of the new date
+ * @param options - An object with options.
+ *
+ * @returns The new date with the day of the week set
  *
  * @example
  * // Set week day to Sunday, with the default weekStartsOn of Sunday:
@@ -30052,43 +28919,40 @@ var _index5 = __nccwpck_require__(9307);
  * const result = setDay(new Date(2014, 8, 1), 0, { weekStartsOn: 1 })
  * //=> Sun Sep 07 2014 00:00:00
  */
-function setDay(dirtyDate, dirtyDay, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index4.default)(2, arguments);
-  var defaultOptions = (0, _index5.getDefaultOptions)();
-  var weekStartsOn = (0, _index3.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
+function setDay(date, day, options) {
+  const defaultOptions = (0, _index3.getDefaultOptions)();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
 
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = (0, _index2.default)(dirtyDate);
-  var day = (0, _index3.default)(dirtyDay);
-  var currentDay = date.getDay();
-  var remainder = day % 7;
-  var dayIndex = (remainder + 7) % 7;
-  var delta = 7 - weekStartsOn;
-  var diff = day < 0 || day > 6 ? day - (currentDay + delta) % 7 : (dayIndex + delta) % 7 - (currentDay + delta) % 7;
-  return (0, _index.default)(date, diff);
+  const _date = (0, _index2.toDate)(date);
+  const currentDay = _date.getDay();
+
+  const remainder = day % 7;
+  const dayIndex = (remainder + 7) % 7;
+
+  const delta = 7 - weekStartsOn;
+  const diff =
+    day < 0 || day > 6
+      ? day - ((currentDay + delta) % 7)
+      : ((dayIndex + delta) % 7) - ((currentDay + delta) % 7);
+  return (0, _index.addDays)(_date, diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4002:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8715:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setDayOfYear = setDayOfYear;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setDayOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setDayOfYear
  * @category Day Helpers
@@ -30097,41 +28961,37 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the day of the year to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} dayOfYear - the day of the year of the new date
- * @returns {Date} the new date with the day of the year set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param dayOfYear - The day of the year of the new date
+ *
+ * @returns The new date with the day of the year set
  *
  * @example
  * // Set the 2nd day of the year to 2 July 2014:
  * const result = setDayOfYear(new Date(2014, 6, 2), 2)
  * //=> Thu Jan 02 2014 00:00:00
  */
-function setDayOfYear(dirtyDate, dirtyDayOfYear) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var dayOfYear = (0, _index.default)(dirtyDayOfYear);
-  date.setMonth(0);
-  date.setDate(dayOfYear);
-  return date;
+function setDayOfYear(date, dayOfYear) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMonth(0);
+  _date.setDate(dayOfYear);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 54:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7911:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setDefaultOptions = setDefaultOptions;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setDefaultOptions;
-var _index = __nccwpck_require__(9307);
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
+var _index = __nccwpck_require__(2466);
+
 /**
  * @name setDefaultOptions
  * @category Common Helpers
@@ -30143,11 +29003,7 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * `options.locale`, `options.weekStartsOn` and `options.firstWeekContainsDate`
  * arguments for all functions.
  *
- * @param {Object} newOptions - an object with options.
- * @param {Locale} [newOptions.locale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [newOptions.weekStartsOn] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [newOptions.firstWeekContainsDate] - the day of January, which is always in the first week of the year
- * @throws {TypeError} 1 argument required
+ * @param options - An object with options
  *
  * @example
  * // Set global locale:
@@ -30181,46 +29037,43 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * const result = startOfWeek(new Date(2014, 8, 2))
  * //=> Sun Aug 31 2014 00:00:00
  */
-function setDefaultOptions(newOptions) {
-  (0, _index2.default)(1, arguments);
-  var result = {};
-  var defaultOptions = (0, _index.getDefaultOptions)();
-  for (var property in defaultOptions) {
+function setDefaultOptions(options) {
+  const result = {};
+  const defaultOptions = (0, _index.getDefaultOptions)();
+
+  for (const property in defaultOptions) {
     if (Object.prototype.hasOwnProperty.call(defaultOptions, property)) {
-      ;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
       result[property] = defaultOptions[property];
     }
   }
-  for (var _property in newOptions) {
-    if (Object.prototype.hasOwnProperty.call(newOptions, _property)) {
-      if (newOptions[_property] === undefined) {
-        delete result[_property];
+
+  for (const property in options) {
+    if (Object.prototype.hasOwnProperty.call(options, property)) {
+      if (options[property] === undefined) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
+        delete result[property];
       } else {
-        ;
-        result[_property] = newOptions[_property];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
+        result[property] = options[property];
       }
     }
   }
+
   (0, _index.setDefaultOptions)(result);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6355:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2560:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setHours = setHours;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setHours;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setHours
  * @category Hour Helpers
@@ -30229,43 +29082,37 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the hours to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} hours - the hours of the new date
- * @returns {Date} the new date with the hours set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param hours - The hours of the new date
+ *
+ * @returns The new date with the hours set
  *
  * @example
  * // Set 4 hours to 1 September 2014 11:30:00:
  * const result = setHours(new Date(2014, 8, 1, 11, 30), 4)
  * //=> Mon Sep 01 2014 04:30:00
  */
-function setHours(dirtyDate, dirtyHours) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var hours = (0, _index.default)(dirtyHours);
-  date.setHours(hours);
-  return date;
+function setHours(date, hours) {
+  const _date = (0, _index.toDate)(date);
+  _date.setHours(hours);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3705:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 665:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setISODay = setISODay;
+var _index = __nccwpck_require__(8361);
+var _index2 = __nccwpck_require__(2924);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setISODay;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6227));
-var _index4 = _interopRequireDefault(__nccwpck_require__(8313));
-var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setISODay
  * @category Weekday Helpers
@@ -30276,43 +29123,37 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
  * ISO week starts with Monday.
  * 7 is the index of Sunday, 1 is the index of Monday etc.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} day - the day of the ISO week of the new date
- * @returns {Date} the new date with the day of the ISO week set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param day - The day of the ISO week of the new date
+ *
+ * @returns The new date with the day of the ISO week set
  *
  * @example
  * // Set Sunday to 1 September 2014:
  * const result = setISODay(new Date(2014, 8, 1), 7)
  * //=> Sun Sep 07 2014 00:00:00
  */
-function setISODay(dirtyDate, dirtyDay) {
-  (0, _index5.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var day = (0, _index.default)(dirtyDay);
-  var currentDay = (0, _index4.default)(date);
-  var diff = day - currentDay;
-  return (0, _index3.default)(date, diff);
+function setISODay(date, day) {
+  const _date = (0, _index3.toDate)(date);
+  const currentDay = (0, _index2.getISODay)(_date);
+  const diff = day - currentDay;
+  return (0, _index.addDays)(_date, diff);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3035:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1308:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setISOWeek = setISOWeek;
+var _index = __nccwpck_require__(6475);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(9894));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setISOWeek
  * @category ISO Week Helpers
@@ -30323,44 +29164,39 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} isoWeek - the ISO week of the new date
- * @returns {Date} the new date with the ISO week set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param week - The ISO week of the new date
+ *
+ * @returns The new date with the ISO week set
  *
  * @example
  * // Set the 53rd ISO week to 7 August 2004:
  * const result = setISOWeek(new Date(2004, 7, 7), 53)
  * //=> Sat Jan 01 2005 00:00:00
  */
-function setISOWeek(dirtyDate, dirtyISOWeek) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var isoWeek = (0, _index.default)(dirtyISOWeek);
-  var diff = (0, _index3.default)(date) - isoWeek;
-  date.setDate(date.getDate() - diff * 7);
-  return date;
+function setISOWeek(date, week) {
+  const _date = (0, _index2.toDate)(date);
+  const diff = (0, _index.getISOWeek)(_date) - week;
+  _date.setDate(_date.getDate() - diff * 7);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 822:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4954:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setISOWeekYear = setISOWeekYear;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(338);
+var _index3 = __nccwpck_require__(7809);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(776));
-var _index4 = _interopRequireDefault(__nccwpck_require__(3086));
-var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setISOWeekYear
  * @category ISO Week-Numbering Year Helpers
@@ -30372,46 +29208,43 @@ var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} isoWeekYear - the ISO week-numbering year of the new date
- * @returns {Date} the new date with the ISO week-numbering year set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param weekYear - The ISO week-numbering year of the new date
+ *
+ * @returns The new date with the ISO week-numbering year set
  *
  * @example
  * // Set ISO week-numbering year 2007 to 29 December 2008:
  * const result = setISOWeekYear(new Date(2008, 11, 29), 2007)
  * //=> Mon Jan 01 2007 00:00:00
  */
-function setISOWeekYear(dirtyDate, dirtyISOWeekYear) {
-  (0, _index5.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var isoWeekYear = (0, _index.default)(dirtyISOWeekYear);
-  var diff = (0, _index4.default)(date, (0, _index3.default)(date));
-  var fourthOfJanuary = new Date(0);
-  fourthOfJanuary.setFullYear(isoWeekYear, 0, 4);
+function setISOWeekYear(date, weekYear) {
+  let _date = (0, _index4.toDate)(date);
+  const diff = (0, _index2.differenceInCalendarDays)(
+    _date,
+    (0, _index3.startOfISOWeekYear)(_date),
+  );
+  const fourthOfJanuary = (0, _index.constructFrom)(date, 0);
+  fourthOfJanuary.setFullYear(weekYear, 0, 4);
   fourthOfJanuary.setHours(0, 0, 0, 0);
-  date = (0, _index3.default)(fourthOfJanuary);
-  date.setDate(date.getDate() + diff);
-  return date;
+  _date = (0, _index3.startOfISOWeekYear)(fourthOfJanuary);
+  _date.setDate(_date.getDate() + diff);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9105:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9756:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setMilliseconds = setMilliseconds;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setMilliseconds
  * @category Millisecond Helpers
@@ -30420,41 +29253,35 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the milliseconds to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} milliseconds - the milliseconds of the new date
- * @returns {Date} the new date with the milliseconds set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param milliseconds - The milliseconds of the new date
+ *
+ * @returns The new date with the milliseconds set
  *
  * @example
  * // Set 300 milliseconds to 1 September 2014 11:30:40.500:
  * const result = setMilliseconds(new Date(2014, 8, 1, 11, 30, 40, 500), 300)
  * //=> Mon Sep 01 2014 11:30:40.300
  */
-function setMilliseconds(dirtyDate, dirtyMilliseconds) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var milliseconds = (0, _index.default)(dirtyMilliseconds);
-  date.setMilliseconds(milliseconds);
-  return date;
+function setMilliseconds(date, milliseconds) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMilliseconds(milliseconds);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9207:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9541:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setMinutes = setMinutes;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setMinutes
  * @category Minute Helpers
@@ -30463,42 +29290,37 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the minutes to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} minutes - the minutes of the new date
- * @returns {Date} the new date with the minutes set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param minutes - The minutes of the new date
+ *
+ * @returns The new date with the minutes set
  *
  * @example
  * // Set 45 minutes to 1 September 2014 11:30:40:
  * const result = setMinutes(new Date(2014, 8, 1, 11, 30, 40), 45)
  * //=> Mon Sep 01 2014 11:45:40
  */
-function setMinutes(dirtyDate, dirtyMinutes) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var minutes = (0, _index.default)(dirtyMinutes);
-  date.setMinutes(minutes);
-  return date;
+function setMinutes(date, minutes) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMinutes(minutes);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 847:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1771:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setMonth = setMonth;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(5586);
+var _index3 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(7573));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setMonth
  * @category Month Helpers
@@ -30507,50 +29329,45 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the month to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} month - the month of the new date
- * @returns {Date} the new date with the month set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param month - The month of the new date
+ *
+ * @returns The new date with the month set
  *
  * @example
  * // Set February to 1 September 2014:
  * const result = setMonth(new Date(2014, 8, 1), 1)
  * //=> Sat Feb 01 2014 00:00:00
  */
-function setMonth(dirtyDate, dirtyMonth) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var month = (0, _index.default)(dirtyMonth);
-  var year = date.getFullYear();
-  var day = date.getDate();
-  var dateWithDesiredMonth = new Date(0);
+function setMonth(date, month) {
+  const _date = (0, _index3.toDate)(date);
+  const year = _date.getFullYear();
+  const day = _date.getDate();
+
+  const dateWithDesiredMonth = (0, _index.constructFrom)(date, 0);
   dateWithDesiredMonth.setFullYear(year, month, 15);
   dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  var daysInMonth = (0, _index3.default)(dateWithDesiredMonth);
+  const daysInMonth = (0, _index2.getDaysInMonth)(dateWithDesiredMonth);
   // Set the last day of the new month
   // if the original date was the last day of the longer month
-  date.setMonth(month, Math.min(day, daysInMonth));
-  return date;
+  _date.setMonth(month, Math.min(day, daysInMonth));
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 621:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5595:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setQuarter = setQuarter;
+var _index = __nccwpck_require__(1771);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(847));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setQuarter
  * @category Quarter Helpers
@@ -30559,42 +29376,36 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the year quarter to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} quarter - the quarter of the new date
- * @returns {Date} the new date with the quarter set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param quarter - The quarter of the new date
+ *
+ * @returns The new date with the quarter set
  *
  * @example
  * // Set the 2nd quarter to 2 July 2014:
  * const result = setQuarter(new Date(2014, 6, 2), 2)
  * //=> Wed Apr 02 2014 00:00:00
  */
-function setQuarter(dirtyDate, dirtyQuarter) {
-  (0, _index4.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var quarter = (0, _index.default)(dirtyQuarter);
-  var oldQuarter = Math.floor(date.getMonth() / 3) + 1;
-  var diff = quarter - oldQuarter;
-  return (0, _index3.default)(date, date.getMonth() + diff * 3);
+function setQuarter(date, quarter) {
+  const _date = (0, _index2.toDate)(date);
+  const oldQuarter = Math.floor(_date.getMonth() / 3) + 1;
+  const diff = quarter - oldQuarter;
+  return (0, _index.setMonth)(_date, _date.getMonth() + diff * 3);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1346:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3987:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setSeconds = setSeconds;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setSeconds
  * @category Second Helpers
@@ -30603,42 +29414,40 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the seconds to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} seconds - the seconds of the new date
- * @returns {Date} the new date with the seconds set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param seconds - The seconds of the new date
+ *
+ * @returns The new date with the seconds set
  *
  * @example
  * // Set 45 seconds to 1 September 2014 11:30:40:
  * const result = setSeconds(new Date(2014, 8, 1, 11, 30, 40), 45)
  * //=> Mon Sep 01 2014 11:30:45
  */
-function setSeconds(dirtyDate, dirtySeconds) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var seconds = (0, _index.default)(dirtySeconds);
-  date.setSeconds(seconds);
-  return date;
+function setSeconds(date, seconds) {
+  const _date = (0, _index.toDate)(date);
+  _date.setSeconds(seconds);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2664:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8476:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setWeek = setWeek;
+var _index = __nccwpck_require__(802);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(81));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
+/**
+ * The {@link setWeek} function options.
+ */
+
 /**
  * @name setWeek
  * @category Week Helpers
@@ -30653,16 +29462,13 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
  *
  * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} week - the week of the new date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @returns {Date} the new date with the local week set
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param week - The week of the new date
+ * @param options - An object with options
+ *
+ * @returns The new date with the local week set
  *
  * @example
  * // Set the 1st week to 2 January 2005 with default options:
@@ -30679,35 +29485,33 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
  * })
  * //=> Sun Jan 4 2004 00:00:00
  */
-function setWeek(dirtyDate, dirtyWeek, options) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var week = (0, _index4.default)(dirtyWeek);
-  var diff = (0, _index.default)(date, options) - week;
-  date.setDate(date.getDate() - diff * 7);
-  return date;
+function setWeek(date, week, options) {
+  const _date = (0, _index2.toDate)(date);
+  const diff = (0, _index.getWeek)(_date, options) - week;
+  _date.setDate(_date.getDate() - diff * 7);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3438:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1651:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setWeekYear = setWeekYear;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(338);
+var _index3 = __nccwpck_require__(1348);
+var _index4 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(3086));
-var _index2 = _interopRequireDefault(__nccwpck_require__(8014));
-var _index3 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index5 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index6 = __nccwpck_require__(9307);
+var _index5 = __nccwpck_require__(2466);
+
+/**
+ * The {@link setWeekYear} function options.
+ */
+
 /**
  * @name setWeekYear
  * @category Week-Numbering Year Helpers
@@ -30723,16 +29527,13 @@ var _index6 = __nccwpck_require__(9307);
  *
  * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} weekYear - the local week-numbering year of the new date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @returns {Date} the new date with the local week-numbering year set
- * @throws {TypeError} 2 arguments required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param weekYear - The local week-numbering year of the new date
+ * @param options - An object with options
+ *
+ * @returns The new date with the local week-numbering year set
  *
  * @example
  * // Set the local week-numbering year 2004 to 2 January 2010 with default options:
@@ -30749,39 +29550,40 @@ var _index6 = __nccwpck_require__(9307);
  * })
  * //=> Sat Jan 01 2005 00:00:00
  */
-function setWeekYear(dirtyDate, dirtyWeekYear, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index5.default)(2, arguments);
-  var defaultOptions = (0, _index6.getDefaultOptions)();
-  var firstWeekContainsDate = (0, _index4.default)((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
-  var date = (0, _index3.default)(dirtyDate);
-  var weekYear = (0, _index4.default)(dirtyWeekYear);
-  var diff = (0, _index.default)(date, (0, _index2.default)(date, options));
-  var firstWeek = new Date(0);
+function setWeekYear(date, weekYear, options) {
+  const defaultOptions = (0, _index5.getDefaultOptions)();
+  const firstWeekContainsDate =
+    options?.firstWeekContainsDate ??
+    options?.locale?.options?.firstWeekContainsDate ??
+    defaultOptions.firstWeekContainsDate ??
+    defaultOptions.locale?.options?.firstWeekContainsDate ??
+    1;
+
+  let _date = (0, _index4.toDate)(date);
+  const diff = (0, _index2.differenceInCalendarDays)(
+    _date,
+    (0, _index3.startOfWeekYear)(_date, options),
+  );
+  const firstWeek = (0, _index.constructFrom)(date, 0);
   firstWeek.setFullYear(weekYear, 0, firstWeekContainsDate);
   firstWeek.setHours(0, 0, 0, 0);
-  date = (0, _index2.default)(firstWeek, options);
-  date.setDate(date.getDate() + diff);
-  return date;
+  _date = (0, _index3.startOfWeekYear)(firstWeek, options);
+  _date.setDate(_date.getDate() + diff);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6212:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4085:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.setYear = setYear;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = setYear;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6477));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name setYear
  * @category Year Helpers
@@ -30790,45 +29592,41 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Set the year to the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} year - the year of the new date
- * @returns {Date} the new date with the year set
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param year - The year of the new date
+ *
+ * @returns The new date with the year set
  *
  * @example
  * // Set year 2013 to 1 September 2014:
  * const result = setYear(new Date(2014, 8, 1), 2013)
  * //=> Sun Sep 01 2013 00:00:00
  */
-function setYear(dirtyDate, dirtyYear) {
-  (0, _index3.default)(2, arguments);
-  var date = (0, _index2.default)(dirtyDate);
-  var year = (0, _index.default)(dirtyYear);
+function setYear(date, year) {
+  const _date = (0, _index2.toDate)(date);
 
   // Check if date is Invalid Date because Date.prototype.setFullYear ignores the value of Invalid Date
-  if (isNaN(date.getTime())) {
-    return new Date(NaN);
+  if (isNaN(+_date)) {
+    return (0, _index.constructFrom)(date, NaN);
   }
-  date.setFullYear(year);
-  return date;
+
+  _date.setFullYear(year);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1868:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1310:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfDay = startOfDay;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfDay;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfDay
  * @category Day Helpers
@@ -30838,38 +29636,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of a day for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a day
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a day
  *
  * @example
  * // The start of a day for 2 September 2014 11:55:00:
  * const result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 02 2014 00:00:00
  */
-function startOfDay(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function startOfDay(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2025:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9608:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfDecade = startOfDecade;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfDecade;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfDecade
  * @category Decade Helpers
@@ -30878,41 +29672,37 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Return the start of a decade for the given date.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a decade
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a decade
  *
  * @example
  * // The start of a decade for 21 October 2015 00:00:00:
  * const result = startOfDecade(new Date(2015, 9, 21, 00, 00, 00))
  * //=> Jan 01 2010 00:00:00
  */
-function startOfDecade(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var year = date.getFullYear();
-  var decade = Math.floor(year / 10) * 10;
-  date.setFullYear(decade, 0, 1);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function startOfDecade(date) {
+  const _date = (0, _index.toDate)(date);
+  const year = _date.getFullYear();
+  const decade = Math.floor(year / 10) * 10;
+  _date.setFullYear(decade, 0, 1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6277:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8079:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfHour = startOfHour;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfHour;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfHour
  * @category Hour Helpers
@@ -30922,38 +29712,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of an hour for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of an hour
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of an hour
  *
  * @example
  * // The start of an hour for 2 September 2014 11:55:00:
  * const result = startOfHour(new Date(2014, 8, 2, 11, 55))
  * //=> Tue Sep 02 2014 11:00:00
  */
-function startOfHour(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setMinutes(0, 0, 0);
-  return date;
+function startOfHour(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMinutes(0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6307:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9709:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfISOWeek = startOfISOWeek;
+var _index = __nccwpck_require__(6068);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfISOWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(9813));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfISOWeek
  * @category ISO Week Helpers
@@ -30965,39 +29751,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of an ISO week
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of an ISO week
  *
  * @example
  * // The start of an ISO week for 2 September 2014 11:55:00:
  * const result = startOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Mon Sep 01 2014 00:00:00
  */
-function startOfISOWeek(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  return (0, _index.default)(dirtyDate, {
-    weekStartsOn: 1
-  });
+function startOfISOWeek(date) {
+  return (0, _index.startOfWeek)(date, { weekStartsOn: 1 });
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 776:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7809:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfISOWeekYear = startOfISOWeekYear;
+var _index = __nccwpck_require__(308);
+var _index2 = __nccwpck_require__(9709);
+var _index3 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfISOWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6991));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6307));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfISOWeekYear
  * @category ISO Week-Numbering Year Helpers
@@ -31010,41 +29791,36 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of an ISO week-numbering year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of an ISO week-numbering year
  *
  * @example
  * // The start of an ISO week-numbering year for 2 July 2005:
  * const result = startOfISOWeekYear(new Date(2005, 6, 2))
  * //=> Mon Jan 03 2005 00:00:00
  */
-function startOfISOWeekYear(dirtyDate) {
-  (0, _index3.default)(1, arguments);
-  var year = (0, _index.default)(dirtyDate);
-  var fourthOfJanuary = new Date(0);
+function startOfISOWeekYear(date) {
+  const year = (0, _index.getISOWeekYear)(date);
+  const fourthOfJanuary = (0, _index3.constructFrom)(date, 0);
   fourthOfJanuary.setFullYear(year, 0, 4);
   fourthOfJanuary.setHours(0, 0, 0, 0);
-  var date = (0, _index2.default)(fourthOfJanuary);
-  return date;
+  return (0, _index2.startOfISOWeek)(fourthOfJanuary);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8567:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1831:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfMinute = startOfMinute;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfMinute;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfMinute
  * @category Minute Helpers
@@ -31054,38 +29830,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of a minute for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a minute
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a minute
  *
  * @example
  * // The start of a minute for 1 December 2014 22:15:45.400:
  * const result = startOfMinute(new Date(2014, 11, 1, 22, 15, 45, 400))
  * //=> Mon Dec 01 2014 22:15:00
  */
-function startOfMinute(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setSeconds(0, 0);
-  return date;
+function startOfMinute(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setSeconds(0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7182:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 50:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfMonth = startOfMonth;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfMonth;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfMonth
  * @category Month Helpers
@@ -31095,39 +29867,35 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of a month for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a month
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a month
  *
  * @example
  * // The start of a month for 2 September 2014 11:55:00:
  * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Mon Sep 01 2014 00:00:00
  */
-function startOfMonth(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setDate(1);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function startOfMonth(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setDate(1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2932:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3148:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfQuarter = startOfQuarter;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfQuarter;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfQuarter
  * @category Quarter Helpers
@@ -31137,41 +29905,37 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of a year quarter for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a quarter
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a quarter
  *
  * @example
  * // The start of a quarter for 2 September 2014 11:55:00:
  * const result = startOfQuarter(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Jul 01 2014 00:00:00
  */
-function startOfQuarter(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  var currentMonth = date.getMonth();
-  var month = currentMonth - currentMonth % 3;
-  date.setMonth(month, 1);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function startOfQuarter(date) {
+  const _date = (0, _index.toDate)(date);
+  const currentMonth = _date.getMonth();
+  const month = currentMonth - (currentMonth % 3);
+  _date.setMonth(month, 1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6738:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2991:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfSecond = startOfSecond;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfSecond;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfSecond
  * @category Second Helpers
@@ -31181,37 +29945,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of a second for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a second
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a second
  *
  * @example
  * // The start of a second for 1 December 2014 22:15:45.400:
  * const result = startOfSecond(new Date(2014, 11, 1, 22, 15, 45, 400))
  * //=> Mon Dec 01 2014 22:15:45.000
  */
-function startOfSecond(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var date = (0, _index.default)(dirtyDate);
-  date.setMilliseconds(0);
-  return date;
+function startOfSecond(date) {
+  const _date = (0, _index.toDate)(date);
+  _date.setMilliseconds(0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5516:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2413:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfToday = startOfToday;
+var _index = __nccwpck_require__(1310);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfToday;
-var _index = _interopRequireDefault(__nccwpck_require__(1868));
 /**
  * @name startOfToday
  * @category Day Helpers
@@ -31221,10 +29982,7 @@ var _index = _interopRequireDefault(__nccwpck_require__(1868));
  * @description
  * Return the start of today.
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `Date.now()` internally hence impure and can't be safely curried.
- *
- * @returns {Date} the start of today
+ * @returns The start of today
  *
  * @example
  * // If today is 6 October 2014:
@@ -31232,23 +29990,18 @@ var _index = _interopRequireDefault(__nccwpck_require__(1868));
  * //=> Mon Oct 6 2014 00:00:00
  */
 function startOfToday() {
-  return (0, _index.default)(Date.now());
+  return (0, _index.startOfDay)(Date.now());
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2442:
-/***/ ((module, exports) => {
+/***/ 8227:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfTomorrow;
-/**
+exports.startOfTomorrow = startOfTomorrow; /**
  * @name startOfTomorrow
  * @category Day Helpers
  * @summary Return the start of tomorrow.
@@ -31257,10 +30010,7 @@ exports["default"] = startOfTomorrow;
  * @description
  * Return the start of tomorrow.
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `new Date()` internally hence impure and can't be safely curried.
- *
- * @returns {Date} the start of tomorrow
+ * @returns The start of tomorrow
  *
  * @example
  * // If today is 6 October 2014:
@@ -31268,34 +30018,34 @@ exports["default"] = startOfTomorrow;
  * //=> Tue Oct 7 2014 00:00:00
  */
 function startOfTomorrow() {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = now.getMonth();
-  var day = now.getDate();
-  var date = new Date(0);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  const date = new Date(0);
   date.setFullYear(year, month, day + 1);
   date.setHours(0, 0, 0, 0);
   return date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 9813:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 6068:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfWeek = startOfWeek;
+var _index = __nccwpck_require__(3622);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfWeek;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index4 = __nccwpck_require__(9307);
+var _index2 = __nccwpck_require__(2466);
+
+/**
+ * The {@link startOfWeek} function options.
+ */
+
 /**
  * @name startOfWeek
  * @category Week Helpers
@@ -31305,13 +30055,12 @@ var _index4 = __nccwpck_require__(9307);
  * Return the start of a week for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @returns {Date} the start of a week
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The start of a week
  *
  * @example
  * // The start of a week for 2 September 2014 11:55:00:
@@ -31323,43 +30072,43 @@ var _index4 = __nccwpck_require__(9307);
  * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
  * //=> Mon Sep 01 2014 00:00:00
  */
-function startOfWeek(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index3.default)(1, arguments);
-  var defaultOptions = (0, _index4.getDefaultOptions)();
-  var weekStartsOn = (0, _index2.default)((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
+function startOfWeek(date, options) {
+  const defaultOptions = (0, _index2.getDefaultOptions)();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
 
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = (0, _index.default)(dirtyDate);
-  var day = date.getDay();
-  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-  date.setDate(date.getDate() - diff);
-  date.setHours(0, 0, 0, 0);
-  return date;
+  const _date = (0, _index.toDate)(date);
+  const day = _date.getDay();
+  const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  _date.setDate(_date.getDate() - diff);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8014:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1348:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfWeekYear = startOfWeekYear;
+var _index = __nccwpck_require__(2736);
+var _index2 = __nccwpck_require__(7669);
+var _index3 = __nccwpck_require__(6068);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfWeekYear;
-var _index = _interopRequireDefault(__nccwpck_require__(3494));
-var _index2 = _interopRequireDefault(__nccwpck_require__(9813));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
-var _index4 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index5 = __nccwpck_require__(9307);
+var _index4 = __nccwpck_require__(2466);
+
+/**
+ * The {@link startOfWeekYear} function options.
+ */
+
 /**
  * @name startOfWeekYear
  * @category Week-Numbering Year Helpers
@@ -31374,15 +30123,12 @@ var _index5 = __nccwpck_require__(9307);
  *
  * Week numbering: https://en.wikipedia.org/wiki/Week#Week_numbering
  *
- * @param {Date|Number} date - the original date
- * @param {Object} [options] - an object with options.
- * @param {Locale} [options.locale=defaultLocale] - the locale object. See [Locale]{@link https://date-fns.org/docs/Locale}
- * @param {0|1|2|3|4|5|6} [options.weekStartsOn=0] - the index of the first day of the week (0 - Sunday)
- * @param {1|2|3|4|5|6|7} [options.firstWeekContainsDate=1] - the day of January, which is always in the first week of the year
- * @returns {Date} the start of a week-numbering year
- * @throws {TypeError} 1 argument required
- * @throws {RangeError} `options.weekStartsOn` must be between 0 and 6
- * @throws {RangeError} `options.firstWeekContainsDate` must be between 1 and 7
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The start of a week-numbering year
  *
  * @example
  * // The start of an a week-numbering year for 2 July 2005 with default settings:
@@ -31399,35 +30145,35 @@ var _index5 = __nccwpck_require__(9307);
  * })
  * //=> Mon Jan 03 2005 00:00:00
  */
-function startOfWeekYear(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  (0, _index4.default)(1, arguments);
-  var defaultOptions = (0, _index5.getDefaultOptions)();
-  var firstWeekContainsDate = (0, _index3.default)((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
-  var year = (0, _index.default)(dirtyDate, options);
-  var firstWeek = new Date(0);
+function startOfWeekYear(date, options) {
+  const defaultOptions = (0, _index4.getDefaultOptions)();
+  const firstWeekContainsDate =
+    options?.firstWeekContainsDate ??
+    options?.locale?.options?.firstWeekContainsDate ??
+    defaultOptions.firstWeekContainsDate ??
+    defaultOptions.locale?.options?.firstWeekContainsDate ??
+    1;
+
+  const year = (0, _index2.getWeekYear)(date, options);
+  const firstWeek = (0, _index.constructFrom)(date, 0);
   firstWeek.setFullYear(year, 0, firstWeekContainsDate);
   firstWeek.setHours(0, 0, 0, 0);
-  var date = (0, _index2.default)(firstWeek, options);
-  return date;
+  const _date = (0, _index3.startOfWeek)(firstWeek, options);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 8225:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3304:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.startOfYear = startOfYear;
+var _index = __nccwpck_require__(3622);
+var _index2 = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfYear;
-var _index = _interopRequireDefault(__nccwpck_require__(6477));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name startOfYear
  * @category Year Helpers
@@ -31437,38 +30183,34 @@ var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
  * Return the start of a year for the given date.
  * The result will be in the local timezone.
  *
- * @param {Date|Number} date - the original date
- * @returns {Date} the start of a year
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The original date
+ *
+ * @returns The start of a year
  *
  * @example
  * // The start of a year for 2 September 2014 11:55:00:
  * const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
  * //=> Wed Jan 01 2014 00:00:00
  */
-function startOfYear(dirtyDate) {
-  (0, _index2.default)(1, arguments);
-  var cleanDate = (0, _index.default)(dirtyDate);
-  var date = new Date(0);
-  date.setFullYear(cleanDate.getFullYear(), 0, 1);
-  date.setHours(0, 0, 0, 0);
-  return date;
+function startOfYear(date) {
+  const cleanDate = (0, _index.toDate)(date);
+  const _date = (0, _index2.constructFrom)(date, 0);
+  _date.setFullYear(cleanDate.getFullYear(), 0, 1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1672:
-/***/ ((module, exports) => {
+/***/ 2600:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = startOfYesterday;
-/**
+exports.startOfYesterday = startOfYesterday; /**
  * @name startOfYesterday
  * @category Day Helpers
  * @summary Return the start of yesterday.
@@ -31477,10 +30219,7 @@ exports["default"] = startOfYesterday;
  * @description
  * Return the start of yesterday.
  *
- * > ⚠️ Please note that this function is not present in the FP submodule as
- * > it uses `new Date()` internally hence impure and can't be safely curried.
- *
- * @returns {Date} the start of yesterday
+ * @returns The start of yesterday
  *
  * @example
  * // If today is 6 October 2014:
@@ -31488,35 +30227,31 @@ exports["default"] = startOfYesterday;
  * //=> Sun Oct 5 2014 00:00:00
  */
 function startOfYesterday() {
-  var now = new Date();
-  var year = now.getFullYear();
-  var month = now.getMonth();
-  var day = now.getDate();
-  var date = new Date(0);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const day = now.getDate();
+
+  const date = new Date(0);
   date.setFullYear(year, month, day - 1);
   date.setHours(0, 0, 0, 0);
   return date;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3875:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7264:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.sub = sub;
+var _index = __nccwpck_require__(9771);
+var _index2 = __nccwpck_require__(8682);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = sub;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(970));
-var _index2 = _interopRequireDefault(__nccwpck_require__(6752));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
+var _index3 = __nccwpck_require__(2736);
+
 /**
  * @name sub
  * @category Common Helpers
@@ -31525,8 +30260,10 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Subtract the specified years, months, weeks, days, hours, minutes and seconds from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Duration} duration - the object with years, months, weeks, days, hours, minutes and seconds to be subtracted
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param duration - The object with years, months, weeks, days, hours, minutes and seconds to be subtracted
  *
  * | Key     | Description                        |
  * |---------|------------------------------------|
@@ -31540,8 +30277,7 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
  *
  * All values default to 0
  *
- * @returns {Date} the new date with the seconds subtracted
- * @throws {TypeError} 2 arguments required
+ * @returns The new date with the seconds subtracted
  *
  * @example
  * // Subtract the following duration from 15 June 2017 15:29:20
@@ -31557,47 +30293,48 @@ var _index4 = _interopRequireDefault(__nccwpck_require__(1985));
  * //=> Mon Sep 1 2014 10:19:50
  */
 function sub(date, duration) {
-  (0, _index3.default)(2, arguments);
-  if (!duration || (0, _typeof2.default)(duration) !== 'object') return new Date(NaN);
-  var years = duration.years ? (0, _index4.default)(duration.years) : 0;
-  var months = duration.months ? (0, _index4.default)(duration.months) : 0;
-  var weeks = duration.weeks ? (0, _index4.default)(duration.weeks) : 0;
-  var days = duration.days ? (0, _index4.default)(duration.days) : 0;
-  var hours = duration.hours ? (0, _index4.default)(duration.hours) : 0;
-  var minutes = duration.minutes ? (0, _index4.default)(duration.minutes) : 0;
-  var seconds = duration.seconds ? (0, _index4.default)(duration.seconds) : 0;
+  const {
+    years = 0,
+    months = 0,
+    weeks = 0,
+    days = 0,
+    hours = 0,
+    minutes = 0,
+    seconds = 0,
+  } = duration;
 
   // Subtract years and months
-  var dateWithoutMonths = (0, _index2.default)(date, months + years * 12);
+  const dateWithoutMonths = (0, _index2.subMonths)(date, months + years * 12);
 
   // Subtract weeks and days
-  var dateWithoutDays = (0, _index.default)(dateWithoutMonths, days + weeks * 7);
+  const dateWithoutDays = (0, _index.subDays)(
+    dateWithoutMonths,
+    days + weeks * 7,
+  );
 
   // Subtract hours, minutes and seconds
-  var minutestoSub = minutes + hours * 60;
-  var secondstoSub = seconds + minutestoSub * 60;
-  var mstoSub = secondstoSub * 1000;
-  var finalDate = new Date(dateWithoutDays.getTime() - mstoSub);
+  const minutestoSub = minutes + hours * 60;
+  const secondstoSub = seconds + minutestoSub * 60;
+  const mstoSub = secondstoSub * 1000;
+  const finalDate = (0, _index3.constructFrom)(
+    date,
+    dateWithoutDays.getTime() - mstoSub,
+  );
+
   return finalDate;
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 1952:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9271:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subBusinessDays = subBusinessDays;
+var _index = __nccwpck_require__(1060);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subBusinessDays;
-var _index = _interopRequireDefault(__nccwpck_require__(1727));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name subBusinessDays
  * @category Day Helpers
@@ -31606,39 +30343,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Substract the specified number of business days (mon - fri) to the given date, ignoring weekends.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of business days to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the business days subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of business days to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the business days subtracted
  *
  * @example
  * // Substract 10 business days from 1 September 2014:
  * const result = subBusinessDays(new Date(2014, 8, 1), 10)
  * //=> Mon Aug 18 2014 00:00:00 (skipped weekend days)
  */
-function subBusinessDays(dirtyDate, dirtyAmount) {
-  (0, _index2.default)(2, arguments);
-  var amount = (0, _index3.default)(dirtyAmount);
-  return (0, _index.default)(dirtyDate, -amount);
+function subBusinessDays(date, amount) {
+  return (0, _index.addBusinessDays)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 970:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9771:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subDays = subDays;
+var _index = __nccwpck_require__(8361);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subDays;
-var _index = _interopRequireDefault(__nccwpck_require__(6227));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name subDays
  * @category Day Helpers
@@ -31647,39 +30378,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Subtract the specified number of days from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of days to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the days subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the days subtracted
  *
  * @example
  * // Subtract 10 days from 1 September 2014:
  * const result = subDays(new Date(2014, 8, 1), 10)
  * //=> Fri Aug 22 2014 00:00:00
  */
-function subDays(dirtyDate, dirtyAmount) {
-  (0, _index2.default)(2, arguments);
-  var amount = (0, _index3.default)(dirtyAmount);
-  return (0, _index.default)(dirtyDate, -amount);
+function subDays(date, amount) {
+  return (0, _index.addDays)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 2481:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 7858:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subHours = subHours;
+var _index = __nccwpck_require__(9994);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subHours;
-var _index = _interopRequireDefault(__nccwpck_require__(9956));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name subHours
  * @category Hour Helpers
@@ -31688,39 +30413,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Subtract the specified number of hours from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of hours to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the hours subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of hours to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the hours subtracted
  *
  * @example
  * // Subtract 2 hours from 11 July 2014 01:00:00:
  * const result = subHours(new Date(2014, 6, 11, 1, 0), 2)
  * //=> Thu Jul 10 2014 23:00:00
  */
-function subHours(dirtyDate, dirtyAmount) {
-  (0, _index2.default)(2, arguments);
-  var amount = (0, _index3.default)(dirtyAmount);
-  return (0, _index.default)(dirtyDate, -amount);
+function subHours(date, amount) {
+  return (0, _index.addHours)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3925:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4118:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subISOWeekYears = subISOWeekYears;
+var _index = __nccwpck_require__(9209);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subISOWeekYears;
-var _index = _interopRequireDefault(__nccwpck_require__(5318));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name subISOWeekYears
  * @category ISO Week-Numbering Year Helpers
@@ -31731,39 +30450,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  *
  * ISO week-numbering year: http://en.wikipedia.org/wiki/ISO_week_date
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of ISO week-numbering years to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the ISO week-numbering years subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of ISO week-numbering years to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the ISO week-numbering years subtracted
  *
  * @example
  * // Subtract 5 ISO week-numbering years from 1 September 2014:
  * const result = subISOWeekYears(new Date(2014, 8, 1), 5)
  * //=> Mon Aug 31 2009 00:00:00
  */
-function subISOWeekYears(dirtyDate, dirtyAmount) {
-  (0, _index2.default)(2, arguments);
-  var amount = (0, _index3.default)(dirtyAmount);
-  return (0, _index.default)(dirtyDate, -amount);
+function subISOWeekYears(date, amount) {
+  return (0, _index.addISOWeekYears)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7923:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9473:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subMilliseconds = subMilliseconds;
+var _index = __nccwpck_require__(8671);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subMilliseconds;
-var _index = _interopRequireDefault(__nccwpck_require__(524));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name subMilliseconds
  * @category Millisecond Helpers
@@ -31772,39 +30485,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Subtract the specified number of milliseconds from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of milliseconds to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the milliseconds subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of milliseconds to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the milliseconds subtracted
  *
  * @example
  * // Subtract 750 milliseconds from 10 July 2014 12:45:30.000:
  * const result = subMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
  * //=> Thu Jul 10 2014 12:45:29.250
  */
-function subMilliseconds(dirtyDate, dirtyAmount) {
-  (0, _index2.default)(2, arguments);
-  var amount = (0, _index3.default)(dirtyAmount);
-  return (0, _index.default)(dirtyDate, -amount);
+function subMilliseconds(date, amount) {
+  return (0, _index.addMilliseconds)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7535:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8137:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subMinutes = subMinutes;
+var _index = __nccwpck_require__(7231);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subMinutes;
-var _index = _interopRequireDefault(__nccwpck_require__(5268));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2063));
-var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
 /**
  * @name subMinutes
  * @category Minute Helpers
@@ -31813,39 +30520,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(1985));
  * @description
  * Subtract the specified number of minutes from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of minutes to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the minutes subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of minutes to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the minutes subtracted
  *
  * @example
  * // Subtract 30 minutes from 10 July 2014 12:00:00:
  * const result = subMinutes(new Date(2014, 6, 10, 12, 0), 30)
  * //=> Thu Jul 10 2014 11:30:00
  */
-function subMinutes(dirtyDate, dirtyAmount) {
-  (0, _index2.default)(2, arguments);
-  var amount = (0, _index3.default)(dirtyAmount);
-  return (0, _index.default)(dirtyDate, -amount);
+function subMinutes(date, amount) {
+  return (0, _index.addMinutes)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6752:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 8682:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subMonths = subMonths;
+var _index = __nccwpck_require__(4119);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subMonths;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(2995));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name subMonths
  * @category Month Helpers
@@ -31854,39 +30555,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Subtract the specified number of months from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of months to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the months subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the months subtracted
  *
  * @example
  * // Subtract 5 months from 1 February 2015:
  * const result = subMonths(new Date(2015, 1, 1), 5)
  * //=> Mon Sep 01 2014 00:00:00
  */
-function subMonths(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, -amount);
+function subMonths(date, amount) {
+  return (0, _index.addMonths)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 3139:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 2535:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subQuarters = subQuarters;
+var _index = __nccwpck_require__(7153);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subQuarters;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(5149));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name subQuarters
  * @category Quarter Helpers
@@ -31895,39 +30590,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Subtract the specified number of year quarters from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of quarters to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the quarters subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of quarters to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the quarters subtracted
  *
  * @example
  * // Subtract 3 quarters from 1 September 2014:
  * const result = subQuarters(new Date(2014, 8, 1), 3)
  * //=> Sun Dec 01 2013 00:00:00
  */
-function subQuarters(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, -amount);
+function subQuarters(date, amount) {
+  return (0, _index.addQuarters)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 138:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4796:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subSeconds = subSeconds;
+var _index = __nccwpck_require__(3378);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subSeconds;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(4112));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name subSeconds
  * @category Second Helpers
@@ -31936,39 +30625,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Subtract the specified number of seconds from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of seconds to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the seconds subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of seconds to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the seconds subtracted
  *
  * @example
  * // Subtract 30 seconds from 10 July 2014 12:45:00:
  * const result = subSeconds(new Date(2014, 6, 10, 12, 45, 0), 30)
  * //=> Thu Jul 10 2014 12:44:30
  */
-function subSeconds(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, -amount);
+function subSeconds(date, amount) {
+  return (0, _index.addSeconds)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 5504:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9966:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subWeeks = subWeeks;
+var _index = __nccwpck_require__(6985);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subWeeks;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(7195));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name subWeeks
  * @category Week Helpers
@@ -31977,39 +30660,33 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Subtract the specified number of weeks from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of weeks to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the weeks subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of weeks to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the weeks subtracted
  *
  * @example
  * // Subtract 4 weeks from 1 September 2014:
  * const result = subWeeks(new Date(2014, 8, 1), 4)
  * //=> Mon Aug 04 2014 00:00:00
  */
-function subWeeks(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, -amount);
+function subWeeks(date, amount) {
+  return (0, _index.addWeeks)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 843:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 9442:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.subYears = subYears;
+var _index = __nccwpck_require__(7204);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = subYears;
-var _index = _interopRequireDefault(__nccwpck_require__(1985));
-var _index2 = _interopRequireDefault(__nccwpck_require__(3367));
-var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name subYears
  * @category Year Helpers
@@ -32018,38 +30695,32 @@ var _index3 = _interopRequireDefault(__nccwpck_require__(2063));
  * @description
  * Subtract the specified number of years from the given date.
  *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of years to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the years subtracted
- * @throws {TypeError} 2 arguments required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ *
+ * @returns The new date with the years subtracted
  *
  * @example
  * // Subtract 5 years from 1 September 2014:
  * const result = subYears(new Date(2014, 8, 1), 5)
  * //=> Tue Sep 01 2009 00:00:00
  */
-function subYears(dirtyDate, dirtyAmount) {
-  (0, _index3.default)(2, arguments);
-  var amount = (0, _index.default)(dirtyAmount);
-  return (0, _index2.default)(dirtyDate, -amount);
+function subYears(date, amount) {
+  return (0, _index.addYears)(date, -amount);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6477:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 3622:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
+exports.toDate = toDate;
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = toDate;
-var _typeof2 = _interopRequireDefault(__nccwpck_require__(5605));
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
 /**
  * @name toDate
  * @category Common Helpers
@@ -32066,9 +30737,11 @@ var _index = _interopRequireDefault(__nccwpck_require__(2063));
  *
  * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
  *
- * @param {Date|Number} argument - the value to convert
- * @returns {Date} the parsed date in the local time zone
- * @throws {TypeError} 1 argument required
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ *
+ * @param argument - The value to convert
+ *
+ * @returns The parsed date in the local time zone
  *
  * @example
  * // Clone the date:
@@ -32081,42 +30754,98 @@ var _index = _interopRequireDefault(__nccwpck_require__(2063));
  * //=> Tue Feb 11 2014 11:30:30
  */
 function toDate(argument) {
-  (0, _index.default)(1, arguments);
-  var argStr = Object.prototype.toString.call(argument);
+  const argStr = Object.prototype.toString.call(argument);
 
   // Clone the date
-  if (argument instanceof Date || (0, _typeof2.default)(argument) === 'object' && argStr === '[object Date]') {
+  if (
+    argument instanceof Date ||
+    (typeof argument === "object" && argStr === "[object Date]")
+  ) {
     // Prevent the date to lose the milliseconds when passed to new Date() in IE10
-    return new Date(argument.getTime());
-  } else if (typeof argument === 'number' || argStr === '[object Number]') {
+    return new argument.constructor(+argument);
+  } else if (
+    typeof argument === "number" ||
+    argStr === "[object Number]" ||
+    typeof argStr === "string" ||
+    argStr === "[object String]"
+  ) {
+    // TODO: Can we get rid of as?
     return new Date(argument);
   } else {
-    if ((typeof argument === 'string' || argStr === '[object String]') && typeof console !== 'undefined') {
-      // eslint-disable-next-line no-console
-      console.warn("Starting with v2.0.0-beta.1 date-fns doesn't accept strings as date arguments. Please use `parseISO` to parse strings. See: https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#string-arguments");
-      // eslint-disable-next-line no-console
-      console.warn(new Error().stack);
-    }
+    // TODO: Can we get rid of as?
     return new Date(NaN);
   }
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 6812:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 1881:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.transpose = transpose;
+var _index = __nccwpck_require__(2736);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = weeksToDays;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
+/**
+ * @name transpose
+ * @category Generic Helpers
+ * @summary Transpose the date to the given constructor.
+ *
+ * @description
+ * The function transposes the date to the given constructor. It helps you
+ * to transpose the date in the system time zone to say `UTCDate` or any other
+ * date extension.
+ *
+ * @typeParam DateInputType - The input `Date` type derived from the passed argument.
+ * @typeParam DateOutputType - The output `Date` type derived from the passed constructor.
+ *
+ * @param fromDate - The date to use values from
+ * @param constructor - The date constructor to use
+ *
+ * @returns Date transposed to the given constructor
+ *
+ * @example
+ * // Create July 10, 2022 00:00 in locale time zone
+ * const date = new Date(2022, 6, 10)
+ * //=> 'Sun Jul 10 2022 00:00:00 GMT+0800 (Singapore Standard Time)'
+ *
+ * @example
+ * // Transpose the date to July 10, 2022 00:00 in UTC
+ * transpose(date, UTCDate)
+ * //=> 'Sun Jul 10 2022 00:00:00 GMT+0000 (Coordinated Universal Time)'
+ */
+function transpose(fromDate, constructor) {
+  const date =
+    constructor instanceof Date
+      ? (0, _index.constructFrom)(constructor, 0)
+      : new constructor(0);
+  date.setFullYear(
+    fromDate.getFullYear(),
+    fromDate.getMonth(),
+    fromDate.getDate(),
+  );
+  date.setHours(
+    fromDate.getHours(),
+    fromDate.getMinutes(),
+    fromDate.getSeconds(),
+    fromDate.getMilliseconds(),
+  );
+  return date;
+}
+
+
+/***/ }),
+
+/***/ 1388:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+exports.weeksToDays = weeksToDays;
+var _index = __nccwpck_require__(7818);
+
 /**
  * @name weeksToDays
  * @category Conversion Helpers
@@ -32125,10 +30854,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of weeks to a full number of days.
  *
- * @param {number} weeks - number of weeks to be converted
+ * @param weeks - The number of weeks to be converted
  *
- * @returns {number} the number of weeks converted in days
- * @throws {TypeError} 1 argument required
+ * @returns The number of weeks converted in days
  *
  * @example
  * // Convert 2 weeks into days
@@ -32136,26 +30864,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 14
  */
 function weeksToDays(weeks) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(weeks * _index2.daysInWeek);
+  return Math.floor(weeks * _index.daysInWeek);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 4616:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 5556:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.yearsToMonths = yearsToMonths;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = yearsToMonths;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name yearsToMonths
  * @category Conversion Helpers
@@ -32164,10 +30886,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of years to a full number of months.
  *
- * @param {number} years - number of years to be converted
+ * @param years - The number of years to be converted
  *
- * @returns {number} the number of years converted in months
- * @throws {TypeError} 1 argument required
+ * @returns The number of years converted in months
  *
  * @example
  * // Convert 2 years into months
@@ -32175,26 +30896,20 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 24
  */
 function yearsToMonths(years) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(years * _index2.monthsInYear);
+  return Math.floor(years * _index.monthsInYear);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
-/***/ 7384:
-/***/ ((module, exports, __nccwpck_require__) => {
+/***/ 4117:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
+exports.yearsToQuarters = yearsToQuarters;
+var _index = __nccwpck_require__(7818);
 
-var _interopRequireDefault = (__nccwpck_require__(3286)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = yearsToQuarters;
-var _index = _interopRequireDefault(__nccwpck_require__(2063));
-var _index2 = __nccwpck_require__(5756);
 /**
  * @name yearsToQuarters
  * @category Conversion Helpers
@@ -32203,10 +30918,9 @@ var _index2 = __nccwpck_require__(5756);
  * @description
  * Convert a number of years to a full number of quarters.
  *
- * @param {number} years - number of years to be converted
+ * @param years - The number of years to be converted
  *
- * @returns {number} the number of years converted in quarters
- * @throws {TypeError} 1 argument required
+ * @returns The number of years converted in quarters
  *
  * @example
  * // Convert 2 years to quarters
@@ -32214,10 +30928,9 @@ var _index2 = __nccwpck_require__(5756);
  * //=> 8
  */
 function yearsToQuarters(years) {
-  (0, _index.default)(1, arguments);
-  return Math.floor(years * _index2.quartersInYear);
+  return Math.floor(years * _index.quartersInYear);
 }
-module.exports = exports.default;
+
 
 /***/ }),
 
@@ -32953,7 +31666,7 @@ if (typeof Object.create === 'function') {
 
 /***/ }),
 
-/***/ 8085:
+/***/ 3973:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 module.exports = minimatch
@@ -33907,7 +32620,7 @@ function regExpEscape (s) {
 
 /***/ }),
 
-/***/ 900:
+/***/ 9992:
 /***/ ((module) => {
 
 /**
@@ -34230,7 +32943,7 @@ function ownProp (obj, field) {
 
 var fs = __nccwpck_require__(7147)
 var path = __nccwpck_require__(1017)
-var minimatch = __nccwpck_require__(8085)
+var minimatch = __nccwpck_require__(3973)
 var isAbsolute = __nccwpck_require__(8714)
 var Minimatch = minimatch.Minimatch
 
@@ -34504,14 +33217,14 @@ function childrenIgnored (self, path) {
 module.exports = glob
 
 var rp = __nccwpck_require__(6863)
-var minimatch = __nccwpck_require__(8085)
+var minimatch = __nccwpck_require__(3973)
 var Minimatch = minimatch.Minimatch
 var inherits = __nccwpck_require__(4124)
 var EE = (__nccwpck_require__(2361).EventEmitter)
 var path = __nccwpck_require__(1017)
 var assert = __nccwpck_require__(9491)
 var isAbsolute = __nccwpck_require__(8714)
-var globSync = __nccwpck_require__(7967)
+var globSync = __nccwpck_require__(3369)
 var common = __nccwpck_require__(5888)
 var setopts = common.setopts
 var ownProp = common.ownProp
@@ -35255,14 +33968,14 @@ Glob.prototype._stat2 = function (f, abs, er, stat, cb) {
 
 /***/ }),
 
-/***/ 7967:
+/***/ 3369:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 module.exports = globSync
 globSync.GlobSync = GlobSync
 
 var rp = __nccwpck_require__(6863)
-var minimatch = __nccwpck_require__(8085)
+var minimatch = __nccwpck_require__(3973)
 var Minimatch = minimatch.Minimatch
 var Glob = (__nccwpck_require__(6968).Glob)
 var util = __nccwpck_require__(3837)
@@ -37640,7 +36353,7 @@ module.exports = { executeCommand }
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const fs = __nccwpck_require__(7147)
-const ms = __nccwpck_require__(900)
+const ms = __nccwpck_require__(9992)
 const { AsciiTable3, AlignmentEnum } = __nccwpck_require__(4244)
 const process = __nccwpck_require__(7742)
 
@@ -38217,334 +36930,6 @@ module.exports = require("util");
 
 "use strict";
 module.exports = require("zlib");
-
-/***/ }),
-
-/***/ 2640:
-/***/ ((module) => {
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-module.exports = _arrayLikeToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 5492:
-/***/ ((module) => {
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return self;
-}
-module.exports = _assertThisInitialized, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 6383:
-/***/ ((module) => {
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-module.exports = _classCallCheck, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 1957:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var toPropertyKey = __nccwpck_require__(2319);
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, toPropertyKey(descriptor.key), descriptor);
-  }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, "prototype", {
-    writable: false
-  });
-  return Constructor;
-}
-module.exports = _createClass, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 8425:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var unsupportedIterableToArray = __nccwpck_require__(7361);
-function _createForOfIteratorHelper(o, allowArrayLike) {
-  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-  if (!it) {
-    if (Array.isArray(o) || (it = unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-      var F = function F() {};
-      return {
-        s: F,
-        n: function n() {
-          if (i >= o.length) return {
-            done: true
-          };
-          return {
-            done: false,
-            value: o[i++]
-          };
-        },
-        e: function e(_e) {
-          throw _e;
-        },
-        f: F
-      };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var normalCompletion = true,
-    didErr = false,
-    err;
-  return {
-    s: function s() {
-      it = it.call(o);
-    },
-    n: function n() {
-      var step = it.next();
-      normalCompletion = step.done;
-      return step;
-    },
-    e: function e(_e2) {
-      didErr = true;
-      err = _e2;
-    },
-    f: function f() {
-      try {
-        if (!normalCompletion && it["return"] != null) it["return"]();
-      } finally {
-        if (didErr) throw err;
-      }
-    }
-  };
-}
-module.exports = _createForOfIteratorHelper, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 2588:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var getPrototypeOf = __nccwpck_require__(2369);
-var isNativeReflectConstruct = __nccwpck_require__(1735);
-var possibleConstructorReturn = __nccwpck_require__(6066);
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = isNativeReflectConstruct();
-  return function _createSuperInternal() {
-    var Super = getPrototypeOf(Derived),
-      result;
-    if (hasNativeReflectConstruct) {
-      var NewTarget = getPrototypeOf(this).constructor;
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-    return possibleConstructorReturn(this, result);
-  };
-}
-module.exports = _createSuper, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 1814:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var toPropertyKey = __nccwpck_require__(2319);
-function _defineProperty(obj, key, value) {
-  key = toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-module.exports = _defineProperty, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 2369:
-/***/ ((module) => {
-
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  return _getPrototypeOf(o);
-}
-module.exports = _getPrototypeOf, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 2946:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var setPrototypeOf = __nccwpck_require__(9269);
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  Object.defineProperty(subClass, "prototype", {
-    writable: false
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-module.exports = _inherits, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 3286:
-/***/ ((module) => {
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-module.exports = _interopRequireDefault, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 1735:
-/***/ ((module) => {
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-  try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-module.exports = _isNativeReflectConstruct, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 6066:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var _typeof = (__nccwpck_require__(5605)["default"]);
-var assertThisInitialized = __nccwpck_require__(5492);
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  } else if (call !== void 0) {
-    throw new TypeError("Derived constructors may only return object or undefined");
-  }
-  return assertThisInitialized(self);
-}
-module.exports = _possibleConstructorReturn, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 9269:
-/***/ ((module) => {
-
-function _setPrototypeOf(o, p) {
-  module.exports = _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports;
-  return _setPrototypeOf(o, p);
-}
-module.exports = _setPrototypeOf, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 7655:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var _typeof = (__nccwpck_require__(5605)["default"]);
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (_typeof(res) !== "object") return res;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return (hint === "string" ? String : Number)(input);
-}
-module.exports = _toPrimitive, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 2319:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var _typeof = (__nccwpck_require__(5605)["default"]);
-var toPrimitive = __nccwpck_require__(7655);
-function _toPropertyKey(arg) {
-  var key = toPrimitive(arg, "string");
-  return _typeof(key) === "symbol" ? key : String(key);
-}
-module.exports = _toPropertyKey, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 5605:
-/***/ ((module) => {
-
-function _typeof(o) {
-  "@babel/helpers - typeof";
-
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
-}
-module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
-
-/***/ }),
-
-/***/ 7361:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-var arrayLikeToArray = __nccwpck_require__(2640);
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
-module.exports = _unsupportedIterableToArray, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
 /***/ }),
 
