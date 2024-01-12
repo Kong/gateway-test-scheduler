@@ -1,0 +1,17 @@
+[
+  {
+    "name": "s1",
+    "exclude_tags": "s1e",
+    "specs": ["tests/fixtures/s1/"]
+  },
+  {
+    "name": "s2",
+    "exclude_tags": "s2e",
+    "specs": ["tests/fixtures/s2/"]
+  },
+  {
+    "name": "s3",
+    "exclude_tags": "s3e",
+    "specs": ["tests/fixtures/s3/"]
+  }
+]

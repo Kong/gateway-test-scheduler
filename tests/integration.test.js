@@ -10,6 +10,8 @@ const BUSTED_EVENTS_FILE_PREFIX = 'busted-events-'
 // Test info (as defined in tests/fixtures/res/test_suites.json):
 // Total number of tests from all suites:
 const ALL_TESTS = 8
+// Total number of test files:
+const ALL_FILES = 9
 // number of tests that are expected to rerun:
 const RERUN_TESTS = 5
 // number of FILES that are expected to fail:
@@ -17,14 +19,19 @@ const EXPECT_FAILURES_FILES = 2
 // number of FILES that are expected to error:
 const EXPECT_ERRORS_FILES = 1
 
-const scheduleAndRun = async (scheduler_res_path, runName) => {
+const schedule = async (
+  scheduler_res_path,
+  runName,
+  runTests,
+  expectedConclusion,
+) => {
   /*
    * Schedule workflow run using tests from the configured folder.
    * Note: some tests are intentionally missing from runtimes.json, to cover
    * the scenario of "unseen" tests being run, i.e. without information on
    * their runtime.
    */
-  const res = await helpers.scheduleAndRun(scheduler_res_path, runName)
+  const res = await helpers.schedule(scheduler_res_path, runName, runTests)
   expect(res.status).toBeLessThan(300)
 
   // fetch the workflow run to obtain the run ID
@@ -32,13 +39,14 @@ const scheduleAndRun = async (scheduler_res_path, runName) => {
   expect(run).toBeDefined()
   expect(run.id).toBeDefined()
 
-  const isCompleted = await helpers.waitForRunCompletion(run.id)
-  expect(isCompleted).toBe(true)
+  const { ok, conclusion } = await helpers.waitForRunCompletion(run.id)
+  expect(ok).toBe(true)
+  expect(conclusion).toBe(expectedConclusion)
 
   return run.id
 }
 
-const rerunFailed = async (runName, runId) => {
+const rerunFailed = async (runName, runId, expectedConclusion = 'failure') => {
   const res = await helpers.rerunFailed(runId)
   expect(res.status).toBeLessThan(300)
 
@@ -46,8 +54,9 @@ const rerunFailed = async (runName, runId) => {
   const rerun = await helpers.getWorkflowRun(runName)
   expect(rerun.id).toBeDefined()
 
-  const isCompleted = await helpers.waitForRunCompletion(rerun.id)
-  expect(isCompleted).toBe(true)
+  const { ok, conclusion } = await helpers.waitForRunCompletion(rerun.id)
+  expect(ok).toBe(true)
+  expect(conclusion).toBe(expectedConclusion)
 
   return rerun.id
 }
@@ -134,12 +143,14 @@ const getFailedTestsRunnerIDs = (bustedEvents) => {
 }
 
 describe('schedule and run tests', () => {
-  let artifacts
   let runId
+  let artifacts
   const runName = uuidv4()
+  const resFolder = 'tests/fixtures/res'
 
   beforeAll(async () => {
-    runId = await scheduleAndRun('tests/fixtures/res', runName)
+    // expecting a failure during run: some of the tests are designed to fail
+    runId = await schedule(resFolder, runName, true, 'failure')
     artifacts = await helpers.getWorkflowRunArtifacts(runId)
   }, TIMEOUT)
 
@@ -244,6 +255,41 @@ describe('schedule and run tests', () => {
         EXPECT_FAILURES_FILES,
         EXPECT_ERRORS_FILES,
       )
+    },
+    TIMEOUT,
+  )
+})
+
+describe('static mode scheduling', () => {
+  const resFolder = 'tests/fixtures/res-static-mode'
+
+  it(
+    'generates schedule chunks after rerun',
+    async () => {
+      const runName = uuidv4()
+      // check that scheduling FAILS on the first run
+      // due to invalid format of tests/fixtures/res-static-mode/runtimes.json
+      const runId = await schedule(resFolder, runName, false, 'failure')
+
+      // rerunning is expected to pass (with static mode autoenabled)
+      const rerunId = await rerunFailed(runName, runId, 'success')
+      const rerunArtifacts = await helpers.getWorkflowRunArtifacts(rerunId)
+      const scheduleChunks = rerunArtifacts['schedule-test-files']
+      expect(scheduleChunks.length).toBe(RUNNER_COUNT)
+
+      // validate content of the schedule chunks
+      let files = 0
+      for (const chunk of scheduleChunks) {
+        for (const item of Object.values(chunk)[0].split('\n')) {
+          const test = JSON.parse(item)
+          expect(test.suite).toBeDefined()
+          expect(test.exclude_tags).toBeDefined()
+          expect(test.filename).toBeDefined()
+          expect(test.duration).toBeGreaterThanOrEqual(0)
+          files++
+        }
+      }
+      expect(files).toBe(ALL_FILES)
     },
     TIMEOUT,
   )

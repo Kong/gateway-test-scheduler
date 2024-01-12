@@ -22,6 +22,12 @@ inputs:
   runner-count:
     description: 'Number of test runners to schedule for'
     required: true
+  static-mode:
+    description:
+      'Whether the scheduling should be performed using static data only
+      (ignoring the runtime information from previous test runs)'
+    required: false
+    default: 'false'
 
 runs:
   using: node20

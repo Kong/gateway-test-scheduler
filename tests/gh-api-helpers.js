@@ -23,13 +23,14 @@ const apiRequest = octokit.request.defaults({
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 const helpers = {
-  scheduleAndRun: async (scheduler_res_path, runName) =>
+  schedule: async (scheduler_res_path, runName, runTests) =>
     apiRequest(
       'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
       {
         inputs: {
           scheduler_res_path,
           run_name: runName,
+          jobs: runTests ? 'all' : 'schedule',
         },
       },
     ),
@@ -73,7 +74,6 @@ const helpers = {
 
     return jobsRes.data.jobs
   },
-  // this is ugly, should we consider using webhooks instead?
   waitForRunCompletion: async (runId) => {
     console.log(`Waiting for workflow run ${runId} to complete...`)
     const pollingTimeout = 300000
@@ -101,14 +101,14 @@ const helpers = {
         status === 'action_required' ||
         status === 'stale'
       ) {
-        return false
+        return { ok: false, conclusion: workflow.data.conclusion }
       }
 
       if (status === 'completed') {
-        return true
+        return { ok: true, conclusion: workflow.data.conclusion }
       }
     }
-    return false
+    return { ok: false, conclusion: 'timeout' }
   },
   getWorkflowRunArtifacts: async (runId) => {
     const artifactsRes = await apiRequest(

@@ -13,6 +13,14 @@ on:
         type: string
         description: name (UUID) to use for this run
         required: false
+      jobs:
+        type: choice
+        options:
+          - all
+          - schedule
+        description: jobs to run
+        required: false
+        default: all
 
 env:
   RUNNER_COUNT: 3
@@ -24,6 +32,7 @@ jobs:
   schedule:
     name: Schedule tests and generate runner array
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.jobs == 'all' || github.event.inputs.jobs == 'schedule' }}
 
     outputs:
       runners: ${{ steps.generate-runner-array.outputs.RUNNERS }}
@@ -40,6 +49,7 @@ jobs:
           test-file-runtime-file: ${{ github.event.inputs.scheduler_res_path }}/runtimes.json
           output-prefix: test-chunk.
           runner-count: ${{ env.RUNNER_COUNT }}
+          static-mode: ${{ github.run_attempt > 1 }}
 
       - name: Upload schedule files
         uses: actions/upload-artifact@v4
@@ -58,6 +68,7 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     needs: schedule
+    if: ${{ github.event.inputs.jobs == 'all' }}
 
     strategy:
       fail-fast: false
