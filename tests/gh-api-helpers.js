@@ -3,46 +3,41 @@ const axios = require('axios')
 const AdmZip = require('adm-zip')
 
 const ref = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF
-const owner = process.env.GITHUB_REPOSITORY_OWNER
 const repo = process.env.GITHUB_REPOSITORY.split('/')[1]
+const owner = process.env.GITHUB_REPOSITORY_OWNER
 const workflow_id = 'integration.yml'
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 })
+const apiRequest = octokit.request.defaults({
+  ref,
+  repo,
+  owner,
+  workflow_id,
+  headers: {
+    'X-GitHub-Api-Version': '2022-11-28',
+  },
+})
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 const helpers = {
-  scheduleAndRun: async (scheduler_res_path, runName) => {
-    return await octokit.request(
+  scheduleAndRun: async (scheduler_res_path, runName) =>
+    apiRequest(
       'POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches',
       {
-        owner,
-        repo,
-        workflow_id,
-        ref,
         inputs: {
           scheduler_res_path,
           run_name: runName,
         },
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
       },
-    )
-  },
-  rerunFailed: async (runId) => {
-    return await octokit.request(
+    ),
+  rerunFailed: async (runId) =>
+    apiRequest(
       'POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs',
-      {
-        owner,
-        repo,
-        run_id: runId,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-      },
-    )
-  },
+      { run_id: runId },
+    ),
   getWorkflowRun: async (runName) => {
     const pastFiveMinutes = new Date(Date.now() - 5 * 60 * 1000)
       .toISOString()
@@ -51,18 +46,11 @@ const helpers = {
     const retryInterval = 1000
 
     for (let retry = 0; retry < retryTimeout / retryInterval; retry++) {
-      await new Promise((resolve) => setTimeout(resolve, retryInterval))
-      const workflows = await octokit.request(
+      await sleep(retryInterval)
+
+      const workflows = await apiRequest(
         'GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs{?created}',
-        {
-          owner,
-          repo,
-          workflow_id,
-          created: `>=${pastFiveMinutes}`,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
-        },
+        { created: `>=${pastFiveMinutes}` },
       )
 
       const workflow_runs = workflows.data.workflow_runs
@@ -78,16 +66,9 @@ const helpers = {
     }
   },
   getJobs: async (runId) => {
-    const jobsRes = await octokit.request(
+    const jobsRes = await apiRequest(
       'GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs',
-      {
-        owner,
-        repo,
-        run_id: runId,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-      },
+      { run_id: runId },
     )
 
     return jobsRes.data.jobs
@@ -96,25 +77,18 @@ const helpers = {
   waitForRunCompletion: async (runId) => {
     console.log(`Waiting for workflow run ${runId} to complete...`)
     const pollingTimeout = 300000
-    const retryInterval = 5000
+    const pollingInterval = 5000
 
     for (
       let pollingCounter = 0;
-      pollingCounter < pollingTimeout / retryInterval;
+      pollingCounter < pollingTimeout / pollingInterval;
       pollingCounter++
     ) {
-      await new Promise((resolve) => setTimeout(resolve, retryInterval))
+      await sleep(pollingInterval)
 
-      const workflow = await octokit.request(
+      const workflow = await apiRequest(
         'GET /repos/{owner}/{repo}/actions/runs/{run_id}',
-        {
-          owner,
-          repo,
-          run_id: runId,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
-        },
+        { run_id: runId },
       )
 
       const status = workflow.data && workflow.data.status
@@ -137,32 +111,20 @@ const helpers = {
     return false
   },
   getWorkflowRunArtifacts: async (runId) => {
-    const artifactsRes = await octokit.request(
+    const artifactsRes = await apiRequest(
       'GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts',
-      {
-        owner,
-        repo,
-        run_id: runId,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-      },
+      { run_id: runId },
     )
 
     const artifacts = artifactsRes.data.artifacts
     const artifactContents = {}
 
     for (const artifact of artifacts) {
-      const downloadRes = await octokit.request(
+      const downloadRes = await apiRequest(
         'GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}',
         {
-          owner,
-          repo,
           artifact_id: artifact.id,
           archive_format: 'zip',
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
         },
       )
       const tmpUrl = downloadRes.url
