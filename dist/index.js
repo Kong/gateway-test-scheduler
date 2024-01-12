@@ -37311,6 +37311,7 @@ module.exports = {
         core.getInput('repo-root', { required: true }),
         core.getInput('output-prefix', { required: true }),
         parseInt(core.getInput('runner-count', { required: true }), 10),
+        core.getInput('static-mode', { required: false }) === 'true',
       )
     } catch (e) {
       core.setFailed(e.message)
@@ -37972,14 +37973,25 @@ const schedule = (
   repoRoot,
   outputPrefix,
   numberOfWorkers,
+  staticMode,
 ) => {
-  const runtimeInfo = readRuntimeInfoFile(runtimeInfoFile)
+  if (staticMode) {
+    console.warn(
+      'The scheduler is running in static mode! No runtime information will be used.',
+    )
+  }
+
+  const runtimeInfo = !staticMode
+    ? readRuntimeInfoFile(runtimeInfoFile)
+    : undefined
   const suites = readTestSuites(testSuitesFile, repoRoot)
   const newTests = new Set()
   const findDuration = (suiteName, filename) => {
     const testFileKey = buildTestFileKey(suiteName, filename)
     const duration =
-      runtimeInfo[suiteName] && runtimeInfo[suiteName][testFileKey]
+      runtimeInfo &&
+      runtimeInfo[suiteName] &&
+      runtimeInfo[suiteName][testFileKey]
     if (duration === undefined && !newTests.has(testFileKey)) {
       newTests.add(testFileKey)
       return 0

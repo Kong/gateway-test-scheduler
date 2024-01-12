@@ -58,6 +58,7 @@ module.exports = {
         core.getInput('repo-root', { required: true }),
         core.getInput('output-prefix', { required: true }),
         parseInt(core.getInput('runner-count', { required: true }), 10),
+        core.getInput('static-mode', { required: false }) === 'true',
       )
     } catch (e) {
       core.setFailed(e.message)
