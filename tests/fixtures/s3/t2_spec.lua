@@ -1,0 +1,5 @@
+describe("test", function()
+  it("fails_xy", function()
+    assert.are.equal(1, 2)
+  end)
+end)

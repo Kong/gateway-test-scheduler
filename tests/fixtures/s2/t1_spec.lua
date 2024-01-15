@@ -1,0 +1,5 @@
+describe("test", function()
+  it("passes_4", function()
+    assert.are.equal(1, 1)
+  end)
+end)
