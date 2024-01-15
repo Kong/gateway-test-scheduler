@@ -119,3 +119,22 @@ invoking the action handlers, the packaged JavaScript file is loaded.
 It can be brought up to date using `npm run package` or, if continuous
 packaging during development is required, using `npm run
 package:watch`.
+
+## Testing
+
+Kong Gateway Test Scheduler relies on [Jest](https://jestjs.io/) as its primary
+testing framework.
+
+### Integration tests
+
+Integration tests are defined in the `tests/integration.test.js` file. These
+tests make use of the `.github/workflows/integration.yml` workflow, which is
+only ever triggered by integration tests through the `workflow_dispatch` event,
+using the GitHub API.
+
+Integration tests invoke the scheduler through the `integration.yml` workflow,
+subsequently validating the results against expected output.
+It's worth noting that certain testing scenarios expect the scheduled tests to
+fail. As a consequence, some runs of the `integration.yml` workflow may appear
+as failed, however, the assessment of success or failure for the integration
+tests rests solely on the outcomes of the `integration.test.js` test suite.
