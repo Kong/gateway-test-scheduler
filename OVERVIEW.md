@@ -18,7 +18,7 @@ scheduling. Subsequently, these predicted runtimes are stored in a
 dedicated storage GitHub repository, ready to be retrieved by the test
 runner.
 
-![boxes_and_arrows.png](img%2Fboxes_and_arrows.png)
+![Component Diagram](img%2Ftest-scheduler-components.png)
 
 ## The "Build & Test" Workflow
 
