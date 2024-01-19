@@ -85,6 +85,7 @@ const cli = () => {
     .argument('<failedTestFilesFile>', 'Failed test files file')
     .argument('<testFileRuntimeFile>', 'File to write runtime statistics to')
     .argument('<kongDirectory>', 'Path to local Kong repository')
+    .argument('<xmlOutputFile>', 'XML output file')
     .argument('<setupVenv>', 'Command to initialize the Kong environment')
     .action(runner)
 

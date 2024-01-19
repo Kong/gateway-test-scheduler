@@ -19,6 +19,10 @@ inputs:
       'Name of the file into which to write actual test runtimes for scheduling
       purposes'
     required: true
+  xml-output-file:
+    description:
+      'Name of the file into which to write test results in JUnit XML format'
+    required: false
   setup-venv:
     description: "Shell command to set up Kong's virtual environment"
     required: true

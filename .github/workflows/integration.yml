@@ -91,6 +91,7 @@ jobs:
         mkdir bin spec
         sudo luarocks install busted --tree=.
         sudo luarocks install lua-cjson
+        sudo luarocks install busted-hjtest
         cp tests/fixtures/busted-ci-helper.lua spec/
 
     - name: Download test rerun information
