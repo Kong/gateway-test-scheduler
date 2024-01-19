@@ -37324,6 +37324,7 @@ module.exports = {
         core.getInput('tests-to-run-file', { required: true }),
         core.getInput('failed-test-files-file', { required: true }),
         core.getInput('test-file-runtime-file', { required: true }),
+        core.getInput('xml-output-file', { required: false }),
         core.getInput('setup-venv', { required: true }),
       )
     } catch (e) {
@@ -37669,6 +37670,7 @@ const runner = async (
   testsToRunFile,
   failedTestFilesFile,
   testFileRuntimeFile,
+  xmlOutputFile,
   setupVenv,
   workingDirectory,
 ) => {
@@ -37724,7 +37726,7 @@ const runner = async (
         : ''
       const command = `${
         setupVenv || ''
-      } ; bin/busted --helper=spec/busted-ci-helper.lua -o gtest --Xoutput --color ${excludeTagsOption} "${filename}"`
+      } ; bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(
         command,

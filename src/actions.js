@@ -71,6 +71,7 @@ module.exports = {
         core.getInput('tests-to-run-file', { required: true }),
         core.getInput('failed-test-files-file', { required: true }),
         core.getInput('test-file-runtime-file', { required: true }),
+        core.getInput('xml-output-file', { required: false }),
         core.getInput('setup-venv', { required: true }),
       )
     } catch (e) {

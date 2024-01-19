@@ -28,6 +28,7 @@ const runner = async (
   testsToRunFile,
   failedTestFilesFile,
   testFileRuntimeFile,
+  xmlOutputFile,
   setupVenv,
   workingDirectory,
 ) => {
@@ -83,7 +84,7 @@ const runner = async (
         : ''
       const command = `${
         setupVenv || ''
-      } ; bin/busted --helper=spec/busted-ci-helper.lua -o gtest --Xoutput --color ${excludeTagsOption} "${filename}"`
+      } ; bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(
         command,
