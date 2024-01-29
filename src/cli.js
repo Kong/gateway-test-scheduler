@@ -86,7 +86,10 @@ const cli = () => {
     .argument('<testFileRuntimeFile>', 'File to write runtime statistics to')
     .argument('<kongDirectory>', 'Path to local Kong repository')
     .argument('<xmlOutputFile>', 'XML output file')
-    .argument('<setupVenv>', 'Command to initialize the Kong environment')
+    .argument(
+      '<setupVenvPath>',
+      "Path to the script to source to set up Kong's virtual environment",
+    )
     .action(runner)
 
   commander.program

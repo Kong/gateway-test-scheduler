@@ -29,7 +29,7 @@ const runner = async (
   failedTestFilesFile,
   testFileRuntimeFile,
   xmlOutputFile,
-  setupVenv,
+  setupVenvPath,
   workingDirectory,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
@@ -48,7 +48,7 @@ const runner = async (
   const runtimes = []
 
   const runTest = async (test) => {
-    const { suite, exclude_tags, environment, filename } = test
+    const { suite, exclude_tags, venv_script, environment, filename } = test
     let failed = false
     const listener = await bustedEventListener(
       bustedEventPath,
@@ -79,12 +79,13 @@ const runner = async (
     )
 
     try {
+      const setupVenv = setupVenvPath
+        ? `. ${setupVenvPath}/${venv_script} ;`
+        : ''
       const excludeTagsOption = exclude_tags
         ? `--exclude-tags="${exclude_tags}"`
         : ''
-      const command = `${
-        setupVenv || ''
-      } ; bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
+      const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(
         command,

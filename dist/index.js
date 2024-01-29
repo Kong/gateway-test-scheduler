@@ -37325,7 +37325,7 @@ module.exports = {
         core.getInput('failed-test-files-file', { required: true }),
         core.getInput('test-file-runtime-file', { required: true }),
         core.getInput('xml-output-file', { required: false }),
-        core.getInput('setup-venv', { required: true }),
+        core.getInput('setup-venv-path', { required: false }),
       )
     } catch (e) {
       core.setFailed(e.message)
@@ -37671,7 +37671,7 @@ const runner = async (
   failedTestFilesFile,
   testFileRuntimeFile,
   xmlOutputFile,
-  setupVenv,
+  setupVenvPath,
   workingDirectory,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
@@ -37690,7 +37690,7 @@ const runner = async (
   const runtimes = []
 
   const runTest = async (test) => {
-    const { suite, exclude_tags, environment, filename } = test
+    const { suite, exclude_tags, venv_script, environment, filename } = test
     let failed = false
     const listener = await bustedEventListener(
       bustedEventPath,
@@ -37721,12 +37721,13 @@ const runner = async (
     )
 
     try {
+      const setupVenv = setupVenvPath
+        ? `. ${setupVenvPath}/${venv_script} ;`
+        : ''
       const excludeTagsOption = exclude_tags
         ? `--exclude-tags="${exclude_tags}"`
         : ''
-      const command = `${
-        setupVenv || ''
-      } ; bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
+      const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(
         command,
@@ -38002,11 +38003,12 @@ const schedule = (
     }
   }
   const tasks = suites
-    .map(({ name, exclude_tags, environment, filenames }) =>
+    .map(({ name, exclude_tags, venv_script, environment, filenames }) =>
       filenames.map((filename) => {
         return {
           suite: name,
           exclude_tags,
+          venv_script,
           environment,
           filename,
           duration: findDuration(name, filename),

@@ -109,7 +109,6 @@ jobs:
         tests-to-run-file: test-chunk.${{ matrix.runner }}.json
         failed-test-files-file: ${{ github.event.inputs.scheduler_res_path }}/failed.json
         test-file-runtime-file: ${{ github.event.inputs.scheduler_res_path }}/runtimes.json
-        setup-venv: ':'
 
     - name: Upload test rerun information
       if: always()
