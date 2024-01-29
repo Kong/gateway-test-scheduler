@@ -167,11 +167,12 @@ const schedule = (
     }
   }
   const tasks = suites
-    .map(({ name, exclude_tags, environment, filenames }) =>
+    .map(({ name, exclude_tags, venv_script, environment, filenames }) =>
       filenames.map((filename) => {
         return {
           suite: name,
           exclude_tags,
+          venv_script,
           environment,
           filename,
           duration: findDuration(name, filename),

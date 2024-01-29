@@ -23,9 +23,9 @@ inputs:
     description:
       'Name of the file into which to write test results in JUnit XML format'
     required: false
-  setup-venv:
-    description: "Shell command to set up Kong's virtual environment"
-    required: true
+  setup-venv-path:
+    description: "Path to the script to source to set up Kong's virtual environment"
+    required: false
 
 runs:
   using: node20

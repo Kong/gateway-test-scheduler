@@ -98,7 +98,7 @@ runner process like so:
 
 ```shell
 npm run cli runner /tmp/schedule-1.json /tmp/failed.json \
-    /tmp/runtimes.json '. bazel-bin/build/kong-dev-venv.sh' ../kong
+    /tmp/runtimes.json /tmp/xml_output 'bazel-bin/build' ../kong
 ```
 
 This invocation will use the first runner configuration file that was
