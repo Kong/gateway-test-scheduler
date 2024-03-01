@@ -37744,7 +37744,9 @@ const runner = async (
       await saveTestResult(test, exitStatus, output)
 
       if (exitStatus !== 0 || failed) {
-        console.error(`\nTest failed with exit status: ${exitStatus} ($output)`)
+        console.error(
+          `\nTest failed with exit status: ${exitStatus}, output: ${output}`,
+        )
         return false
       }
 
