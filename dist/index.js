@@ -33439,7 +33439,8 @@ module.exports = {
         core.getInput('failed-test-files-file', { required: true }),
         core.getInput('test-file-runtime-file', { required: true }),
         core.getInput('xml-output-file', { required: false }),
-        core.getInput('setup-venv-path', { required: false }),
+        core.getInput('build-root', { required: false }),
+        core.getInput('build-dest-path', { required: false }),
       )
     } catch (e) {
       core.setFailed(e.message)
@@ -33751,6 +33752,92 @@ module.exports = { executeCommand }
 
 /***/ }),
 
+/***/ 6120:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const fs = (__nccwpck_require__(7147).promises)
+const path = __nccwpck_require__(1017)
+
+/* Creates symlinks recursively, sub-directories that already exist in
+ * `sourceDir` are not overwritten, they are accessed and symlinks are created
+ * inside them for the corresponding files in the `destDir` tree. This is to
+ * avoid (as much as possible) to lose files from `sourceDir` by replacing
+ * non-empty directories with symlinks.
+ */
+const createSymlinks = async (sourceDir, destDir) => {
+  const filesCreated = []
+  const destFiles = await fs.readdir(destDir)
+
+  for (const destFile of destFiles) {
+    const sourceFilePath = path.join(sourceDir, destFile)
+    const destFilePath = path.join(destDir, destFile)
+
+    try {
+      const sourceStats = await fs.lstat(sourceFilePath)
+      if (sourceStats.isDirectory()) {
+        // if source file is a directory continue recursively
+        filesCreated.push(
+          ...(await createSymlinks(sourceFilePath, destFilePath)),
+        )
+        continue
+      }
+      // delete source file if it already exists (and is not a directory)
+      await fs.unlink(sourceFilePath)
+    } catch (error) {
+      if (error.code !== 'ENOENT') {
+        console.error(error)
+      }
+    }
+
+    // Create the symlink
+    await fs.symlink(destFilePath, sourceFilePath)
+    filesCreated.push(sourceFilePath)
+  }
+
+  return filesCreated
+}
+
+const setup = async (buildRootPath, buildName, sourceDirPath) => {
+  if (!buildRootPath || !buildName || !sourceDirPath) {
+    console.error(
+      'One or more required parameters are missing, skipping installation',
+    )
+    return
+  }
+  console.debug('Installation started')
+  const buildPath = path.join(buildRootPath, buildName)
+  const files = await createSymlinks(sourceDirPath, buildPath)
+  console.debug('Installation completed')
+  return files
+}
+
+const cleanup = async (files) => {
+  if (!files) {
+    console.log('No files to cleanup')
+    return
+  }
+
+  console.debug('Cleanup started')
+  for (const file of files) {
+    try {
+      await fs.unlink(file)
+    } catch (error) {
+      if (error.code !== 'ENOENT') {
+        console.error(error)
+      }
+    }
+  }
+  console.debug('Cleanup completed')
+}
+
+module.exports = {
+  setup,
+  cleanup,
+}
+
+
+/***/ }),
+
 /***/ 8382:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -33763,6 +33850,7 @@ const { executeCommand } = __nccwpck_require__(9722)
 const appendToFile = __nccwpck_require__(1637)
 const bustedEventListener = __nccwpck_require__(5552)
 const { encodeJSON } = __nccwpck_require__(1058)
+const { setup, cleanup } = __nccwpck_require__(6120)
 
 const readTestsToRun = (testsToRunFile, failedTestFilesFile) => {
   let file = testsToRunFile
@@ -33785,7 +33873,8 @@ const runner = async (
   failedTestFilesFile,
   testFileRuntimeFile,
   xmlOutputFile,
-  setupVenvPath,
+  buildRootPath,
+  buildDestPath,
   workingDirectory,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
@@ -33834,10 +33923,14 @@ const runner = async (
       },
     )
 
+    let installedFiles = []
     try {
-      const setupVenv = setupVenvPath
-        ? `. ${setupVenvPath}/${venv_script} ;`
-        : ''
+      const build_name = venv_script ? venv_script.split('-venv')[0] : null
+      installedFiles = await setup(buildRootPath, build_name, buildDestPath)
+      const setupVenv =
+        buildRootPath && venv_script
+          ? `. ${buildRootPath}/${venv_script} ;`
+          : ''
       const excludeTagsOption = exclude_tags
         ? `--exclude-tags="${exclude_tags}"`
         : ''
@@ -33867,6 +33960,7 @@ const runner = async (
       console.error(error.message)
       return false
     } finally {
+      await cleanup(installedFiles)
       listener.close()
     }
   }

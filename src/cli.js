@@ -87,8 +87,12 @@ const cli = () => {
     .argument('<kongDirectory>', 'Path to local Kong repository')
     .argument('<xmlOutputFile>', 'XML output file')
     .argument(
-      '<setupVenvPath>',
-      "Path to the script to source to set up Kong's virtual environment",
+      '<buildRootPath>',
+      "Path to the build root. This is where the script to source to set up Kong's virtual environment is found",
+    )
+    .argument(
+      '<buildDestPath>',
+      'Path to the build destination. Symlinks will be created in this folder pointing to the contents of `build-root/build_name`',
     )
     .action(runner)
 
