@@ -15,6 +15,7 @@
   {
     "name": "s3",
     "exclude_tags": "s3e",
+    "extra_busted_options": "--repeat 1 --seed=1234",
     "specs": ["tests/fixtures/s3/only_spec.lua"]
   }
 ]
