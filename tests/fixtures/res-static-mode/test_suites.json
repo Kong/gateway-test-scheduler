@@ -2,16 +2,19 @@
   {
     "name": "s1",
     "exclude_tags": "s1e",
+    "extra_busted_options": "--tags only-1",
     "specs": ["tests/fixtures/s1/"]
   },
   {
     "name": "s2",
     "exclude_tags": "s2e",
+    "extra_busted_options": "--tags only-2",
     "specs": ["tests/fixtures/s2/"]
   },
   {
     "name": "s3",
     "exclude_tags": "s3e",
+    "extra_busted_options": "--tags only-3 --repeat 10",
     "specs": ["tests/fixtures/s3/"]
   }
 ]
