@@ -50,7 +50,14 @@ const runner = async (
   const runtimes = []
 
   const runTest = async (test) => {
-    const { suite, exclude_tags, venv_script, environment, filename } = test
+    const {
+      suite,
+      exclude_tags,
+      extra_busted_options,
+      venv_script,
+      environment,
+      filename,
+    } = test
     let failed = false
     const listener = await bustedEventListener(
       bustedEventPath,
@@ -91,7 +98,8 @@ const runner = async (
       const excludeTagsOption = exclude_tags
         ? `--exclude-tags="${exclude_tags}"`
         : ''
-      const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
+      const extraBustedOptions = extra_busted_options ?? ''
+      const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} ${extraBustedOptions} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(
         command,

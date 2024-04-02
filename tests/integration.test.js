@@ -170,6 +170,7 @@ describe('schedule and run tests', () => {
         const test = JSON.parse(item)
         expect(test.suite).toBeDefined()
         expect(test.exclude_tags).toBeDefined()
+        expect(test.extra_busted_options).toBeDefined()
         expect(test.filename).toBeDefined()
         expect(test.duration).toBeGreaterThanOrEqual(0)
       }
@@ -282,8 +283,11 @@ describe('static mode scheduling', () => {
       for (const chunk of scheduleChunks) {
         for (const item of Object.values(chunk)[0].split('\n')) {
           const test = JSON.parse(item)
+          console.log({test})
+          console.log({item})
           expect(test.suite).toBeDefined()
           expect(test.exclude_tags).toBeDefined()
+          expect(test.extra_busted_options).toBeDefined()
           expect(test.filename).toBeDefined()
           expect(test.duration).toBeGreaterThanOrEqual(0)
           files++
