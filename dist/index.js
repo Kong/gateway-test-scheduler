@@ -6164,7 +6164,7 @@ var import_plugin_paginate_rest = __nccwpck_require__(4193);
 var import_plugin_rest_endpoint_methods = __nccwpck_require__(3044);
 
 // pkg/dist-src/version.js
-var VERSION = "20.0.2";
+var VERSION = "20.1.0";
 
 // pkg/dist-src/index.js
 var Octokit = import_core.Octokit.plugin(
