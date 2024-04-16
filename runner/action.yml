@@ -19,9 +19,9 @@ inputs:
       'Name of the file into which to write actual test runtimes for scheduling
       purposes'
     required: true
-  xml-output-file:
+  xml-output-folder:
     description:
-      'Name of the file into which to write test results in JUnit XML format'
+      'Name of the folder into which to write test results in JUnit XML format'
     required: false
   build-root:
     description: "Path to the build root. This is where the script to source to set up Kong's virtual environment is found"

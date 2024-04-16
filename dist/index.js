@@ -33438,7 +33438,7 @@ module.exports = {
         core.getInput('tests-to-run-file', { required: true }),
         core.getInput('failed-test-files-file', { required: true }),
         core.getInput('test-file-runtime-file', { required: true }),
-        core.getInput('xml-output-file', { required: false }),
+        core.getInput('xml-output-folder', { required: false }),
         core.getInput('build-root', { required: false }),
         core.getInput('build-dest-path', { required: false }),
       )
@@ -33872,7 +33872,7 @@ const runner = async (
   testsToRunFile,
   failedTestFilesFile,
   testFileRuntimeFile,
-  xmlOutputFile,
+  xmlOutputFolder,
   buildRootPath,
   buildDestPath,
   workingDirectory,
@@ -33934,7 +33934,7 @@ const runner = async (
       const excludeTagsOption = exclude_tags
         ? `--exclude-tags="${exclude_tags}"`
         : ''
-      const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFile}" ${excludeTagsOption} "${filename}"`
+      const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFolder}/${Date.now()}.xml" ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
       const { exitStatus, output } = await executeCommand(
         command,

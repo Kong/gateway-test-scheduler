@@ -71,7 +71,7 @@ module.exports = {
         core.getInput('tests-to-run-file', { required: true }),
         core.getInput('failed-test-files-file', { required: true }),
         core.getInput('test-file-runtime-file', { required: true }),
-        core.getInput('xml-output-file', { required: false }),
+        core.getInput('xml-output-folder', { required: false }),
         core.getInput('build-root', { required: false }),
         core.getInput('build-dest-path', { required: false }),
       )
