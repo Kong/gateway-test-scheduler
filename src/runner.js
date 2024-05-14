@@ -93,6 +93,9 @@ const runner = async (
         : ''
       const command = `${setupVenv} bin/busted --helper=spec/busted-ci-helper.lua -o hjtest --Xoutput "${xmlOutputFolder}/${Date.now()}.xml" ${excludeTagsOption} "${filename}"`
       console.log(`### running ${command}`)
+      console.log(JSON.stringify(process.env))
+      console.log('')
+      console.log(JSON.stringify(environment))
       const { exitStatus, output } = await executeCommand(
         command,
         {
