@@ -90,10 +90,6 @@ const cli = () => {
       '<buildRootPath>',
       "Path to the build root. This is where the script to source to set up Kong's virtual environment is found",
     )
-    .argument(
-      '<buildDestPath>',
-      'Path to the build destination. Symlinks will be created in this folder pointing to the contents of `build-root/build_name`',
-    )
     .action(runner)
 
   commander.program

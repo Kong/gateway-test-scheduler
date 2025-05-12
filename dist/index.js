@@ -556,8 +556,8 @@ class OidcClient {
             const res = yield httpclient
                 .getJson(id_token_url)
                 .catch(error => {
-                throw new Error(`Failed to get ID Token. \n 
-        Error Code : ${error.statusCode}\n 
+                throw new Error(`Failed to get ID Token. \n
+        Error Code : ${error.statusCode}\n
         Error Message: ${error.message}`);
             });
             const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
@@ -7476,7 +7476,7 @@ module.exports = function () {
         }
     };
 };
- // Misspelled 
+ // Misspelled
 
 /***/ }),
 
@@ -31860,7 +31860,7 @@ function expand(str, isTop) {
     ? expand(m.post, false)
     : [''];
 
-  if (/\$$/.test(m.pre)) {    
+  if (/\$$/.test(m.pre)) {
     for (var k = 0; k < post.length; k++) {
       var expansion = pre+ '{' + m.body + '}' + post[k];
       expansions.push(expansion);
@@ -33454,7 +33454,6 @@ module.exports = {
         core.getInput('test-file-runtime-file', { required: true }),
         core.getInput('xml-output-folder', { required: false }),
         core.getInput('build-root', { required: false }),
-        core.getInput('build-dest-path', { required: false }),
       )
     } catch (e) {
       core.setFailed(e.message)
@@ -33766,92 +33765,6 @@ module.exports = { executeCommand }
 
 /***/ }),
 
-/***/ 6120:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-const fs = (__nccwpck_require__(7147).promises)
-const path = __nccwpck_require__(1017)
-
-/* Creates symlinks recursively, sub-directories that already exist in
- * `sourceDir` are not overwritten, they are accessed and symlinks are created
- * inside them for the corresponding files in the `destDir` tree. This is to
- * avoid (as much as possible) to lose files from `sourceDir` by replacing
- * non-empty directories with symlinks.
- */
-const createSymlinks = async (sourceDir, destDir) => {
-  const filesCreated = []
-  const destFiles = await fs.readdir(destDir)
-
-  for (const destFile of destFiles) {
-    const sourceFilePath = path.join(sourceDir, destFile)
-    const destFilePath = path.join(destDir, destFile)
-
-    try {
-      const sourceStats = await fs.lstat(sourceFilePath)
-      if (sourceStats.isDirectory()) {
-        // if source file is a directory continue recursively
-        filesCreated.push(
-          ...(await createSymlinks(sourceFilePath, destFilePath)),
-        )
-        continue
-      }
-      // delete source file if it already exists (and is not a directory)
-      await fs.unlink(sourceFilePath)
-    } catch (error) {
-      if (error.code !== 'ENOENT') {
-        console.error(error)
-      }
-    }
-
-    // Create the symlink
-    await fs.symlink(destFilePath, sourceFilePath)
-    filesCreated.push(sourceFilePath)
-  }
-
-  return filesCreated
-}
-
-const setup = async (buildRootPath, buildName, sourceDirPath) => {
-  if (!buildRootPath || !buildName || !sourceDirPath) {
-    console.error(
-      'One or more required parameters are missing, skipping installation',
-    )
-    return
-  }
-  console.debug('Installation started')
-  const buildPath = path.join(buildRootPath, buildName)
-  const files = await createSymlinks(sourceDirPath, buildPath)
-  console.debug('Installation completed')
-  return files
-}
-
-const cleanup = async (files) => {
-  if (!files) {
-    console.log('No files to cleanup')
-    return
-  }
-
-  console.debug('Cleanup started')
-  for (const file of files) {
-    try {
-      await fs.unlink(file)
-    } catch (error) {
-      if (error.code !== 'ENOENT') {
-        console.error(error)
-      }
-    }
-  }
-  console.debug('Cleanup completed')
-}
-
-module.exports = {
-  setup,
-  cleanup,
-}
-
-
-/***/ }),
-
 /***/ 8382:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -33864,7 +33777,6 @@ const { executeCommand } = __nccwpck_require__(9722)
 const appendToFile = __nccwpck_require__(1637)
 const bustedEventListener = __nccwpck_require__(5552)
 const { encodeJSON } = __nccwpck_require__(1058)
-const { setup, cleanup } = __nccwpck_require__(6120)
 
 const readTestsToRun = (testsToRunFile, failedTestFilesFile) => {
   let file = testsToRunFile
@@ -33888,7 +33800,6 @@ const runner = async (
   testFileRuntimeFile,
   xmlOutputFolder,
   buildRootPath,
-  buildDestPath,
   workingDirectory,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
@@ -33937,10 +33848,7 @@ const runner = async (
       },
     )
 
-    let installedFiles = []
     try {
-      const build_name = venv_script ? venv_script.split('-venv')[0] : null
-      installedFiles = await setup(buildRootPath, build_name, buildDestPath)
       const setupVenv =
         buildRootPath && venv_script
           ? `. ${buildRootPath}/${venv_script} ;`
@@ -33974,7 +33882,6 @@ const runner = async (
       console.error(error.message)
       return false
     } finally {
-      await cleanup(installedFiles)
       listener.close()
     }
   }
@@ -36308,7 +36215,7 @@ class AST {
                         const aps = addPatternStart;
                         // check if we have a possibility of matching . or ..,
                         // and prevent that.
-                        const needNoTrav = 
+                        const needNoTrav =
                         // dots are allowed, and the pattern starts with [ or .
                         (dot && aps.has(src.charAt(0))) ||
                             // the pattern starts with \., and then [ or .
@@ -41951,11 +41858,11 @@ class LRUCache {
             b.__abortController instanceof AC);
     }
     async fetch(k, fetchOptions = {}) {
-        const { 
+        const {
         // get options
-        allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet, 
+        allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet,
         // set options
-        ttl = this.ttl, noDisposeOnSet = this.noDisposeOnSet, size = 0, sizeCalculation = this.sizeCalculation, noUpdateTTL = this.noUpdateTTL, 
+        ttl = this.ttl, noDisposeOnSet = this.noDisposeOnSet, size = 0, sizeCalculation = this.sizeCalculation, noUpdateTTL = this.noUpdateTTL,
         // fetch exclusive options
         noDeleteOnFetchRejection = this.noDeleteOnFetchRejection, allowStaleOnFetchRejection = this.allowStaleOnFetchRejection, ignoreFetchAbort = this.ignoreFetchAbort, allowStaleOnFetchAbort = this.allowStaleOnFetchAbort, context, forceRefresh = false, status, signal, } = fetchOptions;
         if (!this.#hasFetchMethod) {
@@ -42219,7 +42126,7 @@ exports.LRUCache = LRUCache;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -42233,7 +42140,7 @@ exports.LRUCache = LRUCache;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
@@ -42242,24 +42149,24 @@ exports.LRUCache = LRUCache;
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
-/******/ 	
+/******/
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __nccwpck_require__(3561);
 /******/ 	module.exports = __webpack_exports__;
-/******/ 	
+/******/
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
