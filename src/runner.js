@@ -7,7 +7,6 @@ const { executeCommand } = require('./execute-command')
 const appendToFile = require('./append-to-file')
 const bustedEventListener = require('./busted-event-listener')
 const { encodeJSON } = require('./encode-json')
-const { setup, cleanup } = require('./installation')
 
 const readTestsToRun = (testsToRunFile, failedTestFilesFile) => {
   let file = testsToRunFile
@@ -31,7 +30,6 @@ const runner = async (
   testFileRuntimeFile,
   xmlOutputFolder,
   buildRootPath,
-  buildDestPath,
   workingDirectory,
 ) => {
   const testsToRun = readTestsToRun(testsToRunFile, failedTestFilesFile)
@@ -80,10 +78,7 @@ const runner = async (
       },
     )
 
-    let installedFiles = []
     try {
-      const build_name = venv_script ? venv_script.split('-venv')[0] : null
-      installedFiles = await setup(buildRootPath, build_name, buildDestPath)
       const setupVenv =
         buildRootPath && venv_script
           ? `. ${buildRootPath}/${venv_script} ;`
@@ -117,7 +112,6 @@ const runner = async (
       console.error(error.message)
       return false
     } finally {
-      await cleanup(installedFiles)
       listener.close()
     }
   }
