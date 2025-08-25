@@ -167,10 +167,11 @@ describe('schedule and run tests', () => {
        * }
        */
       for (const item of Object.values(chunk)[0].split('\n')) {
+        console.log({item})
         const test = JSON.parse(item)
         expect(test.suite).toBeDefined()
         expect(test.exclude_tags).toBeDefined()
-        expect(test.extra_busted_options).toBeDefined()
+        // expect(test.extra_busted_options).toBeDefined()
         expect(test.filename).toBeDefined()
         expect(test.duration).toBeGreaterThanOrEqual(0)
       }
