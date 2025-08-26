@@ -167,7 +167,7 @@ describe('schedule and run tests', () => {
        * }
        */
       for (const item of Object.values(chunk)[0].split('\n')) {
-        console.log({item})
+        console.log({ item })
         const test = JSON.parse(item)
         expect(test.suite).toBeDefined()
         expect(test.exclude_tags).toBeDefined()
