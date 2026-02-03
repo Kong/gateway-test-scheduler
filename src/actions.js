@@ -36,18 +36,26 @@ module.exports = {
   analyze: async () => {
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
     core.info('download statistics files')
-    await downloadStatistics(
+    const { artifactCount } = await downloadStatistics(
       process.env.GITHUB_REPOSITORY,
       core.getInput('workflow-name', { required: true }),
       core.getInput('artifact-name-regexp', { required: true }),
       tmpDir,
     )
-    core.info('combine statistics files')
-    const testFileRuntimeFile = core.getInput('test-file-runtime-file', {
-      required: true,
-    })
-    await combineStatistics(tmpDir, testFileRuntimeFile)
-    core.info('done')
+    core.info(`downloaded ${artifactCount} files`)
+    const failOnMissing = core.getInput('fail-on-missing-statistics') === 'true'
+    if (failOnMissing && artifactCount === 0) {
+      core.setFailed(
+        'did not find any statistics files and action is set to fail on missing... failing job',
+      )
+    } else {
+      core.info('combine statistics files')
+      const testFileRuntimeFile = core.getInput('test-file-runtime-file', {
+        required: true,
+      })
+      await combineStatistics(tmpDir, testFileRuntimeFile)
+      core.info('done')
+    }
   },
 
   schedule: async () => {
