@@ -18,7 +18,7 @@ inputs:
     required: true
   fail-on-missing-statistics:
     description: |
-      A flag whether the job should fail if no runtime statistics were downloaded
+      A flag to control whether the job should fail when the runtime statistics download failed
     required: false
     default: false
 

@@ -46,7 +46,7 @@ module.exports = {
     const failOnMissing = core.getInput('fail-on-missing-statistics') === 'true'
     if (failOnMissing && artifactCount === 0) {
       core.setFailed(
-        'did not found any statistics files and action is set to fail on missing... failing job',
+        'did not find any statistics files and action is set to fail on missing... failing job',
       )
     } else {
       core.info('combine statistics files')
