@@ -16,6 +16,11 @@ inputs:
     description: |
       Regular expression to match artifact names containing actual test runtimes
     required: true
+  fail-on-missing-statistics:
+    description: |
+      A flag whether the job should fail if no runtime statistics were downloaded
+    required: false
+    default: false
 
 # Define your outputs here.
 outputs:

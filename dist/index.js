@@ -556,8 +556,8 @@ class OidcClient {
             const res = yield httpclient
                 .getJson(id_token_url)
                 .catch(error => {
-                throw new Error(`Failed to get ID Token. \n
-        Error Code : ${error.statusCode}\n
+                throw new Error(`Failed to get ID Token. \n 
+        Error Code : ${error.statusCode}\n 
         Error Message: ${error.message}`);
             });
             const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
@@ -7476,7 +7476,7 @@ module.exports = function () {
         }
     };
 };
- // Misspelled
+ // Misspelled 
 
 /***/ }),
 
@@ -31860,7 +31860,7 @@ function expand(str, isTop) {
     ? expand(m.post, false)
     : [''];
 
-  if (/\$$/.test(m.pre)) {
+  if (/\$$/.test(m.pre)) {    
     for (var k = 0; k < post.length; k++) {
       var expansion = pre+ '{' + m.body + '}' + post[k];
       expansions.push(expansion);
@@ -33417,18 +33417,26 @@ module.exports = {
   analyze: async () => {
     const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'analyze-runtimes-'))
     core.info('download statistics files')
-    await downloadStatistics(
+    const { artifactCount } = await downloadStatistics(
       process.env.GITHUB_REPOSITORY,
       core.getInput('workflow-name', { required: true }),
       core.getInput('artifact-name-regexp', { required: true }),
       tmpDir,
     )
-    core.info('combine statistics files')
-    const testFileRuntimeFile = core.getInput('test-file-runtime-file', {
-      required: true,
-    })
-    await combineStatistics(tmpDir, testFileRuntimeFile)
-    core.info('done')
+    core.info(`downloaded ${artifactCount} files`)
+    const failOnMissing = core.getInput('fail-on-missing-statistics') === 'true'
+    if (failOnMissing && artifactCount === 0) {
+      core.setFailed(
+        'did not found any statistics files and action is set to fail on missing... failing job',
+      )
+    } else {
+      core.info('combine statistics files')
+      const testFileRuntimeFile = core.getInput('test-file-runtime-file', {
+        required: true,
+      })
+      await combineStatistics(tmpDir, testFileRuntimeFile)
+      core.info('done')
+    }
   },
 
   schedule: async () => {
@@ -36215,7 +36223,7 @@ class AST {
                         const aps = addPatternStart;
                         // check if we have a possibility of matching . or ..,
                         // and prevent that.
-                        const needNoTrav =
+                        const needNoTrav = 
                         // dots are allowed, and the pattern starts with [ or .
                         (dot && aps.has(src.charAt(0))) ||
                             // the pattern starts with \., and then [ or .
@@ -41858,11 +41866,11 @@ class LRUCache {
             b.__abortController instanceof AC);
     }
     async fetch(k, fetchOptions = {}) {
-        const {
+        const { 
         // get options
-        allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet,
+        allowStale = this.allowStale, updateAgeOnGet = this.updateAgeOnGet, noDeleteOnStaleGet = this.noDeleteOnStaleGet, 
         // set options
-        ttl = this.ttl, noDisposeOnSet = this.noDisposeOnSet, size = 0, sizeCalculation = this.sizeCalculation, noUpdateTTL = this.noUpdateTTL,
+        ttl = this.ttl, noDisposeOnSet = this.noDisposeOnSet, size = 0, sizeCalculation = this.sizeCalculation, noUpdateTTL = this.noUpdateTTL, 
         // fetch exclusive options
         noDeleteOnFetchRejection = this.noDeleteOnFetchRejection, allowStaleOnFetchRejection = this.allowStaleOnFetchRejection, ignoreFetchAbort = this.ignoreFetchAbort, allowStaleOnFetchAbort = this.allowStaleOnFetchAbort, context, forceRefresh = false, status, signal, } = fetchOptions;
         if (!this.#hasFetchMethod) {
@@ -42126,7 +42134,7 @@ exports.LRUCache = LRUCache;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -42140,7 +42148,7 @@ exports.LRUCache = LRUCache;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
@@ -42149,24 +42157,24 @@ exports.LRUCache = LRUCache;
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
 /******/ 		}
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
-/******/
+/******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __nccwpck_require__(3561);
 /******/ 	module.exports = __webpack_exports__;
-/******/
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
