@@ -116,7 +116,19 @@ const helpers = {
       { run_id: runId },
     )
 
-    const artifacts = artifactsRes.data.artifacts
+    // Only keep the latest artifact for each name,
+    // in case thereare multiple runs with the same name
+    const artifacts = Object.values(
+      artifactsRes.data.artifacts.reduce((map, a) => {
+        if (
+          !map[a.name] ||
+          new Date(a.created_at) > new Date(map[a.name].created_at)
+        ) {
+          map[a.name] = a
+        }
+        return map
+      }, {}),
+    )
     const artifactContents = {}
 
     for (const artifact of artifacts) {

@@ -28,5 +28,5 @@ outputs:
     description: 'Your output description here'
 
 runs:
-  using: node20
+  using: node24
   main: ../src/analyze-action.js

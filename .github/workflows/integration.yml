@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Schedule tests
         id: schedule
@@ -52,7 +52,7 @@ jobs:
           static-mode: ${{ github.run_attempt > 1 }}
 
       - name: Upload schedule files
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         continue-on-error: true
         with:
           name: schedule-test-files
@@ -77,10 +77,10 @@ jobs:
 
     steps:
     - name: Checkout source code
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
     - name: Download test schedule file
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
       with:
         name: schedule-test-files
 
@@ -95,7 +95,7 @@ jobs:
         cp tests/fixtures/busted-ci-helper.lua spec/
 
     - name: Download test rerun information
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
       continue-on-error: true
       with:
         name: test-rerun-info-${{ matrix.runner }}
@@ -112,7 +112,7 @@ jobs:
 
     - name: Upload test rerun information
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       with:
         name: test-rerun-info-${{ matrix.runner }}
         path: ${{ github.event.inputs.scheduler_res_path }}/failed.json
@@ -120,7 +120,7 @@ jobs:
 
     - name: Upload busted events file
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       continue-on-error: true
       with:
         name: busted-events-${{ matrix.runner }}
